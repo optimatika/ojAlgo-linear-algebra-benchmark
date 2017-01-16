@@ -34,134 +34,134 @@ import org.ojalgo.benchmark.contestant.ojAlgo;
 
 public abstract class BenchmarkContestant<T> {
 
-    public abstract class EigenDecomposer implements UnaryOperator<T> {
+	public abstract class EigenDecomposer implements UnaryOperator<T> {
 
-        public abstract T apply(final T matrix);
+		public abstract T apply(final T matrix);
 
-        @SuppressWarnings("unchecked")
-        public final Object decompose(final Object matrix) {
-            return this.apply((T) matrix);
-        }
+		@SuppressWarnings("unchecked")
+		public final Object decompose(final Object matrix) {
+			return this.apply((T) matrix);
+		}
 
-    }
+	}
 
-    /**
-     * A general (square) equation system solver
-     *
-     * @author apete
-     */
-    public abstract class GeneralSolver implements BinaryOperator<T> {
+	/**
+	 * A general (square) equation system solver
+	 *
+	 * @author apete
+	 */
+	public abstract class GeneralSolver implements BinaryOperator<T> {
 
-        public abstract T apply(final T body, final T rhs);
+		public abstract T apply(final T body, final T rhs);
 
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((T) body, (T) rhs);
-        }
+		@SuppressWarnings("unchecked")
+		public final Object solve(final Object body, final Object rhs) {
+			return this.apply((T) body, (T) rhs);
+		}
 
-    }
+	}
 
-    public abstract class HermitianSolver implements BinaryOperator<T> {
+	public abstract class HermitianSolver implements BinaryOperator<T> {
 
-        public abstract T apply(final T body, final T rhs);
+		public abstract T apply(final T body, final T rhs);
 
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((T) body, (T) rhs);
-        }
+		@SuppressWarnings("unchecked")
+		public final Object solve(final Object body, final Object rhs) {
+			return this.apply((T) body, (T) rhs);
+		}
 
-    }
+	}
 
-    public abstract class LeastSquaresSolver implements BinaryOperator<T> {
+	public abstract class LeastSquaresSolver implements BinaryOperator<T> {
 
-        public abstract T apply(final T body, final T rhs);
+		public abstract T apply(final T body, final T rhs);
 
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((T) body, (T) rhs);
-        }
+		@SuppressWarnings("unchecked")
+		public final Object solve(final Object body, final Object rhs) {
+			return this.apply((T) body, (T) rhs);
+		}
 
-    }
+	}
 
-    public abstract class MatrixBuilder implements Supplier<T> {
+	public abstract class MatrixBuilder implements Supplier<T> {
 
-        public abstract void set(int row, int col, double value);
+		public abstract void set(int row, int col, double value);
 
-    }
+	}
 
-    public abstract class MatrixMultiplier implements BinaryOperator<T> {
+	public abstract class MatrixMultiplier implements BinaryOperator<T> {
 
-        public abstract T apply(final T left, final T right);
+		public abstract T apply(final T left, final T right);
 
-        @SuppressWarnings("unchecked")
-        public final Object multiply(final Object left, final Object right) {
-            return this.apply((T) left, (T) left);
-        }
+		@SuppressWarnings("unchecked")
+		public final Object multiply(final Object left, final Object right) {
+			return this.apply((T) left, (T) left);
+		}
 
-    }
+	}
 
-    public abstract class SingularDecomposer implements UnaryOperator<T> {
+	public abstract class SingularDecomposer implements UnaryOperator<T> {
 
-        public abstract T apply(final T matrix);
+		public abstract T apply(final T matrix);
 
-        @SuppressWarnings("unchecked")
-        public final Object decompose(final Object matrix) {
-            return this.apply((T) matrix);
-        }
+		@SuppressWarnings("unchecked")
+		public final Object decompose(final Object matrix) {
+			return this.apply((T) matrix);
+		}
 
-    }
+	}
 
-    public abstract class TransposedMultiplier implements BinaryOperator<T> {
+	public abstract class TransposedMultiplier implements BinaryOperator<T> {
 
-        public abstract T apply(final T left, final T right);
+		public abstract T apply(final T left, final T right);
 
-        @SuppressWarnings("unchecked")
-        public final Object multiply(final Object left, final Object right) {
-            return this.apply((T) left, (T) left);
-        }
+		@SuppressWarnings("unchecked")
+		public final Object multiply(final Object left, final Object right) {
+			return this.apply((T) left, (T) left);
+		}
 
-    }
+	}
 
-    public static final Map<String, BenchmarkContestant<?>> CONTESTANTS = new HashMap<String, BenchmarkContestant<?>>();
+	public static final Map<String, BenchmarkContestant<?>> CONTESTANTS = new HashMap<String, BenchmarkContestant<?>>();
 
-    static {
-        CONTESTANTS.put(ACM.class.getSimpleName(), new ACM());
-        CONTESTANTS.put(EJML.class.getSimpleName(), new EJML());
-        CONTESTANTS.put(MTJ.class.getSimpleName(), new MTJ());
-        CONTESTANTS.put(ojAlgo.class.getSimpleName(), new ojAlgo());
-    }
+	static {
+		CONTESTANTS.put(ACM.class.getSimpleName(), new ACM());
+		CONTESTANTS.put(EJML.class.getSimpleName(), new EJML());
+		CONTESTANTS.put(MTJ.class.getSimpleName(), new MTJ());
+		CONTESTANTS.put(ojAlgo.class.getSimpleName(), new ojAlgo());
+	}
 
-    public BenchmarkContestant() {
-        super();
-    }
+	public BenchmarkContestant() {
+		super();
+	}
 
-    @SuppressWarnings("unchecked")
-    public final Object convert(final Object object) {
-        if (object.getClass().isArray()) {
-            return this.convertTo((double[][]) object);
-        } else {
-            return this.convertFrom((T) object);
-        }
-    }
+	@SuppressWarnings("unchecked")
+	public final Object convert(final Object object) {
+		if (object.getClass().isArray()) {
+			return this.convertTo((double[][]) object);
+		} else {
+			return this.convertFrom((T) object);
+		}
+	}
 
-    public abstract EigenDecomposer getEigenDecomposer();
+	protected abstract double[][] convertFrom(T matrix);
 
-    public abstract GeneralSolver getGeneralSolver();
+	protected abstract T convertTo(double[][] raw);
 
-    public abstract HermitianSolver getHermitianSolver();
+	public abstract EigenDecomposer getEigenDecomposer();
 
-    public abstract LeastSquaresSolver getLeastSquaresSolver();
+	public abstract GeneralSolver getGeneralSolver();
 
-    public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
+	public abstract HermitianSolver getHermitianSolver();
 
-    public abstract MatrixMultiplier getMatrixMultiplier();
+	public abstract LeastSquaresSolver getLeastSquaresSolver();
 
-    public abstract SingularDecomposer getSingularDecomposer();
+	public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
-    public abstract TransposedMultiplier getTransposedMultiplier();
+	public abstract MatrixMultiplier getMatrixMultiplier();
 
-    protected abstract double[][] convertFrom(T matrix);
+	public abstract SingularDecomposer getSingularDecomposer();
 
-    protected abstract T convertTo(double[][] raw);
+	public abstract TransposedMultiplier getTransposedMultiplier();
 
 }

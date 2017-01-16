@@ -34,79 +34,82 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 public abstract class LinearAlgebraBenchmark {
 
-    public static void run(final Class<?> clazz) throws RunnerException {
-        new Runner(LinearAlgebraBenchmark.options().include(clazz.getSimpleName()).build()).run();
-    }
+	protected static ChainedOptionsBuilder options() {
+		return new OptionsBuilder().forks(1).measurementIterations(5).warmupIterations(9).mode(Mode.Throughput)
+				.timeUnit(TimeUnit.SECONDS).timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx4g");
+	}
 
-    protected static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(3).measurementIterations(5).warmupIterations(7).mode(Mode.Throughput).timeUnit(TimeUnit.SECONDS)
-                .timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx2g");
-    }
+	public static void run(final Class<?> clazz) throws RunnerException {
+		new Runner(LinearAlgebraBenchmark.options().include(clazz.getSimpleName()).build()).run();
+	}
 
-    protected BenchmarkContestant<?> contestant;
+	protected BenchmarkContestant<?> contestant;
 
-    protected LinearAlgebraBenchmark() {
-        super();
-    }
+	protected LinearAlgebraBenchmark() {
+		super();
+	}
 
-    public abstract Object execute();
+	public abstract Object execute();
 
-    /**
-     * Verify that the tested library/functionality conforms with the benchmark specifications. Annotate the
-     * implementation with <code>@TearDown(Level.Iteration)</code>
-     */
-    public abstract void verify() throws BenchmarkRequirementsException;
+	protected final Object makeRandom(final int numberOfRows, final int numberOfColumns,
+			final BenchmarkContestant<?> contestant) {
+		final BenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows,
+				numberOfColumns);
+		for (int j = 0; j < numberOfColumns; j++) {
+			for (int i = 0; i < numberOfRows; i++) {
+				tmpSupplier.set(i, j, Math.random());
+			}
+		}
+		return tmpSupplier.get();
+	}
 
-    protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final BenchmarkContestant<?> contestant) {
-        final BenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
-        for (int j = 0; j < numberOfColumns; j++) {
-            for (int i = 0; i < numberOfRows; i++) {
-                tmpSupplier.set(i, j, Math.random());
-            }
-        }
-        return tmpSupplier.get();
-    }
+	protected double[][] makeSPD(final int size) {
+		return MatrixUtils.makeSPD(size).toRawCopy2D();
+	}
 
-    protected double[][] makeSPD(final int size) {
-        return MatrixUtils.makeSPD(size).toRawCopy2D();
-    }
+	protected final Object makeSPD(final int size, final BenchmarkContestant<?> contestant) {
 
-    protected final Object makeSPD(final int size, final BenchmarkContestant<?> contestant) {
+		final double[] tmpRandom = new double[size];
 
-        final double[] tmpRandom = new double[size];
+		final BenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(size, size);
 
-        final BenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(size, size);
+		for (int i = 0; i < size; i++) {
 
-        for (int i = 0; i < size; i++) {
+			tmpRandom[i] = Math.random();
 
-            tmpRandom[i] = Math.random();
+			for (int j = 0; j < i; j++) {
+				tmpSupplier.set(i, j, tmpRandom[i] + tmpRandom[j]);
+				tmpSupplier.set(j, i, tmpRandom[j] + tmpRandom[i]);
+			}
+			tmpSupplier.set(i, i, tmpRandom[i] + 1.0);
+		}
 
-            for (int j = 0; j < i; j++) {
-                tmpSupplier.set(i, j, tmpRandom[i] + tmpRandom[j]);
-                tmpSupplier.set(j, i, tmpRandom[j] + tmpRandom[i]);
-            }
-            tmpSupplier.set(i, i, tmpRandom[i] + 1.0);
-        }
+		return tmpSupplier.get();
+	}
 
-        return tmpSupplier.get();
-    }
+	/**
+	 * Verify that the tested library/functionality conforms with the benchmark
+	 * specifications. Annotate the implementation with
+	 * <code>@TearDown(Level.Iteration)</code>
+	 */
+	public abstract void verify() throws BenchmarkRequirementsException;
 
-    protected void verifyStateless(final Class<?> clazz) throws BenchmarkRequirementsException {
+	protected void verifyStateless(final Class<?> clazz) throws BenchmarkRequirementsException {
 
-        for (final Field tmpField : clazz.getDeclaredFields()) {
-            if (!tmpField.getName().equals("this$0")) {
-                throw new BenchmarkRequirementsException(tmpField.toString());
-            }
-        }
+		for (final Field tmpField : clazz.getDeclaredFields()) {
+			if (!tmpField.getName().equals("this$0")) {
+				throw new BenchmarkRequirementsException(tmpField.toString());
+			}
+		}
 
-        final Class<?> tmpSuperclazz = clazz.getSuperclass();
-        if (tmpSuperclazz != null) {
-            this.verifyStateless(tmpSuperclazz);
-        }
+		final Class<?> tmpSuperclazz = clazz.getSuperclass();
+		if (tmpSuperclazz != null) {
+			this.verifyStateless(tmpSuperclazz);
+		}
 
-        for (final Class<?> tmpInterface : clazz.getInterfaces()) {
-            this.verifyStateless(tmpInterface);
-        }
-    }
+		for (final Class<?> tmpInterface : clazz.getInterfaces()) {
+			this.verifyStateless(tmpInterface);
+		}
+	}
 
 }

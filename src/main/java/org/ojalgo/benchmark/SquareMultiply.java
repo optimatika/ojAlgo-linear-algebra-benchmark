@@ -122,59 +122,59 @@ SquareMultiply.execute             1000     ojAlgo  thrpt   15         418,851 Â
 @State(Scope.Benchmark)
 public class SquareMultiply extends LinearAlgebraBenchmark {
 
-    public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(SquareMultiply.class);
-    }
+	public static void main(final String[] args) throws RunnerException {
+		LinearAlgebraBenchmark.run(SquareMultiply.class);
+	}
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
-            "1000" /* , "2000" , "5000", "10000" */ })
-    public int dim;
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+	@Param({ "100", "1000", "10000" })
+	public int dim;
 
-    private BenchmarkContestant<?>.MatrixMultiplier myPlainMultiplier;
+	Object left;
 
-    Object left;
-    Object righ;
+	@Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+	public String library;
 
-    @Override
-    @Benchmark
-    public Object execute() {
-        return myPlainMultiplier.multiply(left, righ);
-    }
+	private BenchmarkContestant<?>.MatrixMultiplier myPlainMultiplier;
+	Object righ;
 
-    @Setup
-    public void setup() {
+	@Override
+	@Benchmark
+	public Object execute() {
+		return myPlainMultiplier.multiply(left, righ);
+	}
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+	@Setup
+	public void setup() {
 
-        myPlainMultiplier = contestant.getMatrixMultiplier();
+		contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-        final double[][] tmpLeft = new double[dim][dim];
-        for (int i = 0; i < tmpLeft.length; i++) {
-            final double[] tmpRow = tmpLeft[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = Math.random();
-            }
-        }
-        left = contestant.convert(tmpLeft);
+		myPlainMultiplier = contestant.getMatrixMultiplier();
 
-        final double[][] tmpRight = new double[dim][dim];
-        for (int i = 0; i < tmpRight.length; i++) {
-            final double[] tmpRow = tmpRight[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = Math.random();
-            }
-        }
-        righ = contestant.convert(tmpRight);
-    }
+		final double[][] tmpLeft = new double[dim][dim];
+		for (int i = 0; i < tmpLeft.length; i++) {
+			final double[] tmpRow = tmpLeft[i];
+			for (int j = 0; j < tmpRow.length; j++) {
+				tmpRow[j] = Math.random();
+			}
+		}
+		left = contestant.convert(tmpLeft);
 
-    @Override
-    @TearDown(Level.Iteration)
-    public void verify() throws BenchmarkRequirementsException {
+		final double[][] tmpRight = new double[dim][dim];
+		for (int i = 0; i < tmpRight.length; i++) {
+			final double[] tmpRow = tmpRight[i];
+			for (int j = 0; j < tmpRow.length; j++) {
+				tmpRow[j] = Math.random();
+			}
+		}
+		righ = contestant.convert(tmpRight);
+	}
 
-        this.verifyStateless(myPlainMultiplier.getClass());
+	@Override
+	@TearDown(Level.Iteration)
+	public void verify() throws BenchmarkRequirementsException {
 
-    }
+		this.verifyStateless(myPlainMultiplier.getClass());
+
+	}
 
 }

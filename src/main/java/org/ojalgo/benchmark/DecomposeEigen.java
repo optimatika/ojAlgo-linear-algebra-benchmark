@@ -126,41 +126,42 @@ DecomposeEigen.execute   1000     ojAlgo  thrpt    3        25,599 ±        2,0
 @State(Scope.Benchmark)
 public class DecomposeEigen extends LinearAlgebraBenchmark {
 
-    public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(DecomposeEigen.class);
-    }
+	public static void main(final String[] args) throws RunnerException {
+		LinearAlgebraBenchmark.run(DecomposeEigen.class);
+	}
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000", "2000"/* , "5000", "10000" */ })
-    public int dim;
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+	@Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000",
+			"2000"/* , "5000", "10000" */ })
+	public int dim;
+	@Param({ "EJML", "MTJ", "ojAlgo" })
+	public String library;
 
-    private BenchmarkContestant<?>.EigenDecomposer myDecomposer;
+	Object matrix;
 
-    Object matrix;
+	private BenchmarkContestant<?>.EigenDecomposer myDecomposer;
 
-    @Override
-    @Benchmark
-    public Object execute() {
-        return myDecomposer.decompose(matrix);
-    }
+	@Override
+	@Benchmark
+	public Object execute() {
+		return myDecomposer.decompose(matrix);
+	}
 
-    @Setup
-    public void setup() {
+	@Setup
+	public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+		contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-        matrix = contestant.convert(this.makeSPD(dim));
+		matrix = contestant.convert(this.makeSPD(dim));
 
-        myDecomposer = contestant.getEigenDecomposer();
-    }
+		myDecomposer = contestant.getEigenDecomposer();
+	}
 
-    @Override
-    @TearDown(Level.Iteration)
-    public void verify() throws BenchmarkRequirementsException {
+	@Override
+	@TearDown(Level.Iteration)
+	public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myDecomposer.getClass());
+		this.verifyStateless(myDecomposer.getClass());
 
-    }
+	}
 
 }

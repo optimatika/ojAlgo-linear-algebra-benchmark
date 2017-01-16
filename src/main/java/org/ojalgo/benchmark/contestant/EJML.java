@@ -37,191 +37,193 @@ import org.ojalgo.benchmark.BenchmarkContestant;
  */
 public class EJML extends BenchmarkContestant<DenseMatrix64F> {
 
-    @Override
-    public BenchmarkContestant<DenseMatrix64F>.EigenDecomposer getEigenDecomposer() {
-        return new EigenDecomposer() {
+	@Override
+	protected double[][] convertFrom(final DenseMatrix64F matrix) {
+		final double[][] retVal = new double[matrix.numRows][matrix.numCols];
+		for (int i = 0; i < retVal.length; i++) {
+			final double[] tmpRow = retVal[i];
+			for (int j = 0; j < tmpRow.length; j++) {
+				tmpRow[j] = matrix.get(i, j);
+			}
+		}
+		return retVal;
+	}
 
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F matrix) {
+	@Override
+	protected DenseMatrix64F convertTo(final double[][] raw) {
+		return new DenseMatrix64F(raw);
+	}
 
-                final EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(matrix.numCols, true, true);
+	@Override
+	public BenchmarkContestant<DenseMatrix64F>.EigenDecomposer getEigenDecomposer() {
+		return new EigenDecomposer() {
 
-                if (!DecompositionFactory.decomposeSafe(eig, matrix)) {
-                    throw new RuntimeException("Decomposition failed");
-                }
+			@Override
+			public DenseMatrix64F apply(final DenseMatrix64F matrix) {
 
-                eig.getEigenvalue(0);
-                eig.getEigenVector(0);
+				final EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(matrix.numCols, true, true);
 
-                return EigenOps.createMatrixV(eig);
+				if (!DecompositionFactory.decomposeSafe(eig, matrix)) {
+					throw new RuntimeException("Decomposition failed");
+				}
 
-            }
+				eig.getEigenvalue(0);
+				eig.getEigenVector(0);
 
-        };
-    }
+				return EigenOps.createMatrixV(eig);
 
-    @Override
-    public GeneralSolver getGeneralSolver() {
-        return new GeneralSolver() {
+			}
 
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
+		};
+	}
 
-                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
+	@Override
+	public GeneralSolver getGeneralSolver() {
+		return new GeneralSolver() {
 
-                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
-                // make sure the input is not modified
-                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
+			@Override
+			public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
 
-                if (!solver.setA(body)) {
-                    throw new IllegalArgumentException("Bad A");
-                }
+				final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
 
-                solver.solve(rhs, result);
+				LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
+				// make sure the input is not modified
+				solver = new LinearSolverSafe<DenseMatrix64F>(solver);
 
-                return result;
-            }
+				if (!solver.setA(body)) {
+					throw new IllegalArgumentException("Bad A");
+				}
 
-        };
-    }
+				solver.solve(rhs, result);
 
-    @Override
-    public HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
+				return result;
+			}
 
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
+		};
+	}
 
-                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
+	@Override
+	public HermitianSolver getHermitianSolver() {
+		return new HermitianSolver() {
 
-                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
+			@Override
+			public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
 
-                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
+				final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
 
-                if (!solver.setA(body)) {
-                    throw new IllegalArgumentException("Bad A");
-                }
+				LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
 
-                solver.solve(rhs, result);
+				solver = new LinearSolverSafe<DenseMatrix64F>(solver);
 
-                return result;
-            }
+				if (!solver.setA(body)) {
+					throw new IllegalArgumentException("Bad A");
+				}
 
-        };
-    }
+				solver.solve(rhs, result);
 
-    @Override
-    public LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
+				return result;
+			}
 
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
+		};
+	}
 
-                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
+	@Override
+	public LeastSquaresSolver getLeastSquaresSolver() {
+		return new LeastSquaresSolver() {
 
-                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.leastSquares(body.numRows, body.numCols);
+			@Override
+			public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
 
-                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
+				final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
 
-                if (!solver.setA(body)) {
-                    throw new IllegalArgumentException("Bad A");
-                }
+				LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.leastSquares(body.numRows, body.numCols);
 
-                solver.solve(rhs, result);
+				solver = new LinearSolverSafe<DenseMatrix64F>(solver);
 
-                return result;
-            }
+				if (!solver.setA(body)) {
+					throw new IllegalArgumentException("Bad A");
+				}
 
-        };
-    }
+				solver.solve(rhs, result);
 
-    @Override
-    public BenchmarkContestant<DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
-        return new MatrixBuilder() {
+				return result;
+			}
 
-            private final DenseMatrix64F myMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+		};
+	}
 
-            public DenseMatrix64F get() {
-                return myMatrix;
-            }
+	@Override
+	public BenchmarkContestant<DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows,
+			final int numberOfColumns) {
+		return new MatrixBuilder() {
 
-            @Override
-            public void set(final int row, final int col, final double value) {
-                myMatrix.set(row, col, value);
-            }
+			private final DenseMatrix64F myMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
 
-        };
-    }
+			public DenseMatrix64F get() {
+				return myMatrix;
+			}
 
-    @Override
-    public MatrixMultiplier getMatrixMultiplier() {
-        return new MatrixMultiplier() {
+			@Override
+			public void set(final int row, final int col, final double value) {
+				myMatrix.set(row, col, value);
+			}
 
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
+		};
+	}
 
-                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
+	@Override
+	public MatrixMultiplier getMatrixMultiplier() {
+		return new MatrixMultiplier() {
 
-                CommonOps.mult(left, right, result);
+			@Override
+			public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
 
-                return result;
-            }
+				final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
 
-        };
-    }
+				CommonOps.mult(left, right, result);
 
-    @Override
-    public BenchmarkContestant<DenseMatrix64F>.SingularDecomposer getSingularDecomposer() {
-        return new SingularDecomposer() {
+				return result;
+			}
 
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F matrix) {
+		};
+	}
 
-                final SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(matrix.numRows, matrix.numCols, true, true, false);
+	@Override
+	public BenchmarkContestant<DenseMatrix64F>.SingularDecomposer getSingularDecomposer() {
+		return new SingularDecomposer() {
 
-                if (!DecompositionFactory.decomposeSafe(svd, matrix)) {
-                    throw new RuntimeException("Decomposition failed");
-                }
+			@Override
+			public DenseMatrix64F apply(final DenseMatrix64F matrix) {
 
-                svd.getU(null, false);
-                svd.getW(null);
-                return svd.getV(null, false);
-            }
+				final SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(matrix.numRows,
+						matrix.numCols, true, true, false);
 
-        };
-    }
+				if (!DecompositionFactory.decomposeSafe(svd, matrix)) {
+					throw new RuntimeException("Decomposition failed");
+				}
 
-    @Override
-    public TransposedMultiplier getTransposedMultiplier() {
-        return new TransposedMultiplier() {
+				svd.getU(null, false);
+				svd.getW(null);
+				return svd.getV(null, false);
+			}
 
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
+		};
+	}
 
-                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
+	@Override
+	public TransposedMultiplier getTransposedMultiplier() {
+		return new TransposedMultiplier() {
 
-                CommonOps.multTransB(left, right, result);
+			@Override
+			public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
 
-                return result;
-            }
+				final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
 
-        };
-    }
+				CommonOps.multTransB(left, right, result);
 
-    @Override
-    protected double[][] convertFrom(final DenseMatrix64F matrix) {
-        final double[][] retVal = new double[matrix.numRows][matrix.numCols];
-        for (int i = 0; i < retVal.length; i++) {
-            final double[] tmpRow = retVal[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = matrix.get(i, j);
-            }
-        }
-        return retVal;
-    }
+				return result;
+			}
 
-    @Override
-    protected DenseMatrix64F convertTo(final double[][] raw) {
-        return new DenseMatrix64F(raw);
-    }
+		};
+	}
 }

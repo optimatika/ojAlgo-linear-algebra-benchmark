@@ -35,133 +35,134 @@ import org.ojalgo.benchmark.BenchmarkContestant;
  */
 public class ACM extends BenchmarkContestant<RealMatrix> {
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.EigenDecomposer getEigenDecomposer() {
-        return new EigenDecomposer() {
+	@Override
+	protected double[][] convertFrom(final RealMatrix matrix) {
+		return matrix.getData();
+	}
 
-            @Override
-            public RealMatrix apply(final RealMatrix matrix) {
+	@Override
+	protected RealMatrix convertTo(final double[][] raw) {
+		return new Array2DRowRealMatrix(raw);
+	}
 
-                final EigenDecomposition tmpEvD = new EigenDecomposition(matrix);
+	@Override
+	public BenchmarkContestant<RealMatrix>.EigenDecomposer getEigenDecomposer() {
+		return new EigenDecomposer() {
 
-                return tmpEvD.getV();
-            }
-        };
-    }
+			@Override
+			public RealMatrix apply(final RealMatrix matrix) {
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.GeneralSolver getGeneralSolver() {
-        return new GeneralSolver() {
+				final EigenDecomposition tmpEvD = new EigenDecomposition(matrix);
 
-            @Override
-            public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
+				return tmpEvD.getV();
+			}
+		};
+	}
 
-                final LUDecomposition tmpLU = new LUDecomposition(body);
+	@Override
+	public BenchmarkContestant<RealMatrix>.GeneralSolver getGeneralSolver() {
+		return new GeneralSolver() {
 
-                return tmpLU.getSolver().solve(rhs);
-            }
-        };
-    }
+			@Override
+			public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
+				final LUDecomposition tmpLU = new LUDecomposition(body);
 
-            @Override
-            public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
+				return tmpLU.getSolver().solve(rhs);
+			}
+		};
+	}
 
-                final CholeskyDecomposition tmpCholesky = new CholeskyDecomposition(body);
+	@Override
+	public BenchmarkContestant<RealMatrix>.HermitianSolver getHermitianSolver() {
+		return new HermitianSolver() {
 
-                return tmpCholesky.getSolver().solve(rhs);
-            }
+			@Override
+			public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
 
-        };
-    }
+				final CholeskyDecomposition tmpCholesky = new CholeskyDecomposition(body);
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
+				return tmpCholesky.getSolver().solve(rhs);
+			}
 
-            @Override
-            public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
+		};
+	}
 
-                final QRDecomposition tmpQR = new QRDecomposition(body);
+	@Override
+	public BenchmarkContestant<RealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
+		return new LeastSquaresSolver() {
 
-                return tmpQR.getSolver().solve(rhs);
-            }
+			@Override
+			public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
 
-        };
-    }
+				final QRDecomposition tmpQR = new QRDecomposition(body);
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
-        return new MatrixBuilder() {
+				return tmpQR.getSolver().solve(rhs);
+			}
 
-            private final Array2DRowRealMatrix myMatrix = new Array2DRowRealMatrix(numberOfRows, numberOfColumns);
+		};
+	}
 
-            public RealMatrix get() {
-                return myMatrix;
-            }
+	@Override
+	public BenchmarkContestant<RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows,
+			final int numberOfColumns) {
+		return new MatrixBuilder() {
 
-            @Override
-            public void set(final int row, final int col, final double value) {
-                myMatrix.setEntry(row, col, value);
-            }
+			private final Array2DRowRealMatrix myMatrix = new Array2DRowRealMatrix(numberOfRows, numberOfColumns);
 
-        };
-    }
+			public RealMatrix get() {
+				return myMatrix;
+			}
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.MatrixMultiplier getMatrixMultiplier() {
-        return new MatrixMultiplier() {
+			@Override
+			public void set(final int row, final int col, final double value) {
+				myMatrix.setEntry(row, col, value);
+			}
 
-            @Override
-            public RealMatrix apply(final RealMatrix left, final RealMatrix right) {
-                return left.multiply(right);
-            }
+		};
+	}
 
-        };
-    }
+	@Override
+	public BenchmarkContestant<RealMatrix>.MatrixMultiplier getMatrixMultiplier() {
+		return new MatrixMultiplier() {
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.SingularDecomposer getSingularDecomposer() {
-        return new SingularDecomposer() {
+			@Override
+			public RealMatrix apply(final RealMatrix left, final RealMatrix right) {
+				return left.multiply(right);
+			}
 
-            @Override
-            public RealMatrix apply(final RealMatrix matrix) {
+		};
+	}
 
-                final SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
+	@Override
+	public BenchmarkContestant<RealMatrix>.SingularDecomposer getSingularDecomposer() {
+		return new SingularDecomposer() {
 
-                final RealMatrix U = svd.getU();
-                final RealMatrix S = svd.getS();
-                final RealMatrix V = svd.getV();
+			@Override
+			public RealMatrix apply(final RealMatrix matrix) {
 
-                return svd.getS();
-            }
+				final SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
 
-        };
-    }
+				final RealMatrix U = svd.getU();
+				final RealMatrix S = svd.getS();
+				final RealMatrix V = svd.getV();
 
-    @Override
-    public BenchmarkContestant<RealMatrix>.TransposedMultiplier getTransposedMultiplier() {
-        return new TransposedMultiplier() {
+				return svd.getS();
+			}
 
-            @Override
-            public RealMatrix apply(final RealMatrix left, final RealMatrix right) {
-                return left.multiply(right.transpose());
-            }
+		};
+	}
 
-        };
-    }
+	@Override
+	public BenchmarkContestant<RealMatrix>.TransposedMultiplier getTransposedMultiplier() {
+		return new TransposedMultiplier() {
 
-    @Override
-    protected double[][] convertFrom(final RealMatrix matrix) {
-        return matrix.getData();
-    }
+			@Override
+			public RealMatrix apply(final RealMatrix left, final RealMatrix right) {
+				return left.multiply(right.transpose());
+			}
 
-    @Override
-    protected RealMatrix convertTo(final double[][] raw) {
-        return new Array2DRowRealMatrix(raw);
-    }
+		};
+	}
 
 }

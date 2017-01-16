@@ -128,43 +128,44 @@ GeneralSolve.execute   1000     ojAlgo  thrpt   15        2.199 ±      0.048  o
 @State(Scope.Benchmark)
 public class GeneralSolve extends LinearAlgebraBenchmark {
 
-    public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(GeneralSolve.class);
-    }
+	public static void main(final String[] args) throws RunnerException {
+		LinearAlgebraBenchmark.run(GeneralSolve.class);
+	}
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000"/* , "2000", "5000", "10000" */ })
-    public int dim;
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+	Object body;
+	@Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
+			"1000"/* , "2000", "5000", "10000" */ })
+	public int dim;
 
-    private BenchmarkContestant<?>.GeneralSolver myGeneralSolver;
+	@Param({ "EJML", "MTJ", "ojAlgo" })
+	public String library;
 
-    Object body;
-    Object rhs;
+	private BenchmarkContestant<?>.GeneralSolver myGeneralSolver;
+	Object rhs;
 
-    @Override
-    @Benchmark
-    public Object execute() {
-        return myGeneralSolver.solve(body, rhs);
-    }
+	@Override
+	@Benchmark
+	public Object execute() {
+		return myGeneralSolver.solve(body, rhs);
+	}
 
-    @Setup
-    public void setup() {
+	@Setup
+	public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+		contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-        myGeneralSolver = contestant.getGeneralSolver();
+		myGeneralSolver = contestant.getGeneralSolver();
 
-        body = this.makeRandom(dim, dim, contestant);
-        rhs = this.makeRandom(dim, 1, contestant);
-    }
+		body = this.makeRandom(dim, dim, contestant);
+		rhs = this.makeRandom(dim, 1, contestant);
+	}
 
-    @Override
-    @TearDown(Level.Iteration)
-    public void verify() throws BenchmarkRequirementsException {
+	@Override
+	@TearDown(Level.Iteration)
+	public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myGeneralSolver.getClass());
+		this.verifyStateless(myGeneralSolver.getClass());
 
-    }
+	}
 
 }

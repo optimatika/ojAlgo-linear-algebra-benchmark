@@ -46,43 +46,44 @@ import org.openjdk.jmh.runner.RunnerException;
 @State(Scope.Benchmark)
 public class HermitianSolve extends LinearAlgebraBenchmark {
 
-    public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(HermitianSolve.class);
-    }
+	public static void main(final String[] args) throws RunnerException {
+		LinearAlgebraBenchmark.run(HermitianSolve.class);
+	}
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000"/* , "2000", "5000", "10000" */ })
-    public int dim;
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+	Object body;
+	@Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
+			"1000"/* , "2000", "5000", "10000" */ })
+	public int dim;
 
-    private BenchmarkContestant<?>.HermitianSolver myHermitianSolver;
+	@Param({ "EJML", "MTJ", "ojAlgo" })
+	public String library;
 
-    Object body;
-    Object rhs;
+	private BenchmarkContestant<?>.HermitianSolver myHermitianSolver;
+	Object rhs;
 
-    @Override
-    @Benchmark
-    public Object execute() {
-        return myHermitianSolver.solve(body, rhs);
-    }
+	@Override
+	@Benchmark
+	public Object execute() {
+		return myHermitianSolver.solve(body, rhs);
+	}
 
-    @Setup
-    public void setup() {
+	@Setup
+	public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+		contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-        myHermitianSolver = contestant.getHermitianSolver();
+		myHermitianSolver = contestant.getHermitianSolver();
 
-        body = this.makeSPD(dim, contestant);
-        rhs = this.makeRandom(dim, 1, contestant);
-    }
+		body = this.makeSPD(dim, contestant);
+		rhs = this.makeRandom(dim, 1, contestant);
+	}
 
-    @Override
-    @TearDown(Level.Iteration)
-    public void verify() throws BenchmarkRequirementsException {
+	@Override
+	@TearDown(Level.Iteration)
+	public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myHermitianSolver.getClass());
+		this.verifyStateless(myHermitianSolver.getClass());
 
-    }
+	}
 
 }

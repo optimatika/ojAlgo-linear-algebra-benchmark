@@ -34,144 +34,148 @@ import org.ojalgo.matrix.task.TaskException;
  */
 public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
 
-    @Override
-    public BenchmarkContestant<MatrixStore<Double>>.EigenDecomposer getEigenDecomposer() {
-        return new EigenDecomposer() {
+	@Override
+	protected double[][] convertFrom(final MatrixStore<Double> matrix) {
+		return matrix.toRawCopy2D();
+	}
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> matrix) {
-                final Eigenvalue<Double> tmpEvD = Eigenvalue.make(matrix, true);
-                tmpEvD.decompose(matrix);
-                return tmpEvD.getV();
-            }
+	@Override
+	protected MatrixStore<Double> convertTo(final double[][] raw) {
+		return PrimitiveDenseStore.FACTORY.rows(raw);
+	}
 
-        };
-    }
+	@Override
+	public BenchmarkContestant<MatrixStore<Double>>.EigenDecomposer getEigenDecomposer() {
+		return new EigenDecomposer() {
 
-    @Override
-    public GeneralSolver getGeneralSolver() {
-        return new GeneralSolver() {
+			@Override
+			public MatrixStore<Double> apply(final MatrixStore<Double> matrix) {
+				final Eigenvalue<Double> tmpEvD = Eigenvalue.make(matrix, true);
+				tmpEvD.decompose(matrix);
+				return tmpEvD.getV();
+			}
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
-                try {
-                    return SolverTask.PRIMITIVE.make(body, rhs, false, false).solve(body, rhs);
-                } catch (final TaskException exc) {
-                    throw new IllegalArgumentException(exc);
-                }
-            }
+		};
+	}
 
-        };
-    }
+	@Override
+	public GeneralSolver getGeneralSolver() {
+		return new GeneralSolver() {
 
-    @Override
-    public HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
+			@Override
+			public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
+				try {
+					return SolverTask.PRIMITIVE.make(body, rhs, false, false).solve(body, rhs);
+				} catch (final TaskException exc) {
+					throw new IllegalArgumentException(exc);
+				}
+			}
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
-                try {
-                    return SolverTask.PRIMITIVE.make(body, rhs, true, false).solve(body, rhs);
-                } catch (final TaskException exc) {
-                    throw new IllegalArgumentException(exc);
-                }
-            }
+		};
+	}
 
-        };
-    }
+	@Override
+	public HermitianSolver getHermitianSolver() {
+		return new HermitianSolver() {
 
-    @Override
-    public LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
+			@Override
+			public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
+				try {
+					return SolverTask.PRIMITIVE.make(body, rhs, true, false).solve(body, rhs);
+				} catch (final TaskException exc) {
+					throw new IllegalArgumentException(exc);
+				}
+			}
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
-                try {
-                    return SolverTask.PRIMITIVE.make(body, rhs, false, false).solve(body, rhs);
-                } catch (final TaskException exc) {
-                    throw new IllegalArgumentException(exc);
-                }
-            }
+		};
+	}
 
-        };
-    }
+	@Override
+	public LeastSquaresSolver getLeastSquaresSolver() {
+		return new LeastSquaresSolver() {
 
-    @Override
-    public BenchmarkContestant<MatrixStore<Double>>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
-        return new MatrixBuilder() {
+			@Override
+			public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
+				try {
+					return SolverTask.PRIMITIVE.make(body, rhs, false, false).solve(body, rhs);
+				} catch (final TaskException exc) {
+					throw new IllegalArgumentException(exc);
+				}
+			}
 
-            private final PrimitiveDenseStore myMatrix = PrimitiveDenseStore.FACTORY.makeZero(numberOfRows, numberOfColumns);
+		};
+	}
 
-            public MatrixStore<Double> get() {
-                return myMatrix;
-            }
+	@Override
+	public BenchmarkContestant<MatrixStore<Double>>.MatrixBuilder getMatrixBuilder(final int numberOfRows,
+			final int numberOfColumns) {
+		return new MatrixBuilder() {
 
-            @Override
-            public void set(final int row, final int col, final double value) {
-                myMatrix.set(row, col, value);
-            }
+			private final PrimitiveDenseStore myMatrix = PrimitiveDenseStore.FACTORY.makeZero(numberOfRows,
+					numberOfColumns);
 
-        };
-    }
+			public MatrixStore<Double> get() {
+				return myMatrix;
+			}
 
-    @Override
-    public MatrixMultiplier getMatrixMultiplier() {
-        return new MatrixMultiplier() {
+			@Override
+			public void set(final int row, final int col, final double value) {
+				myMatrix.set(row, col, value);
+			}
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
+		};
+	}
 
-                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
+	@Override
+	public MatrixMultiplier getMatrixMultiplier() {
+		return new MatrixMultiplier() {
 
-                retVal.fillByMultiplying(left, right);
+			@Override
+			public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
 
-                return retVal;
-            }
+				final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(),
+						right.countColumns());
 
-        };
-    }
+				retVal.fillByMultiplying(left, right);
 
-    @Override
-    public BenchmarkContestant<MatrixStore<Double>>.SingularDecomposer getSingularDecomposer() {
-        return new SingularDecomposer() {
+				return retVal;
+			}
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> matrix) {
-                final SingularValue<Double> tmpDecomposer = SingularValue.make(matrix);
-                tmpDecomposer.decompose(matrix);
-                tmpDecomposer.getQ1();
-                tmpDecomposer.getD();
-                return tmpDecomposer.getQ2();
-            }
+		};
+	}
 
-        };
-    }
+	@Override
+	public BenchmarkContestant<MatrixStore<Double>>.SingularDecomposer getSingularDecomposer() {
+		return new SingularDecomposer() {
 
-    @Override
-    public TransposedMultiplier getTransposedMultiplier() {
-        return new TransposedMultiplier() {
+			@Override
+			public MatrixStore<Double> apply(final MatrixStore<Double> matrix) {
+				final SingularValue<Double> tmpDecomposer = SingularValue.make(matrix);
+				tmpDecomposer.decompose(matrix);
+				tmpDecomposer.getQ1();
+				tmpDecomposer.getD();
+				return tmpDecomposer.getQ2();
+			}
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
+		};
+	}
 
-                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
+	@Override
+	public TransposedMultiplier getTransposedMultiplier() {
+		return new TransposedMultiplier() {
 
-                retVal.fillByMultiplying(left, right.transpose());
+			@Override
+			public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
 
-                return retVal;
-            }
+				final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(),
+						right.countColumns());
 
-        };
-    }
+				retVal.fillByMultiplying(left, right.transpose());
 
-    @Override
-    protected double[][] convertFrom(final MatrixStore<Double> matrix) {
-        return matrix.toRawCopy2D();
-    }
+				return retVal;
+			}
 
-    @Override
-    protected MatrixStore<Double> convertTo(final double[][] raw) {
-        return PrimitiveDenseStore.FACTORY.rows(raw);
-    }
+		};
+	}
 
 }

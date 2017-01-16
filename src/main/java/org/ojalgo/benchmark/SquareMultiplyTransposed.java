@@ -87,58 +87,59 @@ SquareMultiplyTransposed.execute   1000     ojAlgo  thrpt    3         397,112 Â
 @State(Scope.Benchmark)
 public class SquareMultiplyTransposed extends LinearAlgebraBenchmark {
 
-    public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(SquareMultiplyTransposed.class);
-    }
+	public static void main(final String[] args) throws RunnerException {
+		LinearAlgebraBenchmark.run(SquareMultiplyTransposed.class);
+	}
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000"/* , "2000", "5000", "10000" */ })
-    public int dim;
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+	@Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
+			"1000"/* , "2000", "5000", "10000" */ })
+	public int dim;
+	Object left;
 
-    private BenchmarkContestant<?>.TransposedMultiplier myTransposedMultiplier;
+	@Param({ "EJML", "MTJ", "ojAlgo" })
+	public String library;
 
-    Object left;
-    Object righ;
+	private BenchmarkContestant<?>.TransposedMultiplier myTransposedMultiplier;
+	Object righ;
 
-    @Override
-    @Benchmark
-    public Object execute() {
-        return myTransposedMultiplier.multiply(left, righ);
-    }
+	@Override
+	@Benchmark
+	public Object execute() {
+		return myTransposedMultiplier.multiply(left, righ);
+	}
 
-    @Setup
-    public void setup() {
+	@Setup
+	public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+		contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-        myTransposedMultiplier = contestant.getTransposedMultiplier();
+		myTransposedMultiplier = contestant.getTransposedMultiplier();
 
-        final double[][] tmpLeft = new double[dim][dim];
-        for (int i = 0; i < tmpLeft.length; i++) {
-            final double[] tmpRow = tmpLeft[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = Math.random();
-            }
-        }
-        left = contestant.convert(tmpLeft);
+		final double[][] tmpLeft = new double[dim][dim];
+		for (int i = 0; i < tmpLeft.length; i++) {
+			final double[] tmpRow = tmpLeft[i];
+			for (int j = 0; j < tmpRow.length; j++) {
+				tmpRow[j] = Math.random();
+			}
+		}
+		left = contestant.convert(tmpLeft);
 
-        final double[][] tmpRight = new double[dim][dim];
-        for (int i = 0; i < tmpRight.length; i++) {
-            final double[] tmpRow = tmpRight[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = Math.random();
-            }
-        }
-        righ = contestant.convert(tmpRight);
-    }
+		final double[][] tmpRight = new double[dim][dim];
+		for (int i = 0; i < tmpRight.length; i++) {
+			final double[] tmpRow = tmpRight[i];
+			for (int j = 0; j < tmpRow.length; j++) {
+				tmpRow[j] = Math.random();
+			}
+		}
+		righ = contestant.convert(tmpRight);
+	}
 
-    @Override
-    @TearDown(Level.Iteration)
-    public void verify() throws BenchmarkRequirementsException {
+	@Override
+	@TearDown(Level.Iteration)
+	public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myTransposedMultiplier.getClass());
+		this.verifyStateless(myTransposedMultiplier.getClass());
 
-    }
+	}
 
 }

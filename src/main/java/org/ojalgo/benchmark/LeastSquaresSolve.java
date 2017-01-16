@@ -82,43 +82,46 @@ import org.openjdk.jmh.runner.RunnerException;
 @State(Scope.Benchmark)
 public class LeastSquaresSolve extends LinearAlgebraBenchmark {
 
-    public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(LeastSquaresSolve.class);
-    }
+	public static void main(final String[] args) throws RunnerException {
+		LinearAlgebraBenchmark.run(LeastSquaresSolve.class);
+	}
 
-    @Param({ "2", "3", "4", "5"/* , "10", "20", "50", "100", "200", "500", "1000" , "2000", "5000", "10000" */ })
-    public int dim;
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+	Object body;
+	@Param({ "2", "3", "4", "5"/*
+								 * , "10", "20", "50", "100", "200", "500",
+								 * "1000" , "2000", "5000", "10000"
+								 */ })
+	public int dim;
 
-    private BenchmarkContestant<?>.LeastSquaresSolver myLeastSquaresSolver;
+	@Param({ "EJML", "MTJ", "ojAlgo" })
+	public String library;
 
-    Object body;
-    Object rhs;
+	private BenchmarkContestant<?>.LeastSquaresSolver myLeastSquaresSolver;
+	Object rhs;
 
-    @Override
-    @Benchmark
-    public Object execute() {
-        return myLeastSquaresSolver.solve(body, rhs);
-    }
+	@Override
+	@Benchmark
+	public Object execute() {
+		return myLeastSquaresSolver.solve(body, rhs);
+	}
 
-    @Setup
-    public void setup() {
+	@Setup
+	public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+		contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-        myLeastSquaresSolver = contestant.getLeastSquaresSolver();
+		myLeastSquaresSolver = contestant.getLeastSquaresSolver();
 
-        body = this.makeRandom(dim + dim, dim, contestant);
-        rhs = this.makeRandom(dim + dim, 1, contestant);
-    }
+		body = this.makeRandom(dim + dim, dim, contestant);
+		rhs = this.makeRandom(dim + dim, 1, contestant);
+	}
 
-    @Override
-    @TearDown(Level.Iteration)
-    public void verify() throws BenchmarkRequirementsException {
+	@Override
+	@TearDown(Level.Iteration)
+	public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myLeastSquaresSolver.getClass());
+		this.verifyStateless(myLeastSquaresSolver.getClass());
 
-    }
+	}
 
 }
