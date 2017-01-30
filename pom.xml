@@ -25,6 +25,7 @@
         <dependency>
             <groupId>org.ojalgo</groupId>
             <artifactId>ojalgo</artifactId>
+            <version>42.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.matrix-toolkits-java</groupId>
@@ -138,10 +139,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <parent>
-        <groupId>org.ojalgo</groupId>
-        <artifactId>ojalgo-parent</artifactId>
-        <version>42.0.0-SNAPSHOT</version>
-    </parent>
+    <groupId>org.ojalgo</groupId>
+    <version>42.0.0-SNAPSHOT</version>
 </project>
