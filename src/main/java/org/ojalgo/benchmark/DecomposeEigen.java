@@ -130,9 +130,15 @@ public class DecomposeEigen extends LinearAlgebraBenchmark {
         LinearAlgebraBenchmark.run(DecomposeEigen.class);
     }
 
+<<<<<<< HEAD
     @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000", "2000"/* , "5000", "10000" */ })
     public int dim;
     @Param({ "EJML", "MTJ", "ojAlgo" })
+=======
+    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000", "2000" })
+    public int dim;
+    @Param({ "ACM", "EJML", "MTJ", "ojAlgo" })
+>>>>>>> branch 'master' of https://github.com/optimatika/ojAlgo-linear-algebra-benchmark.git
     public String library;
 
     Object matrix;
