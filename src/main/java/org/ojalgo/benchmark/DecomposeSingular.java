@@ -29,48 +29,56 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Mac Pro 2015-07-01
+ * Mac Pro 2017-04-21
  *
  * <pre>
-# Run complete. Total time: 00:23:20
+# Run complete. Total time: 00:21:51
 
-Benchmark                  (dim)  (library)   Mode  Cnt         Score         Error    Units
-DecomposeSingular.execute      2       EJML  thrpt    3  32200811,380 ± 4571874,603  ops/min
-DecomposeSingular.execute      2        MTJ  thrpt    3   8206077,801 ±  588636,625  ops/min
-DecomposeSingular.execute      2     ojAlgo  thrpt    3  40667898,587 ±  795862,621  ops/min
-DecomposeSingular.execute      3       EJML  thrpt    3  17635298,999 ±  442053,678  ops/min
-DecomposeSingular.execute      3        MTJ  thrpt    3   5030349,755 ±  119993,847  ops/min
-DecomposeSingular.execute      3     ojAlgo  thrpt    3  22774832,786 ±  608800,516  ops/min
-DecomposeSingular.execute      4       EJML  thrpt    3   9993867,965 ±  184607,218  ops/min
-DecomposeSingular.execute      4        MTJ  thrpt    3   3754987,137 ±   75170,672  ops/min
-DecomposeSingular.execute      4     ojAlgo  thrpt    3  12953522,340 ±  159425,556  ops/min
-DecomposeSingular.execute      5       EJML  thrpt    3   6108887,974 ±   69364,230  ops/min
-DecomposeSingular.execute      5        MTJ  thrpt    3   3054350,341 ±  132306,541  ops/min
-DecomposeSingular.execute      5     ojAlgo  thrpt    3   8092410,897 ±   89743,402  ops/min
-DecomposeSingular.execute     10       EJML  thrpt    3   1578659,947 ±  222781,043  ops/min
-DecomposeSingular.execute     10        MTJ  thrpt    3   1018093,145 ±   40143,955  ops/min
-DecomposeSingular.execute     10     ojAlgo  thrpt    3   2217426,763 ±   22911,429  ops/min
-DecomposeSingular.execute     20       EJML  thrpt    3    386870,234 ±   12463,108  ops/min
-DecomposeSingular.execute     20        MTJ  thrpt    3    258994,549 ±   11203,620  ops/min
-DecomposeSingular.execute     20     ojAlgo  thrpt    3    464825,625 ±    3213,276  ops/min
-DecomposeSingular.execute     50       EJML  thrpt    3     38481,520 ±    1671,625  ops/min
-DecomposeSingular.execute     50        MTJ  thrpt    3     45101,316 ±    7418,932  ops/min
-DecomposeSingular.execute     50     ojAlgo  thrpt    3     52287,577 ±    1947,801  ops/min
-DecomposeSingular.execute    100       EJML  thrpt    3      6484,066 ±     135,079  ops/min
-DecomposeSingular.execute    100        MTJ  thrpt    3      9896,366 ±     632,632  ops/min
-DecomposeSingular.execute    100     ojAlgo  thrpt    3      8427,178 ±     705,938  ops/min
-DecomposeSingular.execute    200       EJML  thrpt    3       919,604 ±      24,750  ops/min
-DecomposeSingular.execute    200        MTJ  thrpt    3      2309,658 ±     391,329  ops/min
-DecomposeSingular.execute    200     ojAlgo  thrpt    3      1291,026 ±      23,142  ops/min
-DecomposeSingular.execute    500       EJML  thrpt    3        66,288 ±       8,773  ops/min
-DecomposeSingular.execute    500        MTJ  thrpt    3       294,087 ±      87,077  ops/min
-DecomposeSingular.execute    500     ojAlgo  thrpt    3        96,226 ±       4,350  ops/min
-DecomposeSingular.execute   1000       EJML  thrpt    3         7,989 ±       0,344  ops/min
-DecomposeSingular.execute   1000        MTJ  thrpt    3        61,122 ±       4,298  ops/min
-DecomposeSingular.execute   1000     ojAlgo  thrpt    3         9,538 ±       3,848  ops/min
-DecomposeSingular.execute   2000       EJML  thrpt    3         0,922 ±       0,056  ops/min
-DecomposeSingular.execute   2000        MTJ  thrpt    3         9,772 ±       4,025  ops/min
-DecomposeSingular.execute   2000     ojAlgo  thrpt    3         1,108 ±       0,300  ops/min
+Benchmark                  (dim)  (library)   Mode  Cnt         Score          Error    Units
+DecomposeSingular.execute      2        ACM  thrpt    3  32536808.095 ±   956505.746  ops/min
+DecomposeSingular.execute      2       EJML  thrpt    3  32608989.421 ±  1265476.515  ops/min
+DecomposeSingular.execute      2        MTJ  thrpt    3   8185640.906 ±   450504.968  ops/min
+DecomposeSingular.execute      2     ojAlgo  thrpt    3  56878655.707 ± 16575162.064  ops/min
+DecomposeSingular.execute      3        ACM  thrpt    3  16511210.388 ±   873734.016  ops/min
+DecomposeSingular.execute      3       EJML  thrpt    3  15954667.993 ±  2605948.444  ops/min
+DecomposeSingular.execute      3        MTJ  thrpt    3   5281430.725 ±   938832.777  ops/min
+DecomposeSingular.execute      3     ojAlgo  thrpt    3  24102168.669 ±   725407.419  ops/min
+DecomposeSingular.execute      4        ACM  thrpt    3  10873883.155 ±  2167114.080  ops/min
+DecomposeSingular.execute      4       EJML  thrpt    3   9494306.299 ±  1086568.700  ops/min
+DecomposeSingular.execute      4        MTJ  thrpt    3   3867724.471 ±   251605.645  ops/min
+DecomposeSingular.execute      4     ojAlgo  thrpt    3  16583014.463 ±  2820702.851  ops/min
+DecomposeSingular.execute      5        ACM  thrpt    3   6388455.366 ±  6667323.813  ops/min
+DecomposeSingular.execute      5       EJML  thrpt    3   6695890.929 ±   748042.628  ops/min
+DecomposeSingular.execute      5        MTJ  thrpt    3   2703901.755 ±   395928.417  ops/min
+DecomposeSingular.execute      5     ojAlgo  thrpt    3   9082625.658 ±  1268306.599  ops/min
+DecomposeSingular.execute     10        ACM  thrpt    3   1490945.305 ±   466222.669  ops/min
+DecomposeSingular.execute     10       EJML  thrpt    3   1745460.998 ±   397576.742  ops/min
+DecomposeSingular.execute     10        MTJ  thrpt    3    931817.959 ±    71602.716  ops/min
+DecomposeSingular.execute     10     ojAlgo  thrpt    3   2232419.646 ±   108564.813  ops/min
+DecomposeSingular.execute     20        ACM  thrpt    3    278390.966 ±    17721.526  ops/min
+DecomposeSingular.execute     20       EJML  thrpt    3    406774.722 ±    28390.913  ops/min
+DecomposeSingular.execute     20        MTJ  thrpt    3    238938.013 ±     9051.579  ops/min
+DecomposeSingular.execute     20     ojAlgo  thrpt    3    494423.344 ±    62990.838  ops/min
+DecomposeSingular.execute     50        ACM  thrpt    3     21713.323 ±      522.904  ops/min
+DecomposeSingular.execute     50       EJML  thrpt    3     40313.745 ±     1992.415  ops/min
+DecomposeSingular.execute     50        MTJ  thrpt    3     41603.509 ±     3185.403  ops/min
+DecomposeSingular.execute     50     ojAlgo  thrpt    3     53313.774 ±     8427.499  ops/min
+DecomposeSingular.execute    100        ACM  thrpt    3      2497.800 ±       47.005  ops/min
+DecomposeSingular.execute    100       EJML  thrpt    3      6324.495 ±      876.695  ops/min
+DecomposeSingular.execute    100        MTJ  thrpt    3      9285.069 ±     1170.040  ops/min
+DecomposeSingular.execute    100     ojAlgo  thrpt    3      8325.952 ±     1068.931  ops/min
+DecomposeSingular.execute    200        ACM  thrpt    3       245.167 ±       30.861  ops/min
+DecomposeSingular.execute    200       EJML  thrpt    3       927.351 ±      103.558  ops/min
+DecomposeSingular.execute    200        MTJ  thrpt    3      2144.868 ±      454.645  ops/min
+DecomposeSingular.execute    200     ojAlgo  thrpt    3      1170.619 ±      227.509  ops/min
+DecomposeSingular.execute    500        ACM  thrpt    3        10.084 ±        1.253  ops/min
+DecomposeSingular.execute    500       EJML  thrpt    3        62.114 ±        6.340  ops/min
+DecomposeSingular.execute    500        MTJ  thrpt    3       283.685 ±        3.724  ops/min
+DecomposeSingular.execute    500     ojAlgo  thrpt    3        77.293 ±        1.305  ops/min
+DecomposeSingular.execute   1000        ACM  thrpt    3         0.621 ±        0.559  ops/min
+DecomposeSingular.execute   1000       EJML  thrpt    3         7.984 ±        0.703  ops/min
+DecomposeSingular.execute   1000        MTJ  thrpt    3        59.693 ±       23.157  ops/min
+DecomposeSingular.execute   1000     ojAlgo  thrpt    3         9.032 ±        1.908  ops/min
  * </pre>
  *
  * MacBook Air: 2015-06-20
@@ -122,41 +130,41 @@ DecomposeSingular.execute   2000     ojAlgo  thrpt    3         1,108 ±       0
 @State(Scope.Benchmark)
 public class DecomposeSingular extends LinearAlgebraBenchmark {
 
-	public static void main(final String[] args) throws RunnerException {
-		LinearAlgebraBenchmark.run(DecomposeSingular.class);
-	}
+    public static void main(final String[] args) throws RunnerException {
+        LinearAlgebraBenchmark.run(DecomposeSingular.class);
+    }
 
-	@Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200",
-			"500" /* , "1000", "2000" , "5000", "10000" */ })
-	public int dim;
-	@Param({ "ACM", "EJML", "MTJ", "ojAlgo" })
-	public String library;
+    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
+            "1000" /* , "2000" , "5000", "10000" */ })
+    public int dim;
+    @Param({ "ACM", "EJML", "MTJ", "ojAlgo" })
+    public String library;
 
-	Object matrix;
+    Object matrix;
 
-	private BenchmarkContestant<?>.SingularDecomposer myDecomposer;
+    private BenchmarkContestant<?>.SingularDecomposer myDecomposer;
 
-	@Override
-	@Benchmark
-	public Object execute() {
-		return myDecomposer.decompose(matrix);
-	}
+    @Override
+    @Benchmark
+    public Object execute() {
+        return myDecomposer.decompose(matrix);
+    }
 
-	@Setup
-	public void setup() {
+    @Setup
+    public void setup() {
 
-		contestant = BenchmarkContestant.CONTESTANTS.get(library);
+        contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-		matrix = contestant.convert(this.makeSPD(dim));
+        matrix = contestant.convert(this.makeSPD(dim));
 
-		myDecomposer = contestant.getSingularDecomposer();
-	}
+        myDecomposer = contestant.getSingularDecomposer();
+    }
 
-	@Override
-	public void verify() throws BenchmarkRequirementsException {
+    @Override
+    public void verify() throws BenchmarkRequirementsException {
 
-		this.verifyStateless(myDecomposer.getClass());
+        this.verifyStateless(myDecomposer.getClass());
 
-	}
+    }
 
 }
