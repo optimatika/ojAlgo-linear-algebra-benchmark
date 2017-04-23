@@ -141,4 +141,5 @@
     </build>
     <groupId>org.ojalgo</groupId>
     <version>43-SNAPSHOT</version>
+    <url>http://ojalgo.org/</url>
 </project>
