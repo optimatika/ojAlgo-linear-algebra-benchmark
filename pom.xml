@@ -2,8 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ojalgo-linear-algebra-benchmark</artifactId>
-    <name>oj! Linear Algebra (JMH) Benchmark</name>
+    <artifactId>linear-algebra-benchmark</artifactId>
     <packaging>jar</packaging>
 
     <prerequisites>
@@ -140,6 +139,8 @@
         </pluginManagement>
     </build>
     <groupId>org.ojalgo</groupId>
-    <version>43-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <url>http://ojalgo.org/</url>
+    <description>oj! Linear Algebra (JMH) Benchmark</description>
+    <name>ojLAB</name>
 </project>
