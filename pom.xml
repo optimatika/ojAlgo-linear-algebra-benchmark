@@ -41,6 +41,50 @@
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
         </dependency>
+                <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>[4.12,)</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>[2.9.0,)</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>[1.19,)</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${jmh.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo</artifactId>
+            <version>44.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo-cplex</artifactId>
+            <version>${extensions.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo-commons-math3</artifactId>
+            <version>${extensions.version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -48,6 +92,12 @@
         <jmh.version>1.18</jmh.version>
         <javac.target>1.8</javac.target>
         <uberjar.name>ojlab</uberjar.name>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jmh.version>1.18</jmh.version>
+        <javac.target>1.8</javac.target>
+        <uberjar.name>ojmpb</uberjar.name>
+        <ojalgo.version>44.0.0</ojalgo.version>
+        <extensions.version>1.0.0</extensions.version>
     </properties>
 
     <build>
