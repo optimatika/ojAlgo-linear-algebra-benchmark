@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark;
+package org.ojalgo.benchmark.matrix;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,10 +27,10 @@ import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-import org.ojalgo.benchmark.contestant.ACM;
-import org.ojalgo.benchmark.contestant.EJML;
-import org.ojalgo.benchmark.contestant.MTJ;
-import org.ojalgo.benchmark.contestant.ojAlgo;
+import org.ojalgo.benchmark.matrix.contestant.ACM;
+import org.ojalgo.benchmark.matrix.contestant.EJML;
+import org.ojalgo.benchmark.matrix.contestant.MTJ;
+import org.ojalgo.benchmark.matrix.contestant.ojAlgo;
 
 public abstract class BenchmarkContestant<T> {
 

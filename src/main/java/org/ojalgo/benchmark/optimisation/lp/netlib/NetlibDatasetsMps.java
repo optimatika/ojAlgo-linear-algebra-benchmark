@@ -10,12 +10,15 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.ojalgo.benchmark.lp.netlib;
+package org.ojalgo.benchmark.optimisation.lp.netlib;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.ojalgo.ProgrammingError;
 import org.ojalgo.benchmark.Benchmarks;
 import org.ojalgo.commons.math3.optim.linear.SolverCommonsMathSimplex;
@@ -26,6 +29,7 @@ import org.ojalgo.optimisation.MathProgSysModel;
 import org.ojalgo.optimisation.Optimisation;
 import org.ojalgo.optimisation.Optimisation.Result;
 import org.ojalgo.optimisation.external.SolverCPLEX;
+import org.ojalgo.type.context.NumberContext;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
@@ -76,11 +80,17 @@ NetlibDatasetsMps.solve   SHARE2B     CPLEX  thrpt    5   302.170 ±  92.957  op
 @State(Scope.Benchmark)
 public class NetlibDatasetsMps {
 
-    public static final String PATH = "./src/test/resources/netlib/";
+    public static final String PATH = "./src/main/resources/netlib/";
+
+    private static final boolean DEBUG = true;
+
+    private static final NumberContext PRECISION = new NumberContext(7, 6);
+    private static final String SOLUTION_NOT_VALID = "Solution not valid!";
 
     private static final String SUFFIX = ".SIF";
 
     static final Map<String, ExpressionsBasedModel.Integration<?>> INTEGRATIONS = new HashMap<>();
+
     static {
         INTEGRATIONS.put("CPLEX", SolverCPLEX.INTEGRATION);
         INTEGRATIONS.put("CommonsMath", SolverCommonsMathSimplex.INTEGRATION);
@@ -104,6 +114,7 @@ public class NetlibDatasetsMps {
 
     @Param({ "ojAlgo", "CPLEX" })
     public String solver;
+
     private MathProgSysModel parsedMPS;
 
     public NetlibDatasetsMps() {
@@ -140,6 +151,78 @@ public class NetlibDatasetsMps {
     @Benchmark
     public Optimisation.Result solve() {
         return parsedMPS.solve();
+    }
+
+    @Test
+    public void testAFIRO() {
+
+        final BigDecimal maxValue = null;
+
+        this.doTest("AFIRO", new BigDecimal("-.46475314286e+3"), maxValue);
+    }
+
+    private void assertMinMaxVal(final ExpressionsBasedModel model, final BigDecimal expectedMinimum, final BigDecimal expectedMaximum) {
+
+        Assert.assertTrue(model.validate());
+
+        if (expectedMinimum != null) {
+
+            final double expected = expectedMinimum.doubleValue();
+            final Result minimum = model.minimise();
+            if (DEBUG) {
+                BasicLogger.debug("Minimum: {}", minimum);
+            }
+            final double actual = minimum.getValue();
+
+            if (Double.isNaN(expected) && Double.isNaN(actual)) {
+
+            } else if (PRECISION.isDifferent(expected, actual)) {
+                Assert.assertEquals("Minimum", expected, actual, PRECISION.epsilon());
+            }
+
+            if (!model.validate(PRECISION)) {
+                Assert.fail(SOLUTION_NOT_VALID);
+            }
+        }
+
+        if (expectedMaximum != null) {
+
+            final double expected = expectedMaximum.doubleValue();
+            final Result maximum = model.maximise();
+            if (DEBUG) {
+                BasicLogger.debug("Maximum: {}", maximum);
+            }
+            final double actual = maximum.getValue();
+
+            if (Double.isNaN(expected) && Double.isNaN(actual)) {
+
+            } else if (PRECISION.isDifferent(expected, actual)) {
+                Assert.assertEquals("Maximum", expected, actual, PRECISION.epsilon());
+            }
+
+            if (!model.validate(PRECISION)) {
+                Assert.fail(SOLUTION_NOT_VALID);
+            }
+        }
+    }
+
+    void doTest(final String problem, final BigDecimal expectedMinimum, final BigDecimal expectedMaximum) {
+
+        final ExpressionsBasedModel model = MathProgSysModel.make(new File(NetlibDatasetsMps.PATH + problem + ".SIF")).getExpressionsBasedModel();
+
+        ExpressionsBasedModel.clearIntegrations();
+
+        this.assertMinMaxVal(model, expectedMinimum, expectedMaximum);
+
+        ExpressionsBasedModel.clearIntegrations();
+        ExpressionsBasedModel.addIntegration(SolverCPLEX.INTEGRATION);
+
+        this.assertMinMaxVal(model, expectedMinimum, expectedMaximum);
+
+        ExpressionsBasedModel.clearIntegrations();
+        ExpressionsBasedModel.addIntegration(SolverCommonsMathSimplex.INTEGRATION);
+
+        this.assertMinMaxVal(model, expectedMinimum, expectedMaximum);
     }
 
 }

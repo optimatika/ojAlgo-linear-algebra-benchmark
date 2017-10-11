@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2016 Optimatika (www.optimatika.se)
+ * Copyright 1997-2017 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,12 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark;
+package org.ojalgo.benchmark.matrix;
 
+public class BenchmarkRequirementsException extends Exception {
 
-public class DummyTest {
+	public BenchmarkRequirementsException() {
+		super();
+	}
 
-    public DummyTest() {
-    }
+	public BenchmarkRequirementsException(final String message) {
+		super(message);
+	}
+
+	public BenchmarkRequirementsException(final String message, final Throwable cause) {
+		super(message, cause);
+	}
+
+	public BenchmarkRequirementsException(final String message, final Throwable cause, final boolean enableSuppression,
+			final boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	public BenchmarkRequirementsException(final Throwable cause) {
+		super(cause);
+	}
 
 }

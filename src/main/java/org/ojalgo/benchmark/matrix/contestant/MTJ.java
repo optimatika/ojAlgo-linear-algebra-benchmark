@@ -19,9 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.contestant;
+package org.ojalgo.benchmark.matrix.contestant;
 
-import org.ojalgo.benchmark.BenchmarkContestant;
+import org.ojalgo.benchmark.matrix.BenchmarkContestant;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;

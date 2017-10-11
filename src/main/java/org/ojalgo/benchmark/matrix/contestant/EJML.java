@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.contestant;
+package org.ojalgo.benchmark.matrix.contestant;
 
 import org.ejml.alg.dense.linsol.LinearSolverSafe;
 import org.ejml.data.DenseMatrix64F;
@@ -30,7 +30,7 @@ import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.EigenOps;
-import org.ojalgo.benchmark.BenchmarkContestant;
+import org.ojalgo.benchmark.matrix.BenchmarkContestant;
 
 /**
  * Efficient Java Matrix Library

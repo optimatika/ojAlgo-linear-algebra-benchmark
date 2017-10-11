@@ -19,10 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.contestant;
+package org.ojalgo.benchmark.matrix.contestant;
 
 import org.ojalgo.RecoverableCondition;
-import org.ojalgo.benchmark.BenchmarkContestant;
+import org.ojalgo.benchmark.matrix.BenchmarkContestant;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
