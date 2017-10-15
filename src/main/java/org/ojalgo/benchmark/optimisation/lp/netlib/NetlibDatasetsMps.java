@@ -20,6 +20,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.ojalgo.ProgrammingError;
+import org.ojalgo.SolverJOptimizer;
 import org.ojalgo.benchmark.Benchmarks;
 import org.ojalgo.commons.math3.optim.linear.SolverCommonsMathSimplex;
 import org.ojalgo.netio.BasicLogger;
@@ -94,6 +95,7 @@ public class NetlibDatasetsMps {
     static {
         INTEGRATIONS.put("CPLEX", SolverCPLEX.INTEGRATION);
         INTEGRATIONS.put("CommonsMath", SolverCommonsMathSimplex.INTEGRATION);
+        INTEGRATIONS.put("JOptimizer", SolverJOptimizer.INTEGRATION);
     }
 
     public static void main(final String[] args) throws RunnerException {
@@ -112,7 +114,7 @@ public class NetlibDatasetsMps {
     @Param({ "ADLITTLE", "AFIRO", "AGG", "AGG2", "AGG3" })
     public String model;
 
-    @Param({ "ojAlgo", "CPLEX" })
+    @Param({ "ojAlgo", "CPLEX", "JOptimizer" })
     public String solver;
 
     private MathProgSysModel parsedMPS;
@@ -128,7 +130,7 @@ public class NetlibDatasetsMps {
         parsedMPS = MathProgSysModel.make(tmpFile);
 
         ExpressionsBasedModel.clearIntegrations();
-        ExpressionsBasedModel.addIntegration(SolverCPLEX.INTEGRATION);
+        ExpressionsBasedModel.addIntegration(SolverJOptimizer.INTEGRATION);
 
         final Result expected = parsedMPS.solve();
 
@@ -221,6 +223,11 @@ public class NetlibDatasetsMps {
 
         ExpressionsBasedModel.clearIntegrations();
         ExpressionsBasedModel.addIntegration(SolverCommonsMathSimplex.INTEGRATION);
+
+        this.assertMinMaxVal(model, expectedMinimum, expectedMaximum);
+
+        ExpressionsBasedModel.clearIntegrations();
+        ExpressionsBasedModel.addIntegration(SolverJOptimizer.INTEGRATION);
 
         this.assertMinMaxVal(model, expectedMinimum, expectedMaximum);
     }
