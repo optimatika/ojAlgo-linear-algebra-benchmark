@@ -20,9 +20,9 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.ojalgo.ProgrammingError;
-import org.ojalgo.SolverJOptimizer;
 import org.ojalgo.benchmark.Benchmarks;
 import org.ojalgo.commons.math3.optim.linear.SolverCommonsMathSimplex;
+import org.ojalgo.joptimizer.SolverJOptimizer;
 import org.ojalgo.netio.BasicLogger;
 import org.ojalgo.optimisation.ExpressionsBasedModel;
 import org.ojalgo.optimisation.ExpressionsBasedModel.Integration;
@@ -111,10 +111,11 @@ public class NetlibDatasetsMps {
      * model files used here comes from that site.)</li>
      * </ol>
      */
-    @Param({ "ADLITTLE", "AFIRO", "AGG", "AGG2", "AGG3" })
+    @Param({ "DEGEN2" })
     public String model;
+    // , "ADLITTLE", "AFIRO", "AGG", "AGG2", "AGG3"
 
-    @Param({ "ojAlgo", "CPLEX", "JOptimizer" })
+    @Param({ "ojAlgo", "CPLEX", "CommonsMath", "JOptimizer" })
     public String solver;
 
     private MathProgSysModel parsedMPS;
@@ -163,7 +164,17 @@ public class NetlibDatasetsMps {
         this.doTest("AFIRO", new BigDecimal("-.46475314286e+3"), maxValue);
     }
 
+    @Test
+    public void testDEGEN2() {
+
+        final BigDecimal maxValue = null;
+
+        this.doTest("CAPRI", new BigDecimal("2690.0129142514993"), maxValue);
+    }
+
     private void assertMinMaxVal(final ExpressionsBasedModel model, final BigDecimal expectedMinimum, final BigDecimal expectedMaximum) {
+
+        //model.options.debug(LinearSolver.class);
 
         Assert.assertTrue(model.validate());
 
