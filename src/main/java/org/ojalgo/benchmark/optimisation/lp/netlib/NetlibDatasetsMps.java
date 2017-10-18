@@ -111,9 +111,8 @@ public class NetlibDatasetsMps {
      * model files used here comes from that site.)</li>
      * </ol>
      */
-    @Param({ "DEGEN2" })
+    @Param({ "ADLITTLE", "AFIRO" })
     public String model;
-    // , "ADLITTLE", "AFIRO", "AGG", "AGG2", "AGG3"
 
     @Param({ "ojAlgo", "CPLEX", "CommonsMath", "JOptimizer" })
     public String solver;
