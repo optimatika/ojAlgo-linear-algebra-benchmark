@@ -21,7 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.ojalgo.ProgrammingError;
 import org.ojalgo.benchmark.Benchmarks;
-import org.ojalgo.commons.math3.optim.linear.SolverCommonsMathSimplex;
+import org.ojalgo.commons.math3.optim.linear.SolverCommonsMath;
 import org.ojalgo.joptimizer.SolverJOptimizer;
 import org.ojalgo.netio.BasicLogger;
 import org.ojalgo.optimisation.ExpressionsBasedModel;
@@ -94,7 +94,7 @@ public class NetlibDatasetsMps {
 
     static {
         INTEGRATIONS.put("CPLEX", SolverCPLEX.INTEGRATION);
-        INTEGRATIONS.put("CommonsMath", SolverCommonsMathSimplex.INTEGRATION);
+        INTEGRATIONS.put("CommonsMath", SolverCommonsMath.INTEGRATION);
         INTEGRATIONS.put("JOptimizer", SolverJOptimizer.INTEGRATION);
     }
 
@@ -233,7 +233,7 @@ public class NetlibDatasetsMps {
         this.assertMinMaxVal(model, expectedMinimum, expectedMaximum);
 
         ExpressionsBasedModel.clearIntegrations();
-        ExpressionsBasedModel.addIntegration(SolverCommonsMathSimplex.INTEGRATION);
+        ExpressionsBasedModel.addIntegration(SolverCommonsMath.INTEGRATION);
 
         this.assertMinMaxVal(model, expectedMinimum, expectedMaximum);
 
