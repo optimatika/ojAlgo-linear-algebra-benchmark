@@ -38,8 +38,8 @@ public abstract class Benchmarks {
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).measurementIterations(5).warmupIterations(9).mode(Mode.Throughput).timeUnit(TimeUnit.SECONDS)
-                .timeout(new TimeValue(1L, TimeUnit.MINUTES))
-                .jvmArgs("-server", "-Xmx2g", "-Djava.library.path=/Users/apete/Applications/IBM/ILOG/CPLEX_Studio_Community1262/cplex/bin/x86-64_osx");
+                .timeout(new TimeValue(1L, TimeUnit.MINUTES)).jvmArgs("-server", "-Xmx2g",
+                        "-Djava.library.path=/Library/gurobi751/mac64/lib:/Users/apete/Applications/IBM/ILOG/CPLEX_Studio_Community1262/cplex/bin/x86-64_osx");
     }
 
     protected Benchmarks() {

@@ -30,6 +30,7 @@ import org.ojalgo.optimisation.MathProgSysModel;
 import org.ojalgo.optimisation.Optimisation;
 import org.ojalgo.optimisation.Optimisation.Result;
 import org.ojalgo.optimisation.external.SolverCPLEX;
+import org.ojalgo.optimisation.external.SolverGurobi;
 import org.ojalgo.type.context.NumberContext;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
@@ -40,6 +41,19 @@ import org.openjdk.jmh.runner.RunnerException;
 
 /**
  * <pre>
+# Run complete. Total time: 00:02:57
+
+Benchmark                 (model)     (solver)   Mode  Cnt     Score    Error  Units
+NetlibDatasetsMps.solve  ADLITTLE       ojAlgo  thrpt    5   326.738 ±  1.349  ops/s
+NetlibDatasetsMps.solve  ADLITTLE       Gurobi  thrpt    5   373.964 ± 84.863  ops/s
+NetlibDatasetsMps.solve  ADLITTLE        CPLEX  thrpt    5   381.521 ± 74.064  ops/s
+NetlibDatasetsMps.solve  ADLITTLE  CommonsMath  thrpt    5    13.938 ±  0.696  ops/s
+NetlibDatasetsMps.solve  ADLITTLE   JOptimizer  thrpt    5     1.094 ±  0.006  ops/s
+NetlibDatasetsMps.solve     AFIRO       ojAlgo  thrpt    5  4782.218 ± 35.770  ops/s
+NetlibDatasetsMps.solve     AFIRO       Gurobi  thrpt    5  1184.851 ± 83.053  ops/s
+NetlibDatasetsMps.solve     AFIRO        CPLEX  thrpt    5   960.374 ± 19.445  ops/s
+NetlibDatasetsMps.solve     AFIRO  CommonsMath  thrpt    5   462.964 ±  2.857  ops/s
+NetlibDatasetsMps.solve     AFIRO   JOptimizer  thrpt    5     9.138 ±  0.063  ops/s
  * </pre>
  *
  * <pre>
@@ -96,6 +110,7 @@ public class NetlibDatasetsMps {
         INTEGRATIONS.put("CPLEX", SolverCPLEX.INTEGRATION);
         INTEGRATIONS.put("CommonsMath", SolverCommonsMath.INTEGRATION);
         INTEGRATIONS.put("JOptimizer", SolverJOptimizer.INTEGRATION);
+        INTEGRATIONS.put("Gurobi", SolverGurobi.INTEGRATION);
     }
 
     public static void main(final String[] args) throws RunnerException {
@@ -111,10 +126,10 @@ public class NetlibDatasetsMps {
      * model files used here comes from that site.)</li>
      * </ol>
      */
-    @Param({ "ADLITTLE", "AFIRO" })
+    @Param({ "ADLITTLE", "AFIRO", "AGG", "BLEND" })
     public String model;
 
-    @Param({ "ojAlgo", "CPLEX", "CommonsMath", "JOptimizer" })
+    @Param({ "ojAlgo", "Gurobi", "CPLEX", "CommonsMath", "JOptimizer" })
     public String solver;
 
     private MathProgSysModel parsedMPS;
@@ -130,11 +145,10 @@ public class NetlibDatasetsMps {
         parsedMPS = MathProgSysModel.make(tmpFile);
 
         ExpressionsBasedModel.clearIntegrations();
-        ExpressionsBasedModel.addIntegration(SolverJOptimizer.INTEGRATION);
-
+        ExpressionsBasedModel.addIntegration(SolverCPLEX.INTEGRATION);
         final Result expected = parsedMPS.solve();
-
         ExpressionsBasedModel.clearIntegrations();
+
         final Integration<?> integration = INTEGRATIONS.get(solver);
         if (integration != null) {
             ExpressionsBasedModel.addIntegration(integration);

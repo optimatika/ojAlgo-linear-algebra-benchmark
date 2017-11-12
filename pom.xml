@@ -53,6 +53,11 @@
         </dependency>
         <dependency>
             <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo-gurobi</artifactId>
+            <version>${extensions.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
             <artifactId>ojalgo-commons-math3</artifactId>
             <version>${extensions.version}</version>
         </dependency>
