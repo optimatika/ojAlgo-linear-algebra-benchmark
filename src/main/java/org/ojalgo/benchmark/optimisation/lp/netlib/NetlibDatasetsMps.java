@@ -126,10 +126,10 @@ public class NetlibDatasetsMps {
      * model files used here comes from that site.)</li>
      * </ol>
      */
-    @Param({ "ADLITTLE", "AFIRO", "AGG", "BLEND" })
+    @Param({ "SCFXM2", "ADLITTLE", "AFIRO", "AGG", "BLEND" })
     public String model;
 
-    @Param({ "ojAlgo", "Gurobi", "CPLEX", "CommonsMath", "JOptimizer" })
+    @Param({ "ojAlgo", "Gurobi", "CPLEX" })
     public String solver;
 
     private MathProgSysModel parsedMPS;
