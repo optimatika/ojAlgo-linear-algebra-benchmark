@@ -124,9 +124,10 @@ public class NetlibDatasetsMps {
      * CPLEX as a reference).</li>
      * <li>Remove the problems not available at http://www.numerical.rl.ac.uk/cute/netlib.html (The actual
      * model files used here comes from that site.)</li>
+     * <li>Remove all problems with SIF specific enties in the model files (SIF is a superset of MPS)</li>
      * </ol>
      */
-    @Param({ "SCFXM2", "ADLITTLE", "AFIRO", "AGG", "BLEND" })
+    @Param({ "ADLITTLE", "AFIRO", "AGG2" })
     public String model;
 
     @Param({ "ojAlgo", "Gurobi", "CPLEX" })
