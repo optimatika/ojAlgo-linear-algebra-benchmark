@@ -31,6 +31,7 @@ import org.ojalgo.optimisation.Optimisation;
 import org.ojalgo.optimisation.Optimisation.Result;
 import org.ojalgo.optimisation.external.SolverCPLEX;
 import org.ojalgo.optimisation.external.SolverGurobi;
+import org.ojalgo.optimisation.external.SolverMosek;
 import org.ojalgo.type.context.NumberContext;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
@@ -117,10 +118,11 @@ public class NetlibDatasetsMps {
     static final Map<String, ExpressionsBasedModel.Integration<?>> INTEGRATIONS = new HashMap<>();
 
     static {
-        INTEGRATIONS.put("CPLEX", SolverCPLEX.INTEGRATION);
         INTEGRATIONS.put("CommonsMath", SolverCommonsMath.INTEGRATION);
-        INTEGRATIONS.put("JOptimizer", SolverJOptimizer.INTEGRATION);
+        INTEGRATIONS.put("CPLEX", SolverCPLEX.INTEGRATION);
         INTEGRATIONS.put("Gurobi", SolverGurobi.INTEGRATION);
+        INTEGRATIONS.put("JOptimizer", SolverJOptimizer.INTEGRATION);
+        INTEGRATIONS.put("Mosek", SolverMosek.INTEGRATION);
     }
 
     public static void main(final String[] args) throws RunnerException {

@@ -66,6 +66,11 @@
             <artifactId>ojalgo-joptimizer</artifactId>
             <version>${extensions.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo-mosek</artifactId>
+            <version>${extensions.version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
