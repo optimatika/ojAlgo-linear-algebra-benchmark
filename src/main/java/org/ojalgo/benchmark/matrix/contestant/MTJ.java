@@ -22,6 +22,7 @@
 package org.ojalgo.benchmark.matrix.contestant;
 
 import org.ojalgo.benchmark.matrix.BenchmarkContestant;
+import org.ojalgo.benchmark.matrix.Square3Multiply.MatrixMultiplier;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -34,167 +35,172 @@ import no.uib.cipr.matrix.SymmDenseEVD;
  */
 public class MTJ extends BenchmarkContestant<Matrix> {
 
-	@Override
-	protected double[][] convertFrom(final Matrix matrix) {
-		final double[][] retVal = new double[matrix.numRows()][matrix.numColumns()];
-		for (int i = 0; i < retVal.length; i++) {
-			final double[] tmpRow = retVal[i];
-			for (int j = 0; j < tmpRow.length; j++) {
-				tmpRow[j] = matrix.get(i, j);
-			}
-		}
-		return retVal;
-	}
+    @Override
+    protected double[][] convertFrom(final Matrix matrix) {
+        final double[][] retVal = new double[matrix.numRows()][matrix.numColumns()];
+        for (int i = 0; i < retVal.length; i++) {
+            final double[] tmpRow = retVal[i];
+            for (int j = 0; j < tmpRow.length; j++) {
+                tmpRow[j] = matrix.get(i, j);
+            }
+        }
+        return retVal;
+    }
 
-	@Override
-	protected Matrix convertTo(final double[][] raw) {
-		return new DenseMatrix(raw);
-	}
+    @Override
+    protected Matrix convertTo(final double[][] raw) {
+        return new DenseMatrix(raw);
+    }
 
-	@Override
-	public BenchmarkContestant<Matrix>.EigenDecomposer getEigenDecomposer() {
-		return new EigenDecomposer() {
+    @Override
+    public BenchmarkContestant<Matrix>.EigenDecomposer getEigenDecomposer() {
+        return new EigenDecomposer() {
 
-			@Override
-			public Matrix apply(final Matrix matrix) {
-				try {
-					return SymmDenseEVD.factorize(matrix).getEigenvectors();
-				} catch (final NotConvergedException nce) {
-					throw new RuntimeException(nce);
-				}
-			}
-		};
-	}
+            @Override
+            public Matrix apply(final Matrix matrix) {
+                try {
+                    return SymmDenseEVD.factorize(matrix).getEigenvectors();
+                } catch (final NotConvergedException nce) {
+                    throw new RuntimeException(nce);
+                }
+            }
+        };
+    }
 
-	@Override
-	public GeneralSolver getGeneralSolver() {
-		return new GeneralSolver() {
+    @Override
+    public GeneralSolver getGeneralSolver() {
+        return new GeneralSolver() {
 
-			@Override
-			public Matrix apply(final Matrix body, final Matrix rhs) {
+            @Override
+            public Matrix apply(final Matrix body, final Matrix rhs) {
 
-				final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
+                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
 
-				body.solve(rhs, result);
+                body.solve(rhs, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public HermitianSolver getHermitianSolver() {
-		return new HermitianSolver() {
+    @Override
+    public HermitianSolver getHermitianSolver() {
+        return new HermitianSolver() {
 
-			@Override
-			public Matrix apply(final Matrix body, final Matrix rhs) {
+            @Override
+            public Matrix apply(final Matrix body, final Matrix rhs) {
 
-				final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
+                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
 
-				body.solve(rhs, result);
+                body.solve(rhs, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public LeastSquaresSolver getLeastSquaresSolver() {
-		return new LeastSquaresSolver() {
+    @Override
+    public LeastSquaresSolver getLeastSquaresSolver() {
+        return new LeastSquaresSolver() {
 
-			@Override
-			public Matrix apply(final Matrix body, final Matrix rhs) {
+            @Override
+            public Matrix apply(final Matrix body, final Matrix rhs) {
 
-				final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
+                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
 
-				body.solve(rhs, result);
+                body.solve(rhs, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public BenchmarkContestant<Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows,
-			final int numberOfColumns) {
-		return new MatrixBuilder() {
+    @Override
+    public BenchmarkContestant<Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+        return new MatrixBuilder() {
 
-			private final DenseMatrix myMatrix = new DenseMatrix(numberOfRows, numberOfColumns);
+            private final DenseMatrix myMatrix = new DenseMatrix(numberOfRows, numberOfColumns);
 
-			public Matrix get() {
-				return myMatrix;
-			}
+            public Matrix get() {
+                return myMatrix;
+            }
 
-			@Override
-			public void set(final int row, final int col, final double value) {
-				myMatrix.set(row, col, value);
-			}
+            @Override
+            public void set(final int row, final int col, final double value) {
+                myMatrix.set(row, col, value);
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public MatrixMultiplier getMatrixMultiplier() {
-		return new MatrixMultiplier() {
+    @Override
+    public MatrixMultiplier<Matrix> getMatrixMultiplier() {
+        return new MatrixMultiplier<Matrix>() {
 
-			@Override
-			public Matrix apply(final Matrix left, final Matrix right) {
+            @Override
+            public Matrix multiply(final Matrix left, final Matrix right) {
 
-				final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
+                final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
 
-				return left.mult(right, retVal);
-			}
+                return left.mult(right, retVal);
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public BenchmarkContestant<Matrix>.SingularDecomposer getSingularDecomposer() {
-		return new SingularDecomposer() {
+    @Override
+    public BenchmarkContestant<Matrix>.SingularDecomposer getSingularDecomposer() {
+        return new SingularDecomposer() {
 
-			@Override
-			public Matrix apply(final Matrix matrix) {
+            @Override
+            public Matrix apply(final Matrix matrix) {
 
-				final no.uib.cipr.matrix.SVD svd = new no.uib.cipr.matrix.SVD(matrix.numRows(), matrix.numColumns());
-				final DenseMatrix tmp = new DenseMatrix(matrix);
+                final no.uib.cipr.matrix.SVD svd = new no.uib.cipr.matrix.SVD(matrix.numRows(), matrix.numColumns());
+                final DenseMatrix tmp = new DenseMatrix(matrix);
 
-				DenseMatrix U = null;
-				double[] S = null;
-				DenseMatrix Vt = null;
+                DenseMatrix U = null;
+                double[] S = null;
+                DenseMatrix Vt = null;
 
-				try {
+                try {
 
-					tmp.set(matrix);
-					final SVD s = svd.factor(tmp);
-					U = s.getU();
-					S = s.getS();
-					Vt = s.getVt();
-				} catch (final NotConvergedException e) {
-					throw new RuntimeException(e);
-				}
+                    tmp.set(matrix);
+                    final SVD s = svd.factor(tmp);
+                    U = s.getU();
+                    S = s.getS();
+                    Vt = s.getVt();
+                } catch (final NotConvergedException e) {
+                    throw new RuntimeException(e);
+                }
 
-				return Vt;
-			}
+                return Vt;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public TransposedMultiplier getTransposedMultiplier() {
-		return new TransposedMultiplier() {
+    @Override
+    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
+        return new LeftTransposedMultiplier() {
 
-			@Override
-			public Matrix apply(final Matrix left, final Matrix right) {
+            @Override
+            public Matrix apply(final Matrix left, final Matrix right) {
 
-				final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
+                final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
 
-				return left.transBmult(right, retVal);
-			}
+                return left.transBmult(right, retVal);
+            }
 
-		};
-	}
+        };
+    }
+
+    @Override
+    public BenchmarkContestant<Matrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

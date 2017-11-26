@@ -23,6 +23,7 @@ package org.ojalgo.benchmark.matrix.contestant;
 
 import org.ojalgo.RecoverableCondition;
 import org.ojalgo.benchmark.matrix.BenchmarkContestant;
+import org.ojalgo.benchmark.matrix.Square3Multiply.MatrixMultiplier;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
@@ -33,16 +34,6 @@ import org.ojalgo.matrix.task.SolverTask;
  * oj! Algorithms
  */
 public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
-
-    @Override
-    protected double[][] convertFrom(final MatrixStore<Double> matrix) {
-        return matrix.toRawCopy2D();
-    }
-
-    @Override
-    protected MatrixStore<Double> convertTo(final double[][] raw) {
-        return PrimitiveDenseStore.FACTORY.rows(raw);
-    }
 
     @Override
     public BenchmarkContestant<MatrixStore<Double>>.EigenDecomposer getEigenDecomposer() {
@@ -107,6 +98,23 @@ public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
+    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
+        return new LeftTransposedMultiplier() {
+
+            @Override
+            public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
+
+                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
+
+                retVal.fillByMultiplying(left.transpose(), right);
+
+                return retVal;
+            }
+
+        };
+    }
+
+    @Override
     public BenchmarkContestant<MatrixStore<Double>>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -125,15 +133,32 @@ public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public MatrixMultiplier getMatrixMultiplier() {
-        return new MatrixMultiplier() {
+    public MatrixMultiplier<MatrixStore<Double>> getMatrixMultiplier() {
+        return new MatrixMultiplier<MatrixStore<Double>>() {
+
+            @Override
+            public MatrixStore<Double> multiply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
+
+                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
+
+                retVal.fillByMultiplying(left, right);
+
+                return retVal;
+            }
+
+        };
+    }
+
+    @Override
+    public BenchmarkContestant<MatrixStore<Double>>.RightTransposedMultiplier getRightTransposedMultiplier() {
+        return new RightTransposedMultiplier() {
 
             @Override
             public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
 
                 final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
 
-                retVal.fillByMultiplying(left, right);
+                retVal.fillByMultiplying(left, right.transpose());
 
                 return retVal;
             }
@@ -158,20 +183,13 @@ public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public TransposedMultiplier getTransposedMultiplier() {
-        return new TransposedMultiplier() {
+    protected double[][] convertFrom(final MatrixStore<Double> matrix) {
+        return matrix.toRawCopy2D();
+    }
 
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
-
-                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
-
-                retVal.fillByMultiplying(left, right.transpose());
-
-                return retVal;
-            }
-
-        };
+    @Override
+    protected MatrixStore<Double> convertTo(final double[][] raw) {
+        return PrimitiveDenseStore.FACTORY.rows(raw);
     }
 
 }

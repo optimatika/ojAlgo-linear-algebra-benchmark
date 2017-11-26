@@ -35,7 +35,7 @@ import org.openjdk.jmh.runner.options.TimeValue;
 public abstract class LinearAlgebraBenchmark {
 
     protected static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(5).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
+        return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(7).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
                 .timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx6g");
     }
 

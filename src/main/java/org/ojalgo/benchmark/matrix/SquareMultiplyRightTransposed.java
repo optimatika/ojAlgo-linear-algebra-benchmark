@@ -77,69 +77,101 @@ SquareMultiplyTransposed.execute   1000        MTJ  thrpt    3        1430,790 �
 SquareMultiplyTransposed.execute   1000     ojAlgo  thrpt    3         397,112 ±       846,492  ops/min
  * </pre>
  *
- * Mac Pro: 2016-06-13
+ * MacBook Pro: 2017-11-26
  *
  * <pre>
+Result "org.ojalgo.benchmark.matrix.SquareMultiplyRightTransposed.execute":
+  202.915 ±(99.9%) 27.347 ops/min [Average]
+  (min, avg, max) = (201.805, 202.915, 204.620), stdev = 1.499
+  CI (99.9%): [175.569, 230.262] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:03:15
+
+Benchmark                              (dim)  (library)   Mode  Cnt           Score           Error    Units
+SquareMultiplyRightTransposed.execute      2       EJML  thrpt    3  1724060092.011 ±  65396510.907  ops/min
+SquareMultiplyRightTransposed.execute      2     ojAlgo  thrpt    3   704169517.962 ± 142318323.525  ops/min
+SquareMultiplyRightTransposed.execute      3       EJML  thrpt    3  1033590631.137 ± 165010509.941  ops/min
+SquareMultiplyRightTransposed.execute      3     ojAlgo  thrpt    3   423638972.807 ±  34002247.889  ops/min
+SquareMultiplyRightTransposed.execute      4       EJML  thrpt    3   603379823.687 ± 166353257.136  ops/min
+SquareMultiplyRightTransposed.execute      4     ojAlgo  thrpt    3   262935341.732 ±  59029463.176  ops/min
+SquareMultiplyRightTransposed.execute      5       EJML  thrpt    3   345062237.030 ±  95645123.500  ops/min
+SquareMultiplyRightTransposed.execute      5     ojAlgo  thrpt    3   166567211.303 ±  36911095.893  ops/min
+SquareMultiplyRightTransposed.execute     10       EJML  thrpt    3    58441365.638 ±   2157613.614  ops/min
+SquareMultiplyRightTransposed.execute     10     ojAlgo  thrpt    3     6355299.394 ±   1169788.575  ops/min
+SquareMultiplyRightTransposed.execute     20       EJML  thrpt    3     8890660.471 ±   3108236.735  ops/min
+SquareMultiplyRightTransposed.execute     20     ojAlgo  thrpt    3     4558602.079 ±    979922.176  ops/min
+SquareMultiplyRightTransposed.execute     50       EJML  thrpt    3      688228.506 ±     93275.849  ops/min
+SquareMultiplyRightTransposed.execute     50     ojAlgo  thrpt    3      547683.165 ±    214203.203  ops/min
+SquareMultiplyRightTransposed.execute    100       EJML  thrpt    3       89363.459 ±     13461.607  ops/min
+SquareMultiplyRightTransposed.execute    100     ojAlgo  thrpt    3      126474.843 ±     12438.003  ops/min
+SquareMultiplyRightTransposed.execute    200       EJML  thrpt    3       12783.384 ±      1593.165  ops/min
+SquareMultiplyRightTransposed.execute    200     ojAlgo  thrpt    3       21000.720 ±      7863.501  ops/min
+SquareMultiplyRightTransposed.execute    500       EJML  thrpt    3         798.284 ±       124.370  ops/min
+SquareMultiplyRightTransposed.execute    500     ojAlgo  thrpt    3        1539.304 ±       299.592  ops/min
+SquareMultiplyRightTransposed.execute   1000       EJML  thrpt    3          73.208 ±        30.899  ops/min
+SquareMultiplyRightTransposed.execute   1000     ojAlgo  thrpt    3         202.915 ±        27.347  ops/min
  * </pre>
  *
  * @author apete
  */
 @State(Scope.Benchmark)
-public class SquareMultiplyTransposed extends LinearAlgebraBenchmark {
+public class SquareMultiplyRightTransposed extends LinearAlgebraBenchmark {
 
-	public static void main(final String[] args) throws RunnerException {
-		LinearAlgebraBenchmark.run(SquareMultiplyTransposed.class);
-	}
+    public static void main(final String[] args) throws RunnerException {
+        LinearAlgebraBenchmark.run(SquareMultiplyRightTransposed.class);
+    }
 
-	@Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
-			"1000"/* , "2000", "5000", "10000" */ })
-	public int dim;
-	Object left;
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096",
+            "5000", "8192", "10000" })
+    public int dim;
 
-	@Param({ "EJML", "MTJ", "ojAlgo" })
-	public String library;
+    @Param({ "EJML", "ojAlgo" })
+    public String library;
 
-	private BenchmarkContestant<?>.TransposedMultiplier myTransposedMultiplier;
-	Object righ;
+    private BenchmarkContestant<?>.LeftTransposedMultiplier myTransposedMultiplier;
 
-	@Override
-	@Benchmark
-	public Object execute() {
-		return myTransposedMultiplier.multiply(left, righ);
-	}
+    Object left;
+    Object righ;
 
-	@Setup
-	public void setup() {
+    @Override
+    @Benchmark
+    public Object execute() {
+        return myTransposedMultiplier.multiply(left, righ);
+    }
 
-		contestant = BenchmarkContestant.CONTESTANTS.get(library);
+    @Setup
+    public void setup() {
 
-		myTransposedMultiplier = contestant.getTransposedMultiplier();
+        contestant = BenchmarkContestant.CONTESTANTS.get(library);
 
-		final double[][] tmpLeft = new double[dim][dim];
-		for (int i = 0; i < tmpLeft.length; i++) {
-			final double[] tmpRow = tmpLeft[i];
-			for (int j = 0; j < tmpRow.length; j++) {
-				tmpRow[j] = Math.random();
-			}
-		}
-		left = contestant.convert(tmpLeft);
+        myTransposedMultiplier = contestant.getLeftTransposedMultiplier();
 
-		final double[][] tmpRight = new double[dim][dim];
-		for (int i = 0; i < tmpRight.length; i++) {
-			final double[] tmpRow = tmpRight[i];
-			for (int j = 0; j < tmpRow.length; j++) {
-				tmpRow[j] = Math.random();
-			}
-		}
-		righ = contestant.convert(tmpRight);
-	}
+        final double[][] tmpLeft = new double[dim][dim];
+        for (int i = 0; i < tmpLeft.length; i++) {
+            final double[] tmpRow = tmpLeft[i];
+            for (int j = 0; j < tmpRow.length; j++) {
+                tmpRow[j] = Math.random();
+            }
+        }
+        left = contestant.convert(tmpLeft);
 
-	@Override
-	@TearDown(Level.Iteration)
-	public void verify() throws BenchmarkRequirementsException {
+        final double[][] tmpRight = new double[dim][dim];
+        for (int i = 0; i < tmpRight.length; i++) {
+            final double[] tmpRow = tmpRight[i];
+            for (int j = 0; j < tmpRow.length; j++) {
+                tmpRow[j] = Math.random();
+            }
+        }
+        righ = contestant.convert(tmpRight);
+    }
 
-		this.verifyStateless(myTransposedMultiplier.getClass());
+    @Override
+    @TearDown(Level.Iteration)
+    public void verify() throws BenchmarkRequirementsException {
 
-	}
+        this.verifyStateless(myTransposedMultiplier.getClass());
+
+    }
 
 }

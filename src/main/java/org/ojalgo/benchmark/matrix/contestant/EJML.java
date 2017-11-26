@@ -31,199 +31,215 @@ import org.ejml.interfaces.linsol.LinearSolver;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.EigenOps;
 import org.ojalgo.benchmark.matrix.BenchmarkContestant;
+import org.ojalgo.benchmark.matrix.Square3Multiply.MatrixMultiplier;
 
 /**
  * Efficient Java Matrix Library
  */
 public class EJML extends BenchmarkContestant<DenseMatrix64F> {
 
-	@Override
-	protected double[][] convertFrom(final DenseMatrix64F matrix) {
-		final double[][] retVal = new double[matrix.numRows][matrix.numCols];
-		for (int i = 0; i < retVal.length; i++) {
-			final double[] tmpRow = retVal[i];
-			for (int j = 0; j < tmpRow.length; j++) {
-				tmpRow[j] = matrix.get(i, j);
-			}
-		}
-		return retVal;
-	}
+    @Override
+    protected double[][] convertFrom(final DenseMatrix64F matrix) {
+        final double[][] retVal = new double[matrix.numRows][matrix.numCols];
+        for (int i = 0; i < retVal.length; i++) {
+            final double[] tmpRow = retVal[i];
+            for (int j = 0; j < tmpRow.length; j++) {
+                tmpRow[j] = matrix.get(i, j);
+            }
+        }
+        return retVal;
+    }
 
-	@Override
-	protected DenseMatrix64F convertTo(final double[][] raw) {
-		return new DenseMatrix64F(raw);
-	}
+    @Override
+    protected DenseMatrix64F convertTo(final double[][] raw) {
+        return new DenseMatrix64F(raw);
+    }
 
-	@Override
-	public BenchmarkContestant<DenseMatrix64F>.EigenDecomposer getEigenDecomposer() {
-		return new EigenDecomposer() {
+    @Override
+    public BenchmarkContestant<DenseMatrix64F>.EigenDecomposer getEigenDecomposer() {
+        return new EigenDecomposer() {
 
-			@Override
-			public DenseMatrix64F apply(final DenseMatrix64F matrix) {
+            @Override
+            public DenseMatrix64F apply(final DenseMatrix64F matrix) {
 
-				final EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(matrix.numCols, true, true);
+                final EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(matrix.numCols, true, true);
 
-				if (!DecompositionFactory.decomposeSafe(eig, matrix)) {
-					throw new RuntimeException("Decomposition failed");
-				}
+                if (!DecompositionFactory.decomposeSafe(eig, matrix)) {
+                    throw new RuntimeException("Decomposition failed");
+                }
 
-				eig.getEigenvalue(0);
-				eig.getEigenVector(0);
+                eig.getEigenvalue(0);
+                eig.getEigenVector(0);
 
-				return EigenOps.createMatrixV(eig);
+                return EigenOps.createMatrixV(eig);
 
-			}
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public GeneralSolver getGeneralSolver() {
-		return new GeneralSolver() {
+    @Override
+    public GeneralSolver getGeneralSolver() {
+        return new GeneralSolver() {
 
-			@Override
-			public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
+            @Override
+            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
 
-				final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
+                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
 
-				LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
-				// make sure the input is not modified
-				solver = new LinearSolverSafe<DenseMatrix64F>(solver);
+                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
+                // make sure the input is not modified
+                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
 
-				if (!solver.setA(body)) {
-					throw new IllegalArgumentException("Bad A");
-				}
+                if (!solver.setA(body)) {
+                    throw new IllegalArgumentException("Bad A");
+                }
 
-				solver.solve(rhs, result);
+                solver.solve(rhs, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public HermitianSolver getHermitianSolver() {
-		return new HermitianSolver() {
+    @Override
+    public HermitianSolver getHermitianSolver() {
+        return new HermitianSolver() {
 
-			@Override
-			public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
+            @Override
+            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
 
-				final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
+                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
 
-				LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
+                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
 
-				solver = new LinearSolverSafe<DenseMatrix64F>(solver);
+                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
 
-				if (!solver.setA(body)) {
-					throw new IllegalArgumentException("Bad A");
-				}
+                if (!solver.setA(body)) {
+                    throw new IllegalArgumentException("Bad A");
+                }
 
-				solver.solve(rhs, result);
+                solver.solve(rhs, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public LeastSquaresSolver getLeastSquaresSolver() {
-		return new LeastSquaresSolver() {
+    @Override
+    public LeastSquaresSolver getLeastSquaresSolver() {
+        return new LeastSquaresSolver() {
 
-			@Override
-			public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
+            @Override
+            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
 
-				final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
+                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
 
-				LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.leastSquares(body.numRows, body.numCols);
+                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.leastSquares(body.numRows, body.numCols);
 
-				solver = new LinearSolverSafe<DenseMatrix64F>(solver);
+                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
 
-				if (!solver.setA(body)) {
-					throw new IllegalArgumentException("Bad A");
-				}
+                if (!solver.setA(body)) {
+                    throw new IllegalArgumentException("Bad A");
+                }
 
-				solver.solve(rhs, result);
+                solver.solve(rhs, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public BenchmarkContestant<DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows,
-			final int numberOfColumns) {
-		return new MatrixBuilder() {
+    @Override
+    public BenchmarkContestant<DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+        return new MatrixBuilder() {
 
-			private final DenseMatrix64F myMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+            private final DenseMatrix64F myMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
 
-			public DenseMatrix64F get() {
-				return myMatrix;
-			}
+            public DenseMatrix64F get() {
+                return myMatrix;
+            }
 
-			@Override
-			public void set(final int row, final int col, final double value) {
-				myMatrix.set(row, col, value);
-			}
+            @Override
+            public void set(final int row, final int col, final double value) {
+                myMatrix.set(row, col, value);
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public MatrixMultiplier getMatrixMultiplier() {
-		return new MatrixMultiplier() {
+    @Override
+    public MatrixMultiplier<DenseMatrix64F> getMatrixMultiplier() {
+        return new MatrixMultiplier<DenseMatrix64F>() {
 
-			@Override
-			public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
+            @Override
+            public DenseMatrix64F multiply(final DenseMatrix64F left, final DenseMatrix64F right) {
 
-				final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
+                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
 
-				CommonOps.mult(left, right, result);
+                CommonOps.mult(left, right, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public BenchmarkContestant<DenseMatrix64F>.SingularDecomposer getSingularDecomposer() {
-		return new SingularDecomposer() {
+    @Override
+    public BenchmarkContestant<DenseMatrix64F>.SingularDecomposer getSingularDecomposer() {
+        return new SingularDecomposer() {
 
-			@Override
-			public DenseMatrix64F apply(final DenseMatrix64F matrix) {
+            @Override
+            public DenseMatrix64F apply(final DenseMatrix64F matrix) {
 
-				final SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(matrix.numRows,
-						matrix.numCols, true, true, false);
+                final SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(matrix.numRows, matrix.numCols, true, true, false);
 
-				if (!DecompositionFactory.decomposeSafe(svd, matrix)) {
-					throw new RuntimeException("Decomposition failed");
-				}
+                if (!DecompositionFactory.decomposeSafe(svd, matrix)) {
+                    throw new RuntimeException("Decomposition failed");
+                }
 
-				svd.getU(null, false);
-				svd.getW(null);
-				return svd.getV(null, false);
-			}
+                svd.getU(null, false);
+                svd.getW(null);
+                return svd.getV(null, false);
+            }
 
-		};
-	}
+        };
+    }
 
-	@Override
-	public TransposedMultiplier getTransposedMultiplier() {
-		return new TransposedMultiplier() {
+    @Override
+    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
+        return new LeftTransposedMultiplier() {
 
-			@Override
-			public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
+            @Override
+            public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
 
-				final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
+                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
 
-				CommonOps.multTransB(left, right, result);
+                CommonOps.multTransA(left, right, result);
 
-				return result;
-			}
+                return result;
+            }
 
-		};
-	}
+        };
+    }
+
+    @Override
+    public BenchmarkContestant<DenseMatrix64F>.RightTransposedMultiplier getRightTransposedMultiplier() {
+        return new RightTransposedMultiplier() {
+
+            @Override
+            public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
+
+                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
+
+                CommonOps.multTransB(left, right, result);
+
+                return result;
+            }
+
+        };
+    }
 }

@@ -134,6 +134,13 @@ DecomposeEigen.execute   1000     ojAlgo  thrpt    3        25,599 ±        2,0
 @State(Scope.Benchmark)
 public class DecomposeEigen extends LinearAlgebraBenchmark {
 
+    @FunctionalInterface
+    public static interface TaskDef<T> {
+
+        T decompose(final T matrix, final T right);
+
+    }
+
     public static void main(final String[] args) throws RunnerException {
         LinearAlgebraBenchmark.run(DecomposeEigen.class);
     }
