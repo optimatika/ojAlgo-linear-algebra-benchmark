@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.contestant;
+package org.ojalgo.benchmark.matrix.library;
 
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.suite.FillByMultiplying;
-import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -35,7 +35,7 @@ import no.uib.cipr.matrix.SymmDenseEVD;
 /**
  * Matrix Toolkits Java
  */
-public class MTJ extends MatrixBenchmarkContestant<Matrix> {
+public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
 
     @Override
     public DecomposeEigen.TaskDefinition<Matrix> getEigenDecomposer() {
@@ -50,6 +50,11 @@ public class MTJ extends MatrixBenchmarkContestant<Matrix> {
                 }
             }
         };
+    }
+
+    @Override
+    public MutatingBinaryOperation<Matrix, Matrix> getFillByMultiplyingOperation() {
+        return (ret, arg1, arg2) -> arg1.mult(arg2, ret);
     }
 
     @Override
@@ -119,7 +124,7 @@ public class MTJ extends MatrixBenchmarkContestant<Matrix> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<Matrix, Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final DenseMatrix myMatrix = new DenseMatrix(numberOfRows, numberOfColumns);
@@ -153,25 +158,13 @@ public class MTJ extends MatrixBenchmarkContestant<Matrix> {
     }
 
     @Override
-    public FillByMultiplying.TaskDefinition<Matrix> getMatrixMultiplier2() {
-        return new FillByMultiplying.TaskDefinition<Matrix>() {
-
-            public Matrix multiply(final Matrix product, final Matrix left, final Matrix right) {
-                left.mult(right, product);
-                return product;
-            }
-
-        };
-    }
-
-    @Override
-    public MatrixBenchmarkContestant<Matrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
+    public MatrixBenchmarkLibrary<Matrix, Matrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public MatrixBenchmarkContestant<Matrix>.SingularDecomposer getSingularDecomposer() {
+    public MatrixBenchmarkLibrary<Matrix, Matrix>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override

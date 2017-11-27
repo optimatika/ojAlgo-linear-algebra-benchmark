@@ -33,27 +33,58 @@ import org.openjdk.jmh.runner.options.ChainedOptionsBuilder;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
-public abstract class MatrixBenchmarkSuite {
+public abstract class MatrixBenchmarkOperation {
+
+    @FunctionalInterface
+    public interface MutatingBinaryOperation<I, T extends I> {
+
+        public abstract void operate(T ret, I arg1, I arg2);
+
+        @SuppressWarnings("unchecked")
+        default Object execute(final Object ret, final Object arg1, final Object arg2) {
+            this.operate((T) ret, (I) arg1, (I) arg2);
+            return ret;
+        }
+
+    }
+
+    @FunctionalInterface
+    public interface ProducingBinaryOperation<I, T extends I> {
+
+        public abstract I operate(I arg1, I arg2);
+
+        @SuppressWarnings("unchecked")
+        default Object execute(final Object arg1, final Object arg2) {
+            return this.operate((I) arg1, (I) arg2);
+        }
+
+    }
+
+    public static void run(final Class<?> clazz) throws RunnerException {
+        new Runner(MatrixBenchmarkOperation.options().include(clazz.getSimpleName()).build()).run();
+    }
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(7).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
                 .timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx6g");
     }
 
-    public static void run(final Class<?> clazz) throws RunnerException {
-        new Runner(MatrixBenchmarkSuite.options().include(clazz.getSimpleName()).build()).run();
-    }
+    protected MatrixBenchmarkLibrary<?, ?> contestant;
 
-    protected MatrixBenchmarkContestant<?> contestant;
-
-    protected MatrixBenchmarkSuite() {
+    protected MatrixBenchmarkOperation() {
         super();
     }
 
     public abstract Object execute();
 
-    protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkContestant<?> contestant) {
-        final MatrixBenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
+    /**
+     * Verify that the tested library/functionality conforms with the benchmark specifications. Annotate the
+     * implementation with <code>@TearDown(Level.Iteration)</code>
+     */
+    public abstract void verify() throws BenchmarkRequirementsException;
+
+    protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
         for (int j = 0; j < numberOfColumns; j++) {
             for (int i = 0; i < numberOfRows; i++) {
                 tmpSupplier.set(i, j, Math.random());
@@ -66,11 +97,11 @@ public abstract class MatrixBenchmarkSuite {
         return MatrixUtils.makeSPD(size).toRawCopy2D();
     }
 
-    protected final Object makeSPD(final int size, final MatrixBenchmarkContestant<?> contestant) {
+    protected final Object makeSPD(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
 
         final double[] tmpRandom = new double[size];
 
-        final MatrixBenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(size, size);
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(size, size);
 
         for (int i = 0; i < size; i++) {
 
@@ -85,12 +116,6 @@ public abstract class MatrixBenchmarkSuite {
 
         return tmpSupplier.get();
     }
-
-    /**
-     * Verify that the tested library/functionality conforms with the benchmark specifications. Annotate the
-     * implementation with <code>@TearDown(Level.Iteration)</code>
-     */
-    public abstract void verify() throws BenchmarkRequirementsException;
 
     protected void verifyStateless(final Class<?> clazz) throws BenchmarkRequirementsException {
 

@@ -19,11 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.suite;
+package org.ojalgo.benchmark.matrix.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -47,7 +47,7 @@ import org.openjdk.jmh.runner.RunnerException;
  * @author apete
  */
 @State(Scope.Benchmark)
-public class HermitianSolve extends MatrixBenchmarkSuite {
+public class HermitianSolve extends MatrixBenchmarkOperation {
 
     @FunctionalInterface
     public static interface TaskDefinition<T> {
@@ -57,7 +57,7 @@ public class HermitianSolve extends MatrixBenchmarkSuite {
     }
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkSuite.run(HermitianSolve.class);
+        MatrixBenchmarkOperation.run(HermitianSolve.class);
     }
 
     Object body;
@@ -67,7 +67,7 @@ public class HermitianSolve extends MatrixBenchmarkSuite {
     @Param({ "EJML", "MTJ", "ojAlgo" })
     public String library;
 
-    private MatrixBenchmarkContestant<?>.HermitianSolver myHermitianSolver;
+    private MatrixBenchmarkLibrary<?, ?>.HermitianSolver myHermitianSolver;
     Object rhs;
 
     @Override
@@ -79,7 +79,7 @@ public class HermitianSolve extends MatrixBenchmarkSuite {
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
+        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
 
         myHermitianSolver = contestant.getHermitianSolver();
 

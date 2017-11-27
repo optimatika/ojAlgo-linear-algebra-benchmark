@@ -19,16 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.contestant;
+package org.ojalgo.benchmark.matrix.library;
 
 import org.ojalgo.RecoverableCondition;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.suite.FillByMultiplying.TaskDefinition;
-import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
-import org.ojalgo.matrix.store.ElementsConsumer;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ojalgo.matrix.task.SolverTask;
@@ -36,7 +35,7 @@ import org.ojalgo.matrix.task.SolverTask;
 /**
  * oj! Algorithms
  */
-public class ojAlgo extends MatrixBenchmarkContestant<MatrixStore<Double>> {
+public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore> {
 
     @Override
     public DecomposeEigen.TaskDefinition<MatrixStore<Double>> getEigenDecomposer() {
@@ -50,6 +49,11 @@ public class ojAlgo extends MatrixBenchmarkContestant<MatrixStore<Double>> {
             }
 
         };
+    }
+
+    @Override
+    public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getFillByMultiplyingOperation() {
+        return (ret, arg1, arg2) -> ret.fillByMultiplying(arg1, arg2);
     }
 
     @Override
@@ -118,7 +122,7 @@ public class ojAlgo extends MatrixBenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<MatrixStore<Double>>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final PrimitiveDenseStore myMatrix = PrimitiveDenseStore.FACTORY.makeZero(numberOfRows, numberOfColumns);
@@ -154,20 +158,7 @@ public class ojAlgo extends MatrixBenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public TaskDefinition<MatrixStore<Double>> getMatrixMultiplier2() {
-        return new TaskDefinition<MatrixStore<Double>>() {
-
-            @SuppressWarnings("unchecked")
-            public MatrixStore<Double> multiply(final MatrixStore<Double> product, final MatrixStore<Double> left, final MatrixStore<Double> right) {
-                ((ElementsConsumer<Double>) product).fillByMultiplying(left, right);
-                return product;
-            }
-
-        };
-    }
-
-    @Override
-    public MatrixBenchmarkContestant<MatrixStore<Double>>.RightTransposedMultiplier getRightTransposedMultiplier() {
+    public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.RightTransposedMultiplier getRightTransposedMultiplier() {
         return new RightTransposedMultiplier() {
 
             @Override
@@ -184,7 +175,7 @@ public class ojAlgo extends MatrixBenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<MatrixStore<Double>>.SingularDecomposer getSingularDecomposer() {
+    public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override

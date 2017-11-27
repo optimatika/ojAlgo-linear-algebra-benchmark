@@ -19,11 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.suite;
+package org.ojalgo.benchmark.matrix.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -80,15 +80,46 @@ SquareMultiplyTransposed.execute   1000        MTJ  thrpt    3        1430,790 �
 SquareMultiplyTransposed.execute   1000     ojAlgo  thrpt    3         397,112 ±       846,492  ops/min
  * </pre>
  *
- * Mac Pro: 2016-06-13
+ * MacBook Pro: 2017-11-26
  *
  * <pre>
+Result "org.ojalgo.benchmark.matrix.SquareMultiplyRightTransposed.execute":
+  202.915 ±(99.9%) 27.347 ops/min [Average]
+  (min, avg, max) = (201.805, 202.915, 204.620), stdev = 1.499
+  CI (99.9%): [175.569, 230.262] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:03:15
+
+Benchmark                              (dim)  (library)   Mode  Cnt           Score           Error    Units
+SquareMultiplyRightTransposed.execute      2       EJML  thrpt    3  1724060092.011 ±  65396510.907  ops/min
+SquareMultiplyRightTransposed.execute      2     ojAlgo  thrpt    3   704169517.962 ± 142318323.525  ops/min
+SquareMultiplyRightTransposed.execute      3       EJML  thrpt    3  1033590631.137 ± 165010509.941  ops/min
+SquareMultiplyRightTransposed.execute      3     ojAlgo  thrpt    3   423638972.807 ±  34002247.889  ops/min
+SquareMultiplyRightTransposed.execute      4       EJML  thrpt    3   603379823.687 ± 166353257.136  ops/min
+SquareMultiplyRightTransposed.execute      4     ojAlgo  thrpt    3   262935341.732 ±  59029463.176  ops/min
+SquareMultiplyRightTransposed.execute      5       EJML  thrpt    3   345062237.030 ±  95645123.500  ops/min
+SquareMultiplyRightTransposed.execute      5     ojAlgo  thrpt    3   166567211.303 ±  36911095.893  ops/min
+SquareMultiplyRightTransposed.execute     10       EJML  thrpt    3    58441365.638 ±   2157613.614  ops/min
+SquareMultiplyRightTransposed.execute     10     ojAlgo  thrpt    3     6355299.394 ±   1169788.575  ops/min
+SquareMultiplyRightTransposed.execute     20       EJML  thrpt    3     8890660.471 ±   3108236.735  ops/min
+SquareMultiplyRightTransposed.execute     20     ojAlgo  thrpt    3     4558602.079 ±    979922.176  ops/min
+SquareMultiplyRightTransposed.execute     50       EJML  thrpt    3      688228.506 ±     93275.849  ops/min
+SquareMultiplyRightTransposed.execute     50     ojAlgo  thrpt    3      547683.165 ±    214203.203  ops/min
+SquareMultiplyRightTransposed.execute    100       EJML  thrpt    3       89363.459 ±     13461.607  ops/min
+SquareMultiplyRightTransposed.execute    100     ojAlgo  thrpt    3      126474.843 ±     12438.003  ops/min
+SquareMultiplyRightTransposed.execute    200       EJML  thrpt    3       12783.384 ±      1593.165  ops/min
+SquareMultiplyRightTransposed.execute    200     ojAlgo  thrpt    3       21000.720 ±      7863.501  ops/min
+SquareMultiplyRightTransposed.execute    500       EJML  thrpt    3         798.284 ±       124.370  ops/min
+SquareMultiplyRightTransposed.execute    500     ojAlgo  thrpt    3        1539.304 ±       299.592  ops/min
+SquareMultiplyRightTransposed.execute   1000       EJML  thrpt    3          73.208 ±        30.899  ops/min
+SquareMultiplyRightTransposed.execute   1000     ojAlgo  thrpt    3         202.915 ±        27.347  ops/min
  * </pre>
  *
  * @author apete
  */
 @State(Scope.Benchmark)
-public class SquareMultiplyLeftTransposed extends MatrixBenchmarkSuite {
+public class SquareMultiplyRightTransposed extends MatrixBenchmarkOperation {
 
     @FunctionalInterface
     public static interface TaskDefinition<T> {
@@ -98,17 +129,19 @@ public class SquareMultiplyLeftTransposed extends MatrixBenchmarkSuite {
     }
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkSuite.run(SquareMultiplyLeftTransposed.class);
+        MatrixBenchmarkOperation.run(SquareMultiplyRightTransposed.class);
     }
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000"/* , "2000", "5000", "10000" */ })
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096",
+            "5000", "8192", "10000" })
     public int dim;
-    Object left;
 
-    @Param({ "EJML", "MTJ", "ojAlgo" })
+    @Param({ "EJML", "ojAlgo" })
     public String library;
 
-    private MatrixBenchmarkContestant<?>.LeftTransposedMultiplier myTransposedMultiplier;
+    private MatrixBenchmarkLibrary<?, ?>.LeftTransposedMultiplier myTransposedMultiplier;
+
+    Object left;
     Object righ;
 
     @Override
@@ -120,7 +153,7 @@ public class SquareMultiplyLeftTransposed extends MatrixBenchmarkSuite {
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
+        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
 
         myTransposedMultiplier = contestant.getLeftTransposedMultiplier();
 

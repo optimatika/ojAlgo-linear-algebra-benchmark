@@ -19,11 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.suite;
+package org.ojalgo.benchmark.matrix.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
@@ -131,7 +131,7 @@ DecomposeSingular.execute   1000     ojAlgo  thrpt    3         9.032 ±        
  * @author apete
  */
 @State(Scope.Benchmark)
-public class DecomposeSingular extends MatrixBenchmarkSuite {
+public class DecomposeSingular extends MatrixBenchmarkOperation {
 
     @FunctionalInterface
     public static interface TaskDefinition<T> {
@@ -141,7 +141,7 @@ public class DecomposeSingular extends MatrixBenchmarkSuite {
     }
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkSuite.run(DecomposeSingular.class);
+        MatrixBenchmarkOperation.run(DecomposeSingular.class);
     }
 
     @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
@@ -152,7 +152,7 @@ public class DecomposeSingular extends MatrixBenchmarkSuite {
 
     Object matrix;
 
-    private MatrixBenchmarkContestant<?>.SingularDecomposer myDecomposer;
+    private MatrixBenchmarkLibrary<?, ?>.SingularDecomposer myDecomposer;
 
     @Override
     @Benchmark
@@ -163,7 +163,7 @@ public class DecomposeSingular extends MatrixBenchmarkSuite {
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
+        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
 
         matrix = contestant.convert(this.makeSPD(dim));
 

@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.contestant;
+package org.ojalgo.benchmark.matrix.library;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.CholeskyDecomposition;
@@ -28,15 +28,15 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.QRDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.suite.FillByMultiplying;
-import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
 
 /**
  * Apache Commons Math
  */
-public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
+public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
 
     @Override
     public DecomposeEigen.TaskDefinition<RealMatrix> getEigenDecomposer() {
@@ -52,7 +52,12 @@ public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<RealMatrix>.GeneralSolver getGeneralSolver() {
+    public MutatingBinaryOperation<RealMatrix, RealMatrix> getFillByMultiplyingOperation() {
+        return (ret, arg1, arg2) -> ret.setSubMatrix(arg1.multiply(arg2).getData(), 0, 0);
+    }
+
+    @Override
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.GeneralSolver getGeneralSolver() {
         return new GeneralSolver() {
 
             @Override
@@ -66,7 +71,7 @@ public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<RealMatrix>.HermitianSolver getHermitianSolver() {
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.HermitianSolver getHermitianSolver() {
         return new HermitianSolver() {
 
             @Override
@@ -81,7 +86,7 @@ public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<RealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
         return new LeastSquaresSolver() {
 
             @Override
@@ -96,7 +101,7 @@ public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<RealMatrix>.LeftTransposedMultiplier getLeftTransposedMultiplier() {
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.LeftTransposedMultiplier getLeftTransposedMultiplier() {
         return new LeftTransposedMultiplier() {
 
             @Override
@@ -108,7 +113,7 @@ public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final Array2DRowRealMatrix myMatrix = new Array2DRowRealMatrix(numberOfRows, numberOfColumns);
@@ -139,13 +144,13 @@ public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<RealMatrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public MatrixBenchmarkContestant<RealMatrix>.SingularDecomposer getSingularDecomposer() {
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override
@@ -171,18 +176,6 @@ public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
     @Override
     protected RealMatrix convertTo(final double[][] raw) {
         return new Array2DRowRealMatrix(raw);
-    }
-
-    @Override
-    public FillByMultiplying.TaskDefinition<RealMatrix> getMatrixMultiplier2() {
-        return new FillByMultiplying.TaskDefinition<RealMatrix>() {
-
-            public RealMatrix multiply(final RealMatrix product, final RealMatrix left, final RealMatrix right) {
-                product.setSubMatrix(left.multiply(right).getData(), 0, 0);
-                return product;
-            }
-
-        };
     }
 
 }

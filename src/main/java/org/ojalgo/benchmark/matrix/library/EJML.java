@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.contestant;
+package org.ojalgo.benchmark.matrix.library;
 
 import org.ejml.alg.dense.linsol.LinearSolverSafe;
 import org.ejml.data.DenseMatrix64F;
@@ -30,15 +30,15 @@ import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.EigenOps;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.suite.FillByMultiplying;
-import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
 
 /**
  * Efficient Java Matrix Library
  */
-public class EJML extends MatrixBenchmarkContestant<DenseMatrix64F> {
+public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F> {
 
     @Override
     public DecomposeEigen.TaskDefinition<DenseMatrix64F> getEigenDecomposer() {
@@ -61,6 +61,11 @@ public class EJML extends MatrixBenchmarkContestant<DenseMatrix64F> {
             }
 
         };
+    }
+
+    @Override
+    public MutatingBinaryOperation<DenseMatrix64F, DenseMatrix64F> getFillByMultiplyingOperation() {
+        return (ret, arg1, arg2) -> CommonOps.multAdd(arg1, arg2, ret);
     }
 
     @Override
@@ -156,7 +161,7 @@ public class EJML extends MatrixBenchmarkContestant<DenseMatrix64F> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final DenseMatrix64F myMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
@@ -192,7 +197,7 @@ public class EJML extends MatrixBenchmarkContestant<DenseMatrix64F> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<DenseMatrix64F>.RightTransposedMultiplier getRightTransposedMultiplier() {
+    public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.RightTransposedMultiplier getRightTransposedMultiplier() {
         return new RightTransposedMultiplier() {
 
             @Override
@@ -209,7 +214,7 @@ public class EJML extends MatrixBenchmarkContestant<DenseMatrix64F> {
     }
 
     @Override
-    public MatrixBenchmarkContestant<DenseMatrix64F>.SingularDecomposer getSingularDecomposer() {
+    public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override
@@ -244,18 +249,6 @@ public class EJML extends MatrixBenchmarkContestant<DenseMatrix64F> {
     @Override
     protected DenseMatrix64F convertTo(final double[][] raw) {
         return new DenseMatrix64F(raw);
-    }
-
-    @Override
-    public FillByMultiplying.TaskDefinition<DenseMatrix64F> getMatrixMultiplier2() {
-        return new FillByMultiplying.TaskDefinition<DenseMatrix64F>() {
-
-            public DenseMatrix64F multiply(final DenseMatrix64F product, final DenseMatrix64F left, final DenseMatrix64F right) {
-                CommonOps.multAdd(left, right, product);
-                return product;
-            }
-
-        };
     }
 
 }

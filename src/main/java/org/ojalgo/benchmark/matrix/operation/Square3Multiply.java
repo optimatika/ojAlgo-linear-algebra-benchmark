@@ -19,11 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.suite;
+package org.ojalgo.benchmark.matrix.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -322,7 +322,7 @@ Square3Multiply.execute   2000        MTJ  thrpt    3         317,437 ±        
  * @author apete
  */
 @State(Scope.Benchmark)
-public class Square3Multiply extends MatrixBenchmarkSuite {
+public class Square3Multiply extends MatrixBenchmarkOperation {
 
     @FunctionalInterface
     public static interface TaskDefinition<T> {
@@ -332,7 +332,7 @@ public class Square3Multiply extends MatrixBenchmarkSuite {
     }
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkSuite.run(Square3Multiply.class);
+        MatrixBenchmarkOperation.run(Square3Multiply.class);
     }
 
     @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024",
@@ -358,7 +358,7 @@ public class Square3Multiply extends MatrixBenchmarkSuite {
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
+        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
 
         myPlainMultiplier = contestant.getMatrixMultiplier();
 
