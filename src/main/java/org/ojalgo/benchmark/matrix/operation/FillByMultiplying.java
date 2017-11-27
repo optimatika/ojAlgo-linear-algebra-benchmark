@@ -38,91 +38,67 @@ import org.openjdk.jmh.runner.RunnerException;
  * <h2>2017-11-27</h2>
  *
  * <pre>
-Result "org.ojalgo.benchmark.matrix.suite.FillByMultiplying.execute":
-  1705,970 ±(99.9%) 1661,444 ops/min [Average]
-  (min, avg, max) = (1601,549, 1705,970, 1768,938), stdev = 91,069
-  CI (99.9%): [44,526, 3367,414] (assumes normal distribution)
+Result "org.ojalgo.benchmark.matrix.operation.FillByMultiplying.execute":
+  226,860 ±(99.9%) 10,931 ops/min [Average]
+  (min, avg, max) = (226,171, 226,860, 227,258), stdev = 0,599
+  CI (99.9%): [215,929, 237,791] (assumes normal distribution)
 
 
-# Run complete. Total time: 00:16:41
+# Run complete. Total time: 00:46:51
 
-Benchmark                  (dim)  (library)   Mode  Cnt           Score          Error    Units
-FillByMultiplying.execute      1        ACM  thrpt    3   133509876,393 ± 11416322,389  ops/min
-FillByMultiplying.execute      1       EJML  thrpt    3  3973998391,089 ± 56628908,712  ops/min
-FillByMultiplying.execute      1     ojAlgo  thrpt    3  2335453142,903 ± 11270791,836  ops/min
-FillByMultiplying.execute      1        MTJ  thrpt    3    58619282,070 ±  9016646,201  ops/min
-FillByMultiplying.execute      2        ACM  thrpt    3    82091571,157 ±  9912227,323  ops/min
-FillByMultiplying.execute      2       EJML  thrpt    3  1397927321,639 ± 13027030,155  ops/min
-FillByMultiplying.execute      2     ojAlgo  thrpt    3  2189453160,090 ± 25126812,861  ops/min
-FillByMultiplying.execute      2        MTJ  thrpt    3    54292162,644 ± 25429554,710  ops/min
-FillByMultiplying.execute      3        ACM  thrpt    3    59293729,289 ±  5521067,113  ops/min
-FillByMultiplying.execute      3       EJML  thrpt    3   619381670,038 ±  3534161,085  ops/min
-FillByMultiplying.execute      3     ojAlgo  thrpt    3  1262196535,636 ±  5668832,891  ops/min
-FillByMultiplying.execute      3        MTJ  thrpt    3    53248273,717 ± 21962096,949  ops/min
-FillByMultiplying.execute      4        ACM  thrpt    3    44857961,834 ± 17684802,887  ops/min
-FillByMultiplying.execute      4       EJML  thrpt    3   285050407,384 ±  3198931,507  ops/min
-FillByMultiplying.execute      4     ojAlgo  thrpt    3   714832013,074 ± 42423339,132  ops/min
-FillByMultiplying.execute      4        MTJ  thrpt    3    54005662,275 ± 16200949,931  ops/min
-FillByMultiplying.execute      5        ACM  thrpt    3    34212932,590 ±   793359,330  ops/min
-FillByMultiplying.execute      5       EJML  thrpt    3   197697522,702 ± 19329928,027  ops/min
-FillByMultiplying.execute      5     ojAlgo  thrpt    3   429006864,713 ±  1956560,060  ops/min
-FillByMultiplying.execute      5        MTJ  thrpt    3    49072779,752 ± 19717279,955  ops/min
-FillByMultiplying.execute      8        ACM  thrpt    3    17674052,541 ±   287104,069  ops/min
-FillByMultiplying.execute      8       EJML  thrpt    3    60466427,142 ± 18110004,860  ops/min
-FillByMultiplying.execute      8     ojAlgo  thrpt    3   100155300,735 ±  1650859,694  ops/min
-FillByMultiplying.execute      8        MTJ  thrpt    3    46003966,819 ± 10814171,351  ops/min
-FillByMultiplying.execute     10        ACM  thrpt    3    12384643,884 ±   218927,248  ops/min
-FillByMultiplying.execute     10       EJML  thrpt    3    34675525,519 ±  1737458,173  ops/min
-FillByMultiplying.execute     10     ojAlgo  thrpt    3    52263689,961 ±   679568,437  ops/min
-FillByMultiplying.execute     10        MTJ  thrpt    3    38972677,430 ±  4627255,276  ops/min
-FillByMultiplying.execute     16        ACM  thrpt    3     4920984,968 ±    50625,889  ops/min
-FillByMultiplying.execute     16       EJML  thrpt    3     6388069,320 ±    87738,426  ops/min
-FillByMultiplying.execute     16     ojAlgo  thrpt    3     7339705,297 ±   916288,582  ops/min
-FillByMultiplying.execute     16        MTJ  thrpt    3    14930494,711 ±  2071844,130  ops/min
-FillByMultiplying.execute     20        ACM  thrpt    3     2872316,671 ±  1198022,066  ops/min
-FillByMultiplying.execute     20       EJML  thrpt    3     4991384,834 ±    68635,816  ops/min
-FillByMultiplying.execute     20     ojAlgo  thrpt    3     5337023,103 ±   884462,268  ops/min
-FillByMultiplying.execute     20        MTJ  thrpt    3    11639719,403 ±  1765750,350  ops/min
-FillByMultiplying.execute     32        ACM  thrpt    3      877934,913 ±    22912,642  ops/min
-FillByMultiplying.execute     32       EJML  thrpt    3      941178,299 ±     6854,662  ops/min
-FillByMultiplying.execute     32     ojAlgo  thrpt    3     1571106,836 ±     9231,194  ops/min
-FillByMultiplying.execute     32        MTJ  thrpt    3     5079786,383 ±    82100,431  ops/min
-FillByMultiplying.execute     50        ACM  thrpt    3      258285,215 ±    24159,582  ops/min
-FillByMultiplying.execute     50       EJML  thrpt    3      381063,824 ±  1149112,384  ops/min
-FillByMultiplying.execute     50     ojAlgo  thrpt    3      586132,439 ±   421377,519  ops/min
-FillByMultiplying.execute     50        MTJ  thrpt    3     1658285,710 ±    30088,761  ops/min
-FillByMultiplying.execute     64        ACM  thrpt    3      124717,588 ±     5886,222  ops/min
-FillByMultiplying.execute     64       EJML  thrpt    3      126349,373 ±     1392,042  ops/min
-FillByMultiplying.execute     64     ojAlgo  thrpt    3      409154,245 ±     2393,577  ops/min
-FillByMultiplying.execute     64        MTJ  thrpt    3      872841,200 ±    20942,697  ops/min
-FillByMultiplying.execute    100        ACM  thrpt    3       30694,992 ±     2789,816  ops/min
-FillByMultiplying.execute    100       EJML  thrpt    3       55743,930 ±     1248,767  ops/min
-FillByMultiplying.execute    100     ojAlgo  thrpt    3      132455,310 ±    14064,157  ops/min
-FillByMultiplying.execute    100        MTJ  thrpt    3      241666,397 ±      904,960  ops/min
-FillByMultiplying.execute    128        ACM  thrpt    3       15560,081 ±     3922,615  ops/min
-FillByMultiplying.execute    128       EJML  thrpt    3       27243,681 ±      275,621  ops/min
-FillByMultiplying.execute    128     ojAlgo  thrpt    3       96741,033 ±    18075,344  ops/min
-FillByMultiplying.execute    128        MTJ  thrpt    3      242589,084 ±    22161,818  ops/min
-FillByMultiplying.execute    200        ACM  thrpt    3        2604,684 ±      306,563  ops/min
-FillByMultiplying.execute    200       EJML  thrpt    3        6791,938 ±      176,233  ops/min
-FillByMultiplying.execute    200     ojAlgo  thrpt    3       39135,537 ±     1922,100  ops/min
-FillByMultiplying.execute    200        MTJ  thrpt    3      115530,796 ±      888,664  ops/min
-FillByMultiplying.execute    256        ACM  thrpt    3        1051,977 ±       10,153  ops/min
-FillByMultiplying.execute    256       EJML  thrpt    3        3429,855 ±       24,040  ops/min
-FillByMultiplying.execute    256     ojAlgo  thrpt    3       20627,758 ±     1713,292  ops/min
-FillByMultiplying.execute    256        MTJ  thrpt    3       76085,155 ±     2941,512  ops/min
-FillByMultiplying.execute    500        ACM  thrpt    3          54,016 ±        2,738  ops/min
-FillByMultiplying.execute    500       EJML  thrpt    3         454,829 ±        1,987  ops/min
-FillByMultiplying.execute    500     ojAlgo  thrpt    3        2909,490 ±      319,740  ops/min
-FillByMultiplying.execute    500        MTJ  thrpt    3       12198,915 ±     1078,807  ops/min
-FillByMultiplying.execute    512        ACM  thrpt    3          44,473 ±        0,649  ops/min
-FillByMultiplying.execute    512       EJML  thrpt    3         428,077 ±        0,664  ops/min
-FillByMultiplying.execute    512     ojAlgo  thrpt    3        2669,563 ±     1415,115  ops/min
-FillByMultiplying.execute    512        MTJ  thrpt    3       11456,405 ±      222,816  ops/min
-FillByMultiplying.execute   1000        ACM  thrpt    3           3,268 ±        0,407  ops/min
-FillByMultiplying.execute   1000       EJML  thrpt    3          48,963 ±        3,978  ops/min
-FillByMultiplying.execute   1000     ojAlgo  thrpt    3         283,759 ±       33,892  ops/min
-FillByMultiplying.execute   1000        MTJ  thrpt    3        1705,970 ±     1661,444  ops/min
+Benchmark                  (dim)  (library)   Mode  Cnt           Score           Error    Units
+FillByMultiplying.execute      1        ACM  thrpt    3   130195832,553 ±  50610258,368  ops/min
+FillByMultiplying.execute      1       EJML  thrpt    3  3567745521,436 ±  73164059,367  ops/min
+FillByMultiplying.execute      1     ojAlgo  thrpt    3  2330664719,350 ± 178003415,027  ops/min
+FillByMultiplying.execute      1        MTJ  thrpt    3    57809662,012 ±   2857348,872  ops/min
+FillByMultiplying.execute      2        ACM  thrpt    3    84175478,404 ±   7382748,938  ops/min
+FillByMultiplying.execute      2       EJML  thrpt    3  1341948087,160 ± 199313175,158  ops/min
+FillByMultiplying.execute      2     ojAlgo  thrpt    3  2073852684,219 ±  42451497,358  ops/min
+FillByMultiplying.execute      2        MTJ  thrpt    3    55968751,624 ±  12911684,175  ops/min
+FillByMultiplying.execute      3        ACM  thrpt    3    60546866,100 ±  28851220,347  ops/min
+FillByMultiplying.execute      3       EJML  thrpt    3   597799471,156 ±  18580426,922  ops/min
+FillByMultiplying.execute      3     ojAlgo  thrpt    3  1212452366,762 ±  15728306,773  ops/min
+FillByMultiplying.execute      3        MTJ  thrpt    3    51035077,114 ±  25007520,075  ops/min
+FillByMultiplying.execute      4        ACM  thrpt    3    44924598,952 ±   1674854,365  ops/min
+FillByMultiplying.execute      4       EJML  thrpt    3   278452788,436 ±   6461193,770  ops/min
+FillByMultiplying.execute      4     ojAlgo  thrpt    3   730889977,524 ±   6893044,622  ops/min
+FillByMultiplying.execute      4        MTJ  thrpt    3    55611011,428 ±   7590705,782  ops/min
+FillByMultiplying.execute      5        ACM  thrpt    3    34699588,705 ±   1191620,112  ops/min
+FillByMultiplying.execute      5       EJML  thrpt    3   197794544,217 ±   6448163,668  ops/min
+FillByMultiplying.execute      5     ojAlgo  thrpt    3   421946772,062 ±   6595428,946  ops/min
+FillByMultiplying.execute      5        MTJ  thrpt    3    48389935,417 ±  18152393,151  ops/min
+FillByMultiplying.execute     10        ACM  thrpt    3    12446763,075 ±    262512,802  ops/min
+FillByMultiplying.execute     10       EJML  thrpt    3    35974364,514 ±   2385307,002  ops/min
+FillByMultiplying.execute     10     ojAlgo  thrpt    3    52179128,614 ±    761543,257  ops/min
+FillByMultiplying.execute     10        MTJ  thrpt    3    38863389,966 ±    714186,806  ops/min
+FillByMultiplying.execute     20        ACM  thrpt    3     2966439,671 ±     92275,128  ops/min
+FillByMultiplying.execute     20       EJML  thrpt    3     3270871,129 ±    322986,009  ops/min
+FillByMultiplying.execute     20     ojAlgo  thrpt    3     5240271,628 ±    605556,927  ops/min
+FillByMultiplying.execute     20        MTJ  thrpt    3    11815616,956 ±   1167496,177  ops/min
+FillByMultiplying.execute     50        ACM  thrpt    3      256733,284 ±     54185,254  ops/min
+FillByMultiplying.execute     50       EJML  thrpt    3      265766,674 ±      6461,436  ops/min
+FillByMultiplying.execute     50     ojAlgo  thrpt    3      567630,639 ±     40260,273  ops/min
+FillByMultiplying.execute     50        MTJ  thrpt    3     1659459,258 ±     55708,319  ops/min
+FillByMultiplying.execute    100        ACM  thrpt    3       29866,013 ±     15976,452  ops/min
+FillByMultiplying.execute    100       EJML  thrpt    3       55895,563 ±      1702,350  ops/min
+FillByMultiplying.execute    100     ojAlgo  thrpt    3      133874,177 ±     14503,649  ops/min
+FillByMultiplying.execute    100        MTJ  thrpt    3      240955,716 ±      7425,468  ops/min
+FillByMultiplying.execute    200        ACM  thrpt    3        2655,788 ±       169,604  ops/min
+FillByMultiplying.execute    200       EJML  thrpt    3        6834,055 ±       208,417  ops/min
+FillByMultiplying.execute    200     ojAlgo  thrpt    3       36004,149 ±     23019,248  ops/min
+FillByMultiplying.execute    200        MTJ  thrpt    3      120139,780 ±      6117,772  ops/min
+FillByMultiplying.execute    500        ACM  thrpt    3          46,177 ±         3,203  ops/min
+FillByMultiplying.execute    500       EJML  thrpt    3         448,310 ±       108,075  ops/min
+FillByMultiplying.execute    500     ojAlgo  thrpt    3        2701,616 ±        43,445  ops/min
+FillByMultiplying.execute    500        MTJ  thrpt    3        8971,591 ±       761,164  ops/min
+FillByMultiplying.execute   1000        ACM  thrpt    3           3,456 ±         0,203  ops/min
+FillByMultiplying.execute   1000       EJML  thrpt    3          47,777 ±         9,075  ops/min
+FillByMultiplying.execute   1000     ojAlgo  thrpt    3         263,610 ±        35,152  ops/min
+FillByMultiplying.execute   1000        MTJ  thrpt    3        1316,516 ±       487,116  ops/min
+FillByMultiplying.execute   2000        ACM  thrpt    3           0,308 ±         0,004  ops/min
+FillByMultiplying.execute   2000       EJML  thrpt    3           5,390 ±         1,009  ops/min
+FillByMultiplying.execute   2000     ojAlgo  thrpt    3          14,286 ±         1,082  ops/min
+FillByMultiplying.execute   2000        MTJ  thrpt    3         226,860 ±        10,931  ops/min
  * </pre>
  *
  * @author apete
