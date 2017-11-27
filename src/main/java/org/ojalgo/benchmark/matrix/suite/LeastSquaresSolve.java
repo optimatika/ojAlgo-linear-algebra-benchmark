@@ -19,8 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix;
+package org.ojalgo.benchmark.matrix.suite;
 
+import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -80,48 +83,54 @@ import org.openjdk.jmh.runner.RunnerException;
  * @author apete
  */
 @State(Scope.Benchmark)
-public class LeastSquaresSolve extends LinearAlgebraBenchmark {
+public class LeastSquaresSolve extends MatrixBenchmarkSuite {
 
-	public static void main(final String[] args) throws RunnerException {
-		LinearAlgebraBenchmark.run(LeastSquaresSolve.class);
-	}
+    @FunctionalInterface
+    public static interface TaskDefinition<T> {
 
-	Object body;
-	@Param({ "2", "3", "4", "5"/*
-								 * , "10", "20", "50", "100", "200", "500",
-								 * "1000" , "2000", "5000", "10000"
-								 */ })
-	public int dim;
+        int doThThing();
 
-	@Param({ "EJML", "MTJ", "ojAlgo" })
-	public String library;
+    }
 
-	private BenchmarkContestant<?>.LeastSquaresSolver myLeastSquaresSolver;
-	Object rhs;
+    public static void main(final String[] args) throws RunnerException {
+        MatrixBenchmarkSuite.run(LeastSquaresSolve.class);
+    }
 
-	@Override
-	@Benchmark
-	public Object execute() {
-		return myLeastSquaresSolver.solve(body, rhs);
-	}
+    Object body;
+    @Param({ "2", "3", "4", "5"/*
+                                * , "10", "20", "50", "100", "200", "500", "1000" , "2000", "5000", "10000"
+                                */ })
+    public int dim;
 
-	@Setup
-	public void setup() {
+    @Param({ "EJML", "MTJ", "ojAlgo" })
+    public String library;
 
-		contestant = BenchmarkContestant.CONTESTANTS.get(library);
+    private MatrixBenchmarkContestant<?>.LeastSquaresSolver myLeastSquaresSolver;
+    Object rhs;
 
-		myLeastSquaresSolver = contestant.getLeastSquaresSolver();
+    @Override
+    @Benchmark
+    public Object execute() {
+        return myLeastSquaresSolver.solve(body, rhs);
+    }
 
-		body = this.makeRandom(dim + dim, dim, contestant);
-		rhs = this.makeRandom(dim + dim, 1, contestant);
-	}
+    @Setup
+    public void setup() {
 
-	@Override
-	@TearDown(Level.Iteration)
-	public void verify() throws BenchmarkRequirementsException {
+        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
 
-		this.verifyStateless(myLeastSquaresSolver.getClass());
+        myLeastSquaresSolver = contestant.getLeastSquaresSolver();
 
-	}
+        body = this.makeRandom(dim + dim, dim, contestant);
+        rhs = this.makeRandom(dim + dim, 1, contestant);
+    }
+
+    @Override
+    @TearDown(Level.Iteration)
+    public void verify() throws BenchmarkRequirementsException {
+
+        this.verifyStateless(myLeastSquaresSolver.getClass());
+
+    }
 
 }

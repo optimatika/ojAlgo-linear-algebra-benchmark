@@ -21,8 +21,10 @@
  */
 package org.ojalgo.benchmark.matrix.contestant;
 
-import org.ojalgo.benchmark.matrix.BenchmarkContestant;
-import org.ojalgo.benchmark.matrix.Square3Multiply.MatrixMultiplier;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
+import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.suite.FillByMultiplying;
+import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -33,31 +35,14 @@ import no.uib.cipr.matrix.SymmDenseEVD;
 /**
  * Matrix Toolkits Java
  */
-public class MTJ extends BenchmarkContestant<Matrix> {
+public class MTJ extends MatrixBenchmarkContestant<Matrix> {
 
     @Override
-    protected double[][] convertFrom(final Matrix matrix) {
-        final double[][] retVal = new double[matrix.numRows()][matrix.numColumns()];
-        for (int i = 0; i < retVal.length; i++) {
-            final double[] tmpRow = retVal[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = matrix.get(i, j);
-            }
-        }
-        return retVal;
-    }
-
-    @Override
-    protected Matrix convertTo(final double[][] raw) {
-        return new DenseMatrix(raw);
-    }
-
-    @Override
-    public BenchmarkContestant<Matrix>.EigenDecomposer getEigenDecomposer() {
-        return new EigenDecomposer() {
+    public DecomposeEigen.TaskDefinition<Matrix> getEigenDecomposer() {
+        return new DecomposeEigen.TaskDefinition<Matrix>() {
 
             @Override
-            public Matrix apply(final Matrix matrix) {
+            public Matrix decompose(final Matrix matrix) {
                 try {
                     return SymmDenseEVD.factorize(matrix).getEigenvectors();
                 } catch (final NotConvergedException nce) {
@@ -119,7 +104,22 @@ public class MTJ extends BenchmarkContestant<Matrix> {
     }
 
     @Override
-    public BenchmarkContestant<Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
+        return new LeftTransposedMultiplier() {
+
+            @Override
+            public Matrix apply(final Matrix left, final Matrix right) {
+
+                final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
+
+                return left.transBmult(right, retVal);
+            }
+
+        };
+    }
+
+    @Override
+    public MatrixBenchmarkContestant<Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final DenseMatrix myMatrix = new DenseMatrix(numberOfRows, numberOfColumns);
@@ -129,16 +129,17 @@ public class MTJ extends BenchmarkContestant<Matrix> {
             }
 
             @Override
-            public void set(final int row, final int col, final double value) {
+            public MatrixBuilder set(final int row, final int col, final double value) {
                 myMatrix.set(row, col, value);
+                return this;
             }
 
         };
     }
 
     @Override
-    public MatrixMultiplier<Matrix> getMatrixMultiplier() {
-        return new MatrixMultiplier<Matrix>() {
+    public Square3Multiply.TaskDefinition<Matrix> getMatrixMultiplier() {
+        return new Square3Multiply.TaskDefinition<Matrix>() {
 
             @Override
             public Matrix multiply(final Matrix left, final Matrix right) {
@@ -152,7 +153,25 @@ public class MTJ extends BenchmarkContestant<Matrix> {
     }
 
     @Override
-    public BenchmarkContestant<Matrix>.SingularDecomposer getSingularDecomposer() {
+    public FillByMultiplying.TaskDefinition<Matrix> getMatrixMultiplier2() {
+        return new FillByMultiplying.TaskDefinition<Matrix>() {
+
+            public Matrix multiply(final Matrix product, final Matrix left, final Matrix right) {
+                left.mult(right, product);
+                return product;
+            }
+
+        };
+    }
+
+    @Override
+    public MatrixBenchmarkContestant<Matrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public MatrixBenchmarkContestant<Matrix>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override
@@ -183,24 +202,20 @@ public class MTJ extends BenchmarkContestant<Matrix> {
     }
 
     @Override
-    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
-        return new LeftTransposedMultiplier() {
-
-            @Override
-            public Matrix apply(final Matrix left, final Matrix right) {
-
-                final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
-
-                return left.transBmult(right, retVal);
+    protected double[][] convertFrom(final Matrix matrix) {
+        final double[][] retVal = new double[matrix.numRows()][matrix.numColumns()];
+        for (int i = 0; i < retVal.length; i++) {
+            final double[] tmpRow = retVal[i];
+            for (int j = 0; j < tmpRow.length; j++) {
+                tmpRow[j] = matrix.get(i, j);
             }
-
-        };
+        }
+        return retVal;
     }
 
     @Override
-    public BenchmarkContestant<Matrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
-        // TODO Auto-generated method stub
-        return null;
+    protected Matrix convertTo(final double[][] raw) {
+        return new DenseMatrix(raw);
     }
 
 }

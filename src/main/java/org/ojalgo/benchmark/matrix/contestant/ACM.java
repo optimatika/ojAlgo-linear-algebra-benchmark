@@ -28,30 +28,21 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.QRDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
-import org.ojalgo.benchmark.matrix.BenchmarkContestant;
-import org.ojalgo.benchmark.matrix.Square3Multiply;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
+import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.suite.FillByMultiplying;
+import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
 
 /**
  * Apache Commons Math
  */
-public class ACM extends BenchmarkContestant<RealMatrix> {
+public class ACM extends MatrixBenchmarkContestant<RealMatrix> {
 
     @Override
-    protected double[][] convertFrom(final RealMatrix matrix) {
-        return matrix.getData();
-    }
+    public DecomposeEigen.TaskDefinition<RealMatrix> getEigenDecomposer() {
+        return new DecomposeEigen.TaskDefinition<RealMatrix>() {
 
-    @Override
-    protected RealMatrix convertTo(final double[][] raw) {
-        return new Array2DRowRealMatrix(raw);
-    }
-
-    @Override
-    public BenchmarkContestant<RealMatrix>.EigenDecomposer getEigenDecomposer() {
-        return new EigenDecomposer() {
-
-            @Override
-            public RealMatrix apply(final RealMatrix matrix) {
+            public RealMatrix decompose(final RealMatrix matrix) {
 
                 final EigenDecomposition tmpEvD = new EigenDecomposition(matrix);
 
@@ -61,7 +52,7 @@ public class ACM extends BenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public BenchmarkContestant<RealMatrix>.GeneralSolver getGeneralSolver() {
+    public MatrixBenchmarkContestant<RealMatrix>.GeneralSolver getGeneralSolver() {
         return new GeneralSolver() {
 
             @Override
@@ -75,7 +66,7 @@ public class ACM extends BenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public BenchmarkContestant<RealMatrix>.HermitianSolver getHermitianSolver() {
+    public MatrixBenchmarkContestant<RealMatrix>.HermitianSolver getHermitianSolver() {
         return new HermitianSolver() {
 
             @Override
@@ -90,7 +81,7 @@ public class ACM extends BenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public BenchmarkContestant<RealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
+    public MatrixBenchmarkContestant<RealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
         return new LeastSquaresSolver() {
 
             @Override
@@ -105,7 +96,19 @@ public class ACM extends BenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public BenchmarkContestant<RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkContestant<RealMatrix>.LeftTransposedMultiplier getLeftTransposedMultiplier() {
+        return new LeftTransposedMultiplier() {
+
+            @Override
+            public RealMatrix apply(final RealMatrix left, final RealMatrix right) {
+                return left.multiply(right.transpose());
+            }
+
+        };
+    }
+
+    @Override
+    public MatrixBenchmarkContestant<RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final Array2DRowRealMatrix myMatrix = new Array2DRowRealMatrix(numberOfRows, numberOfColumns);
@@ -115,16 +118,17 @@ public class ACM extends BenchmarkContestant<RealMatrix> {
             }
 
             @Override
-            public void set(final int row, final int col, final double value) {
+            public MatrixBuilder set(final int row, final int col, final double value) {
                 myMatrix.setEntry(row, col, value);
+                return this;
             }
 
         };
     }
 
     @Override
-    public Square3Multiply.MatrixMultiplier<RealMatrix> getMatrixMultiplier() {
-        return new Square3Multiply.MatrixMultiplier<RealMatrix>() {
+    public Square3Multiply.TaskDefinition<RealMatrix> getMatrixMultiplier() {
+        return new Square3Multiply.TaskDefinition<RealMatrix>() {
 
             @Override
             public RealMatrix multiply(final RealMatrix left, final RealMatrix right) {
@@ -135,7 +139,13 @@ public class ACM extends BenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public BenchmarkContestant<RealMatrix>.SingularDecomposer getSingularDecomposer() {
+    public MatrixBenchmarkContestant<RealMatrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public MatrixBenchmarkContestant<RealMatrix>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override
@@ -154,21 +164,25 @@ public class ACM extends BenchmarkContestant<RealMatrix> {
     }
 
     @Override
-    public BenchmarkContestant<RealMatrix>.LeftTransposedMultiplier getLeftTransposedMultiplier() {
-        return new LeftTransposedMultiplier() {
-
-            @Override
-            public RealMatrix apply(final RealMatrix left, final RealMatrix right) {
-                return left.multiply(right.transpose());
-            }
-
-        };
+    protected double[][] convertFrom(final RealMatrix matrix) {
+        return matrix.getData();
     }
 
     @Override
-    public BenchmarkContestant<RealMatrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
-        // TODO Auto-generated method stub
-        return null;
+    protected RealMatrix convertTo(final double[][] raw) {
+        return new Array2DRowRealMatrix(raw);
+    }
+
+    @Override
+    public FillByMultiplying.TaskDefinition<RealMatrix> getMatrixMultiplier2() {
+        return new FillByMultiplying.TaskDefinition<RealMatrix>() {
+
+            public RealMatrix multiply(final RealMatrix product, final RealMatrix left, final RealMatrix right) {
+                product.setSubMatrix(left.multiply(right).getData(), 0, 0);
+                return product;
+            }
+
+        };
     }
 
 }

@@ -31,19 +31,11 @@ import org.ojalgo.benchmark.matrix.contestant.ACM;
 import org.ojalgo.benchmark.matrix.contestant.EJML;
 import org.ojalgo.benchmark.matrix.contestant.MTJ;
 import org.ojalgo.benchmark.matrix.contestant.ojAlgo;
+import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.suite.FillByMultiplying;
+import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
 
-public abstract class BenchmarkContestant<T> {
-
-    public abstract class EigenDecomposer implements UnaryOperator<T> {
-
-        public abstract T apply(final T matrix);
-
-        @SuppressWarnings("unchecked")
-        public final Object decompose(final Object matrix) {
-            return this.apply((T) matrix);
-        }
-
-    }
+public abstract class MatrixBenchmarkContestant<T> {
 
     /**
      * A general (square) equation system solver
@@ -85,7 +77,7 @@ public abstract class BenchmarkContestant<T> {
 
     public abstract class MatrixBuilder implements Supplier<T> {
 
-        public abstract void set(int row, int col, double value);
+        public abstract MatrixBuilder set(int row, int col, double value);
 
     }
 
@@ -122,7 +114,7 @@ public abstract class BenchmarkContestant<T> {
 
     }
 
-    public static final Map<String, BenchmarkContestant<?>> CONTESTANTS = new HashMap<String, BenchmarkContestant<?>>();
+    public static final Map<String, MatrixBenchmarkContestant<?>> CONTESTANTS = new HashMap<String, MatrixBenchmarkContestant<?>>();
 
     static {
         CONTESTANTS.put(ACM.class.getSimpleName(), new ACM());
@@ -131,7 +123,7 @@ public abstract class BenchmarkContestant<T> {
         CONTESTANTS.put(ojAlgo.class.getSimpleName(), new ojAlgo());
     }
 
-    public BenchmarkContestant() {
+    public MatrixBenchmarkContestant() {
         super();
     }
 
@@ -148,7 +140,7 @@ public abstract class BenchmarkContestant<T> {
 
     protected abstract T convertTo(double[][] raw);
 
-    public abstract EigenDecomposer getEigenDecomposer();
+    public abstract DecomposeEigen.TaskDefinition<T> getEigenDecomposer();
 
     public abstract GeneralSolver getGeneralSolver();
 
@@ -158,7 +150,9 @@ public abstract class BenchmarkContestant<T> {
 
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
-    public abstract Square3Multiply.MatrixMultiplier<T> getMatrixMultiplier();
+    public abstract Square3Multiply.TaskDefinition<T> getMatrixMultiplier();
+
+    public abstract FillByMultiplying.TaskDefinition<T> getMatrixMultiplier2();
 
     public abstract SingularDecomposer getSingularDecomposer();
 

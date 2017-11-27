@@ -19,8 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix;
+package org.ojalgo.benchmark.matrix.suite;
 
+import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
@@ -128,10 +131,17 @@ DecomposeSingular.execute   1000     ojAlgo  thrpt    3         9.032 ±        
  * @author apete
  */
 @State(Scope.Benchmark)
-public class DecomposeSingular extends LinearAlgebraBenchmark {
+public class DecomposeSingular extends MatrixBenchmarkSuite {
+
+    @FunctionalInterface
+    public static interface TaskDefinition<T> {
+
+        int doThThing();
+
+    }
 
     public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(DecomposeSingular.class);
+        MatrixBenchmarkSuite.run(DecomposeSingular.class);
     }
 
     @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
@@ -142,7 +152,7 @@ public class DecomposeSingular extends LinearAlgebraBenchmark {
 
     Object matrix;
 
-    private BenchmarkContestant<?>.SingularDecomposer myDecomposer;
+    private MatrixBenchmarkContestant<?>.SingularDecomposer myDecomposer;
 
     @Override
     @Benchmark
@@ -153,7 +163,7 @@ public class DecomposeSingular extends LinearAlgebraBenchmark {
     @Setup
     public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
 
         matrix = contestant.convert(this.makeSPD(dim));
 

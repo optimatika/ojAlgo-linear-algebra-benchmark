@@ -22,10 +22,13 @@
 package org.ojalgo.benchmark.matrix.contestant;
 
 import org.ojalgo.RecoverableCondition;
-import org.ojalgo.benchmark.matrix.BenchmarkContestant;
-import org.ojalgo.benchmark.matrix.Square3Multiply.MatrixMultiplier;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
+import org.ojalgo.benchmark.matrix.suite.DecomposeEigen;
+import org.ojalgo.benchmark.matrix.suite.FillByMultiplying.TaskDefinition;
+import org.ojalgo.benchmark.matrix.suite.Square3Multiply;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
+import org.ojalgo.matrix.store.ElementsConsumer;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ojalgo.matrix.task.SolverTask;
@@ -33,14 +36,14 @@ import org.ojalgo.matrix.task.SolverTask;
 /**
  * oj! Algorithms
  */
-public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
+public class ojAlgo extends MatrixBenchmarkContestant<MatrixStore<Double>> {
 
     @Override
-    public BenchmarkContestant<MatrixStore<Double>>.EigenDecomposer getEigenDecomposer() {
-        return new EigenDecomposer() {
+    public DecomposeEigen.TaskDefinition<MatrixStore<Double>> getEigenDecomposer() {
+        return new DecomposeEigen.TaskDefinition<MatrixStore<Double>>() {
 
             @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> matrix) {
+            public MatrixStore<Double> decompose(final MatrixStore<Double> matrix) {
                 final Eigenvalue<Double> tmpEvD = Eigenvalue.make(matrix, true);
                 tmpEvD.decompose(matrix);
                 return tmpEvD.getV();
@@ -115,7 +118,7 @@ public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public BenchmarkContestant<MatrixStore<Double>>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkContestant<MatrixStore<Double>>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final PrimitiveDenseStore myMatrix = PrimitiveDenseStore.FACTORY.makeZero(numberOfRows, numberOfColumns);
@@ -125,16 +128,17 @@ public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
             }
 
             @Override
-            public void set(final int row, final int col, final double value) {
+            public MatrixBuilder set(final int row, final int col, final double value) {
                 myMatrix.set(row, col, value);
+                return this;
             }
 
         };
     }
 
     @Override
-    public MatrixMultiplier<MatrixStore<Double>> getMatrixMultiplier() {
-        return new MatrixMultiplier<MatrixStore<Double>>() {
+    public Square3Multiply.TaskDefinition<MatrixStore<Double>> getMatrixMultiplier() {
+        return new Square3Multiply.TaskDefinition<MatrixStore<Double>>() {
 
             @Override
             public MatrixStore<Double> multiply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
@@ -150,7 +154,20 @@ public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public BenchmarkContestant<MatrixStore<Double>>.RightTransposedMultiplier getRightTransposedMultiplier() {
+    public TaskDefinition<MatrixStore<Double>> getMatrixMultiplier2() {
+        return new TaskDefinition<MatrixStore<Double>>() {
+
+            @SuppressWarnings("unchecked")
+            public MatrixStore<Double> multiply(final MatrixStore<Double> product, final MatrixStore<Double> left, final MatrixStore<Double> right) {
+                ((ElementsConsumer<Double>) product).fillByMultiplying(left, right);
+                return product;
+            }
+
+        };
+    }
+
+    @Override
+    public MatrixBenchmarkContestant<MatrixStore<Double>>.RightTransposedMultiplier getRightTransposedMultiplier() {
         return new RightTransposedMultiplier() {
 
             @Override
@@ -167,7 +184,7 @@ public class ojAlgo extends BenchmarkContestant<MatrixStore<Double>> {
     }
 
     @Override
-    public BenchmarkContestant<MatrixStore<Double>>.SingularDecomposer getSingularDecomposer() {
+    public MatrixBenchmarkContestant<MatrixStore<Double>>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override

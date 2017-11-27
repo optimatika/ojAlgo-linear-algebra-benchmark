@@ -19,8 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix;
+package org.ojalgo.benchmark.matrix.suite;
 
+import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -31,7 +34,8 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Mac Pro 2017-04-22
+ * <h1>Mac Pro (Early 2009)</h1>
+ * <h2>2017-04-22</h2>
  *
  * <pre>
 # Run complete. Total time: 00:09:27
@@ -132,17 +136,17 @@ DecomposeEigen.execute   1000     ojAlgo  thrpt    3        25,599 ±        2,0
  * @author apete
  */
 @State(Scope.Benchmark)
-public class DecomposeEigen extends LinearAlgebraBenchmark {
+public class DecomposeEigen extends MatrixBenchmarkSuite {
 
     @FunctionalInterface
-    public static interface TaskDef<T> {
+    public static interface TaskDefinition<T> {
 
-        T decompose(final T matrix, final T right);
+        T decompose(final T matrix);
 
     }
 
     public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(DecomposeEigen.class);
+        MatrixBenchmarkSuite.run(DecomposeEigen.class);
     }
 
     @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000" })
@@ -150,9 +154,9 @@ public class DecomposeEigen extends LinearAlgebraBenchmark {
     @Param({ "ACM", "EJML", "MTJ", "ojAlgo" })
     public String library;
 
-    Object matrix;
+    private TaskDefinition myDecomposer;
 
-    private BenchmarkContestant<?>.EigenDecomposer myDecomposer;
+    Object matrix;
 
     @Override
     @Benchmark
@@ -163,7 +167,7 @@ public class DecomposeEigen extends LinearAlgebraBenchmark {
     @Setup
     public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
 
         matrix = contestant.convert(this.makeSPD(dim));
 

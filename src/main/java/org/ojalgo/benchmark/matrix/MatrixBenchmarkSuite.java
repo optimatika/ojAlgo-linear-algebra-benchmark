@@ -24,6 +24,7 @@ package org.ojalgo.benchmark.matrix;
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
+import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.matrix.MatrixUtils;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.runner.Runner;
@@ -32,7 +33,7 @@ import org.openjdk.jmh.runner.options.ChainedOptionsBuilder;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
-public abstract class LinearAlgebraBenchmark {
+public abstract class MatrixBenchmarkSuite {
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(7).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
@@ -40,19 +41,19 @@ public abstract class LinearAlgebraBenchmark {
     }
 
     public static void run(final Class<?> clazz) throws RunnerException {
-        new Runner(LinearAlgebraBenchmark.options().include(clazz.getSimpleName()).build()).run();
+        new Runner(MatrixBenchmarkSuite.options().include(clazz.getSimpleName()).build()).run();
     }
 
-    protected BenchmarkContestant<?> contestant;
+    protected MatrixBenchmarkContestant<?> contestant;
 
-    protected LinearAlgebraBenchmark() {
+    protected MatrixBenchmarkSuite() {
         super();
     }
 
     public abstract Object execute();
 
-    protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final BenchmarkContestant<?> contestant) {
-        final BenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
+    protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkContestant<?> contestant) {
+        final MatrixBenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
         for (int j = 0; j < numberOfColumns; j++) {
             for (int i = 0; i < numberOfRows; i++) {
                 tmpSupplier.set(i, j, Math.random());
@@ -65,11 +66,11 @@ public abstract class LinearAlgebraBenchmark {
         return MatrixUtils.makeSPD(size).toRawCopy2D();
     }
 
-    protected final Object makeSPD(final int size, final BenchmarkContestant<?> contestant) {
+    protected final Object makeSPD(final int size, final MatrixBenchmarkContestant<?> contestant) {
 
         final double[] tmpRandom = new double[size];
 
-        final BenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(size, size);
+        final MatrixBenchmarkContestant<?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(size, size);
 
         for (int i = 0; i < size; i++) {
 

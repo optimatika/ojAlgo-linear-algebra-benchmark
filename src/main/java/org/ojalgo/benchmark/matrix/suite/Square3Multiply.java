@@ -19,8 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix;
+package org.ojalgo.benchmark.matrix.suite;
 
+import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkContestant;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkSuite;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -31,7 +34,106 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Mac Pro: 2016-06-16
+ * <h1>Mac Pro (Early 2009)</h1>
+ * <h2>2017-11-27</h2>
+ *
+ * <pre>
+Result "org.ojalgo.benchmark.matrix.suite.Square3Multiply.execute":
+  212,359 ±(99.9%) 5,171 ops/min [Average]
+  (min, avg, max) = (212,087, 212,359, 212,653), stdev = 0,283
+  CI (99.9%): [207,188, 217,531] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:54:41
+
+Benchmark                (dim)  (library)   Mode  Cnt           Score          Error    Units
+Square3Multiply.execute      1        ACM  thrpt    3   254923632,405 ±  1314836,835  ops/min
+Square3Multiply.execute      1       EJML  thrpt    3  2500753621,500 ± 78817879,533  ops/min
+Square3Multiply.execute      1     ojAlgo  thrpt    3   728514474,369 ± 14262656,373  ops/min
+Square3Multiply.execute      1        MTJ  thrpt    3    58014815,314 ±  4648269,211  ops/min
+Square3Multiply.execute      2        ACM  thrpt    3   155190106,022 ± 23912485,977  ops/min
+Square3Multiply.execute      2       EJML  thrpt    3  1138062984,439 ± 22470058,902  ops/min
+Square3Multiply.execute      2     ojAlgo  thrpt    3   671971441,655 ± 15911558,485  ops/min
+Square3Multiply.execute      2        MTJ  thrpt    3    52876978,818 ± 17800560,300  ops/min
+Square3Multiply.execute      3        ACM  thrpt    3   106512669,418 ±  5369324,972  ops/min
+Square3Multiply.execute      3       EJML  thrpt    3   508622972,387 ±  2678019,055  ops/min
+Square3Multiply.execute      3     ojAlgo  thrpt    3   524220281,914 ±  9675485,448  ops/min
+Square3Multiply.execute      3        MTJ  thrpt    3    50096363,636 ± 15843984,950  ops/min
+Square3Multiply.execute      4        ACM  thrpt    3    80183256,133 ±  1336210,416  ops/min
+Square3Multiply.execute      4       EJML  thrpt    3   279659724,193 ± 13601635,557  ops/min
+Square3Multiply.execute      4     ojAlgo  thrpt    3   404210764,832 ± 10621559,325  ops/min
+Square3Multiply.execute      4        MTJ  thrpt    3    52239956,444 ±  5820864,253  ops/min
+Square3Multiply.execute      5        ACM  thrpt    3    59167173,032 ±  3978791,816  ops/min
+Square3Multiply.execute      5       EJML  thrpt    3   184000448,543 ± 97436340,890  ops/min
+Square3Multiply.execute      5     ojAlgo  thrpt    3   286566596,176 ±  8822935,637  ops/min
+Square3Multiply.execute      5        MTJ  thrpt    3    47162928,357 ± 11114329,421  ops/min
+Square3Multiply.execute      8        ACM  thrpt    3    26414221,835 ±  2452259,131  ops/min
+Square3Multiply.execute      8       EJML  thrpt    3    59412081,070 ± 27516531,608  ops/min
+Square3Multiply.execute      8     ojAlgo  thrpt    3    85173662,895 ±  1856858,630  ops/min
+Square3Multiply.execute      8        MTJ  thrpt    3    42677050,328 ±  8787178,328  ops/min
+Square3Multiply.execute     10        ACM  thrpt    3    17141411,631 ±  1581589,998  ops/min
+Square3Multiply.execute     10       EJML  thrpt    3    34369482,925 ±  5586231,462  ops/min
+Square3Multiply.execute     10     ojAlgo  thrpt    3    46858546,216 ±  1143289,381  ops/min
+Square3Multiply.execute     10        MTJ  thrpt    3    34851479,436 ±  4795575,084  ops/min
+Square3Multiply.execute     16        ACM  thrpt    3     5636173,330 ±   559813,545  ops/min
+Square3Multiply.execute     16       EJML  thrpt    3     8114357,377 ±   399565,775  ops/min
+Square3Multiply.execute     16     ojAlgo  thrpt    3     6784038,936 ±   203454,487  ops/min
+Square3Multiply.execute     16        MTJ  thrpt    3    12963026,344 ±   433471,593  ops/min
+Square3Multiply.execute     20        ACM  thrpt    3     3215814,367 ±   225774,576  ops/min
+Square3Multiply.execute     20       EJML  thrpt    3     4327959,426 ±   425564,568  ops/min
+Square3Multiply.execute     20     ojAlgo  thrpt    3     4781362,014 ±   319495,067  ops/min
+Square3Multiply.execute     20        MTJ  thrpt    3     9939781,606 ±   203335,383  ops/min
+Square3Multiply.execute     32        ACM  thrpt    3      898526,788 ±    89997,385  ops/min
+Square3Multiply.execute     32       EJML  thrpt    3     1282061,625 ±    52718,507  ops/min
+Square3Multiply.execute     32     ojAlgo  thrpt    3     1344815,075 ±    56949,822  ops/min
+Square3Multiply.execute     32        MTJ  thrpt    3     4304806,265 ±   264865,780  ops/min
+Square3Multiply.execute     50        ACM  thrpt    3      257661,112 ±   112584,263  ops/min
+Square3Multiply.execute     50       EJML  thrpt    3      386493,188 ±   568671,712  ops/min
+Square3Multiply.execute     50     ojAlgo  thrpt    3      544612,125 ±    52191,510  ops/min
+Square3Multiply.execute     50        MTJ  thrpt    3     1501190,538 ±    62281,125  ops/min
+Square3Multiply.execute     64        ACM  thrpt    3      126207,483 ±      644,825  ops/min
+Square3Multiply.execute     64       EJML  thrpt    3      194290,342 ±    12174,269  ops/min
+Square3Multiply.execute     64     ojAlgo  thrpt    3      388631,374 ±    41363,149  ops/min
+Square3Multiply.execute     64        MTJ  thrpt    3      785752,323 ±    41497,111  ops/min
+Square3Multiply.execute    100        ACM  thrpt    3       25556,521 ±    20298,376  ops/min
+Square3Multiply.execute    100       EJML  thrpt    3       55023,655 ±     5158,811  ops/min
+Square3Multiply.execute    100     ojAlgo  thrpt    3      127988,025 ±    26763,907  ops/min
+Square3Multiply.execute    100        MTJ  thrpt    3      226765,283 ±     2674,363  ops/min
+Square3Multiply.execute    128        ACM  thrpt    3       14982,081 ±     6601,730  ops/min
+Square3Multiply.execute    128       EJML  thrpt    3       26580,042 ±     8341,526  ops/min
+Square3Multiply.execute    128     ojAlgo  thrpt    3       92891,864 ±    12526,132  ops/min
+Square3Multiply.execute    128        MTJ  thrpt    3      223227,275 ±    16219,521  ops/min
+Square3Multiply.execute    200        ACM  thrpt    3        2588,314 ±     1188,978  ops/min
+Square3Multiply.execute    200       EJML  thrpt    3        6873,519 ±     1557,445  ops/min
+Square3Multiply.execute    200     ojAlgo  thrpt    3       36914,429 ±     5533,042  ops/min
+Square3Multiply.execute    200        MTJ  thrpt    3      102790,291 ±    39867,801  ops/min
+Square3Multiply.execute    256        ACM  thrpt    3         983,619 ±        5,487  ops/min
+Square3Multiply.execute    256       EJML  thrpt    3        3396,727 ±      283,919  ops/min
+Square3Multiply.execute    256     ojAlgo  thrpt    3       20025,949 ±     1486,603  ops/min
+Square3Multiply.execute    256        MTJ  thrpt    3       67420,027 ±     5711,454  ops/min
+Square3Multiply.execute    500        ACM  thrpt    3          53,291 ±       10,825  ops/min
+Square3Multiply.execute    500       EJML  thrpt    3         455,094 ±        9,277  ops/min
+Square3Multiply.execute    500     ojAlgo  thrpt    3        2796,945 ±      504,576  ops/min
+Square3Multiply.execute    500        MTJ  thrpt    3       11484,187 ±      693,510  ops/min
+Square3Multiply.execute    512        ACM  thrpt    3          51,758 ±        4,563  ops/min
+Square3Multiply.execute    512       EJML  thrpt    3         426,652 ±        6,959  ops/min
+Square3Multiply.execute    512     ojAlgo  thrpt    3        2636,663 ±      461,709  ops/min
+Square3Multiply.execute    512        MTJ  thrpt    3        9527,006 ±    17623,000  ops/min
+Square3Multiply.execute   1000        ACM  thrpt    3           3,451 ±        0,298  ops/min
+Square3Multiply.execute   1000       EJML  thrpt    3          48,942 ±        3,935  ops/min
+Square3Multiply.execute   1000     ojAlgo  thrpt    3         281,303 ±       32,419  ops/min
+Square3Multiply.execute   1000        MTJ  thrpt    3        1512,186 ±      423,352  ops/min
+Square3Multiply.execute   1024        ACM  thrpt    3           3,434 ±        1,734  ops/min
+Square3Multiply.execute   1024       EJML  thrpt    3          45,120 ±        1,260  ops/min
+Square3Multiply.execute   1024     ojAlgo  thrpt    3         261,811 ±      131,884  ops/min
+Square3Multiply.execute   1024        MTJ  thrpt    3        1371,107 ±     1479,895  ops/min
+Square3Multiply.execute   2000        ACM  thrpt    3           0,318 ±        0,102  ops/min
+Square3Multiply.execute   2000       EJML  thrpt    3           5,392 ±        2,494  ops/min
+Square3Multiply.execute   2000     ojAlgo  thrpt    3          14,289 ±        0,195  ops/min
+Square3Multiply.execute   2000        MTJ  thrpt    3         212,359 ±        5,171  ops/min
+ * </pre>
+ *
+ * <h2>2016-06-16</h2>
  *
  * <pre>
 Benchmark                         (dim)  (library)   Mode  Cnt           Score          Error    Units
@@ -70,7 +172,8 @@ SquareMultiply.execute             1000        MTJ  thrpt   15        1598,225 �
 SquareMultiply.execute             1000     ojAlgo  thrpt   15         418,851 ±       16,176  ops/min
  * </pre>
  *
- * MacBook Air: 2015-06-18
+ * <h1>MacBook Air</h1>
+ * <h2>2015-06-18</h2>
  *
  * <pre>
  * # Run complete. Total time: 00:45:32
@@ -117,8 +220,9 @@ SquareMultiply.execute             1000     ojAlgo  thrpt   15         418,851 �
  * SquareMultiply.execute   5000     ojAlgo  thrpt    3           0,845 ±         0,024  ops/min
  * </pre>
  *
- * MacBook Pro 2017-11-26
- * 
+ * <h1>MacBook Pro</h1>
+ * <h2>2017-11-26</h2>
+ *
  * <pre>
 Result "org.ojalgo.benchmark.matrix.Square3Multiply.execute":
   317,437 ±(99.9%) 36,033 ops/min [Average]
@@ -218,17 +322,17 @@ Square3Multiply.execute   2000        MTJ  thrpt    3         317,437 ±        
  * @author apete
  */
 @State(Scope.Benchmark)
-public class Square3Multiply extends LinearAlgebraBenchmark {
+public class Square3Multiply extends MatrixBenchmarkSuite {
 
     @FunctionalInterface
-    public static interface MatrixMultiplier<T> {
+    public static interface TaskDefinition<T> {
 
         T multiply(final T left, final T right);
 
     }
 
     public static void main(final String[] args) throws RunnerException {
-        LinearAlgebraBenchmark.run(Square3Multiply.class);
+        MatrixBenchmarkSuite.run(Square3Multiply.class);
     }
 
     @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024",
@@ -242,7 +346,7 @@ public class Square3Multiply extends LinearAlgebraBenchmark {
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String library;
 
-    private MatrixMultiplier myPlainMultiplier;
+    private TaskDefinition myPlainMultiplier;
     Object righ;
 
     @Override
@@ -254,7 +358,7 @@ public class Square3Multiply extends LinearAlgebraBenchmark {
     @Setup
     public void setup() {
 
-        contestant = BenchmarkContestant.CONTESTANTS.get(library);
+        contestant = MatrixBenchmarkContestant.CONTESTANTS.get(library);
 
         myPlainMultiplier = contestant.getMatrixMultiplier();
 
