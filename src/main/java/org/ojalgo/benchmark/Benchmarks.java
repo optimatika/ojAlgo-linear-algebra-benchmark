@@ -32,13 +32,15 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 public abstract class Benchmarks {
 
+    private static final TimeValue ONE_MINUTE = new TimeValue(1L, TimeUnit.MINUTES);
+
     public static void run(final Class<?> clazz) throws RunnerException {
         new Runner(Benchmarks.options().include(clazz.getSimpleName()).build()).run();
     }
 
     protected static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(1).measurementIterations(5).warmupIterations(9).mode(Mode.Throughput).timeUnit(TimeUnit.SECONDS)
-                .timeout(new TimeValue(1L, TimeUnit.MINUTES)).jvmArgs("-server", "-Xmx2g",
+        return new OptionsBuilder().forks(1).measurementIterations(5).warmupIterations(9).mode(Mode.Throughput).timeUnit(TimeUnit.SECONDS).timeout(ONE_MINUTE)
+                .jvmArgs("-server", "-Xmx6g",
                         "-Djava.library.path=/Library/gurobi751/mac64/lib:/Users/apete/Applications/IBM/ILOG/CPLEX_Studio_Community1262/cplex/bin/x86-64_osx");
     }
 

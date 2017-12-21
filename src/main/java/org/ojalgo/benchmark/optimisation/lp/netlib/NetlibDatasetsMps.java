@@ -58,45 +58,69 @@ NetlibDatasetsMps.solve     AFIRO   JOptimizer  thrpt    5     9.138 ±  0.063  
  * </pre>
  *
  * <pre>
-# Run complete. Total time: 00:15:39
+Result "org.ojalgo.benchmark.optimisation.lp.netlib.NetlibDatasetsMps.solve":
+  351.404 ±(99.9%) 173.328 ops/s [Average]
+  (min, avg, max) = (281.136, 351.404, 393.905), stdev = 45.013
+  CI (99.9%): [178.076, 524.732] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:31:23
 
 Benchmark                 (model)  (solver)   Mode  Cnt     Score     Error  Units
-NetlibDatasetsMps.solve    BRANDY    ojAlgo  thrpt    5    29.196 ±   3.059  ops/s
-NetlibDatasetsMps.solve    BRANDY    Gurobi  thrpt    5   111.036 ±   5.275  ops/s
-NetlibDatasetsMps.solve    BRANDY     CPLEX  thrpt    5   117.789 ±  82.828  ops/s
-NetlibDatasetsMps.solve    BORE3D    ojAlgo  thrpt    5   111.338 ±   7.048  ops/s
-NetlibDatasetsMps.solve    BORE3D    Gurobi  thrpt    5   231.145 ±  47.081  ops/s
-NetlibDatasetsMps.solve    BORE3D     CPLEX  thrpt    5   209.177 ±  81.747  ops/s
-NetlibDatasetsMps.solve   BOEING2    ojAlgo  thrpt    5    17.051 ±   4.779  ops/s
-NetlibDatasetsMps.solve   BOEING2    Gurobi  thrpt    5   207.382 ±  21.972  ops/s
-NetlibDatasetsMps.solve   BOEING2     CPLEX  thrpt    5   189.733 ±  96.891  ops/s
-NetlibDatasetsMps.solve   BOEING1    ojAlgo  thrpt    5     0.041 ±   0.001  ops/s
-NetlibDatasetsMps.solve   BOEING1    Gurobi  thrpt    5    50.872 ±   2.882  ops/s
-NetlibDatasetsMps.solve   BOEING1     CPLEX  thrpt    5    55.084 ±  12.040  ops/s
-NetlibDatasetsMps.solve     BLEND    ojAlgo  thrpt    5   228.887 ±  18.924  ops/s
-NetlibDatasetsMps.solve     BLEND    Gurobi  thrpt    5   372.114 ±  67.487  ops/s
-NetlibDatasetsMps.solve     BLEND     CPLEX  thrpt    5   317.094 ± 201.946  ops/s
-NetlibDatasetsMps.solve  BEACONFD    ojAlgo  thrpt    5   221.678 ±  18.431  ops/s
-NetlibDatasetsMps.solve  BEACONFD    Gurobi  thrpt    5   186.061 ±  11.842  ops/s
-NetlibDatasetsMps.solve  BEACONFD     CPLEX  thrpt    5   176.775 ±  42.661  ops/s
-NetlibDatasetsMps.solve     BANDM    ojAlgo  thrpt    5     5.361 ±   0.330  ops/s
-NetlibDatasetsMps.solve     BANDM    Gurobi  thrpt    5    66.827 ±   5.738  ops/s
-NetlibDatasetsMps.solve     BANDM     CPLEX  thrpt    5    55.624 ±  11.838  ops/s
-NetlibDatasetsMps.solve      AGG3    ojAlgo  thrpt    5     2.370 ±   0.362  ops/s
-NetlibDatasetsMps.solve      AGG3    Gurobi  thrpt    5    92.931 ±  19.391  ops/s
-NetlibDatasetsMps.solve      AGG3     CPLEX  thrpt    5    88.960 ±  40.540  ops/s
-NetlibDatasetsMps.solve      AGG2    ojAlgo  thrpt    5     2.689 ±   0.373  ops/s
-NetlibDatasetsMps.solve      AGG2    Gurobi  thrpt    5    93.409 ±  14.101  ops/s
-NetlibDatasetsMps.solve      AGG2     CPLEX  thrpt    5    89.896 ±  49.458  ops/s
-NetlibDatasetsMps.solve       AGG    ojAlgo  thrpt    5    17.623 ±   1.595  ops/s
-NetlibDatasetsMps.solve       AGG    Gurobi  thrpt    5   153.219 ±  21.460  ops/s
-NetlibDatasetsMps.solve       AGG     CPLEX  thrpt    5   126.240 ±  62.653  ops/s
-NetlibDatasetsMps.solve     AFIRO    ojAlgo  thrpt    5  5653.878 ± 350.552  ops/s
-NetlibDatasetsMps.solve     AFIRO    Gurobi  thrpt    5  1301.682 ± 224.408  ops/s
-NetlibDatasetsMps.solve     AFIRO     CPLEX  thrpt    5   900.559 ± 214.402  ops/s
-NetlibDatasetsMps.solve  ADLITTLE    ojAlgo  thrpt    5   352.146 ±  21.066  ops/s
-NetlibDatasetsMps.solve  ADLITTLE    Gurobi  thrpt    5   391.054 ±  26.545  ops/s
-NetlibDatasetsMps.solve  ADLITTLE     CPLEX  thrpt    5   344.437 ±  90.112  ops/s
+NetlibDatasetsMps.solve   FORPLAN    ojAlgo  thrpt    5    18.736 ±   0.669  ops/s
+NetlibDatasetsMps.solve   FORPLAN    Gurobi  thrpt    5    74.065 ±  17.320  ops/s
+NetlibDatasetsMps.solve   FORPLAN     CPLEX  thrpt    5    98.284 ±  50.223  ops/s
+NetlibDatasetsMps.solve    FINNIS    ojAlgo  thrpt    5     0.014 ±   0.001  ops/s
+NetlibDatasetsMps.solve    FINNIS    Gurobi  thrpt    5    77.512 ±  30.214  ops/s
+NetlibDatasetsMps.solve    FINNIS     CPLEX  thrpt    5    74.862 ±  14.698  ops/s
+NetlibDatasetsMps.solve  FFFFF800    ojAlgo  thrpt    5     1.795 ±   0.078  ops/s
+NetlibDatasetsMps.solve  FFFFF800    Gurobi  thrpt    5    55.906 ±   8.481  ops/s
+NetlibDatasetsMps.solve  FFFFF800     CPLEX  thrpt    5    60.005 ±  27.839  ops/s
+NetlibDatasetsMps.solve  ETAMACRO    ojAlgo  thrpt    5     2.547 ±   0.094  ops/s
+NetlibDatasetsMps.solve  ETAMACRO    Gurobi  thrpt    5    54.603 ±   3.501  ops/s
+NetlibDatasetsMps.solve  ETAMACRO     CPLEX  thrpt    5    44.829 ±  12.830  ops/s
+NetlibDatasetsMps.solve      E226    ojAlgo  thrpt    5     7.338 ±   0.231  ops/s
+NetlibDatasetsMps.solve      E226    Gurobi  thrpt    5    70.537 ±   2.447  ops/s
+NetlibDatasetsMps.solve      E226     CPLEX  thrpt    5    84.089 ±  37.586  ops/s
+NetlibDatasetsMps.solve     CAPRI    ojAlgo  thrpt    5     2.916 ±   0.149  ops/s
+NetlibDatasetsMps.solve     CAPRI    Gurobi  thrpt    5   109.458 ±  35.618  ops/s
+NetlibDatasetsMps.solve     CAPRI     CPLEX  thrpt    5   122.432 ±  25.916  ops/s
+NetlibDatasetsMps.solve    BRANDY    ojAlgo  thrpt    5    24.698 ±   0.718  ops/s
+NetlibDatasetsMps.solve    BRANDY    Gurobi  thrpt    5   113.142 ±  10.603  ops/s
+NetlibDatasetsMps.solve    BRANDY     CPLEX  thrpt    5   119.273 ±  41.354  ops/s
+NetlibDatasetsMps.solve    BORE3D    ojAlgo  thrpt    5    96.059 ±   2.708  ops/s
+NetlibDatasetsMps.solve    BORE3D    Gurobi  thrpt    5   235.608 ± 103.447  ops/s
+NetlibDatasetsMps.solve    BORE3D     CPLEX  thrpt    5   226.258 ±  35.547  ops/s
+NetlibDatasetsMps.solve   BOEING2    ojAlgo  thrpt    5    15.326 ±   0.144  ops/s
+NetlibDatasetsMps.solve   BOEING2    Gurobi  thrpt    5   203.861 ±  60.684  ops/s
+NetlibDatasetsMps.solve   BOEING2     CPLEX  thrpt    5   209.409 ±  32.679  ops/s
+NetlibDatasetsMps.solve   BOEING1    ojAlgo  thrpt    5     1.056 ±   0.118  ops/s
+NetlibDatasetsMps.solve   BOEING1    Gurobi  thrpt    5    50.268 ±  12.333  ops/s
+NetlibDatasetsMps.solve   BOEING1     CPLEX  thrpt    5    51.795 ±  22.695  ops/s
+NetlibDatasetsMps.solve     BLEND    ojAlgo  thrpt    5   226.831 ±  19.714  ops/s
+NetlibDatasetsMps.solve     BLEND    Gurobi  thrpt    5   407.130 ±  14.473  ops/s
+NetlibDatasetsMps.solve     BLEND     CPLEX  thrpt    5   378.324 ±  89.857  ops/s
+NetlibDatasetsMps.solve  BEACONFD    ojAlgo  thrpt    5   209.564 ±   4.081  ops/s
+NetlibDatasetsMps.solve  BEACONFD    Gurobi  thrpt    5   193.261 ±  23.756  ops/s
+NetlibDatasetsMps.solve  BEACONFD     CPLEX  thrpt    5   184.886 ±  34.528  ops/s
+NetlibDatasetsMps.solve     BANDM    ojAlgo  thrpt    5     4.606 ±   0.130  ops/s
+NetlibDatasetsMps.solve     BANDM    Gurobi  thrpt    5    65.904 ±   1.958  ops/s
+NetlibDatasetsMps.solve     BANDM     CPLEX  thrpt    5    51.556 ±  21.445  ops/s
+NetlibDatasetsMps.solve      AGG3    ojAlgo  thrpt    5     2.622 ±   0.187  ops/s
+NetlibDatasetsMps.solve      AGG3    Gurobi  thrpt    5    91.625 ±  24.865  ops/s
+NetlibDatasetsMps.solve      AGG3     CPLEX  thrpt    5    95.836 ±  25.064  ops/s
+NetlibDatasetsMps.solve      AGG2    ojAlgo  thrpt    5     2.927 ±   0.164  ops/s
+NetlibDatasetsMps.solve      AGG2    Gurobi  thrpt    5    94.510 ±  25.689  ops/s
+NetlibDatasetsMps.solve      AGG2     CPLEX  thrpt    5    96.830 ±  18.554  ops/s
+NetlibDatasetsMps.solve       AGG    ojAlgo  thrpt    5    15.654 ±   0.582  ops/s
+NetlibDatasetsMps.solve       AGG    Gurobi  thrpt    5   158.593 ±  12.538  ops/s
+NetlibDatasetsMps.solve       AGG     CPLEX  thrpt    5   142.258 ±  35.565  ops/s
+NetlibDatasetsMps.solve     AFIRO    ojAlgo  thrpt    5  4748.837 ± 127.660  ops/s
+NetlibDatasetsMps.solve     AFIRO    Gurobi  thrpt    5  1323.479 ± 370.478  ops/s
+NetlibDatasetsMps.solve     AFIRO     CPLEX  thrpt    5   959.615 ±  90.741  ops/s
+NetlibDatasetsMps.solve  ADLITTLE    ojAlgo  thrpt    5   319.216 ±   7.631  ops/s
+NetlibDatasetsMps.solve  ADLITTLE    Gurobi  thrpt    5   410.718 ± 112.237  ops/s
+NetlibDatasetsMps.solve  ADLITTLE     CPLEX  thrpt    5   351.404 ± 173.328  ops/s
  * </pre>
  *
  * http://www.netlib.org/lp/data/readme
@@ -139,7 +163,9 @@ public class NetlibDatasetsMps {
      * <li>Remove all problems with SIF specific enties in the model files (SIF is a superset of MPS)</li>
      * </ol>
      */
-    @Param({ "BRANDY", "BORE3D", "BOEING2", "BOEING1", "BLEND", "BEACONFD", "BANDM", "AGG3", "AGG2", "AGG", "AFIRO", "ADLITTLE" })
+    @Param({ "STOCFOR1", "STAIR", "SHARE2B", "SHARE1B", "SCTAP1", "SCSD1", "SCORPION", "SCFXM2", "SCFXM1", "SCAGR7", "SCAGR25", "SC50B", "SC50A", "SC205",
+            "SC105", "LOTFI", "KB2", "ISRAEL", "GROW7", "GROW22", "FORPLAN", "FINNIS", "FFFFF800", "ETAMACRO", "E226", "CAPRI", "BRANDY", "BORE3D", "BOEING2",
+            "BOEING1", "BLEND", "BEACONFD", "BANDM", "AGG3", "AGG2", "AGG", "AFIRO", "ADLITTLE" })
     public String model;
 
     @Param({ "ojAlgo", "Gurobi", "CPLEX" })
