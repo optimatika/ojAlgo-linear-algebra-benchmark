@@ -184,6 +184,9 @@ NetlibDatasetsMps.solve  ADLITTLE     CPLEX  thrpt    5   350.290 ± 285.618  op
  * </pre>
  *
  * http://www.netlib.org/lp/data/readme
+ * <P>
+ * Should in particular investigate: FINNIS, GROW15, GROW22, SCFXM2, TUFF
+ * </p>
  *
  * @author apete
  */
@@ -223,9 +226,9 @@ public class NetlibDatasetsMps {
      * <li>Remove all problems with SIF specific enties in the model files (SIF is a superset of MPS)</li>
      * </ol>
      */
-    @Param({ "STOCFOR1", "STAIR", "SHARE2B", "SHARE1B", "SCTAP1", "SCSD1", "SCORPION", "SCFXM2", "SCFXM1", "SCAGR7", "SCAGR25", "SC50B", "SC50A", "SC205",
-            "SC105", "LOTFI", "KB2", "ISRAEL", "GROW7", "GROW22", "FORPLAN", "FINNIS", "FFFFF800", "ETAMACRO", "E226", "CAPRI", "BRANDY", "BORE3D", "BOEING2",
-            "BOEING1", "BLEND", "BEACONFD", "BANDM", "AGG3", "AGG2", "AGG", "AFIRO", "ADLITTLE" })
+    @Param({ "STOCFOR1", "STAIR", "SHARE2B", "SHARE1B", "SCTAP1", "SCSD1", "SCORPION", "SCFXM1", "SCAGR7", "SCAGR25", "SC50B", "SC50A", "SC205", "SC105",
+            "LOTFI", "KB2", "ISRAEL", "GROW7", "FORPLAN", "FFFFF800", "ETAMACRO", "E226", "CAPRI", "BRANDY", "BORE3D", "BOEING2", "BOEING1", "BLEND",
+            "BEACONFD", "BANDM", "AGG3", "AGG2", "AGG", "AFIRO", "ADLITTLE" })
     public String model;
 
     @Param({ "ojAlgo", "Gurobi", "CPLEX" })
