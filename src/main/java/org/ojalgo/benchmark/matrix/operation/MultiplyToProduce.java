@@ -322,17 +322,10 @@ Square3Multiply.execute   2000        MTJ  thrpt    3         317,437 ±        
  * @author apete
  */
 @State(Scope.Benchmark)
-public class Square3Multiply extends MatrixBenchmarkOperation {
-
-    @FunctionalInterface
-    public static interface TaskDefinition<T> {
-
-        T multiply(final T left, final T right);
-
-    }
+public class MultiplyToProduce extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Square3Multiply.class);
+        MatrixBenchmarkOperation.run(MultiplyToProduce.class);
     }
 
     @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024",
@@ -341,18 +334,18 @@ public class Square3Multiply extends MatrixBenchmarkOperation {
                    */ })
     public int dim;
 
-    Object left;
-
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String library;
 
-    private TaskDefinition myPlainMultiplier;
-    Object righ;
+    private ProducingBinaryOperation<?, ?> myOperation;
+
+    Object left;
+    Object right;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myPlainMultiplier.multiply(left, righ);
+        return myOperation.execute(left, right);
     }
 
     @Setup
@@ -360,32 +353,17 @@ public class Square3Multiply extends MatrixBenchmarkOperation {
 
         contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
 
-        myPlainMultiplier = contestant.getMatrixMultiplier();
+        myOperation = contestant.getOperationMultiplyToProduce();
 
-        final double[][] tmpLeft = new double[dim][dim];
-        for (int i = 0; i < tmpLeft.length; i++) {
-            final double[] tmpRow = tmpLeft[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = Math.random();
-            }
-        }
-        left = contestant.convert(tmpLeft);
-
-        final double[][] tmpRight = new double[dim][dim];
-        for (int i = 0; i < tmpRight.length; i++) {
-            final double[] tmpRow = tmpRight[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = Math.random();
-            }
-        }
-        righ = contestant.convert(tmpRight);
+        left = this.makeRandom(dim, dim, contestant);
+        right = this.makeRandom(dim, dim, contestant);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myPlainMultiplier.getClass());
+        this.verifyStateless(myOperation.getClass());
 
     }
 

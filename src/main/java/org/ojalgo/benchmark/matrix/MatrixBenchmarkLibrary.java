@@ -28,13 +28,12 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.matrix.library.ACM;
 import org.ojalgo.benchmark.matrix.library.EJML;
 import org.ojalgo.benchmark.matrix.library.MTJ;
 import org.ojalgo.benchmark.matrix.library.ojAlgo;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply2;
 
 public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
@@ -76,31 +75,9 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     }
 
-    public abstract class LeftTransposedMultiplier implements BinaryOperator<I> {
-
-        public abstract I apply(final I left, final I right);
-
-        @SuppressWarnings("unchecked")
-        public final Object multiply(final Object left, final Object right) {
-            return this.apply((I) left, (I) left);
-        }
-
-    }
-
     public abstract class MatrixBuilder implements Supplier<I> {
 
         public abstract MatrixBuilder set(int row, int col, double value);
-
-    }
-
-    public abstract class RightTransposedMultiplier implements BinaryOperator<I> {
-
-        public abstract I apply(final I left, final I right);
-
-        @SuppressWarnings("unchecked")
-        public final Object multiply(final Object left, final Object right) {
-            return this.apply((I) left, (I) left);
-        }
 
     }
 
@@ -145,17 +122,11 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract LeastSquaresSolver getLeastSquaresSolver();
 
-    public abstract LeftTransposedMultiplier getLeftTransposedMultiplier();
-
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
-    public abstract Square3Multiply.TaskDefinition<I> getMatrixMultiplier();
+    public abstract MutatingBinaryOperation<I, T> getOperationFillByMultiplying();
 
-    public abstract Square3Multiply2.TaskDefinition<I, T> getMatrixMultiplier2();
-
-    public abstract MutatingBinaryOperation<I, T> getFillByMultiplyingOperation();
-
-    public abstract RightTransposedMultiplier getRightTransposedMultiplier();
+    public abstract ProducingBinaryOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract SingularDecomposer getSingularDecomposer();
 

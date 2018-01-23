@@ -30,9 +30,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 
 /**
  * Apache Commons Math
@@ -50,11 +49,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
                 return tmpEvD.getV();
             }
         };
-    }
-
-    @Override
-    public MutatingBinaryOperation<RealMatrix, RealMatrix> getFillByMultiplyingOperation() {
-        return (ret, arg1, arg2) -> ret.setSubMatrix(arg1.multiply(arg2).getData(), 0, 0);
     }
 
     @Override
@@ -102,18 +96,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.LeftTransposedMultiplier getLeftTransposedMultiplier() {
-        return new LeftTransposedMultiplier() {
-
-            @Override
-            public RealMatrix apply(final RealMatrix left, final RealMatrix right) {
-                return left.multiply(right.transpose());
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -133,32 +115,13 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public Square3Multiply.TaskDefinition<RealMatrix> getMatrixMultiplier() {
-        return new Square3Multiply.TaskDefinition<RealMatrix>() {
-
-            @Override
-            public RealMatrix multiply(final RealMatrix left, final RealMatrix right) {
-                return left.multiply(right);
-            }
-
-        };
+    public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
+        return (ret, arg1, arg2) -> ret.setSubMatrix(arg1.multiply(arg2).getData(), 0, 0);
     }
 
     @Override
-    public TaskDefinition<RealMatrix, RealMatrix> getMatrixMultiplier2() {
-        return new TaskDefinition<RealMatrix, RealMatrix>() {
-
-            public RealMatrix multiply(final RealMatrix left, final RealMatrix right, final RealMatrix product) {
-                return left.multiply(right);
-            }
-
-        };
-    }
-
-    @Override
-    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
-        // TODO Auto-generated method stub
-        return null;
+    public ProducingBinaryOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
+        return (arg1, arg2) -> arg1.multiply(arg2);
     }
 
     @Override

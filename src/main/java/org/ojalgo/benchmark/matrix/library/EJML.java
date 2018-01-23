@@ -32,9 +32,8 @@ import org.ejml.ops.CommonOps;
 import org.ejml.ops.EigenOps;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 
 /**
  * Efficient Java Matrix Library
@@ -62,11 +61,6 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
             }
 
         };
-    }
-
-    @Override
-    public MutatingBinaryOperation<DenseMatrix64F, DenseMatrix64F> getFillByMultiplyingOperation() {
-        return (ret, arg1, arg2) -> CommonOps.multAdd(arg1, arg2, ret);
     }
 
     @Override
@@ -145,23 +139,6 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
     }
 
     @Override
-    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
-        return new LeftTransposedMultiplier() {
-
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
-
-                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
-
-                CommonOps.multTransA(left, right, result);
-
-                return result;
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -181,48 +158,16 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
     }
 
     @Override
-    public Square3Multiply.TaskDefinition<DenseMatrix64F> getMatrixMultiplier() {
-        return new Square3Multiply.TaskDefinition<DenseMatrix64F>() {
-
-            @Override
-            public DenseMatrix64F multiply(final DenseMatrix64F left, final DenseMatrix64F right) {
-
-                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
-
-                CommonOps.mult(left, right, result);
-
-                return result;
-            }
-
-        };
+    public MutatingBinaryOperation<DenseMatrix64F, DenseMatrix64F> getOperationFillByMultiplying() {
+        return (ret, arg1, arg2) -> CommonOps.multAdd(arg1, arg2, ret);
     }
 
     @Override
-    public TaskDefinition<DenseMatrix64F, DenseMatrix64F> getMatrixMultiplier2() {
-        return new TaskDefinition<DenseMatrix64F, DenseMatrix64F>() {
-
-            public DenseMatrix64F multiply(final DenseMatrix64F left, final DenseMatrix64F right, final DenseMatrix64F product) {
-                CommonOps.mult(left, right, product);
-                return product;
-            }
-
-        };
-    }
-
-    @Override
-    public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.RightTransposedMultiplier getRightTransposedMultiplier() {
-        return new RightTransposedMultiplier() {
-
-            @Override
-            public DenseMatrix64F apply(final DenseMatrix64F left, final DenseMatrix64F right) {
-
-                final DenseMatrix64F result = new DenseMatrix64F(left.getNumRows(), right.getNumCols());
-
-                CommonOps.multTransB(left, right, result);
-
-                return result;
-            }
-
+    public ProducingBinaryOperation<DenseMatrix64F, DenseMatrix64F> getOperationMultiplyToProduce() {
+        return (arg1, arg2) -> {
+            final DenseMatrix64F ret = new DenseMatrix64F(arg1.getNumRows(), arg2.getNumCols());
+            CommonOps.multAdd(arg1, arg2, ret);
+            return ret;
         };
     }
 

@@ -60,13 +60,25 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
+    @FunctionalInterface
+    public interface ProducingUnaryOperation<I, T extends I> {
+
+        public abstract I operate(I arg);
+
+        @SuppressWarnings("unchecked")
+        default Object execute(final Object arg) {
+            return this.operate((I) arg);
+        }
+
+    }
+
     public static void run(final Class<?> clazz) throws RunnerException {
         new Runner(MatrixBenchmarkOperation.options().include(clazz.getSimpleName()).build()).run();
     }
 
     protected static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(7).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx6g");
+        return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(9).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
+                .warmupTime(new TimeValue(1L, TimeUnit.MINUTES)).timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx6g");
     }
 
     protected MatrixBenchmarkLibrary<?, ?> contestant;
@@ -83,7 +95,7 @@ public abstract class MatrixBenchmarkOperation {
      */
     public abstract void verify() throws BenchmarkRequirementsException;
 
-    protected final Object makeEmpty(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
+    protected final Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
         return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
     }
 
@@ -97,6 +109,10 @@ public abstract class MatrixBenchmarkOperation {
         return tmpSupplier.get();
     }
 
+    /**
+     * @deprecated Use {@link #makeSPD(int, MatrixBenchmarkLibrary)} instead
+     */
+    @Deprecated
     protected double[][] makeSPD(final int size) {
         return MatrixUtils.makeSPD(size).toRawCopy2D();
     }

@@ -24,9 +24,8 @@ package org.ojalgo.benchmark.matrix.library;
 import org.ojalgo.RecoverableCondition;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
@@ -50,11 +49,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
             }
 
         };
-    }
-
-    @Override
-    public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getFillByMultiplyingOperation() {
-        return (ret, arg1, arg2) -> ret.fillByMultiplying(arg1, arg2);
     }
 
     @Override
@@ -106,23 +100,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
-        return new LeftTransposedMultiplier() {
-
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
-
-                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
-
-                retVal.fillByMultiplying(left.transpose(), right);
-
-                return retVal;
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -142,49 +119,13 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public Square3Multiply.TaskDefinition<MatrixStore<Double>> getMatrixMultiplier() {
-        return new Square3Multiply.TaskDefinition<MatrixStore<Double>>() {
-
-            @Override
-            public MatrixStore<Double> multiply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
-
-                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
-
-                retVal.fillByMultiplying(left, right);
-
-                return retVal;
-            }
-
-        };
+    public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
+        return (ret, arg1, arg2) -> ret.fillByMultiplying(arg1, arg2);
     }
 
     @Override
-    public TaskDefinition<MatrixStore<Double>, PrimitiveDenseStore> getMatrixMultiplier2() {
-        return new TaskDefinition<MatrixStore<Double>, PrimitiveDenseStore>() {
-
-            public MatrixStore<Double> multiply(final MatrixStore<Double> left, final MatrixStore<Double> right, final PrimitiveDenseStore product) {
-                left.multiply(right, product);
-                return product;
-            }
-
-        };
-    }
-
-    @Override
-    public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.RightTransposedMultiplier getRightTransposedMultiplier() {
-        return new RightTransposedMultiplier() {
-
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> left, final MatrixStore<Double> right) {
-
-                final PrimitiveDenseStore retVal = PrimitiveDenseStore.FACTORY.makeZero(left.countRows(), right.countColumns());
-
-                retVal.fillByMultiplying(left, right.transpose());
-
-                return retVal;
-            }
-
-        };
+    public ProducingBinaryOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationMultiplyToProduce() {
+        return (arg1, arg2) -> arg1.multiply(arg2);
     }
 
     @Override

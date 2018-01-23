@@ -23,9 +23,8 @@ package org.ojalgo.benchmark.matrix.library;
 
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
-import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -51,11 +50,6 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
                 }
             }
         };
-    }
-
-    @Override
-    public MutatingBinaryOperation<Matrix, Matrix> getFillByMultiplyingOperation() {
-        return (ret, arg1, arg2) -> arg1.mult(arg2, ret);
     }
 
     @Override
@@ -110,21 +104,6 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public LeftTransposedMultiplier getLeftTransposedMultiplier() {
-        return new LeftTransposedMultiplier() {
-
-            @Override
-            public Matrix apply(final Matrix left, final Matrix right) {
-
-                final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
-
-                return left.transBmult(right, retVal);
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<Matrix, Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -144,35 +123,17 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public Square3Multiply.TaskDefinition<Matrix> getMatrixMultiplier() {
-        return new Square3Multiply.TaskDefinition<Matrix>() {
-
-            @Override
-            public Matrix multiply(final Matrix left, final Matrix right) {
-
-                final DenseMatrix retVal = new DenseMatrix(left.numRows(), right.numColumns());
-
-                return left.mult(right, retVal);
-            }
-
-        };
+    public MutatingBinaryOperation<Matrix, Matrix> getOperationFillByMultiplying() {
+        return (ret, arg1, arg2) -> arg1.mult(arg2, ret);
     }
 
     @Override
-    public TaskDefinition<Matrix, Matrix> getMatrixMultiplier2() {
-        return new TaskDefinition<Matrix, Matrix>() {
+    public ProducingBinaryOperation<Matrix, Matrix> getOperationMultiplyToProduce() {
 
-            public Matrix multiply(final Matrix left, final Matrix right, final Matrix product) {
-                return left.mult(right, product);
-            }
-
+        return (arg1, arg2) -> {
+            final DenseMatrix ret = new DenseMatrix(arg1.numRows(), arg1.numColumns());
+            return arg1.mult(arg2, ret);
         };
-    }
-
-    @Override
-    public MatrixBenchmarkLibrary<Matrix, Matrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
