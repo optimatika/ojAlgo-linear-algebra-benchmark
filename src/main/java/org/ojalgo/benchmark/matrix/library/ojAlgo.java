@@ -26,6 +26,7 @@ import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
 import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
@@ -198,6 +199,12 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     protected MatrixStore<Double> convertTo(final double[][] raw) {
         return PrimitiveDenseStore.FACTORY.rows(raw);
+    }
+
+    @Override
+    public TaskDefinition<MatrixStore<Double>> getMatrixMultiplier2() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

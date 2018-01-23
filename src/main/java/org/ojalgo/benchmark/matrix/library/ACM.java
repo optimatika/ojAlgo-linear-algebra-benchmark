@@ -32,6 +32,7 @@ import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
 import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 
 /**
  * Apache Commons Math
@@ -176,6 +177,12 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     @Override
     protected RealMatrix convertTo(final double[][] raw) {
         return new Array2DRowRealMatrix(raw);
+    }
+
+    @Override
+    public TaskDefinition<RealMatrix> getMatrixMultiplier2() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

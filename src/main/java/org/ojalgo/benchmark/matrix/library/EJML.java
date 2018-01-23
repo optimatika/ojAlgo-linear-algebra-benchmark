@@ -34,6 +34,7 @@ import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
 import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 
 /**
  * Efficient Java Matrix Library
@@ -249,6 +250,12 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
     @Override
     protected DenseMatrix64F convertTo(final double[][] raw) {
         return new DenseMatrix64F(raw);
+    }
+
+    @Override
+    public TaskDefinition<DenseMatrix64F> getMatrixMultiplier2() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -34,6 +34,7 @@ import org.ojalgo.benchmark.matrix.library.MTJ;
 import org.ojalgo.benchmark.matrix.library.ojAlgo;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
 import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply2;
 
 public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
@@ -149,6 +150,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
     public abstract Square3Multiply.TaskDefinition<I> getMatrixMultiplier();
+
+    public abstract Square3Multiply2.TaskDefinition<I> getMatrixMultiplier2();
 
     public abstract MutatingBinaryOperation<I, T> getFillByMultiplyingOperation();
 

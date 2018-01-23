@@ -25,6 +25,7 @@ import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
 import org.ojalgo.benchmark.matrix.operation.Square3Multiply;
+import org.ojalgo.benchmark.matrix.operation.Square3Multiply2.TaskDefinition;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -209,6 +210,12 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     @Override
     protected Matrix convertTo(final double[][] raw) {
         return new DenseMatrix(raw);
+    }
+
+    @Override
+    public TaskDefinition<Matrix> getMatrixMultiplier2() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

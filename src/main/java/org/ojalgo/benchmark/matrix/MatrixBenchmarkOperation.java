@@ -83,6 +83,10 @@ public abstract class MatrixBenchmarkOperation {
      */
     public abstract void verify() throws BenchmarkRequirementsException;
 
+    protected final Object makeEmpty(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
+        return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
+    }
+
     protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
         final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
         for (int j = 0; j < numberOfColumns; j++) {
