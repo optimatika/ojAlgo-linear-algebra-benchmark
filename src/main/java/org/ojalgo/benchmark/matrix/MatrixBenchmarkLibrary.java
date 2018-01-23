@@ -151,7 +151,7 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract Square3Multiply.TaskDefinition<I> getMatrixMultiplier();
 
-    public abstract Square3Multiply2.TaskDefinition<I> getMatrixMultiplier2();
+    public abstract Square3Multiply2.TaskDefinition<I, T> getMatrixMultiplier2();
 
     public abstract MutatingBinaryOperation<I, T> getFillByMultiplyingOperation();
 

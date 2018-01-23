@@ -159,6 +159,18 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
+    public TaskDefinition<MatrixStore<Double>, PrimitiveDenseStore> getMatrixMultiplier2() {
+        return new TaskDefinition<MatrixStore<Double>, PrimitiveDenseStore>() {
+
+            public MatrixStore<Double> multiply(final MatrixStore<Double> left, final MatrixStore<Double> right, final PrimitiveDenseStore product) {
+                left.multiply(right, product);
+                return product;
+            }
+
+        };
+    }
+
+    @Override
     public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.RightTransposedMultiplier getRightTransposedMultiplier() {
         return new RightTransposedMultiplier() {
 
@@ -199,12 +211,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     protected MatrixStore<Double> convertTo(final double[][] raw) {
         return PrimitiveDenseStore.FACTORY.rows(raw);
-    }
-
-    @Override
-    public TaskDefinition<MatrixStore<Double>> getMatrixMultiplier2() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

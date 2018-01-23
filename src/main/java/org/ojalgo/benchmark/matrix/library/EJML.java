@@ -198,6 +198,18 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
     }
 
     @Override
+    public TaskDefinition<DenseMatrix64F, DenseMatrix64F> getMatrixMultiplier2() {
+        return new TaskDefinition<DenseMatrix64F, DenseMatrix64F>() {
+
+            public DenseMatrix64F multiply(final DenseMatrix64F left, final DenseMatrix64F right, final DenseMatrix64F product) {
+                CommonOps.mult(left, right, product);
+                return product;
+            }
+
+        };
+    }
+
+    @Override
     public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.RightTransposedMultiplier getRightTransposedMultiplier() {
         return new RightTransposedMultiplier() {
 
@@ -250,12 +262,6 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
     @Override
     protected DenseMatrix64F convertTo(final double[][] raw) {
         return new DenseMatrix64F(raw);
-    }
-
-    @Override
-    public TaskDefinition<DenseMatrix64F> getMatrixMultiplier2() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

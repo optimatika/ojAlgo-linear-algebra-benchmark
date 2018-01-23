@@ -159,6 +159,17 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
+    public TaskDefinition<Matrix, Matrix> getMatrixMultiplier2() {
+        return new TaskDefinition<Matrix, Matrix>() {
+
+            public Matrix multiply(final Matrix left, final Matrix right, final Matrix product) {
+                return left.mult(right, product);
+            }
+
+        };
+    }
+
+    @Override
     public MatrixBenchmarkLibrary<Matrix, Matrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
         // TODO Auto-generated method stub
         return null;
@@ -210,12 +221,6 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     @Override
     protected Matrix convertTo(final double[][] raw) {
         return new DenseMatrix(raw);
-    }
-
-    @Override
-    public TaskDefinition<Matrix> getMatrixMultiplier2() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

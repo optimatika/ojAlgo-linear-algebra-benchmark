@@ -145,6 +145,17 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
+    public TaskDefinition<RealMatrix, RealMatrix> getMatrixMultiplier2() {
+        return new TaskDefinition<RealMatrix, RealMatrix>() {
+
+            public RealMatrix multiply(final RealMatrix left, final RealMatrix right, final RealMatrix product) {
+                return left.multiply(right);
+            }
+
+        };
+    }
+
+    @Override
     public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.RightTransposedMultiplier getRightTransposedMultiplier() {
         // TODO Auto-generated method stub
         return null;
@@ -177,12 +188,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     @Override
     protected RealMatrix convertTo(final double[][] raw) {
         return new Array2DRowRealMatrix(raw);
-    }
-
-    @Override
-    public TaskDefinition<RealMatrix> getMatrixMultiplier2() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }
