@@ -19,12 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix;
+package org.ojalgo.benchmark;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
-import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.matrix.MatrixUtils;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.runner.Runner;
@@ -72,14 +71,15 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
+    static final TimeValue ONE_MINUTE = new TimeValue(1L, TimeUnit.MINUTES);
+
     public static void run(final Class<?> clazz) throws RunnerException {
         new Runner(MatrixBenchmarkOperation.options().include(clazz.getSimpleName()).build()).run();
     }
 
     protected static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(7).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .warmupTime(new TimeValue(1L, TimeUnit.MINUTES)).measurementTime(new TimeValue(1L, TimeUnit.MINUTES)).timeout(new TimeValue(1L, TimeUnit.HOURS))
-                .jvmArgs("-server", "-Xmx6g");
+        return new OptionsBuilder().forks(1).warmupIterations(7).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
+                .warmupTime(ONE_MINUTE).measurementTime(ONE_MINUTE).timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx6g");
     }
 
     protected MatrixBenchmarkLibrary<?, ?> contestant;
@@ -95,10 +95,6 @@ public abstract class MatrixBenchmarkOperation {
      * implementation with <code>@TearDown(Level.Iteration)</code>
      */
     public abstract void verify() throws BenchmarkRequirementsException;
-
-    protected final Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
-        return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
-    }
 
     protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
         final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
@@ -136,6 +132,10 @@ public abstract class MatrixBenchmarkOperation {
         }
 
         return tmpSupplier.get();
+    }
+
+    protected final Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
+        return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
     }
 
     protected void verifyStateless(final Class<?> clazz) throws BenchmarkRequirementsException {

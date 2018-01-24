@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix;
+package org.ojalgo.benchmark;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,13 +27,13 @@ import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.matrix.library.ACM;
-import org.ojalgo.benchmark.matrix.library.EJML;
-import org.ojalgo.benchmark.matrix.library.MTJ;
-import org.ojalgo.benchmark.matrix.library.ojAlgo;
-import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
+import org.ojalgo.benchmark.lab.DecomposeEigen;
+import org.ojalgo.benchmark.lab.library.ACM;
+import org.ojalgo.benchmark.lab.library.EJML;
+import org.ojalgo.benchmark.lab.library.MTJ;
+import org.ojalgo.benchmark.lab.library.ojAlgo;
 
 public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 

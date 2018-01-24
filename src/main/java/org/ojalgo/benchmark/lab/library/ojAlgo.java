@@ -19,13 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.matrix.library;
+package org.ojalgo.benchmark.lab.library;
 
 import org.ojalgo.RecoverableCondition;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
-import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
+import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
+import org.ojalgo.benchmark.lab.DecomposeEigen;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
