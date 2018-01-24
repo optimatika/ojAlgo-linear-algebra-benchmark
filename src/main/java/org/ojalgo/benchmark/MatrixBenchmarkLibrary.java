@@ -128,10 +128,14 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract ProducingBinaryOperation<I, I> getOperationMultiplyToProduce();
 
+    public abstract MutatingBinaryOperation<I, T> getOperationSolveGeneral(int dim);
+
     public abstract SingularDecomposer getSingularDecomposer();
 
     protected abstract double[][] convertFrom(I matrix);
 
     protected abstract I convertTo(double[][] raw);
+
+    protected abstract T copy(I source, T destination);
 
 }

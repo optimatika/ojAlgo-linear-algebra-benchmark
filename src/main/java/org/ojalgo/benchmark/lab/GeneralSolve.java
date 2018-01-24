@@ -142,20 +142,21 @@ public class GeneralSolve extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(GeneralSolve.class);
     }
 
-    Object body;
     @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000"/* , "2000", "5000", "10000" */ })
     public int dim;
-
     @Param({ "EJML", "MTJ", "ojAlgo" })
     public String library;
 
-    private MatrixBenchmarkLibrary<?, ?>.GeneralSolver myGeneralSolver;
+    private MutatingBinaryOperation<?, ?> myOperation;
+
+    Object body;
     Object rhs;
+    Object solution;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myGeneralSolver.solve(body, rhs);
+        return myOperation.execute(solution, body, rhs);
     }
 
     @Setup
@@ -163,17 +164,18 @@ public class GeneralSolve extends MatrixBenchmarkOperation {
 
         contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
 
-        myGeneralSolver = contestant.getGeneralSolver();
+        myOperation = contestant.getOperationSolveGeneral(dim);
 
         body = this.makeRandom(dim, dim, contestant);
         rhs = this.makeRandom(dim, 1, contestant);
+        solution = this.makeZero(dim, 1, contestant);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myGeneralSolver.getClass());
+        this.verifyStateless(myOperation.getClass());
 
     }
 

@@ -116,7 +116,7 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
 
     @Override
     public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
-        return (ret, arg1, arg2) -> ret.setSubMatrix(arg1.multiply(arg2).getData(), 0, 0);
+        return (ret, arg1, arg2) -> this.copy(arg1.multiply(arg2), ret);
     }
 
     @Override
@@ -151,6 +151,25 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     @Override
     protected RealMatrix convertTo(final double[][] raw) {
         return new Array2DRowRealMatrix(raw);
+    }
+
+    @Override
+    public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationSolveGeneral(int dim) {
+        return (sol, body, rhs) -> {
+            final LUDecomposition lu = new LUDecomposition(body);
+            final RealMatrix tmp = lu.getSolver().solve(rhs);
+            this.copy(tmp, sol);
+        };
+    }
+
+    @Override
+    protected RealMatrix copy(final RealMatrix source, final RealMatrix destination) {
+        for (int i = 0; i < source.getRowDimension(); i++) {
+            for (int j = 0; j < destination.getColumnDimension(); j++) {
+                destination.setEntry(i, j, source.getEntry(i, j));
+            }
+        }
+        return destination;
     }
 
 }

@@ -22,6 +22,7 @@
 package org.ojalgo.benchmark.lab.library;
 
 import org.ojalgo.RecoverableCondition;
+import org.ojalgo.access.Structure2D;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
@@ -129,6 +130,45 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
+    public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationSolveGeneral(final int dim) {
+
+        final Structure2D bodyShape = new Structure2D() {
+
+            public long countColumns() {
+                return dim;
+            }
+
+            public long countRows() {
+                return dim;
+            }
+
+        };
+
+        final Structure2D rhsShape = new Structure2D() {
+
+            public long countColumns() {
+                return dim;
+            }
+
+            public long countRows() {
+                return dim;
+            }
+
+        };
+
+        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(bodyShape, rhsShape, false, false);
+
+        return (sol, body, rhs) -> {
+            try {
+                task.solve(body, rhs, sol);
+            } catch (final RecoverableCondition exception) {
+                exception.printStackTrace();
+            }
+        };
+
+    }
+
+    @Override
     public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
@@ -152,6 +192,12 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     protected MatrixStore<Double> convertTo(final double[][] raw) {
         return PrimitiveDenseStore.FACTORY.rows(raw);
+    }
+
+    @Override
+    protected PrimitiveDenseStore copy(final MatrixStore<Double> source, final PrimitiveDenseStore destination) {
+        source.supplyTo(destination);
+        return destination;
     }
 
 }

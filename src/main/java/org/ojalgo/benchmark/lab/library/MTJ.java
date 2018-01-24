@@ -137,6 +137,11 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
+    public MutatingBinaryOperation<Matrix, Matrix> getOperationSolveGeneral(int dim) {
+        return (sol, body, rhs) -> body.solve(rhs, sol);
+    }
+
+    @Override
     public MatrixBenchmarkLibrary<Matrix, Matrix>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
@@ -182,6 +187,12 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     @Override
     protected Matrix convertTo(final double[][] raw) {
         return new DenseMatrix(raw);
+    }
+
+    @Override
+    protected Matrix copy(final Matrix source, final Matrix destination) {
+        destination.set(source);
+        return destination;
     }
 
 }

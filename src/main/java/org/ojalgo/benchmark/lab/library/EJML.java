@@ -23,6 +23,8 @@ package org.ojalgo.benchmark.lab.library;
 
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
+import org.ejml.interfaces.linsol.LinearSolverDense;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
@@ -117,6 +119,17 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public MutatingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationSolveGeneral(final int dim) {
+        final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(dim);
+        return (sol, body, rhs) -> {
+            if (!solver.setA(body)) {
+                throw new RuntimeException();
+            }
+            solver.solve(rhs, sol);
+        };
+    }
+
+    @Override
     public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
@@ -144,6 +157,12 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     protected DMatrixRMaj convertTo(final double[][] raw) {
         return new DMatrixRMaj(raw);
+    }
+
+    @Override
+    protected DMatrixRMaj copy(final DMatrixRMaj source, final DMatrixRMaj destination) {
+        System.arraycopy(source.data, 0, destination.data, 0, source.data.length);
+        return destination;
     }
 
 }
