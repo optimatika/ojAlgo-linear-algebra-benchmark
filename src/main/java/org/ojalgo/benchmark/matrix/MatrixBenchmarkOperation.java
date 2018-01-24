@@ -77,8 +77,9 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     protected static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(9).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .warmupTime(new TimeValue(1L, TimeUnit.MINUTES)).timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx6g");
+        return new OptionsBuilder().forks(1).measurementIterations(3).warmupIterations(7).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
+                .warmupTime(new TimeValue(1L, TimeUnit.MINUTES)).measurementTime(new TimeValue(1L, TimeUnit.MINUTES)).timeout(new TimeValue(1L, TimeUnit.HOURS))
+                .jvmArgs("-server", "-Xmx6g");
     }
 
     protected MatrixBenchmarkLibrary<?, ?> contestant;

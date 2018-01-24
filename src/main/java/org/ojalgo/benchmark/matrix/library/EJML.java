@@ -21,15 +21,8 @@
  */
 package org.ojalgo.benchmark.matrix.library;
 
-import org.ejml.alg.dense.linsol.LinearSolverSafe;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.LinearSolverFactory;
-import org.ejml.interfaces.decomposition.EigenDecomposition;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.interfaces.linsol.LinearSolver;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.EigenOps;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.matrix.MatrixBenchmarkOperation.ProducingBinaryOperation;
@@ -38,28 +31,16 @@ import org.ojalgo.benchmark.matrix.operation.DecomposeEigen;
 /**
  * Efficient Java Matrix Library
  */
-public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F> {
+public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
-    public DecomposeEigen.TaskDefinition<DenseMatrix64F> getEigenDecomposer() {
-        return new DecomposeEigen.TaskDefinition<DenseMatrix64F>() {
+    public DecomposeEigen.TaskDefinition<DMatrixRMaj> getEigenDecomposer() {
+        return new DecomposeEigen.TaskDefinition<DMatrixRMaj>() {
 
-            @Override
-            public DenseMatrix64F decompose(final DenseMatrix64F matrix) {
-
-                final EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(matrix.numCols, true, true);
-
-                if (!DecompositionFactory.decomposeSafe(eig, matrix)) {
-                    throw new RuntimeException("Decomposition failed");
-                }
-
-                eig.getEigenvalue(0);
-                eig.getEigenVector(0);
-
-                return EigenOps.createMatrixV(eig);
-
+            public DMatrixRMaj decompose(final DMatrixRMaj matrix) {
+                // TODO Auto-generated method stub
+                return null;
             }
-
         };
     }
 
@@ -68,21 +49,9 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
         return new GeneralSolver() {
 
             @Override
-            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
-
-                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
-
-                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
-                // make sure the input is not modified
-                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
-
-                if (!solver.setA(body)) {
-                    throw new IllegalArgumentException("Bad A");
-                }
-
-                solver.solve(rhs, result);
-
-                return result;
+            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
+                // TODO Auto-generated method stub
+                return null;
             }
 
         };
@@ -93,21 +62,9 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
         return new HermitianSolver() {
 
             @Override
-            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
-
-                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
-
-                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(body.numRows);
-
-                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
-
-                if (!solver.setA(body)) {
-                    throw new IllegalArgumentException("Bad A");
-                }
-
-                solver.solve(rhs, result);
-
-                return result;
+            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
+                // TODO Auto-generated method stub
+                return null;
             }
 
         };
@@ -118,33 +75,21 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
         return new LeastSquaresSolver() {
 
             @Override
-            public DenseMatrix64F apply(final DenseMatrix64F body, final DenseMatrix64F rhs) {
-
-                final DenseMatrix64F result = new DenseMatrix64F(body.numCols, rhs.numCols);
-
-                LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.leastSquares(body.numRows, body.numCols);
-
-                solver = new LinearSolverSafe<DenseMatrix64F>(solver);
-
-                if (!solver.setA(body)) {
-                    throw new IllegalArgumentException("Bad A");
-                }
-
-                solver.solve(rhs, result);
-
-                return result;
+            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
+                // TODO Auto-generated method stub
+                return null;
             }
 
         };
     }
 
     @Override
-    public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
-            private final DenseMatrix64F myMatrix = new DenseMatrix64F(numberOfRows, numberOfColumns);
+            private final DMatrixRMaj myMatrix = new DMatrixRMaj(numberOfRows, numberOfColumns);
 
-            public DenseMatrix64F get() {
+            public DMatrixRMaj get() {
                 return myMatrix;
             }
 
@@ -158,43 +103,35 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
     }
 
     @Override
-    public MutatingBinaryOperation<DenseMatrix64F, DenseMatrix64F> getOperationFillByMultiplying() {
-        return (ret, arg1, arg2) -> CommonOps.multAdd(arg1, arg2, ret);
+    public MutatingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
+        return (ret, arg1, arg2) -> CommonOps_DDRM.mult(arg1, arg2, ret);
     }
 
     @Override
-    public ProducingBinaryOperation<DenseMatrix64F, DenseMatrix64F> getOperationMultiplyToProduce() {
+    public ProducingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationMultiplyToProduce() {
         return (arg1, arg2) -> {
-            final DenseMatrix64F ret = new DenseMatrix64F(arg1.getNumRows(), arg2.getNumCols());
-            CommonOps.multAdd(arg1, arg2, ret);
+            final DMatrixRMaj ret = new DMatrixRMaj(arg1.getNumRows(), arg2.getNumCols());
+            CommonOps_DDRM.mult(arg1, arg2, ret);
             return ret;
         };
     }
 
     @Override
-    public MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>.SingularDecomposer getSingularDecomposer() {
+    public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.SingularDecomposer getSingularDecomposer() {
         return new SingularDecomposer() {
 
             @Override
-            public DenseMatrix64F apply(final DenseMatrix64F matrix) {
-
-                final SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(matrix.numRows, matrix.numCols, true, true, false);
-
-                if (!DecompositionFactory.decomposeSafe(svd, matrix)) {
-                    throw new RuntimeException("Decomposition failed");
-                }
-
-                svd.getU(null, false);
-                svd.getW(null);
-                return svd.getV(null, false);
+            public DMatrixRMaj apply(final DMatrixRMaj matrix) {
+                // TODO Auto-generated method stub
+                return null;
             }
 
         };
     }
 
     @Override
-    protected double[][] convertFrom(final DenseMatrix64F matrix) {
-        final double[][] retVal = new double[matrix.numRows][matrix.numCols];
+    protected double[][] convertFrom(final DMatrixRMaj matrix) {
+        final double[][] retVal = new double[matrix.getNumRows()][matrix.getNumCols()];
         for (int i = 0; i < retVal.length; i++) {
             final double[] tmpRow = retVal[i];
             for (int j = 0; j < tmpRow.length; j++) {
@@ -205,8 +142,8 @@ public class EJML extends MatrixBenchmarkLibrary<DenseMatrix64F, DenseMatrix64F>
     }
 
     @Override
-    protected DenseMatrix64F convertTo(final double[][] raw) {
-        return new DenseMatrix64F(raw);
+    protected DMatrixRMaj convertTo(final double[][] raw) {
+        return new DMatrixRMaj(raw);
     }
 
 }

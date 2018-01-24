@@ -17,8 +17,8 @@
         </dependency>
         <dependency>
             <groupId>org.ejml</groupId>
-            <artifactId>all</artifactId>
-            <version>0.30</version>
+            <artifactId>ejml-all</artifactId>
+            <version>0.33</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
