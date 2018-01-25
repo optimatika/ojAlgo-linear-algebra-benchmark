@@ -85,51 +85,44 @@ import org.openjdk.jmh.runner.RunnerException;
 @State(Scope.Benchmark)
 public class LeastSquaresSolve extends MatrixBenchmarkOperation {
 
-    @FunctionalInterface
-    public static interface TaskDefinition<T> {
-
-        int doThThing();
-
-    }
-
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(LeastSquaresSolve.class);
     }
 
-    Object body;
-    @Param({ "2", "3", "4", "5"/*
-                                * , "10", "20", "50", "100", "200", "500", "1000" , "2000", "5000", "10000"
-                                */ })
+    @Param({ "10", "100", "1000" })
     public int dim;
 
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    public String lib;
 
-    private MatrixBenchmarkLibrary<?, ?>.LeastSquaresSolver myLeastSquaresSolver;
+    private MatrixBenchmarkLibrary<?, ?>.LeastSquaresSolver myOperation;
+
+    Object body;
     Object rhs;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myLeastSquaresSolver.solve(body, rhs);
+        return myOperation.solve(body, rhs);
     }
 
+    @Override
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
+        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myLeastSquaresSolver = contestant.getLeastSquaresSolver();
+        myOperation = library.getLeastSquaresSolver();
 
-        body = this.makeRandom(dim + dim, dim, contestant);
-        rhs = this.makeRandom(dim + dim, 1, contestant);
+        body = this.makeRandom(dim + dim, dim, library);
+        rhs = this.makeRandom(dim + dim, 1, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myLeastSquaresSolver.getClass());
+        // this.verifyStateless(myLeastSquaresSolver.getClass());
 
     }
 

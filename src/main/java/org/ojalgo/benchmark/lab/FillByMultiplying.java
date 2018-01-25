@@ -170,15 +170,11 @@ public class FillByMultiplying extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
     }
 
-    //    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024",
-    //            "2000"/*
-    //                   * , "2048", "4096", "5000", "8192", "10000"
-    //                   */ })
-    @Param({ "500", "1000" })
+    @Param({ "10", "100", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
-    public String library;
+    public String lib;
 
     private MutatingBinaryOperation<?, ?> myOperation;
 
@@ -189,26 +185,27 @@ public class FillByMultiplying extends MatrixBenchmarkOperation {
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(product, left, right);
+        return myOperation.execute(left, right, product);
     }
 
+    @Override
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
+        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = contestant.getOperationFillByMultiplying();
+        myOperation = library.getOperationFillByMultiplying();
 
-        left = this.makeRandom(dim, dim, contestant);
-        right = this.makeRandom(dim, dim, contestant);
-        product = this.makeZero(dim, dim, contestant);
+        left = this.makeRandom(dim, dim, library);
+        right = this.makeRandom(dim, dim, library);
+        product = this.makeZero(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myOperation.getClass());
+        // this.verifyStateless(myOperation.getClass());
 
     }
 

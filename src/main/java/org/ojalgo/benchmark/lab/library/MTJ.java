@@ -24,50 +24,16 @@ package org.ojalgo.benchmark.lab.library;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.lab.DecomposeEigen;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
-import no.uib.cipr.matrix.NotConvergedException;
-import no.uib.cipr.matrix.SVD;
 import no.uib.cipr.matrix.SymmDenseEVD;
 
 /**
  * Matrix Toolkits Java
  */
 public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
-
-    @Override
-    public DecomposeEigen.TaskDefinition<Matrix> getEigenDecomposer() {
-        return new DecomposeEigen.TaskDefinition<Matrix>() {
-
-            @Override
-            public Matrix decompose(final Matrix matrix) {
-                try {
-                    return SymmDenseEVD.factorize(matrix).getEigenvectors();
-                } catch (final NotConvergedException nce) {
-                    throw new RuntimeException(nce);
-                }
-            }
-        };
-    }
-
-    @Override
-    public GeneralSolver getGeneralSolver() {
-        return new GeneralSolver() {
-
-            @Override
-            public Matrix apply(final Matrix body, final Matrix rhs) {
-
-                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
-
-                body.solve(rhs, result);
-
-                return result;
-            }
-
-        };
-    }
 
     @Override
     public HermitianSolver getHermitianSolver() {
@@ -124,7 +90,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
 
     @Override
     public MutatingBinaryOperation<Matrix, Matrix> getOperationFillByMultiplying() {
-        return (ret, arg1, arg2) -> arg1.mult(arg2, ret);
+        return (arg1, arg2, ret) -> arg1.mult(arg2, ret);
     }
 
     @Override
@@ -137,39 +103,8 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public MutatingBinaryOperation<Matrix, Matrix> getOperationSolveGeneral(int dim) {
-        return (sol, body, rhs) -> body.solve(rhs, sol);
-    }
-
-    @Override
-    public MatrixBenchmarkLibrary<Matrix, Matrix>.SingularDecomposer getSingularDecomposer() {
-        return new SingularDecomposer() {
-
-            @Override
-            public Matrix apply(final Matrix matrix) {
-
-                final no.uib.cipr.matrix.SVD svd = new no.uib.cipr.matrix.SVD(matrix.numRows(), matrix.numColumns());
-                final DenseMatrix tmp = new DenseMatrix(matrix);
-
-                DenseMatrix U = null;
-                double[] S = null;
-                DenseMatrix Vt = null;
-
-                try {
-
-                    tmp.set(matrix);
-                    final SVD s = svd.factor(tmp);
-                    U = s.getU();
-                    S = s.getS();
-                    Vt = s.getVt();
-                } catch (final NotConvergedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                return Vt;
-            }
-
-        };
+    public MutatingBinaryOperation<Matrix, Matrix> getOperationSolveGeneral(final int dim) {
+        return (body, rhs, sol) -> body.solve(rhs, sol);
     }
 
     @Override
@@ -193,6 +128,16 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     protected Matrix copy(final Matrix source, final Matrix destination) {
         destination.set(source);
         return destination;
+    }
+
+    @Override
+    public ProducingUnaryOperation<Matrix, Matrix> getOperationEigenvectors(final int dim) {
+        return (input) -> SymmDenseEVD.factorize(input).getEigenvectors();
+    }
+
+    @Override
+    public ProducingUnaryOperation<Matrix, Matrix> getOperationPseudoinverse(final int dim) {
+        throw new UnsupportedOperationException();
     }
 
 }

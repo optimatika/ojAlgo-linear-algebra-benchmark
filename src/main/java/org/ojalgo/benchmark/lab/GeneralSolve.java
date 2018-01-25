@@ -131,21 +131,14 @@ GeneralSolve.execute   1000     ojAlgo  thrpt   15        2.199 ±      0.048  o
 @State(Scope.Benchmark)
 public class GeneralSolve extends MatrixBenchmarkOperation {
 
-    @FunctionalInterface
-    public static interface TaskDefinition<T> {
-
-        int doThThing();
-
-    }
-
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(GeneralSolve.class);
     }
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000"/* , "2000", "5000", "10000" */ })
+    @Param({ "10", "100", "1000" })
     public int dim;
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    public String lib;
 
     private MutatingBinaryOperation<?, ?> myOperation;
 
@@ -156,26 +149,27 @@ public class GeneralSolve extends MatrixBenchmarkOperation {
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(solution, body, rhs);
+        return myOperation.execute(body, rhs, solution);
     }
 
+    @Override
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
+        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = contestant.getOperationSolveGeneral(dim);
+        myOperation = library.getOperationSolveGeneral(dim);
 
-        body = this.makeRandom(dim, dim, contestant);
-        rhs = this.makeRandom(dim, 1, contestant);
-        solution = this.makeZero(dim, 1, contestant);
+        body = this.makeRandom(dim, dim, library);
+        rhs = this.makeRandom(dim, 1, library);
+        solution = this.makeZero(dim, 1, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myOperation.getClass());
+        // this.verifyStateless(myOperation.getClass());
 
     }
 

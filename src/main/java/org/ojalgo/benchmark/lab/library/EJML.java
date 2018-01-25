@@ -23,41 +23,19 @@ package org.ojalgo.benchmark.lab.library;
 
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
+import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 import org.ejml.interfaces.linsol.LinearSolverDense;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.lab.DecomposeEigen;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
 
 /**
  * Efficient Java Matrix Library
  */
 public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
-
-    @Override
-    public DecomposeEigen.TaskDefinition<DMatrixRMaj> getEigenDecomposer() {
-        return new DecomposeEigen.TaskDefinition<DMatrixRMaj>() {
-
-            public DMatrixRMaj decompose(final DMatrixRMaj matrix) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
-    }
-
-    @Override
-    public GeneralSolver getGeneralSolver() {
-        return new GeneralSolver() {
-
-            @Override
-            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        };
-    }
 
     @Override
     public HermitianSolver getHermitianSolver() {
@@ -105,8 +83,17 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public ProducingUnaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationEigenvectors(final int dim) {
+        final EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
+        return (input) -> {
+            evd.decompose(input);
+            return evd.getEigenVector(0); // Only 1 vector - all other libraries return all vectors at once
+        };
+    }
+
+    @Override
     public MutatingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
-        return (ret, arg1, arg2) -> CommonOps_DDRM.mult(arg1, arg2, ret);
+        return (arg1, arg2, ret) -> CommonOps_DDRM.mult(arg1, arg2, ret);
     }
 
     @Override
@@ -119,26 +106,26 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public MutatingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationSolveGeneral(final int dim) {
-        final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(dim);
-        return (sol, body, rhs) -> {
-            if (!solver.setA(body)) {
+    public ProducingUnaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationPseudoinverse(final int dim) {
+        final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.pseudoInverse(true);
+        final DMatrixRMaj ret = new DMatrixRMaj(dim, dim);
+        return (matrix) -> {
+            if (!solver.setA(matrix)) {
                 throw new RuntimeException();
             }
-            solver.solve(rhs, sol);
+            solver.invert(ret);
+            return ret;
         };
     }
 
     @Override
-    public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.SingularDecomposer getSingularDecomposer() {
-        return new SingularDecomposer() {
-
-            @Override
-            public DMatrixRMaj apply(final DMatrixRMaj matrix) {
-                // TODO Auto-generated method stub
-                return null;
+    public MutatingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationSolveGeneral(final int dim) {
+        final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(dim);
+        return (body, rhs, sol) -> {
+            if (!solver.setA(body)) {
+                throw new RuntimeException();
             }
-
+            solver.solve(rhs, sol);
         };
     }
 

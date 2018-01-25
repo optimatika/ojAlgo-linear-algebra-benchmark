@@ -31,39 +31,12 @@ import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.lab.DecomposeEigen;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
 
 /**
  * Apache Commons Math
  */
 public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
-
-    @Override
-    public DecomposeEigen.TaskDefinition<RealMatrix> getEigenDecomposer() {
-        return new DecomposeEigen.TaskDefinition<RealMatrix>() {
-
-            public RealMatrix decompose(final RealMatrix matrix) {
-
-                final EigenDecomposition tmpEvD = new EigenDecomposition(matrix);
-
-                return tmpEvD.getV();
-            }
-        };
-    }
-
-    @Override
-    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.GeneralSolver getGeneralSolver() {
-        return new GeneralSolver() {
-
-            @Override
-            public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
-
-                final LUDecomposition tmpLU = new LUDecomposition(body);
-
-                return tmpLU.getSolver().solve(rhs);
-            }
-        };
-    }
 
     @Override
     public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.HermitianSolver getHermitianSolver() {
@@ -115,8 +88,16 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
+    public ProducingUnaryOperation<RealMatrix, RealMatrix> getOperationEigenvectors(final int dim) {
+        return (input) -> {
+            final EigenDecomposition evd = new EigenDecomposition(input);
+            return evd.getV();
+        };
+    }
+
+    @Override
     public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
-        return (ret, arg1, arg2) -> this.copy(arg1.multiply(arg2), ret);
+        return (arg1, arg2, ret) -> this.copy(arg1.multiply(arg2), ret);
     }
 
     @Override
@@ -125,21 +106,16 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.SingularDecomposer getSingularDecomposer() {
-        return new SingularDecomposer() {
+    public ProducingUnaryOperation<RealMatrix, RealMatrix> getOperationPseudoinverse(final int dim) {
+        return (matrix) -> new SingularValueDecomposition(matrix).getSolver().getInverse();
+    }
 
-            @Override
-            public RealMatrix apply(final RealMatrix matrix) {
-
-                final SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
-
-                final RealMatrix U = svd.getU();
-                final RealMatrix S = svd.getS();
-                final RealMatrix V = svd.getV();
-
-                return svd.getS();
-            }
-
+    @Override
+    public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationSolveGeneral(final int dim) {
+        return (body, rhs, sol) -> {
+            final LUDecomposition lu = new LUDecomposition(body);
+            final RealMatrix tmp = lu.getSolver().solve(rhs);
+            this.copy(tmp, sol);
         };
     }
 
@@ -151,15 +127,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     @Override
     protected RealMatrix convertTo(final double[][] raw) {
         return new Array2DRowRealMatrix(raw);
-    }
-
-    @Override
-    public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationSolveGeneral(int dim) {
-        return (sol, body, rhs) -> {
-            final LUDecomposition lu = new LUDecomposition(body);
-            final RealMatrix tmp = lu.getSolver().solve(rhs);
-            this.copy(tmp, sol);
-        };
     }
 
     @Override

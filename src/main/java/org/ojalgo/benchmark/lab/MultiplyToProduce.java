@@ -328,14 +328,11 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(MultiplyToProduce.class);
     }
 
-    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024",
-            "2000"/*
-                   * , "2048", "4096", "5000", "8192", "10000"
-                   */ })
+    @Param({ "10", "100", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
-    public String library;
+    public String lib;
 
     private ProducingBinaryOperation<?, ?> myOperation;
 
@@ -348,22 +345,23 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
         return myOperation.execute(left, right);
     }
 
+    @Override
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
+        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = contestant.getOperationMultiplyToProduce();
+        myOperation = library.getOperationMultiplyToProduce();
 
-        left = this.makeRandom(dim, dim, contestant);
-        right = this.makeRandom(dim, dim, contestant);
+        left = this.makeRandom(dim, dim, library);
+        right = this.makeRandom(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myOperation.getClass());
+        // this.verifyStateless(myOperation.getClass());
 
     }
 

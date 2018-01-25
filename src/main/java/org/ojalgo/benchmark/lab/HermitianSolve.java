@@ -60,38 +60,40 @@ public class HermitianSolve extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(HermitianSolve.class);
     }
 
-    Object body;
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500", "1000"/* , "2000", "5000", "10000" */ })
+    @Param({ "10", "100", "1000" })
     public int dim;
 
-    @Param({ "EJML", "MTJ", "ojAlgo" })
-    public String library;
+    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    public String lib;
 
-    private MatrixBenchmarkLibrary<?, ?>.HermitianSolver myHermitianSolver;
+    private MatrixBenchmarkLibrary<?, ?>.HermitianSolver myOperation;
+
+    Object body;
     Object rhs;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myHermitianSolver.solve(body, rhs);
+        return myOperation.solve(body, rhs);
     }
 
+    @Override
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
+        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myHermitianSolver = contestant.getHermitianSolver();
+        myOperation = library.getHermitianSolver();
 
-        body = this.makeSPD(dim, contestant);
-        rhs = this.makeRandom(dim, 1, contestant);
+        body = this.makeSPD(dim, library);
+        rhs = this.makeRandom(dim, 1, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myHermitianSolver.getClass());
+        // this.verifyStateless(myHermitianSolver.getClass());
 
     }
 

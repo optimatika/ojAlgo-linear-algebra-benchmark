@@ -24,7 +24,6 @@ package org.ojalgo.benchmark;
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
-import org.ojalgo.matrix.MatrixUtils;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -37,11 +36,16 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface MutatingBinaryOperation<I, T extends I> {
 
-        public abstract void operate(T ret, I arg1, I arg2);
+        public abstract void operate(I arg1, I arg2, T ret) throws Exception;
 
         @SuppressWarnings("unchecked")
-        default Object execute(final Object ret, final Object arg1, final Object arg2) {
-            this.operate((T) ret, (I) arg1, (I) arg2);
+        default Object execute(final Object arg1, final Object arg2, final Object ret) {
+            try {
+                this.operate((I) arg1, (I) arg2, (T) ret);
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+                return null;
+            }
             return ret;
         }
 
@@ -50,45 +54,57 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface ProducingBinaryOperation<I, T extends I> {
 
-        public abstract I operate(I arg1, I arg2);
+        public abstract I operate(I arg1, I arg2) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg1, final Object arg2) {
-            return this.operate((I) arg1, (I) arg2);
+            try {
+                return this.operate((I) arg1, (I) arg2);
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+                return null;
+            }
         }
-
     }
 
     @FunctionalInterface
     public interface ProducingUnaryOperation<I, T extends I> {
 
-        public abstract I operate(I arg);
+        public abstract I operate(I arg) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg) {
-            return this.operate((I) arg);
+            try {
+                return this.operate((I) arg);
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+                return null;
+            }
         }
 
     }
 
-    static final TimeValue ONE_MINUTE = new TimeValue(1L, TimeUnit.MINUTES);
-
-    public static void run(final Class<?> clazz) throws RunnerException {
-        new Runner(MatrixBenchmarkOperation.options().include(clazz.getSimpleName()).build()).run();
-    }
+    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.MINUTES);
+    static final TimeValue TIMEOUT = new TimeValue(10L, TimeUnit.MINUTES);
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(7).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .warmupTime(ONE_MINUTE).measurementTime(ONE_MINUTE).timeout(new TimeValue(1L, TimeUnit.HOURS)).jvmArgs("-server", "-Xmx6g");
+                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-server", "-Xmx6g");
     }
 
-    protected MatrixBenchmarkLibrary<?, ?> contestant;
+    protected static void run(final Class<?> clazz) throws RunnerException {
+        new Runner(MatrixBenchmarkOperation.options().include(clazz.getSimpleName()).build()).run();
+    }
+
+    protected MatrixBenchmarkLibrary<?, ?> library;
 
     protected MatrixBenchmarkOperation() {
         super();
     }
 
     public abstract Object execute();
+
+    public abstract void setup();
 
     /**
      * Verify that the tested library/functionality conforms with the benchmark specifications. Annotate the
@@ -104,14 +120,6 @@ public abstract class MatrixBenchmarkOperation {
             }
         }
         return tmpSupplier.get();
-    }
-
-    /**
-     * @deprecated Use {@link #makeSPD(int, MatrixBenchmarkLibrary)} instead
-     */
-    @Deprecated
-    protected double[][] makeSPD(final int size) {
-        return MatrixUtils.makeSPD(size).toRawCopy2D();
     }
 
     protected final Object makeSPD(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {

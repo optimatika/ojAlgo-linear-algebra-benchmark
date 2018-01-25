@@ -25,33 +25,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.lab.DecomposeEigen;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
 import org.ojalgo.benchmark.lab.library.ACM;
 import org.ojalgo.benchmark.lab.library.EJML;
 import org.ojalgo.benchmark.lab.library.MTJ;
 import org.ojalgo.benchmark.lab.library.ojAlgo;
 
 public abstract class MatrixBenchmarkLibrary<I, T extends I> {
-
-    /**
-     * A general (square) equation system solver
-     *
-     * @author apete
-     */
-    public abstract class GeneralSolver implements BinaryOperator<I> {
-
-        public abstract I apply(final I body, final I rhs);
-
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((I) body, (I) rhs);
-        }
-
-    }
 
     public abstract class HermitianSolver implements BinaryOperator<I> {
 
@@ -81,17 +64,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     }
 
-    public abstract class SingularDecomposer implements UnaryOperator<I> {
-
-        public abstract I apply(final I matrix);
-
-        @SuppressWarnings("unchecked")
-        public final Object decompose(final Object matrix) {
-            return this.apply((I) matrix);
-        }
-
-    }
-
     public static final Map<String, MatrixBenchmarkLibrary<?, ?>> LIBRARIES = new HashMap<String, MatrixBenchmarkLibrary<?, ?>>();
 
     static {
@@ -114,23 +86,21 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         }
     }
 
-    public abstract DecomposeEigen.TaskDefinition<I> getEigenDecomposer();
-
-    public abstract GeneralSolver getGeneralSolver();
-
     public abstract HermitianSolver getHermitianSolver();
 
     public abstract LeastSquaresSolver getLeastSquaresSolver();
 
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
+    public abstract ProducingUnaryOperation<I, T> getOperationEigenvectors(int dim);
+
     public abstract MutatingBinaryOperation<I, T> getOperationFillByMultiplying();
 
     public abstract ProducingBinaryOperation<I, I> getOperationMultiplyToProduce();
 
-    public abstract MutatingBinaryOperation<I, T> getOperationSolveGeneral(int dim);
+    public abstract ProducingUnaryOperation<I, T> getOperationPseudoinverse(int dim);
 
-    public abstract SingularDecomposer getSingularDecomposer();
+    public abstract MutatingBinaryOperation<I, T> getOperationSolveGeneral(int dim);
 
     protected abstract double[][] convertFrom(I matrix);
 

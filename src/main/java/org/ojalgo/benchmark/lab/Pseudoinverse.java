@@ -131,49 +131,42 @@ DecomposeSingular.execute   1000     ojAlgo  thrpt    3         9.032 ±        
  * @author apete
  */
 @State(Scope.Benchmark)
-public class DecomposeSingular extends MatrixBenchmarkOperation {
-
-    @FunctionalInterface
-    public static interface TaskDefinition<T> {
-
-        int doThThing();
-
-    }
+public class Pseudoinverse extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeSingular.class);
+        MatrixBenchmarkOperation.run(Pseudoinverse.class);
     }
 
-    @Param({ "2", "3", "4", "5", "10", "20", "50", "100", "200", "500",
-            "1000" /* , "2000" , "5000", "10000" */ })
+    @Param({ "10", "100", "1000" })
     public int dim;
-    @Param({ "ACM", "EJML", "MTJ", "ojAlgo" })
-    public String library;
+    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    public String lib;
+
+    private ProducingUnaryOperation<?, ?> myOperation;
 
     Object matrix;
-
-    private MatrixBenchmarkLibrary<?, ?>.SingularDecomposer myDecomposer;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myDecomposer.decompose(matrix);
+        return myOperation.execute(matrix);
     }
 
+    @Override
     @Setup
     public void setup() {
 
-        contestant = MatrixBenchmarkLibrary.LIBRARIES.get(library);
+        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        matrix = contestant.convert(this.makeSPD(dim));
+        matrix = this.makeSPD(dim, library);
 
-        myDecomposer = contestant.getSingularDecomposer();
+        myOperation = library.getOperationPseudoinverse(dim);
     }
 
     @Override
     public void verify() throws BenchmarkRequirementsException {
 
-        this.verifyStateless(myDecomposer.getClass());
+        // this.verifyStateless(myDecomposer.getClass());
 
     }
 
