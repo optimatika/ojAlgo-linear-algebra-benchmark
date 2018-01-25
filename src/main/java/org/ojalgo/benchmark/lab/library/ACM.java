@@ -29,6 +29,7 @@ import org.apache.commons.math3.linear.QRDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
@@ -96,6 +97,19 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
+    public DecompositionOperation<RealMatrix, RealMatrix> getOperationEvD(final int dim) {
+
+        final RealMatrix[] ret = new RealMatrix[2];
+
+        return (matrix) -> {
+            final EigenDecomposition svd = new EigenDecomposition(matrix);
+            ret[0] = svd.getD();
+            ret[1] = svd.getV();
+            return ret;
+        };
+    }
+
+    @Override
     public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
         return (arg1, arg2, ret) -> this.copy(arg1.multiply(arg2), ret);
     }
@@ -116,6 +130,20 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
             final LUDecomposition lu = new LUDecomposition(body);
             final RealMatrix tmp = lu.getSolver().solve(rhs);
             this.copy(tmp, sol);
+        };
+    }
+
+    @Override
+    public DecompositionOperation<RealMatrix, RealMatrix> getOperationSVD(final int dim) {
+
+        final RealMatrix[] ret = new RealMatrix[3];
+
+        return (matrix) -> {
+            final SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
+            ret[0] = svd.getU();
+            ret[1] = svd.getS();
+            ret[2] = svd.getV();
+            return ret;
         };
     }
 

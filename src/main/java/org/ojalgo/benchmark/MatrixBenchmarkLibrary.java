@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
@@ -97,6 +98,10 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract MutatingBinaryOperation<I, T> getOperationFillByMultiplying();
 
     public abstract ProducingBinaryOperation<I, I> getOperationMultiplyToProduce();
+
+    public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
+
+    public abstract DecompositionOperation<I, I> getOperationEvD(int dim);
 
     public abstract ProducingUnaryOperation<I, T> getOperationPseudoinverse(int dim);
 

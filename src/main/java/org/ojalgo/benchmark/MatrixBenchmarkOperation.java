@@ -34,6 +34,23 @@ import org.openjdk.jmh.runner.options.TimeValue;
 public abstract class MatrixBenchmarkOperation {
 
     @FunctionalInterface
+    public interface DecompositionOperation<I, T extends I> {
+
+        public abstract I[] operate(I arg) throws Exception;
+
+        @SuppressWarnings("unchecked")
+        default Object execute(final Object arg) {
+            try {
+                return this.operate((I) arg);
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+                return null;
+            }
+        }
+
+    }
+
+    @FunctionalInterface
     public interface MutatingBinaryOperation<I, T extends I> {
 
         public abstract void operate(I arg1, I arg2, T ret) throws Exception;

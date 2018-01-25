@@ -26,8 +26,10 @@ import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.interfaces.linsol.LinearSolverDense;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
@@ -92,6 +94,22 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationEvD(final int dim) {
+
+        final DMatrixRMaj[] ret = new DMatrixRMaj[2];
+
+        final EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
+
+        throw new UnsupportedOperationException();
+
+        //        return (matrix) -> {
+        //            evd.decompose(matrix);
+        //
+        //            return ret;
+        //        };
+    }
+
+    @Override
     public MutatingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
         return (arg1, arg2, ret) -> CommonOps_DDRM.mult(arg1, arg2, ret);
     }
@@ -126,6 +144,22 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
                 throw new RuntimeException();
             }
             solver.solve(rhs, sol);
+        };
+    }
+
+    @Override
+    public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationSVD(final int dim) {
+
+        final DMatrixRMaj[] ret = new DMatrixRMaj[3];
+
+        final SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, true, true, true);
+
+        return (matrix) -> {
+            svd.decompose(matrix);
+            ret[0] = svd.getU(null, false);
+            ret[1] = svd.getW(null);
+            ret[2] = svd.getV(null, false);
+            return ret;
         };
     }
 

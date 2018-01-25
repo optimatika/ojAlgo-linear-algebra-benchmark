@@ -24,6 +24,7 @@ package org.ojalgo.benchmark.lab.library;
 import org.ojalgo.RecoverableCondition;
 import org.ojalgo.access.Structure2D;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
@@ -114,6 +115,34 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
+    public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationEvD(final int dim) {
+
+        @SuppressWarnings("unchecked")
+        final MatrixStore<Double>[] ret = (MatrixStore<Double>[]) new MatrixStore<?>[2];
+
+        final Structure2D shape = new Structure2D() {
+
+            public long countColumns() {
+                return dim;
+            }
+
+            public long countRows() {
+                return dim;
+            }
+
+        };
+
+        final Eigenvalue<Double> evd = Eigenvalue.PRIMITIVE.make(shape, true);
+
+        return (matrix) -> {
+            evd.decompose(matrix);
+            ret[0] = evd.getD();
+            ret[1] = evd.getV();
+            return ret;
+        };
+    }
+
+    @Override
     public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
         return (arg1, arg2, ret) -> ret.fillByMultiplying(arg1, arg2);
     }
@@ -145,7 +174,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
             svd.decompose(matrix);
             return svd.getInverse(preallocated);
         };
-    }
+    };
 
     @Override
     public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationSolveGeneral(final int dim) {
@@ -177,7 +206,36 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
         final SolverTask<Double> task = SolverTask.PRIMITIVE.make(bodyShape, rhsShape, false, false);
 
         return (body, rhs, sol) -> task.solve(body, rhs, sol);
-    };
+    }
+
+    @Override
+    public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationSVD(final int dim) {
+
+        @SuppressWarnings("unchecked")
+        final MatrixStore<Double>[] ret = (MatrixStore<Double>[]) new MatrixStore<?>[3];
+
+        final Structure2D shape = new Structure2D() {
+
+            public long countColumns() {
+                return dim;
+            }
+
+            public long countRows() {
+                return dim;
+            }
+
+        };
+
+        final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(shape);
+
+        return (matrix) -> {
+            svd.decompose(matrix);
+            ret[0] = svd.getQ1();
+            ret[1] = svd.getD();
+            ret[2] = svd.getQ2();
+            return ret;
+        };
+    }
 
     @Override
     protected double[][] convertFrom(final MatrixStore<Double> matrix) {

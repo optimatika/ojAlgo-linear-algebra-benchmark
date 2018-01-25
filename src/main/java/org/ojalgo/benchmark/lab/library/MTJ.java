@@ -22,13 +22,16 @@
 package org.ojalgo.benchmark.lab.library;
 
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
+import no.uib.cipr.matrix.SVD;
 import no.uib.cipr.matrix.SymmDenseEVD;
+import no.uib.cipr.matrix.SymmTridiagMatrix;
 
 /**
  * Matrix Toolkits Java
@@ -89,6 +92,25 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
+    public ProducingUnaryOperation<Matrix, Matrix> getOperationEigenvectors(final int dim) {
+        return (input) -> SymmDenseEVD.factorize(input).getEigenvectors();
+    }
+
+    @Override
+    public DecompositionOperation<Matrix, Matrix> getOperationEvD(final int dim) {
+
+        final Matrix[] ret = new Matrix[3];
+        final double[] offDiag = new double[dim - 1];
+
+        return (matrix) -> {
+            final SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
+            ret[0] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
+            ret[1] = evd.getEigenvectors();
+            return ret;
+        };
+    }
+
+    @Override
     public MutatingBinaryOperation<Matrix, Matrix> getOperationFillByMultiplying() {
         return (arg1, arg2, ret) -> arg1.mult(arg2, ret);
     }
@@ -103,8 +125,28 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
+    public ProducingUnaryOperation<Matrix, Matrix> getOperationPseudoinverse(final int dim) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public MutatingBinaryOperation<Matrix, Matrix> getOperationSolveGeneral(final int dim) {
         return (body, rhs, sol) -> body.solve(rhs, sol);
+    }
+
+    @Override
+    public DecompositionOperation<Matrix, Matrix> getOperationSVD(final int dim) {
+
+        final Matrix[] ret = new Matrix[3];
+        final double[] offDiag = new double[dim - 1];
+
+        return (matrix) -> {
+            final SVD svd = SVD.factorize(matrix);
+            ret[0] = svd.getU();
+            ret[1] = new SymmTridiagMatrix(svd.getS(), offDiag);
+            ret[2] = svd.getVt().transpose();
+            return ret;
+        };
     }
 
     @Override
@@ -128,16 +170,6 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     protected Matrix copy(final Matrix source, final Matrix destination) {
         destination.set(source);
         return destination;
-    }
-
-    @Override
-    public ProducingUnaryOperation<Matrix, Matrix> getOperationEigenvectors(final int dim) {
-        return (input) -> SymmDenseEVD.factorize(input).getEigenvectors();
-    }
-
-    @Override
-    public ProducingUnaryOperation<Matrix, Matrix> getOperationPseudoinverse(final int dim) {
-        throw new UnsupportedOperationException();
     }
 
 }
