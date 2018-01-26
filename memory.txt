@@ -7,3 +7,13 @@
 "ACM", "EJML", "ojAlgo", "MTJ" 
 "EJML", "ojAlgo", "MTJ" 
  
+ 
+ sudo yum install atlas
+ 
+ 
+-XX:+UnlockDiagnosticVMOptions
+-XX:+TraceClassLoading
+-XX:+LogCompilation
+
+nohup java -classpath ojlab.jar org.ojalgo.benchmark.lab.DecomposeSVD &
+nohup /opt/zing/zing-jdk8/bin/java -classpath ojlab.jar org.ojalgo.benchmark.lab.DecomposeSVD &
