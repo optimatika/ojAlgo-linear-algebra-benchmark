@@ -34,28 +34,55 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * <pre>
+Result "org.ojalgo.benchmark.lab.Add.execute":
+  7772.240 ±(99.9%) 325.264 ops/min [Average]
+  (min, avg, max) = (7760.034, 7772.240, 7792.700), stdev = 17.829
+  CI (99.9%): [7446.976, 8097.503] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:20:09
+
+Benchmark    (dim)   (lib)   Mode  Cnt           Score          Error    Units
+Add.execute     10     ACM  thrpt    3    57261727.549 ±   101775.440  ops/min
+Add.execute     10    EJML  thrpt    3   845073015.540 ± 27622912.728  ops/min
+Add.execute     10  ojAlgo  thrpt    3  1048812255.182 ± 20700437.805  ops/min
+Add.execute     10     MTJ  thrpt    3    31601661.093 ±  1461547.503  ops/min
+Add.execute    100     ACM  thrpt    3     1594535.318 ±   428617.690  ops/min
+Add.execute    100    EJML  thrpt    3     6601048.216 ±    57540.081  ops/min
+Add.execute    100  ojAlgo  thrpt    3     7048501.734 ±   154649.433  ops/min
+Add.execute    100     MTJ  thrpt    3      948478.021 ±     6896.721  ops/min
+Add.execute   1000     ACM  thrpt    3        9226.428 ±     3579.453  ops/min
+Add.execute   1000    EJML  thrpt    3       20889.401 ±      243.172  ops/min
+Add.execute   1000  ojAlgo  thrpt    3       20778.833 ±      290.211  ops/min
+Add.execute   1000     MTJ  thrpt    3        7772.240 ±      325.264  ops/min
+ * </pre>
+ *
  * @author apete
  */
 @State(Scope.Benchmark)
-public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class Add extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeSVD.class);
+        MatrixBenchmarkOperation.run(Add.class);
     }
 
-    @Param({ "10", "100", "1000", "10000" })
+    @Param({ "10", "100", "1000" })
     public int dim;
+
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private DecompositionOperation<?, ?> myOperation;
+    private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
-    Object matrix;
+    Object left;
+    Object result;
+    Object right;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(matrix);
+        return myOperation.execute(left, right, result);
     }
 
     @Override
@@ -64,16 +91,18 @@ public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkS
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        matrix = this.makeRandom(dim, dim, library);
+        myOperation = library.getOperationAdd();
 
-        myOperation = library.getOperationSVD(dim);
+        left = this.makeRandom(dim, dim, library);
+        right = this.makeRandom(dim, dim, library);
+        result = this.makeZero(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
 
-        // this.verifyStateless(myDecomposer.getClass());
+        // this.verifyStateless(myOperation.getClass());
 
     }
 

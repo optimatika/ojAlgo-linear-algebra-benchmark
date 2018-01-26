@@ -334,7 +334,7 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private ProducingBinaryOperation<?, ?> myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object left;
     Object right;

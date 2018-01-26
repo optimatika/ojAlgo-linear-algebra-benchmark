@@ -83,7 +83,7 @@ import org.openjdk.jmh.runner.RunnerException;
  * @author apete
  */
 @State(Scope.Benchmark)
-public class LeastSquaresSolve extends MatrixBenchmarkOperation {
+public class LeastSquaresSolve extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(LeastSquaresSolve.class);

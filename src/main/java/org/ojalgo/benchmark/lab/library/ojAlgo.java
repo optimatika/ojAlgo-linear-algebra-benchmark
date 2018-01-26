@@ -25,9 +25,11 @@ import org.ojalgo.RecoverableCondition;
 import org.ojalgo.access.Structure2D;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.function.PrimitiveFunction;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
@@ -92,7 +94,12 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public ProducingUnaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEigenvectors(final int dim) {
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationAdd() {
+        return (a, b, c) -> c.fillMatching(a, PrimitiveFunction.ADD, b);
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEigenvectors(final int dim) {
 
         final Structure2D shape = new Structure2D() {
 
@@ -143,17 +150,17 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
         return (left, right, product) -> product.fillByMultiplying(left, right);
     }
 
     @Override
-    public ProducingBinaryOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationMultiplyToProduce() {
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationMultiplyToProduce() {
         return (left, right) -> left.multiply(right);
-    }
+    };
 
     @Override
-    public ProducingUnaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationPseudoinverse(final int dim) {
 
         final Structure2D shape = new Structure2D() {
 
@@ -174,10 +181,15 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
             svd.decompose(matrix);
             return svd.getInverse(preallocated);
         };
-    };
+    }
 
     @Override
-    public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationSolveGeneral(final int dim) {
+    public MutatingBinaryMatrixScalarOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationScale() {
+        return (a, s, b) -> b.fillMatching(a, PrimitiveFunction.MULTIPLY, s);
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationSolveGeneral(final int dim) {
 
         final Structure2D bodyShape = new Structure2D() {
 

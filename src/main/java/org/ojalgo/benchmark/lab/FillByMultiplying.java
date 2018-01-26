@@ -164,7 +164,7 @@ FillByMultiplying.execute   1000        MTJ  thrpt    3   1706,836 ±  200,497  
  * @author apete
  */
 @State(Scope.Benchmark)
-public class FillByMultiplying extends MatrixBenchmarkOperation {
+public class FillByMultiplying extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
@@ -176,7 +176,7 @@ public class FillByMultiplying extends MatrixBenchmarkOperation {
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private MutatingBinaryOperation<?, ?> myOperation;
+    private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object left;
     Object product;

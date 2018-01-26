@@ -27,9 +27,10 @@ import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.lab.library.ACM;
 import org.ojalgo.benchmark.lab.library.EJML;
 import org.ojalgo.benchmark.lab.library.MTJ;
@@ -107,7 +108,7 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
-    public abstract ProducingUnaryOperation<I, T> getOperationEigenvectors(int dim);
+    public abstract ProducingUnaryMatrixOperation<I, T> getOperationEigenvectors(int dim);
 
     public abstract DecompositionOperation<I, I> getOperationEvD(int dim);
 
@@ -118,13 +119,17 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      * ret == product - the results of matrix multiplication [left]x[right] should end up in that matrix
      * </pre>
      */
-    public abstract MutatingBinaryOperation<I, T> getOperationFillByMultiplying();
+    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
 
-    public abstract ProducingBinaryOperation<I, I> getOperationMultiplyToProduce();
+    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
 
-    public abstract ProducingUnaryOperation<I, T> getOperationPseudoinverse(int dim);
+    public abstract MutatingBinaryMatrixScalarOperation<I, T> getOperationScale();
 
-    public abstract MutatingBinaryOperation<I, T> getOperationSolveGeneral(int dim);
+    public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
+
+    public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);
+
+    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationSolveGeneral(int dim);
 
     public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
 

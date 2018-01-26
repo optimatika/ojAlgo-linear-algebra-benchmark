@@ -136,7 +136,7 @@ DecomposeEigen.execute   1000     ojAlgo  thrpt    3        25,599 ±        2,0
  * @author apete
  */
 @State(Scope.Benchmark)
-public class DecomposeEigen extends MatrixBenchmarkOperation {
+public class DecomposeEigen extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(DecomposeEigen.class);
@@ -147,7 +147,7 @@ public class DecomposeEigen extends MatrixBenchmarkOperation {
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private ProducingUnaryOperation<?, ?> myOperation;
+    private ProducingUnaryMatrixOperation<?, ?> myOperation;
 
     Object matrix;
 

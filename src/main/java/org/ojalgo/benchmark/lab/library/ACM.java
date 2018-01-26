@@ -30,9 +30,10 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 
 /**
  * Apache Commons Math
@@ -89,7 +90,12 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public ProducingUnaryOperation<RealMatrix, RealMatrix> getOperationEigenvectors(final int dim) {
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationAdd() {
+        return (a, b, c) -> this.copy(a.add(b), c);
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationEigenvectors(final int dim) {
         return (input) -> {
             final EigenDecomposition evd = new EigenDecomposition(input);
             return evd.getV();
@@ -110,22 +116,27 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
         return (left, right, product) -> this.copy(left.multiply(right), product);
     }
 
     @Override
-    public ProducingBinaryOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
         return (left, right) -> left.multiply(right);
     }
 
     @Override
-    public ProducingUnaryOperation<RealMatrix, RealMatrix> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationPseudoinverse(final int dim) {
         return (matrix) -> new SingularValueDecomposition(matrix).getSolver().getInverse();
     }
 
     @Override
-    public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationSolveGeneral(final int dim) {
+    public MutatingBinaryMatrixScalarOperation<RealMatrix, RealMatrix> getOperationScale() {
+        return (a, s, b) -> this.copy(a.scalarMultiply(s), b);
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationSolveGeneral(final int dim) {
         return (body, rhs, sol) -> {
             final LUDecomposition lu = new LUDecomposition(body);
             final RealMatrix tmp = lu.getSolver().solve(rhs);

@@ -140,7 +140,7 @@ public class GeneralSolve extends MatrixBenchmarkOperation {
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private MutatingBinaryOperation<?, ?> myOperation;
+    private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object body;
     Object rhs;

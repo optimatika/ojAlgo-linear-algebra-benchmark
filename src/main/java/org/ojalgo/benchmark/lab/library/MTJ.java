@@ -23,9 +23,10 @@ package org.ojalgo.benchmark.lab.library;
 
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -92,7 +93,12 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public ProducingUnaryOperation<Matrix, Matrix> getOperationEigenvectors(final int dim) {
+    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationAdd() {
+        return (a, b, c) -> c.set(a).add(b);
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<Matrix, Matrix> getOperationEigenvectors(final int dim) {
         return (input) -> SymmDenseEVD.factorize(input).getEigenvectors();
     }
 
@@ -111,12 +117,12 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public MutatingBinaryOperation<Matrix, Matrix> getOperationFillByMultiplying() {
+    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationFillByMultiplying() {
         return (left, right, product) -> left.mult(right, product);
     }
 
     @Override
-    public ProducingBinaryOperation<Matrix, Matrix> getOperationMultiplyToProduce() {
+    public ProducingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationMultiplyToProduce() {
         return (left, right) -> {
             final DenseMatrix product = new DenseMatrix(left.numRows(), left.numColumns());
             return left.mult(right, product);
@@ -124,12 +130,17 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public ProducingUnaryOperation<Matrix, Matrix> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<Matrix, Matrix> getOperationPseudoinverse(final int dim) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public MutatingBinaryOperation<Matrix, Matrix> getOperationSolveGeneral(final int dim) {
+    public MutatingBinaryMatrixScalarOperation<Matrix, Matrix> getOperationScale() {
+        return (a, s, b) -> b.set(s, a);
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationSolveGeneral(final int dim) {
         return (body, rhs, sol) -> body.solve(rhs, sol);
     }
 
