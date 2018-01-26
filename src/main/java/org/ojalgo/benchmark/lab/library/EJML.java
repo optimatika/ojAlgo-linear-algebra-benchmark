@@ -111,15 +111,15 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public MutatingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
-        return (arg1, arg2, ret) -> CommonOps_DDRM.mult(arg1, arg2, ret);
+        return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
     }
 
     @Override
     public ProducingBinaryOperation<DMatrixRMaj, DMatrixRMaj> getOperationMultiplyToProduce() {
-        return (arg1, arg2) -> {
-            final DMatrixRMaj ret = new DMatrixRMaj(arg1.getNumRows(), arg2.getNumCols());
-            CommonOps_DDRM.mult(arg1, arg2, ret);
-            return ret;
+        return (left, right) -> {
+            final DMatrixRMaj product = new DMatrixRMaj(left.getNumRows(), right.getNumCols());
+            CommonOps_DDRM.mult(left, right, product);
+            return product;
         };
     }
 

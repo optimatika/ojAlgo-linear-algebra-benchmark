@@ -111,12 +111,12 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
 
     @Override
     public MutatingBinaryOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
-        return (arg1, arg2, ret) -> this.copy(arg1.multiply(arg2), ret);
+        return (left, right, product) -> this.copy(left.multiply(right), product);
     }
 
     @Override
     public ProducingBinaryOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
-        return (arg1, arg2) -> arg1.multiply(arg2);
+        return (left, right) -> left.multiply(right);
     }
 
     @Override
@@ -159,8 +159,8 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
 
     @Override
     protected RealMatrix copy(final RealMatrix source, final RealMatrix destination) {
-        for (int i = 0; i < source.getRowDimension(); i++) {
-            for (int j = 0; j < destination.getColumnDimension(); j++) {
+        for (int i = 0, rlim = source.getRowDimension(); i < rlim; i++) {
+            for (int j = 0, clim = destination.getColumnDimension(); j < clim; j++) {
                 destination.setEntry(i, j, source.getEntry(i, j));
             }
         }

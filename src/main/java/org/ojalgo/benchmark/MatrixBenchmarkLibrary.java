@@ -37,6 +37,10 @@ import org.ojalgo.benchmark.lab.library.ojAlgo;
 
 public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public abstract class HermitianSolver implements BinaryOperator<I> {
 
         public abstract I apply(final I body, final I rhs);
@@ -48,6 +52,10 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public abstract class LeastSquaresSolver implements BinaryOperator<I> {
 
         public abstract I apply(final I body, final I rhs);
@@ -87,25 +95,38 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         }
     }
 
+    /**
+     * @deprected Replace with something new named getOperation*
+     */
     public abstract HermitianSolver getHermitianSolver();
 
+    /**
+     * @deprected Replace with something new named getOperation*
+     */
     public abstract LeastSquaresSolver getLeastSquaresSolver();
 
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
     public abstract ProducingUnaryOperation<I, T> getOperationEigenvectors(int dim);
 
+    public abstract DecompositionOperation<I, I> getOperationEvD(int dim);
+
+    /**
+     * <pre>
+     * arg1 == left input matrix
+     * arg2 == right input matrix
+     * ret == product - the results of matrix multiplication [left]x[right] should end up in that matrix
+     * </pre>
+     */
     public abstract MutatingBinaryOperation<I, T> getOperationFillByMultiplying();
 
     public abstract ProducingBinaryOperation<I, I> getOperationMultiplyToProduce();
 
-    public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
-
-    public abstract DecompositionOperation<I, I> getOperationEvD(int dim);
-
     public abstract ProducingUnaryOperation<I, T> getOperationPseudoinverse(int dim);
 
     public abstract MutatingBinaryOperation<I, T> getOperationSolveGeneral(int dim);
+
+    public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
 
     protected abstract double[][] convertFrom(I matrix);
 

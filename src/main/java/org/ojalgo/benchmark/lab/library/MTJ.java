@@ -112,15 +112,14 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
 
     @Override
     public MutatingBinaryOperation<Matrix, Matrix> getOperationFillByMultiplying() {
-        return (arg1, arg2, ret) -> arg1.mult(arg2, ret);
+        return (left, right, product) -> left.mult(right, product);
     }
 
     @Override
     public ProducingBinaryOperation<Matrix, Matrix> getOperationMultiplyToProduce() {
-
-        return (arg1, arg2) -> {
-            final DenseMatrix ret = new DenseMatrix(arg1.numRows(), arg1.numColumns());
-            return arg1.mult(arg2, ret);
+        return (left, right) -> {
+            final DenseMatrix product = new DenseMatrix(left.numRows(), left.numColumns());
+            return left.mult(right, product);
         };
     }
 

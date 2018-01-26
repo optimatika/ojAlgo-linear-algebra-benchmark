@@ -144,12 +144,12 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public MutatingBinaryOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
-        return (arg1, arg2, ret) -> ret.fillByMultiplying(arg1, arg2);
+        return (left, right, product) -> product.fillByMultiplying(left, right);
     }
 
     @Override
     public ProducingBinaryOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationMultiplyToProduce() {
-        return (arg1, arg2) -> arg1.multiply(arg2);
+        return (left, right) -> left.multiply(right);
     }
 
     @Override
