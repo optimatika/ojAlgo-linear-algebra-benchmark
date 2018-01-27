@@ -36,6 +36,15 @@ import org.ojalgo.benchmark.lab.library.EJML;
 import org.ojalgo.benchmark.lab.library.MTJ;
 import org.ojalgo.benchmark.lab.library.ojAlgo;
 
+/**
+ * <p>
+ * The type paramater I must be able expose the shape of the matrix
+ * </p>
+ * <p>
+ * </p>
+ *
+ * @author apete
+ */
 public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     /**
@@ -71,6 +80,12 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract class MatrixBuilder implements Supplier<I> {
 
         public abstract MatrixBuilder set(int row, int col, double value);
+
+    }
+
+    public abstract class ElementsExtractor {
+
+        public abstract double get(int row, int col);
 
     }
 
@@ -138,5 +153,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     protected abstract I convertTo(double[][] raw);
 
     protected abstract T copy(I source, T destination);
+
+    @SuppressWarnings("unchecked")
+    protected abstract I multiply(I... factors);
 
 }

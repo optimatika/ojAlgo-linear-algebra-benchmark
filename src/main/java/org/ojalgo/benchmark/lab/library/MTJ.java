@@ -182,4 +182,16 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
         return destination;
     }
 
+    @Override
+    protected Matrix multiply(final Matrix... factors) {
+
+        Matrix retVal = factors[0];
+
+        for (int f = 1; f < factors.length; f++) {
+            retVal = retVal.mult(factors[f], new DenseMatrix(retVal.numRows(), factors[f].numColumns()));
+        }
+
+        return retVal;
+    }
+
 }

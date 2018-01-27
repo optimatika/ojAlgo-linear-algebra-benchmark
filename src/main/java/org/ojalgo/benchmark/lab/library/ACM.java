@@ -178,4 +178,16 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
         return destination;
     }
 
+    @Override
+    protected RealMatrix multiply(final RealMatrix... factors) {
+
+        RealMatrix retVal = factors[0];
+
+        for (int f = 1; f < factors.length; f++) {
+            retVal = retVal.multiply(factors[f]);
+        }
+
+        return retVal;
+    }
+
 }

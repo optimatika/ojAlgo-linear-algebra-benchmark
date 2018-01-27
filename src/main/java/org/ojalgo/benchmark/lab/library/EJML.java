@@ -197,4 +197,18 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
         return destination;
     }
 
+    @Override
+    protected DMatrixRMaj multiply(final DMatrixRMaj... factors) {
+
+        DMatrixRMaj retVal = factors[0];
+
+        for (int f = 1; f < factors.length; f++) {
+            final DMatrixRMaj prod = new DMatrixRMaj(retVal.numRows, factors[f].numCols);
+            CommonOps_DDRM.mult(retVal, factors[f], prod);
+            retVal = prod;
+        }
+
+        return retVal;
+    }
+
 }

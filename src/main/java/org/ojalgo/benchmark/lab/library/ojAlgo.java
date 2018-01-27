@@ -265,4 +265,16 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
         return destination;
     }
 
+    @Override
+    protected MatrixStore<Double> multiply(final MatrixStore<Double>... factors) {
+
+        MatrixStore<Double> retVal = factors[0];
+
+        for (int f = 1; f < factors.length; f++) {
+            retVal = retVal.multiply(factors[f]);
+        }
+
+        return retVal;
+    }
+
 }
