@@ -8,15 +8,15 @@
 "ACM", "EJML", "ojAlgo", "MTJ" 
 "EJML", "ojAlgo", "MTJ" 
  
- sudo yum install nano
- sudo yum install wget
- sudo yum install atlas
+sudo yum install nano
+sudo yum install wget
+sudo yum install atlas
  
- sudo yum install jdk-8u161-linux-x64.rpm
- sudo yum install jdk-9.0.4_linux-x64_bin.rpm
- sudo yum install zing-jdk1.8.0
+sudo yum install jdk-8u161-linux-x64.rpm
+sudo yum install jdk-9.0.4_linux-x64_bin.rpm
+sudo yum install zing-jdk1.8.0
  
- sudo alternatives --config java
+sudo alternatives --config java
  
  
 -XX:+UnlockDiagnosticVMOptions
