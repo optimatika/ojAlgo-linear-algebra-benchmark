@@ -119,7 +119,7 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
-    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
+    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.MINUTES);
     static final TimeValue TIMEOUT = new TimeValue(10L, TimeUnit.MINUTES);
 
     protected static ChainedOptionsBuilder options() {
