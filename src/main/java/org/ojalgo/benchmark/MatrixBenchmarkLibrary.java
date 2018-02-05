@@ -35,6 +35,8 @@ import org.ojalgo.benchmark.lab.library.ACM;
 import org.ojalgo.benchmark.lab.library.EJML;
 import org.ojalgo.benchmark.lab.library.MTJ;
 import org.ojalgo.benchmark.lab.library.ojAlgo;
+import org.ojalgo.constant.PrimitiveMath;
+import org.ojalgo.netio.BasicLogger;
 
 /**
  * <p>
@@ -46,6 +48,12 @@ import org.ojalgo.benchmark.lab.library.ojAlgo;
  * @author apete
  */
 public abstract class MatrixBenchmarkLibrary<I, T extends I> {
+
+    public abstract class ElementsExtractor {
+
+        public abstract double get(int row, int col);
+
+    }
 
     /**
      * @deprecated
@@ -83,12 +91,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     }
 
-    public abstract class ElementsExtractor {
-
-        public abstract double get(int row, int col);
-
-    }
-
     public static final Map<String, MatrixBenchmarkLibrary<?, ?>> LIBRARIES = new HashMap<String, MatrixBenchmarkLibrary<?, ?>>();
 
     static {
@@ -111,6 +113,36 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public boolean equals(final Object expected, final int dim, final Object actual) {
+
+        I left;
+        if (expected.getClass().isArray()) {
+            left = this.multiply((I[]) expected);
+        } else {
+            left = (I) expected;
+        }
+
+        I right;
+        if (actual.getClass().isArray()) {
+            right = this.multiply((I[]) actual);
+        } else {
+            right = (I) actual;
+        }
+
+        final I diff = this.subtract(left, right);
+
+        final double error = this.norm(diff);
+
+        final boolean retVal = (error <= (dim * dim * PrimitiveMath.MACHINE_EPSILON));
+
+        if (!retVal) {
+            BasicLogger.debug("Error {} too large for {}", error, dim);
+        }
+
+        return retVal;
+    }
+
     /**
      * @deprected Replace with something new named getOperation*
      */
@@ -122,6 +154,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract LeastSquaresSolver getLeastSquaresSolver();
 
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
+
+    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationEigenvectors(int dim);
 
@@ -136,13 +170,11 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
 
-    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
-
-    public abstract MutatingBinaryMatrixScalarOperation<I, T> getOperationScale();
-
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);
+
+    public abstract MutatingBinaryMatrixScalarOperation<I, T> getOperationScale();
 
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationSolveGeneral(int dim);
 
@@ -156,5 +188,9 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     @SuppressWarnings("unchecked")
     protected abstract I multiply(I... factors);
+
+    protected abstract double norm(I matrix);
+
+    protected abstract I subtract(I left, I right);
 
 }

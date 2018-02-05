@@ -30,6 +30,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
+import no.uib.cipr.matrix.Matrix.Norm;
 import no.uib.cipr.matrix.SVD;
 import no.uib.cipr.matrix.SymmDenseEVD;
 import no.uib.cipr.matrix.SymmTridiagMatrix;
@@ -154,7 +155,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
             final SVD svd = SVD.factorize(matrix);
             ret[0] = svd.getU();
             ret[1] = new SymmTridiagMatrix(svd.getS(), offDiag);
-            ret[2] = svd.getVt().transpose();
+            ret[2] = svd.getVt();
             return ret;
         };
     }
@@ -192,6 +193,16 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
         }
 
         return retVal;
+    }
+
+    @Override
+    protected double norm(final Matrix matrix) {
+        return matrix.norm(Norm.Frobenius);
+    }
+
+    @Override
+    protected Matrix subtract(final Matrix left, final Matrix right) {
+        return left.add(right.scale(-1));
     }
 
 }

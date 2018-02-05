@@ -244,7 +244,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
             svd.decompose(matrix);
             ret[0] = svd.getQ1();
             ret[1] = svd.getD();
-            ret[2] = svd.getQ2();
+            ret[2] = svd.getQ2().transpose();
             return ret;
         };
     }
@@ -275,6 +275,16 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
         }
 
         return retVal;
+    }
+
+    @Override
+    protected double norm(final MatrixStore<Double> matrix) {
+        return matrix.norm();
+    }
+
+    @Override
+    protected MatrixStore<Double> subtract(final MatrixStore<Double> left, final MatrixStore<Double> right) {
+        return left.subtract(right);
     }
 
 }

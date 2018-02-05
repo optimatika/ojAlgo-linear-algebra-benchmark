@@ -23,6 +23,7 @@ package org.ojalgo.benchmark.lab.library;
 
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
@@ -169,7 +170,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
             svd.decompose(matrix);
             ret[0] = svd.getU(null, false);
             ret[1] = svd.getW(null);
-            ret[2] = svd.getV(null, false);
+            ret[2] = svd.getV(null, true);
             return ret;
         };
     }
@@ -209,6 +210,18 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
         }
 
         return retVal;
+    }
+
+    @Override
+    protected double norm(final DMatrixRMaj matrix) {
+        return NormOps_DDRM.fastNormF(matrix);
+    }
+
+    @Override
+    protected DMatrixRMaj subtract(final DMatrixRMaj left, final DMatrixRMaj right) {
+        final DMatrixRMaj prod = new DMatrixRMaj(left.numRows, right.numCols);
+        CommonOps_DDRM.subtract(left, right, prod);
+        return prod;
     }
 
 }

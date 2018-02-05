@@ -43,7 +43,7 @@ public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkS
         MatrixBenchmarkOperation.run(DecomposeSVD.class);
     }
 
-    @Param({ "10", "100", "1000", "10000" })
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
@@ -51,11 +51,12 @@ public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkS
     private DecompositionOperation<?, ?> myOperation;
 
     Object matrix;
+    Object result;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(matrix);
+        return result = myOperation.execute(matrix);
     }
 
     @Override
@@ -72,9 +73,9 @@ public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkS
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myDecomposer.getClass());
-
+        if (!library.equals(matrix, dim, result)) {
+            throw new BenchmarkRequirementsException("Not able to reconstruct the matrix!");
+        }
     }
 
 }

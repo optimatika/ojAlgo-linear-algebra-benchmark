@@ -153,7 +153,7 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
             final SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
             ret[0] = svd.getU();
             ret[1] = svd.getS();
-            ret[2] = svd.getV();
+            ret[2] = svd.getVT();
             return ret;
         };
     }
@@ -188,6 +188,16 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
         }
 
         return retVal;
+    }
+
+    @Override
+    protected double norm(final RealMatrix matrix) {
+        return matrix.getFrobeniusNorm();
+    }
+
+    @Override
+    protected RealMatrix subtract(final RealMatrix left, final RealMatrix right) {
+        return left.subtract(right);
     }
 
 }
