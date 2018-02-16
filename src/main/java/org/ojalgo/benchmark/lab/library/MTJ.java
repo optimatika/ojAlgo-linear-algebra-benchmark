@@ -38,7 +38,7 @@ import no.uib.cipr.matrix.SymmTridiagMatrix;
 /**
  * Matrix Toolkits Java
  */
-public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
+public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
 
     @Override
     public HermitianSolver getHermitianSolver() {
@@ -75,7 +75,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public MatrixBenchmarkLibrary<Matrix, Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<Matrix, DenseMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final DenseMatrix myMatrix = new DenseMatrix(numberOfRows, numberOfColumns);
@@ -94,12 +94,12 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationAdd() {
+    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationAdd() {
         return (a, b, c) -> c.set(a).add(b);
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<Matrix, Matrix> getOperationEigenvectors(final int dim) {
+    public ProducingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationEigenvectors(final int dim) {
         return (input) -> SymmDenseEVD.factorize(input).getEigenvectors();
     }
 
@@ -118,7 +118,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationFillByMultiplying() {
+    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationFillByMultiplying() {
         return (left, right, product) -> left.mult(right, product);
     }
 
@@ -131,17 +131,17 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<Matrix, Matrix> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationPseudoinverse(final int dim) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public MutatingBinaryMatrixScalarOperation<Matrix, Matrix> getOperationScale() {
+    public MutatingBinaryMatrixScalarOperation<Matrix, DenseMatrix> getOperationScale() {
         return (a, s, b) -> b.set(s, a);
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationSolveGeneral(final int dim) {
+    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationSolveGeneral(final int dim) {
         return (body, rhs, sol) -> body.solve(rhs, sol);
     }
 
@@ -178,7 +178,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    protected Matrix copy(final Matrix source, final Matrix destination) {
+    protected DenseMatrix copy(final Matrix source, final DenseMatrix destination) {
         destination.set(source);
         return destination;
     }
