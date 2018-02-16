@@ -38,10 +38,10 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
 /**
  * Apache Commons Math
  */
-public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
+public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix> {
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.HermitianSolver getHermitianSolver() {
+    public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.HermitianSolver getHermitianSolver() {
         return new HermitianSolver() {
 
             @Override
@@ -56,7 +56,7 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
+    public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
         return new LeastSquaresSolver() {
 
             @Override
@@ -71,12 +71,12 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final Array2DRowRealMatrix myMatrix = new Array2DRowRealMatrix(numberOfRows, numberOfColumns);
 
-            public RealMatrix get() {
+            public Array2DRowRealMatrix get() {
                 return myMatrix;
             }
 
@@ -90,12 +90,12 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationAdd() {
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationAdd() {
         return (a, b, c) -> this.copy(a.add(b), c);
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationEigenvectors(final int dim) {
+    public ProducingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationEigenvectors(final int dim) {
         return (input) -> {
             final EigenDecomposition evd = new EigenDecomposition(input);
             return evd.getV();
@@ -116,7 +116,7 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying() {
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying() {
         return (left, right, product) -> this.copy(left.multiply(right), product);
     }
 
@@ -126,17 +126,17 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationPseudoinverse(final int dim) {
         return (matrix) -> new SingularValueDecomposition(matrix).getSolver().getInverse();
     }
 
     @Override
-    public MutatingBinaryMatrixScalarOperation<RealMatrix, RealMatrix> getOperationScale() {
+    public MutatingBinaryMatrixScalarOperation<RealMatrix, Array2DRowRealMatrix> getOperationScale() {
         return (a, s, b) -> this.copy(a.scalarMultiply(s), b);
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationSolveGeneral(final int dim) {
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationSolveGeneral(final int dim) {
         return (body, rhs, sol) -> {
             final LUDecomposition lu = new LUDecomposition(body);
             final RealMatrix tmp = lu.getSolver().solve(rhs);
@@ -169,7 +169,7 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    protected RealMatrix copy(final RealMatrix source, final RealMatrix destination) {
+    protected Array2DRowRealMatrix copy(final RealMatrix source, final Array2DRowRealMatrix destination) {
         for (int i = 0, rlim = source.getRowDimension(); i < rlim; i++) {
             for (int j = 0, clim = destination.getColumnDimension(); j < clim; j++) {
                 destination.setEntry(i, j, source.getEntry(i, j));
