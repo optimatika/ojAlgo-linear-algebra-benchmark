@@ -122,6 +122,13 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationLeastSquaresSolver(final int numbEquations, final int numbVariables,
+            final int numbSolutions) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationMultiplyToProduce() {
         return (left, right) -> {
             final DMatrixRMaj product = new DMatrixRMaj(left.getNumRows(), right.getNumCols());
