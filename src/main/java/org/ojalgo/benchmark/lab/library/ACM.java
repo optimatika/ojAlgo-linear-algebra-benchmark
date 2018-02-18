@@ -121,6 +121,13 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationLeastSquaresSolver(final int numbEquations,
+            final int numbVariables, final int numbSolutions) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
         return (left, right) -> left.multiply(right);
     }

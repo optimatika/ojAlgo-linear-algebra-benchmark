@@ -155,9 +155,20 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationLeastSquaresSolver(final int numbEquations,
+            final int numbVariables, final int numbSolutions) {
+
+        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, false, false);
+
+        final PhysicalStore<Double> preallocated = task.preallocate(numbEquations, numbVariables, numbSolutions);
+
+        return (body, rhs) -> task.solve(body, rhs, preallocated);
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationMultiplyToProduce() {
         return (left, right) -> left.multiply(right);
-    };
+    }
 
     @Override
     public ProducingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationPseudoinverse(final int dim) {
@@ -191,31 +202,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationSolveGeneral(final int dim) {
 
-        final Structure2D bodyShape = new Structure2D() {
-
-            public long countColumns() {
-                return dim;
-            }
-
-            public long countRows() {
-                return dim;
-            }
-
-        };
-
-        final Structure2D rhsShape = new Structure2D() {
-
-            public long countColumns() {
-                return dim;
-            }
-
-            public long countRows() {
-                return dim;
-            }
-
-        };
-
-        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(bodyShape, rhsShape, false, false);
+        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(dim, dim, dim, false, false);
 
         return (body, rhs, sol) -> task.solve(body, rhs, sol);
     }

@@ -170,6 +170,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
 
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationLeastSquaresSolver(int numbEquations, int numbVariables, int numbSolutions);
+
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);

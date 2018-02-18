@@ -123,6 +123,13 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
+    public ProducingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationLeastSquaresSolver(final int numbEquations, final int numbVariables,
+            final int numbSolutions) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationMultiplyToProduce() {
         return (left, right) -> {
             final DenseMatrix product = new DenseMatrix(left.numRows(), left.numColumns());

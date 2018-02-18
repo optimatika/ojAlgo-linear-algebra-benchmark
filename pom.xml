@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>benchmark</artifactId>
+    <artifactId>linear-algebra-benchmark</artifactId>
     <packaging>jar</packaging>
 
     <prerequisites>
@@ -11,9 +11,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.googlecode.matrix-toolkits-java</groupId>
+            <groupId>io.github.andreas-solti.matrix-toolkits-java</groupId>
             <artifactId>mtj</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.7</version>
         </dependency>
         <dependency>
             <groupId>org.ejml</groupId>
@@ -143,4 +143,7 @@
     <url>http://ojalgo.org/</url>
     <description>oj! Linear Algebra (JMH) Benchmark</description>
     <name>ojLAB</name>
+    <organization>
+        <url>http://ojalgo.org/</url>
+    </organization>
 </project>
