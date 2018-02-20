@@ -123,8 +123,10 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationLeastSquaresSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions) {
-        // TODO Auto-generated method stub
-        return null;
+        return (body, rhs) -> {
+            final QRDecomposition qr = new QRDecomposition(body);
+            return qr.getSolver().solve(rhs);
+        };
     }
 
     @Override
@@ -183,6 +185,12 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
             }
         }
         return destination;
+    }
+
+    @Override
+    protected RealMatrix[] makeArray(final int length) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override

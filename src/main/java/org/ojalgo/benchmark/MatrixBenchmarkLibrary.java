@@ -188,6 +188,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     protected abstract T copy(I source, T destination);
 
+    protected abstract I[] makeArray(int length);
+
     @SuppressWarnings("unchecked")
     protected abstract I multiply(I... factors);
 

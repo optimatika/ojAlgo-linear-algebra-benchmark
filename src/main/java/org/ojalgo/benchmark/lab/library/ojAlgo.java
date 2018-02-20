@@ -173,20 +173,8 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public ProducingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationPseudoinverse(final int dim) {
 
-        final Structure2D shape = new Structure2D() {
-
-            public long countColumns() {
-                return dim;
-            }
-
-            public long countRows() {
-                return dim;
-            }
-
-        };
-
-        final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(shape);
-        final PhysicalStore<Double> preallocated = svd.preallocate(shape);
+        final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
+        final PhysicalStore<Double> preallocated = svd.preallocate(dim, dim);
 
         return (matrix) -> {
             svd.decompose(matrix);
@@ -210,29 +198,16 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationSVD(final int dim) {
 
-        @SuppressWarnings("unchecked")
-        final MatrixStore<Double>[] ret = (MatrixStore<Double>[]) new MatrixStore<?>[3];
+        final MatrixStore<Double>[] factors = this.makeArray(3);
 
-        final Structure2D shape = new Structure2D() {
-
-            public long countColumns() {
-                return dim;
-            }
-
-            public long countRows() {
-                return dim;
-            }
-
-        };
-
-        final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(shape);
+        final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
 
         return (matrix) -> {
             svd.decompose(matrix);
-            ret[0] = svd.getQ1();
-            ret[1] = svd.getD();
-            ret[2] = svd.getQ2().transpose();
-            return ret;
+            factors[0] = svd.getQ1();
+            factors[1] = svd.getD();
+            factors[2] = svd.getQ2().transpose();
+            return factors;
         };
     }
 
@@ -250,6 +225,12 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     protected PrimitiveDenseStore copy(final MatrixStore<Double> source, final PrimitiveDenseStore destination) {
         source.supplyTo(destination);
         return destination;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected MatrixStore<Double>[] makeArray(final int length) {
+        return (MatrixStore<Double>[]) new MatrixStore<?>[length];
     }
 
     @Override

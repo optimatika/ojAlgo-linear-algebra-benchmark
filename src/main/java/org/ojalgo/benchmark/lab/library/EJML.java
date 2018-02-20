@@ -21,6 +21,7 @@
  */
 package org.ojalgo.benchmark.lab.library;
 
+import org.ejml.LinearSolverSafe;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.NormOps_DDRM;
@@ -29,6 +30,7 @@ import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
@@ -124,8 +126,17 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationLeastSquaresSolver(final int numbEquations, final int numbVariables,
             final int numbSolutions) {
-        // TODO Auto-generated method stub
-        return null;
+
+        final DMatrixRMaj result = new DMatrixRMaj(numbVariables, numbSolutions);
+        final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
+
+        return (body, rhs) -> {
+            if (!solver.setA(body)) {
+                throw new BenchmarkRequirementsException("Bad A");
+            }
+            solver.solve(rhs, result);
+            return result;
+        };
     }
 
     @Override
@@ -203,6 +214,12 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     protected DMatrixRMaj copy(final DMatrixRMaj source, final DMatrixRMaj destination) {
         System.arraycopy(source.data, 0, destination.data, 0, source.data.length);
         return destination;
+    }
+
+    @Override
+    protected DMatrixRMaj[] makeArray(final int length) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override

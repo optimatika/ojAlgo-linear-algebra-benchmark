@@ -80,13 +80,33 @@ import org.openjdk.jmh.runner.RunnerException;
  * LeastSquaresSolve.execute   1000     ojAlgo  thrpt    3         43,572 ±       15,780  ops/min
  * </pre>
  *
+ * MacBook Pro: 2018-02-20
+ *
+ * <pre>
+# Run complete. Total time: 00:20:29
+
+Benchmark                   (dim)   (lib)   Mode  Cnt         Score         Error    Units
+LeastSquaresSolver.execute     10     ACM  thrpt    3  10193343.006 ± 1860170.160  ops/min
+LeastSquaresSolver.execute     10    EJML  thrpt    3  22726883.142 ± 4139184.314  ops/min
+LeastSquaresSolver.execute     10  ojAlgo  thrpt    3  11999487.220 ±  467230.953  ops/min
+LeastSquaresSolver.execute     10     MTJ  thrpt    3  11766346.823 ±  682688.431  ops/min
+LeastSquaresSolver.execute    100     ACM  thrpt    3     41233.337 ±   19916.044  ops/min
+LeastSquaresSolver.execute    100    EJML  thrpt    3     44212.043 ±    3905.765  ops/min
+LeastSquaresSolver.execute    100  ojAlgo  thrpt    3     36916.294 ±    4893.924  ops/min
+LeastSquaresSolver.execute    100     MTJ  thrpt    3    144316.599 ±   18955.382  ops/min
+LeastSquaresSolver.execute   1000     ACM  thrpt    3        48.256 ±       9.100  ops/min
+LeastSquaresSolver.execute   1000    EJML  thrpt    3        48.372 ±      12.252  ops/min
+LeastSquaresSolver.execute   1000  ojAlgo  thrpt    3       103.000 ±      37.009  ops/min
+LeastSquaresSolver.execute   1000     MTJ  thrpt    3       648.200 ±      82.129  ops/min
+ * </pre>
+ *
  * @author apete
  */
 @State(Scope.Benchmark)
-public class LeastSquaresSolve extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class LeastSquaresSolver extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(LeastSquaresSolve.class);
+        MatrixBenchmarkOperation.run(LeastSquaresSolver.class);
     }
 
     @Param({ "10", "100", "1000" })
@@ -95,7 +115,7 @@ public class LeastSquaresSolve extends MatrixBenchmarkOperation implements Bench
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private MatrixBenchmarkLibrary<?, ?>.LeastSquaresSolver myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object body;
     Object rhs;
@@ -103,7 +123,7 @@ public class LeastSquaresSolve extends MatrixBenchmarkOperation implements Bench
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.solve(body, rhs);
+        return myOperation.execute(body, rhs);
     }
 
     @Override
@@ -112,7 +132,7 @@ public class LeastSquaresSolve extends MatrixBenchmarkOperation implements Bench
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getLeastSquaresSolver();
+        myOperation = library.getOperationLeastSquaresSolver(dim + dim, dim, 1);
 
         body = this.makeRandom(dim + dim, dim, library);
         rhs = this.makeRandom(dim + dim, 1, library);

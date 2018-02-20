@@ -123,10 +123,10 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationLeastSquaresSolver(final int numbEquations, final int numbVariables,
+    public ProducingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationLeastSquaresSolver(final int numbEquations, final int numbVariables,
             final int numbSolutions) {
-        // TODO Auto-generated method stub
-        return null;
+        final DenseMatrix result = new DenseMatrix(numbVariables, numbSolutions);
+        return (body, rhs) -> body.solve(rhs, result);
     }
 
     @Override
@@ -188,6 +188,12 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     protected DenseMatrix copy(final Matrix source, final DenseMatrix destination) {
         destination.set(source);
         return destination;
+    }
+
+    @Override
+    protected Matrix[] makeArray(final int length) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
