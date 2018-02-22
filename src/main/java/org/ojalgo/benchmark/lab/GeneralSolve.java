@@ -157,7 +157,7 @@ public class GeneralSolve extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getOperationEquationSystemSolver(dim, dim, 1);
+        myOperation = library.getOperationEquationSystemSolver(dim, dim, 1, false);
 
         body = this.makeRandom(dim, dim, library);
         rhs = this.makeRandom(dim, 1, library);

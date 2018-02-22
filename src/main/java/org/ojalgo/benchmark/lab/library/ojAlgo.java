@@ -21,7 +21,6 @@
  */
 package org.ojalgo.benchmark.lab.library;
 
-import org.ojalgo.RecoverableCondition;
 import org.ojalgo.access.Structure2D;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
@@ -41,22 +40,6 @@ import org.ojalgo.matrix.task.SolverTask;
  * oj! Algorithms
  */
 public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore> {
-
-    @Override
-    public HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
-
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
-                try {
-                    return SolverTask.PRIMITIVE.make(body, rhs, true, false).solve(body, rhs);
-                } catch (final RecoverableCondition exc) {
-                    throw new IllegalArgumentException(exc);
-                }
-            }
-
-        };
-    }
 
     @Override
     public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
@@ -140,9 +123,9 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
-            final int numbVariables, final int numbSolutions) {
+            final int numbVariables, final int numbSolutions, final boolean spd) {
 
-        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, false, false);
+        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, spd, spd);
 
         final PhysicalStore<Double> preallocated = task.preallocate(numbEquations, numbVariables, numbSolutions);
 

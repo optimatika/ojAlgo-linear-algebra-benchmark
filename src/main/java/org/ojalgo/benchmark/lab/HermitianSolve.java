@@ -49,13 +49,6 @@ import org.openjdk.jmh.runner.RunnerException;
 @State(Scope.Benchmark)
 public class HermitianSolve extends MatrixBenchmarkOperation {
 
-    @FunctionalInterface
-    public static interface TaskDefinition<T> {
-
-        int doThThing();
-
-    }
-
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(HermitianSolve.class);
     }
@@ -66,7 +59,7 @@ public class HermitianSolve extends MatrixBenchmarkOperation {
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private MatrixBenchmarkLibrary<?, ?>.HermitianSolver myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object body;
     Object rhs;
@@ -74,7 +67,7 @@ public class HermitianSolve extends MatrixBenchmarkOperation {
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.solve(body, rhs);
+        return myOperation.execute(body, rhs);
     }
 
     @Override
@@ -83,7 +76,7 @@ public class HermitianSolve extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getHermitianSolver();
+        myOperation = library.getOperationEquationSystemSolver(dim, dim, 1, true);
 
         body = this.makeSPD(dim, library);
         rhs = this.makeRandom(dim, 1, library);

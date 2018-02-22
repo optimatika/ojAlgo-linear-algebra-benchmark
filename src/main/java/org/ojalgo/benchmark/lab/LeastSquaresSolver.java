@@ -132,7 +132,7 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getOperationEquationSystemSolver(dim + dim, dim, 1);
+        myOperation = library.getOperationEquationSystemSolver(dim + dim, dim, 1, false);
 
         body = this.makeRandom(dim + dim, dim, library);
         rhs = this.makeRandom(dim + dim, 1, library);

@@ -41,21 +41,6 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
 public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix> {
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
-
-            @Override
-            public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
-
-                final CholeskyDecomposition tmpCholesky = new CholeskyDecomposition(body);
-
-                return tmpCholesky.getSolver().solve(rhs);
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -107,12 +92,19 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationEquationSystemSolver(final int numbEquations,
-            final int numbVariables, final int numbSolutions) {
+            final int numbVariables, final int numbSolutions, final boolean spd) {
         if (numbEquations == numbVariables) {
-            return (body, rhs) -> {
-                final LUDecomposition lu = new LUDecomposition(body);
-                return lu.getSolver().solve(rhs);
-            };
+            if (spd) {
+                return (body, rhs) -> {
+                    final CholeskyDecomposition cholesky = new CholeskyDecomposition(body);
+                    return cholesky.getSolver().solve(rhs);
+                };
+            } else {
+                return (body, rhs) -> {
+                    final LUDecomposition lu = new LUDecomposition(body);
+                    return lu.getSolver().solve(rhs);
+                };
+            }
         } else if (numbEquations > numbVariables) {
             return (body, rhs) -> {
                 final QRDecomposition qr = new QRDecomposition(body);

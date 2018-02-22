@@ -23,7 +23,6 @@ package org.ojalgo.benchmark;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
@@ -52,21 +51,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract class ElementsExtractor {
 
         public abstract double get(int row, int col);
-
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public abstract class HermitianSolver implements BinaryOperator<I> {
-
-        public abstract I apply(final I body, final I rhs);
-
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((I) body, (I) rhs);
-        }
 
     }
 
@@ -128,11 +112,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         return retVal;
     }
 
-    /**
-     * @deprected Replace with something new named getOperation*
-     */
-    public abstract HermitianSolver getHermitianSolver();
-
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
@@ -150,7 +129,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
 
-    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions);
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions,
+            boolean spd);
 
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 

@@ -41,23 +41,6 @@ import no.uib.cipr.matrix.SymmTridiagMatrix;
 public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
 
     @Override
-    public HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
-
-            @Override
-            public Matrix apply(final Matrix body, final Matrix rhs) {
-
-                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
-
-                body.solve(rhs, result);
-
-                return result;
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<Matrix, DenseMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -107,7 +90,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
-            final int numbSolutions) {
+            final int numbSolutions, final boolean spd) {
         final DenseMatrix result = new DenseMatrix(numbVariables, numbSolutions);
         return (body, rhs) -> body.solve(rhs, result);
     }

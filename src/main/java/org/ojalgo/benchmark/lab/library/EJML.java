@@ -44,19 +44,6 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
 public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
-    public HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
-
-            @Override
-            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -90,6 +77,46 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
+            final int numbSolutions, final boolean spd) {
+
+        final DMatrixRMaj result = new DMatrixRMaj(numbVariables, numbSolutions);
+
+        if (numbEquations == numbVariables) {
+            if (spd) {
+                final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.symmPosDef(numbVariables));
+                return (body, rhs) -> {
+                    if (!solver.setA(body)) {
+                        throw new BenchmarkRequirementsException();
+                    }
+                    solver.solve(rhs, result);
+                    return result;
+                };
+            } else {
+                final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.linear(numbVariables));
+                return (body, rhs) -> {
+                    if (!solver.setA(body)) {
+                        throw new BenchmarkRequirementsException();
+                    }
+                    solver.solve(rhs, result);
+                    return result;
+                };
+            }
+        } else if (numbEquations > numbVariables) {
+            final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
+            return (body, rhs) -> {
+                if (!solver.setA(body)) {
+                    throw new BenchmarkRequirementsException();
+                }
+                solver.solve(rhs, result);
+                return result;
+            };
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationEvD(final int dim) {
 
         final DMatrixRMaj[] ret = new DMatrixRMaj[2];
@@ -108,35 +135,6 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
         return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
-    }
-
-    @Override
-    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
-            final int numbSolutions) {
-
-        final DMatrixRMaj result = new DMatrixRMaj(numbVariables, numbSolutions);
-
-        if (numbEquations == numbVariables) {
-            final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.linear(numbVariables));
-            return (body, rhs) -> {
-                if (!solver.setA(body)) {
-                    throw new BenchmarkRequirementsException();
-                }
-                solver.solve(rhs, result);
-                return result;
-            };
-        } else if (numbEquations > numbVariables) {
-            final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
-            return (body, rhs) -> {
-                if (!solver.setA(body)) {
-                    throw new BenchmarkRequirementsException();
-                }
-                solver.solve(rhs, result);
-                return result;
-            };
-        } else {
-            return null;
-        }
     }
 
     @Override
