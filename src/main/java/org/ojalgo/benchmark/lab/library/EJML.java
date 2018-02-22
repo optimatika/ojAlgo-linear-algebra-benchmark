@@ -57,19 +57,6 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
-
-            @Override
-            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -124,19 +111,32 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationLeastSquaresSolver(final int numbEquations, final int numbVariables,
+    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
             final int numbSolutions) {
 
         final DMatrixRMaj result = new DMatrixRMaj(numbVariables, numbSolutions);
-        final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
 
-        return (body, rhs) -> {
-            if (!solver.setA(body)) {
-                throw new BenchmarkRequirementsException("Bad A");
-            }
-            solver.solve(rhs, result);
-            return result;
-        };
+        if (numbEquations == numbVariables) {
+            final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.linear(numbVariables));
+            return (body, rhs) -> {
+                if (!solver.setA(body)) {
+                    throw new BenchmarkRequirementsException();
+                }
+                solver.solve(rhs, result);
+                return result;
+            };
+        } else if (numbEquations > numbVariables) {
+            final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
+            return (body, rhs) -> {
+                if (!solver.setA(body)) {
+                    throw new BenchmarkRequirementsException();
+                }
+                solver.solve(rhs, result);
+                return result;
+            };
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -164,17 +164,6 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingBinaryMatrixScalarOperation<DMatrixRMaj, DMatrixRMaj> getOperationScale() {
         return (a, s, b) -> CommonOps_DDRM.scale(s, a, b);
-    }
-
-    @Override
-    public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationSolveGeneral(final int dim) {
-        final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(dim);
-        return (body, rhs, sol) -> {
-            if (!solver.setA(body)) {
-                throw new RuntimeException();
-            }
-            solver.solve(rhs, sol);
-        };
     }
 
     @Override

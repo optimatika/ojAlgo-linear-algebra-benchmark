@@ -59,22 +59,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
-
-            @Override
-            public MatrixStore<Double> apply(final MatrixStore<Double> body, final MatrixStore<Double> rhs) {
-                try {
-                    return SolverTask.PRIMITIVE.make(body, rhs, false, false).solve(body, rhs);
-                } catch (final RecoverableCondition exc) {
-                    throw new IllegalArgumentException(exc);
-                }
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -155,7 +139,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationLeastSquaresSolver(final int numbEquations,
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions) {
 
         final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, false, false);
@@ -185,14 +169,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public MutatingBinaryMatrixScalarOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationScale() {
         return (a, s, b) -> b.fillMatching(a, PrimitiveFunction.MULTIPLY, s);
-    }
-
-    @Override
-    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationSolveGeneral(final int dim) {
-
-        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(dim, dim, dim, false, false);
-
-        return (body, rhs, sol) -> task.solve(body, rhs, sol);
     }
 
     @Override

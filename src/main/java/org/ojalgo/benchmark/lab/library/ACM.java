@@ -56,21 +56,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
-
-            @Override
-            public RealMatrix apply(final RealMatrix body, final RealMatrix rhs) {
-
-                final QRDecomposition tmpQR = new QRDecomposition(body);
-
-                return tmpQR.getSolver().solve(rhs);
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -121,12 +106,21 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationLeastSquaresSolver(final int numbEquations,
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions) {
-        return (body, rhs) -> {
-            final QRDecomposition qr = new QRDecomposition(body);
-            return qr.getSolver().solve(rhs);
-        };
+        if (numbEquations == numbVariables) {
+            return (body, rhs) -> {
+                final LUDecomposition lu = new LUDecomposition(body);
+                return lu.getSolver().solve(rhs);
+            };
+        } else if (numbEquations > numbVariables) {
+            return (body, rhs) -> {
+                final QRDecomposition qr = new QRDecomposition(body);
+                return qr.getSolver().solve(rhs);
+            };
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -142,15 +136,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public MutatingBinaryMatrixScalarOperation<RealMatrix, Array2DRowRealMatrix> getOperationScale() {
         return (a, s, b) -> this.copy(a.scalarMultiply(s), b);
-    }
-
-    @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationSolveGeneral(final int dim) {
-        return (body, rhs, sol) -> {
-            final LUDecomposition lu = new LUDecomposition(body);
-            final RealMatrix tmp = lu.getSolver().solve(rhs);
-            this.copy(tmp, sol);
-        };
     }
 
     @Override

@@ -58,23 +58,6 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    public LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
-
-            @Override
-            public Matrix apply(final Matrix body, final Matrix rhs) {
-
-                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
-
-                body.solve(rhs, result);
-
-                return result;
-            }
-
-        };
-    }
-
-    @Override
     public MatrixBenchmarkLibrary<Matrix, DenseMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
@@ -123,7 +106,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationLeastSquaresSolver(final int numbEquations, final int numbVariables,
+    public ProducingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
             final int numbSolutions) {
         final DenseMatrix result = new DenseMatrix(numbVariables, numbSolutions);
         return (body, rhs) -> body.solve(rhs, result);
@@ -145,11 +128,6 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     @Override
     public MutatingBinaryMatrixScalarOperation<Matrix, DenseMatrix> getOperationScale() {
         return (a, s, b) -> b.set(s, a);
-    }
-
-    @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationSolveGeneral(final int dim) {
-        return (body, rhs, sol) -> body.solve(rhs, sol);
     }
 
     @Override

@@ -70,21 +70,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     }
 
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public abstract class LeastSquaresSolver implements BinaryOperator<I> {
-
-        public abstract I apply(final I body, final I rhs);
-
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((I) body, (I) rhs);
-        }
-
-    }
-
     public abstract class MatrixBuilder implements Supplier<I> {
 
         public abstract MatrixBuilder set(int row, int col, double value);
@@ -148,11 +133,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract HermitianSolver getHermitianSolver();
 
-    /**
-     * @deprected Replace with something new named getOperation*
-     */
-    public abstract LeastSquaresSolver getLeastSquaresSolver();
-
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
@@ -170,15 +150,13 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
 
-    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationLeastSquaresSolver(int numbEquations, int numbVariables, int numbSolutions);
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions);
 
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);
 
     public abstract MutatingBinaryMatrixScalarOperation<I, T> getOperationScale();
-
-    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationSolveGeneral(int dim);
 
     public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
 
