@@ -151,7 +151,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public MutatingBinaryMatrixScalarOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationScale() {
-        return (a, s, b) -> b.fillMatching(a, PrimitiveFunction.MULTIPLY, s);
+        return (a, s, b) -> b.fillMatching(PrimitiveFunction.MULTIPLY.first(s), a);
     }
 
     @Override
