@@ -34,12 +34,27 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Mac Pro: 2015-06-13
+ * Mac Pro: 2018-02-23
  *
  * <pre>
+# Run complete. Total time: 00:20:11
+
+Benchmark               (dim)   (lib)   Mode  Cnt         Score         Error    Units
+HermitianSolve.execute     10     ACM  thrpt    3  15232248.591 ±  336213.938  ops/min
+HermitianSolve.execute     10    EJML  thrpt    3  54329954.965 ± 2398886.643  ops/min
+HermitianSolve.execute     10  ojAlgo  thrpt    3  50836618.152 ±  777386.197  ops/min
+HermitianSolve.execute     10     MTJ  thrpt    3  26529812.710 ± 1050002.364  ops/min
+HermitianSolve.execute    100     ACM  thrpt    3    153682.126 ±   42031.507  ops/min
+HermitianSolve.execute    100    EJML  thrpt    3    274902.489 ±   78191.974  ops/min
+HermitianSolve.execute    100  ojAlgo  thrpt    3    167983.043 ±   12615.147  ops/min
+HermitianSolve.execute    100     MTJ  thrpt    3    172111.200 ±   47630.643  ops/min
+HermitianSolve.execute   1000     ACM  thrpt    3       233.557 ±       3.475  ops/min
+HermitianSolve.execute   1000    EJML  thrpt    3       279.627 ±       2.176  ops/min
+HermitianSolve.execute   1000  ojAlgo  thrpt    3       221.878 ±     133.507  ops/min
+HermitianSolve.execute   1000     MTJ  thrpt    3      2599.969 ±      29.084  ops/min
  * </pre>
  *
- * MacBook Air: 2015-06-13
+ * MacBook Pro: 2018-02-23
  *
  * <pre>
  * </pre>

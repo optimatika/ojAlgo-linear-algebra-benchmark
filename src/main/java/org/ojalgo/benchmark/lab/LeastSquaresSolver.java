@@ -34,9 +34,24 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Mac Pro 2015-06-13
+ * Mac Pro 2018-02-23
  *
  * <pre>
+# Run complete. Total time: 00:20:26
+
+Benchmark                   (dim)   (lib)   Mode  Cnt        Score        Error    Units
+LeastSquaresSolver.execute     10     ACM  thrpt    3  5200707.434 ±  62665.368  ops/min
+LeastSquaresSolver.execute     10    EJML  thrpt    3  9173323.292 ± 280396.776  ops/min
+LeastSquaresSolver.execute     10  ojAlgo  thrpt    3  5793229.586 ± 648123.702  ops/min
+LeastSquaresSolver.execute     10     MTJ  thrpt    3  5213698.794 ±  90154.483  ops/min
+LeastSquaresSolver.execute    100     ACM  thrpt    3    31520.051 ±    214.258  ops/min
+LeastSquaresSolver.execute    100    EJML  thrpt    3    31236.966 ±     37.154  ops/min
+LeastSquaresSolver.execute    100  ojAlgo  thrpt    3    25226.972 ±   3038.485  ops/min
+LeastSquaresSolver.execute    100     MTJ  thrpt    3    56666.168 ±    819.864  ops/min
+LeastSquaresSolver.execute   1000     ACM  thrpt    3       33.696 ±     10.208  ops/min
+LeastSquaresSolver.execute   1000    EJML  thrpt    3       34.215 ±      0.509  ops/min
+LeastSquaresSolver.execute   1000  ojAlgo  thrpt    3       97.905 ±      2.333  ops/min
+LeastSquaresSolver.execute   1000     MTJ  thrpt    3      314.707 ±     12.122  ops/min
  * </pre>
  *
  * MacBook Air: 2015-06-18
