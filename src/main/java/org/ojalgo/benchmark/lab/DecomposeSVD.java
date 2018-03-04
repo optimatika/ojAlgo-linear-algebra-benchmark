@@ -34,6 +34,31 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * Mac Pro: 2018-03-04
+ * 
+ * <pre>
+ * </pre>
+ *
+ * MacBook Pro: 2018-03-04
+ *
+ * <pre>
+# Run complete. Total time: 00:24:47
+
+Benchmark             (dim)   (lib)   Mode  Cnt        Score        Error    Units
+DecomposeSVD.execute     10     ACM  thrpt    3  3360867.318 ± 365063.646  ops/min
+DecomposeSVD.execute     10    EJML  thrpt    3  4901892.911 ± 522417.157  ops/min
+DecomposeSVD.execute     10  ojAlgo  thrpt    3  4859845.832 ± 819330.955  ops/min
+DecomposeSVD.execute     10     MTJ  thrpt    3  2468949.202 ± 704396.180  ops/min
+DecomposeSVD.execute    100     ACM  thrpt    3     6415.992 ±    250.327  ops/min
+DecomposeSVD.execute    100    EJML  thrpt    3    12451.286 ±   3286.352  ops/min
+DecomposeSVD.execute    100  ojAlgo  thrpt    3    15896.994 ±   1121.752  ops/min
+DecomposeSVD.execute    100     MTJ  thrpt    3    29052.226 ±   2799.026  ops/min
+DecomposeSVD.execute   1000     ACM  thrpt    3        2.367 ±      1.888  ops/min
+DecomposeSVD.execute   1000    EJML  thrpt    3       14.275 ±      0.701  ops/min
+DecomposeSVD.execute   1000  ojAlgo  thrpt    3       16.303 ±      0.355  ops/min
+DecomposeSVD.execute   1000     MTJ  thrpt    3      161.126 ±      3.737  ops/min
+ * </pre>
+ *
  * @author apete
  */
 @State(Scope.Benchmark)
