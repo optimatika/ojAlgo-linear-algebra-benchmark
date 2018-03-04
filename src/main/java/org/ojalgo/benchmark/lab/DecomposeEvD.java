@@ -136,25 +136,26 @@ DecomposeEigen.execute   1000     ojAlgo  thrpt    3        25,599 ±        2,0
  * @author apete
  */
 @State(Scope.Benchmark)
-public class DecomposeEigen extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeEigen.class);
+        MatrixBenchmarkOperation.run(DecomposeEvD.class);
     }
 
     @Param({ "10", "100", "1000" })
     public int dim;
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "MTJ", "ACM", "EJML", "ojAlgo" })
     public String lib;
 
-    private ProducingUnaryMatrixOperation<?, ?> myOperation;
+    private DecompositionOperation<?, ?> myOperation;
 
     Object matrix;
+    Object result;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(matrix);
+        return result = myOperation.execute(matrix);
     }
 
     @Override
@@ -165,15 +166,15 @@ public class DecomposeEigen extends MatrixBenchmarkOperation implements Benchmar
 
         matrix = this.makeSPD(dim, library);
 
-        myOperation = library.getOperationEigenvectors(dim);
+        myOperation = library.getOperationEvD(dim);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myDecomposer.getClass());
-
+        if (!library.equals(matrix, dim, result)) {
+            throw new BenchmarkRequirementsException("Not able to reconstruct the matrix!");
+        }
     }
 
 }

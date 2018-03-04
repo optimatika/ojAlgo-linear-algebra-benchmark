@@ -27,6 +27,12 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixO
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.matrix.decomposition.Eigenvalue;
+import org.ojalgo.matrix.store.ElementsConsumer;
+import org.ojalgo.matrix.store.ElementsSupplier;
+import org.ojalgo.matrix.store.PhysicalStore.Factory;
+import org.ojalgo.matrix.store.PrimitiveDenseStore;
+import org.ojalgo.netio.BasicLogger;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -65,20 +71,54 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationEigenvectors(final int dim) {
-        return (input) -> SymmDenseEVD.factorize(input).getEigenvectors();
-    }
-
-    @Override
     public DecompositionOperation<Matrix, Matrix> getOperationEvD(final int dim) {
 
-        final Matrix[] ret = new Matrix[3];
+        final Matrix[] ret = this.makeArray(3);
         final double[] offDiag = new double[dim - 1];
 
         return (matrix) -> {
+
+            final Eigenvalue<Double> hghjk = Eigenvalue.PRIMITIVE.make(true);
+
+            hghjk.decompose(new ElementsSupplier<Double>() {
+
+                public void supplyTo(final ElementsConsumer<Double> receiver) {
+                    for (int i = 0; i < dim; i++) {
+                        for (int j = 0; j < dim; j++) {
+                            receiver.set(i, j, matrix.get(i, j));
+                        }
+                    }
+                }
+
+                public long countColumns() {
+                    // TODO Auto-generated method stub
+                    return dim;
+                }
+
+                public long countRows() {
+                    // TODO Auto-generated method stub
+                    return dim;
+                }
+
+                public Factory<Double, ?> physical() {
+                    // TODO Auto-generated method stub
+                    return PrimitiveDenseStore.FACTORY;
+                }
+            });
+            BasicLogger.DEBUG.println("ojAlgo");
+            BasicLogger.DEBUG.println(hghjk.getD());
+            BasicLogger.DEBUG.println(hghjk.getV());
+
             final SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
-            ret[0] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
-            ret[1] = evd.getEigenvectors();
+            ret[0] = evd.getEigenvectors();
+            ret[1] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
+            ret[2] = evd.getEigenvectors().transpose();
+
+            BasicLogger.DEBUG.println("MTJ");
+
+            BasicLogger.DEBUG.println(ret[1]);
+            BasicLogger.DEBUG.println(ret[0]);
+
             return ret;
         };
     }
@@ -116,7 +156,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     @Override
     public DecompositionOperation<Matrix, Matrix> getOperationSVD(final int dim) {
 
-        final Matrix[] ret = new Matrix[3];
+        final Matrix[] ret = this.makeArray(3);
         final double[] offDiag = new double[dim - 1];
 
         return (matrix) -> {
@@ -153,8 +193,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
 
     @Override
     protected Matrix[] makeArray(final int length) {
-        // TODO Auto-generated method stub
-        return null;
+        return new Matrix[length];
     }
 
     @Override

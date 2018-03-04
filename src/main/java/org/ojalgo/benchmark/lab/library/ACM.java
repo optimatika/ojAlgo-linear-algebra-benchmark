@@ -65,32 +65,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationEigenvectors(final int dim) {
-        return (input) -> {
-            final EigenDecomposition evd = new EigenDecomposition(input);
-            return evd.getV();
-        };
-    }
-
-    @Override
-    public DecompositionOperation<RealMatrix, RealMatrix> getOperationEvD(final int dim) {
-
-        final RealMatrix[] ret = new RealMatrix[2];
-
-        return (matrix) -> {
-            final EigenDecomposition svd = new EigenDecomposition(matrix);
-            ret[0] = svd.getD();
-            ret[1] = svd.getV();
-            return ret;
-        };
-    }
-
-    @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying() {
-        return (left, right, product) -> this.copy(left.multiply(right), product);
-    }
-
-    @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions, final boolean spd) {
         if (numbEquations == numbVariables) {
@@ -116,6 +90,25 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
+    public DecompositionOperation<RealMatrix, RealMatrix> getOperationEvD(final int dim) {
+
+        final RealMatrix[] ret = this.makeArray(3);
+
+        return (matrix) -> {
+            final EigenDecomposition svd = new EigenDecomposition(matrix);
+            ret[0] = svd.getV();
+            ret[1] = svd.getD();
+            ret[2] = svd.getVT();
+            return ret;
+        };
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying() {
+        return (left, right, product) -> this.copy(left.multiply(right), product);
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
         return (left, right) -> left.multiply(right);
     }
@@ -133,7 +126,7 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public DecompositionOperation<RealMatrix, RealMatrix> getOperationSVD(final int dim) {
 
-        final RealMatrix[] ret = new RealMatrix[3];
+        final RealMatrix[] ret = this.makeArray(3);
 
         return (matrix) -> {
             final SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
@@ -166,8 +159,7 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
 
     @Override
     protected RealMatrix[] makeArray(final int length) {
-        // TODO Auto-generated method stub
-        return null;
+        return new RealMatrix[length];
     }
 
     @Override

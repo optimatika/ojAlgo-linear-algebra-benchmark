@@ -21,7 +21,6 @@
  */
 package org.ojalgo.benchmark.lab.library;
 
-import org.ojalgo.access.Structure2D;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
@@ -66,52 +65,17 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEigenvectors(final int dim) {
-
-        final Structure2D shape = new Structure2D() {
-
-            public long countColumns() {
-                return dim;
-            }
-
-            public long countRows() {
-                return dim;
-            }
-
-        };
-
-        final Eigenvalue<Double> evd = Eigenvalue.PRIMITIVE.make(shape, true);
-
-        return (matrix) -> {
-            evd.decompose(matrix);
-            return evd.getV();
-        };
-    }
-
-    @Override
     public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationEvD(final int dim) {
 
-        @SuppressWarnings("unchecked")
-        final MatrixStore<Double>[] ret = (MatrixStore<Double>[]) new MatrixStore<?>[2];
+        final MatrixStore<Double>[] ret = this.makeArray(3);
 
-        final Structure2D shape = new Structure2D() {
-
-            public long countColumns() {
-                return dim;
-            }
-
-            public long countRows() {
-                return dim;
-            }
-
-        };
-
-        final Eigenvalue<Double> evd = Eigenvalue.PRIMITIVE.make(shape, true);
+        final Eigenvalue<Double> evd = Eigenvalue.PRIMITIVE.make(dim, true);
 
         return (matrix) -> {
             evd.decompose(matrix);
-            ret[0] = evd.getD();
-            ret[1] = evd.getV();
+            ret[0] = evd.getV();
+            ret[1] = evd.getD();
+            ret[2] = ret[0].transpose();
             return ret;
         };
     }
@@ -157,16 +121,15 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationSVD(final int dim) {
 
-        final MatrixStore<Double>[] factors = this.makeArray(3);
-
+        final MatrixStore<Double>[] ret = this.makeArray(3);
         final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
 
         return (matrix) -> {
             svd.decompose(matrix);
-            factors[0] = svd.getQ1();
-            factors[1] = svd.getD();
-            factors[2] = svd.getQ2().transpose();
-            return factors;
+            ret[0] = svd.getQ1();
+            ret[1] = svd.getD();
+            ret[2] = svd.getQ2().transpose();
+            return ret;
         };
     }
 

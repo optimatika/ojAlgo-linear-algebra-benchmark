@@ -24,6 +24,7 @@ package org.ojalgo.benchmark.lab.library;
 import org.ejml.LinearSolverSafe;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.EigenOps_DDRM;
 import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
@@ -65,15 +66,6 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationAdd() {
         return (a, b, c) -> CommonOps_DDRM.add(a, b, c);
-    }
-
-    @Override
-    public ProducingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEigenvectors(final int dim) {
-        final EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
-        return (input) -> {
-            evd.decompose(input);
-            return evd.getEigenVector(0); // Only 1 vector - all other libraries return all vectors at once
-        };
     }
 
     @Override
@@ -119,17 +111,23 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationEvD(final int dim) {
 
-        final DMatrixRMaj[] ret = new DMatrixRMaj[2];
-
+        final DMatrixRMaj[] ret = this.makeArray(3);
         final EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
+        final DMatrixRMaj vt = new DMatrixRMaj(dim, dim);
 
-        throw new UnsupportedOperationException();
+        return input -> {
 
-        //        return (matrix) -> {
-        //            evd.decompose(matrix);
-        //
-        //            return ret;
-        //        };
+            if (!DecompositionFactory_DDRM.decomposeSafe(evd, input)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
+
+            ret[0] = EigenOps_DDRM.createMatrixV(evd);
+            ret[1] = EigenOps_DDRM.createMatrixD(evd);
+            ret[2] = CommonOps_DDRM.transpose(ret[0], vt);
+
+            return ret;
+        };
+
     }
 
     @Override
@@ -167,8 +165,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationSVD(final int dim) {
 
-        final DMatrixRMaj[] ret = new DMatrixRMaj[3];
-
+        final DMatrixRMaj[] ret = this.makeArray(3);
         final SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, true, true, true);
 
         return (matrix) -> {
@@ -205,8 +202,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     protected DMatrixRMaj[] makeArray(final int length) {
-        // TODO Auto-generated method stub
-        return null;
+        return new DMatrixRMaj[length];
     }
 
     @Override

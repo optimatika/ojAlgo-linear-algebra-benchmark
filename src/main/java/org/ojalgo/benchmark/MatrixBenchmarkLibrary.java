@@ -116,8 +116,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
 
-    public abstract ProducingUnaryMatrixOperation<I, T> getOperationEigenvectors(int dim);
-
     public abstract DecompositionOperation<I, I> getOperationEvD(int dim);
 
     /**
