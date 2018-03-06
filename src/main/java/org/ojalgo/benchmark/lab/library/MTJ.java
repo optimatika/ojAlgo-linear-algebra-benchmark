@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2017 Optimatika (www.optimatika.se)
+ * Copyright 1997-2018 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,12 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixO
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.matrix.decomposition.Eigenvalue;
+import org.ojalgo.matrix.store.ElementsConsumer;
+import org.ojalgo.matrix.store.ElementsSupplier;
+import org.ojalgo.matrix.store.PhysicalStore.Factory;
+import org.ojalgo.matrix.store.PrimitiveDenseStore;
+import org.ojalgo.netio.BasicLogger;
 
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrix;
@@ -38,44 +44,10 @@ import no.uib.cipr.matrix.SymmTridiagMatrix;
 /**
  * Matrix Toolkits Java
  */
-public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
+public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
 
     @Override
-    public HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
-
-            @Override
-            public Matrix apply(final Matrix body, final Matrix rhs) {
-
-                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
-
-                body.solve(rhs, result);
-
-                return result;
-            }
-
-        };
-    }
-
-    @Override
-    public LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
-
-            @Override
-            public Matrix apply(final Matrix body, final Matrix rhs) {
-
-                final DenseMatrix result = new DenseMatrix(body.numColumns(), rhs.numColumns());
-
-                body.solve(rhs, result);
-
-                return result;
-            }
-
-        };
-    }
-
-    @Override
-    public MatrixBenchmarkLibrary<Matrix, Matrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<Matrix, DenseMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
             private final DenseMatrix myMatrix = new DenseMatrix(numberOfRows, numberOfColumns);
@@ -94,32 +66,73 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationAdd() {
+    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationAdd() {
         return (a, b, c) -> c.set(a).add(b);
-    }
-
-    @Override
-    public ProducingUnaryMatrixOperation<Matrix, Matrix> getOperationEigenvectors(final int dim) {
-        return (input) -> SymmDenseEVD.factorize(input).getEigenvectors();
     }
 
     @Override
     public DecompositionOperation<Matrix, Matrix> getOperationEvD(final int dim) {
 
-        final Matrix[] ret = new Matrix[3];
+        final Matrix[] ret = this.makeArray(3);
         final double[] offDiag = new double[dim - 1];
 
         return (matrix) -> {
+
+            final Eigenvalue<Double> hghjk = Eigenvalue.PRIMITIVE.make(true);
+
+            hghjk.decompose(new ElementsSupplier<Double>() {
+
+                public void supplyTo(final ElementsConsumer<Double> receiver) {
+                    for (int i = 0; i < dim; i++) {
+                        for (int j = 0; j < dim; j++) {
+                            receiver.set(i, j, matrix.get(i, j));
+                        }
+                    }
+                }
+
+                public long countColumns() {
+                    // TODO Auto-generated method stub
+                    return dim;
+                }
+
+                public long countRows() {
+                    // TODO Auto-generated method stub
+                    return dim;
+                }
+
+                public Factory<Double, ?> physical() {
+                    // TODO Auto-generated method stub
+                    return PrimitiveDenseStore.FACTORY;
+                }
+            });
+            BasicLogger.DEBUG.println("ojAlgo");
+            BasicLogger.DEBUG.println(hghjk.getD());
+            BasicLogger.DEBUG.println(hghjk.getV());
+
             final SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
-            ret[0] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
-            ret[1] = evd.getEigenvectors();
+            ret[0] = evd.getEigenvectors();
+            ret[1] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
+            ret[2] = evd.getEigenvectors().transpose();
+
+            BasicLogger.DEBUG.println("MTJ");
+
+            BasicLogger.DEBUG.println(ret[1]);
+            BasicLogger.DEBUG.println(ret[0]);
+
             return ret;
         };
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationFillByMultiplying() {
+    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationFillByMultiplying() {
         return (left, right, product) -> left.mult(right, product);
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
+            final int numbSolutions, final boolean spd) {
+        final DenseMatrix result = new DenseMatrix(numbVariables, numbSolutions);
+        return (body, rhs) -> body.solve(rhs, result);
     }
 
     @Override
@@ -131,24 +144,19 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<Matrix, Matrix> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationPseudoinverse(final int dim) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public MutatingBinaryMatrixScalarOperation<Matrix, Matrix> getOperationScale() {
+    public MutatingBinaryMatrixScalarOperation<Matrix, DenseMatrix> getOperationScale() {
         return (a, s, b) -> b.set(s, a);
-    }
-
-    @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationSolveGeneral(final int dim) {
-        return (body, rhs, sol) -> body.solve(rhs, sol);
     }
 
     @Override
     public DecompositionOperation<Matrix, Matrix> getOperationSVD(final int dim) {
 
-        final Matrix[] ret = new Matrix[3];
+        final Matrix[] ret = this.makeArray(3);
         final double[] offDiag = new double[dim - 1];
 
         return (matrix) -> {
@@ -178,9 +186,14 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, Matrix> {
     }
 
     @Override
-    protected Matrix copy(final Matrix source, final Matrix destination) {
+    protected DenseMatrix copy(final Matrix source, final DenseMatrix destination) {
         destination.set(source);
         return destination;
+    }
+
+    @Override
+    protected Matrix[] makeArray(final int length) {
+        return new Matrix[length];
     }
 
     @Override

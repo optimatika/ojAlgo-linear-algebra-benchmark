@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2017 Optimatika (www.optimatika.se)
+ * Copyright 1997-2018 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -119,7 +119,7 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
-    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.MINUTES);
+    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
     static final TimeValue TIMEOUT = new TimeValue(10L, TimeUnit.MINUTES);
 
     protected static ChainedOptionsBuilder options() {
@@ -168,8 +168,8 @@ public abstract class MatrixBenchmarkOperation {
             tmpRandom[i] = Math.random();
 
             for (int j = 0; j < i; j++) {
-                tmpSupplier.set(i, j, tmpRandom[i] + tmpRandom[j]);
-                tmpSupplier.set(j, i, tmpRandom[j] + tmpRandom[i]);
+                tmpSupplier.set(i, j, tmpRandom[i] * tmpRandom[j]);
+                tmpSupplier.set(j, i, tmpRandom[j] * tmpRandom[i]);
             }
             tmpSupplier.set(i, i, tmpRandom[i] + 1.0);
         }

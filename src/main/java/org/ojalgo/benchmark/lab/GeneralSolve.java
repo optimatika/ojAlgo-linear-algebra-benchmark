@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2017 Optimatika (www.optimatika.se)
+ * Copyright 1997-2018 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -135,21 +135,20 @@ public class GeneralSolve extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(GeneralSolve.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "10", "100", "200", "500" })
     public int dim;
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object body;
     Object rhs;
-    Object solution;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(body, rhs, solution);
+        return myOperation.execute(body, rhs);
     }
 
     @Override
@@ -158,11 +157,10 @@ public class GeneralSolve extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getOperationSolveGeneral(dim);
+        myOperation = library.getOperationEquationSystemSolver(dim, dim, 1, false);
 
         body = this.makeRandom(dim, dim, library);
         rhs = this.makeRandom(dim, 1, library);
-        solution = this.makeZero(dim, 1, library);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2017 Optimatika (www.optimatika.se)
+ * Copyright 1997-2018 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@ package org.ojalgo.benchmark;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
@@ -52,36 +51,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract class ElementsExtractor {
 
         public abstract double get(int row, int col);
-
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public abstract class HermitianSolver implements BinaryOperator<I> {
-
-        public abstract I apply(final I body, final I rhs);
-
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((I) body, (I) rhs);
-        }
-
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public abstract class LeastSquaresSolver implements BinaryOperator<I> {
-
-        public abstract I apply(final I body, final I rhs);
-
-        @SuppressWarnings("unchecked")
-        public final Object solve(final Object body, final Object rhs) {
-            return this.apply((I) body, (I) rhs);
-        }
 
     }
 
@@ -143,21 +112,9 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         return retVal;
     }
 
-    /**
-     * @deprected Replace with something new named getOperation*
-     */
-    public abstract HermitianSolver getHermitianSolver();
-
-    /**
-     * @deprected Replace with something new named getOperation*
-     */
-    public abstract LeastSquaresSolver getLeastSquaresSolver();
-
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
-
-    public abstract ProducingUnaryMatrixOperation<I, T> getOperationEigenvectors(int dim);
 
     public abstract DecompositionOperation<I, I> getOperationEvD(int dim);
 
@@ -170,13 +127,14 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
 
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions,
+            boolean spd);
+
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);
 
     public abstract MutatingBinaryMatrixScalarOperation<I, T> getOperationScale();
-
-    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationSolveGeneral(int dim);
 
     public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
 
@@ -185,6 +143,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     protected abstract I convertTo(double[][] raw);
 
     protected abstract T copy(I source, T destination);
+
+    protected abstract I[] makeArray(int length);
 
     @SuppressWarnings("unchecked")
     protected abstract I multiply(I... factors);

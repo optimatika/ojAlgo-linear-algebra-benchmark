@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2017 Optimatika (www.optimatika.se)
+ * Copyright 1997-2018 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,24 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Mac Pro 2015-06-13
+ * Mac Pro 2018-02-23
  *
  * <pre>
+# Run complete. Total time: 00:20:26
+
+Benchmark                   (dim)   (lib)   Mode  Cnt        Score        Error    Units
+LeastSquaresSolver.execute     10     ACM  thrpt    3  5200707.434 ±  62665.368  ops/min
+LeastSquaresSolver.execute     10    EJML  thrpt    3  9173323.292 ± 280396.776  ops/min
+LeastSquaresSolver.execute     10  ojAlgo  thrpt    3  5793229.586 ± 648123.702  ops/min
+LeastSquaresSolver.execute     10     MTJ  thrpt    3  5213698.794 ±  90154.483  ops/min
+LeastSquaresSolver.execute    100     ACM  thrpt    3    31520.051 ±    214.258  ops/min
+LeastSquaresSolver.execute    100    EJML  thrpt    3    31236.966 ±     37.154  ops/min
+LeastSquaresSolver.execute    100  ojAlgo  thrpt    3    25226.972 ±   3038.485  ops/min
+LeastSquaresSolver.execute    100     MTJ  thrpt    3    56666.168 ±    819.864  ops/min
+LeastSquaresSolver.execute   1000     ACM  thrpt    3       33.696 ±     10.208  ops/min
+LeastSquaresSolver.execute   1000    EJML  thrpt    3       34.215 ±      0.509  ops/min
+LeastSquaresSolver.execute   1000  ojAlgo  thrpt    3       97.905 ±      2.333  ops/min
+LeastSquaresSolver.execute   1000     MTJ  thrpt    3      314.707 ±     12.122  ops/min
  * </pre>
  *
  * MacBook Air: 2015-06-18
@@ -80,13 +95,33 @@ import org.openjdk.jmh.runner.RunnerException;
  * LeastSquaresSolve.execute   1000     ojAlgo  thrpt    3         43,572 ±       15,780  ops/min
  * </pre>
  *
+ * MacBook Pro: 2018-02-20
+ *
+ * <pre>
+# Run complete. Total time: 00:20:29
+
+Benchmark                   (dim)   (lib)   Mode  Cnt         Score         Error    Units
+LeastSquaresSolver.execute     10     ACM  thrpt    3  10193343.006 ± 1860170.160  ops/min
+LeastSquaresSolver.execute     10    EJML  thrpt    3  22726883.142 ± 4139184.314  ops/min
+LeastSquaresSolver.execute     10  ojAlgo  thrpt    3  11999487.220 ±  467230.953  ops/min
+LeastSquaresSolver.execute     10     MTJ  thrpt    3  11766346.823 ±  682688.431  ops/min
+LeastSquaresSolver.execute    100     ACM  thrpt    3     41233.337 ±   19916.044  ops/min
+LeastSquaresSolver.execute    100    EJML  thrpt    3     44212.043 ±    3905.765  ops/min
+LeastSquaresSolver.execute    100  ojAlgo  thrpt    3     36916.294 ±    4893.924  ops/min
+LeastSquaresSolver.execute    100     MTJ  thrpt    3    144316.599 ±   18955.382  ops/min
+LeastSquaresSolver.execute   1000     ACM  thrpt    3        48.256 ±       9.100  ops/min
+LeastSquaresSolver.execute   1000    EJML  thrpt    3        48.372 ±      12.252  ops/min
+LeastSquaresSolver.execute   1000  ojAlgo  thrpt    3       103.000 ±      37.009  ops/min
+LeastSquaresSolver.execute   1000     MTJ  thrpt    3       648.200 ±      82.129  ops/min
+ * </pre>
+ *
  * @author apete
  */
 @State(Scope.Benchmark)
-public class LeastSquaresSolve extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class LeastSquaresSolver extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(LeastSquaresSolve.class);
+        MatrixBenchmarkOperation.run(LeastSquaresSolver.class);
     }
 
     @Param({ "10", "100", "1000" })
@@ -95,7 +130,7 @@ public class LeastSquaresSolve extends MatrixBenchmarkOperation implements Bench
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
-    private MatrixBenchmarkLibrary<?, ?>.LeastSquaresSolver myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object body;
     Object rhs;
@@ -103,7 +138,7 @@ public class LeastSquaresSolve extends MatrixBenchmarkOperation implements Bench
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.solve(body, rhs);
+        return myOperation.execute(body, rhs);
     }
 
     @Override
@@ -112,7 +147,7 @@ public class LeastSquaresSolve extends MatrixBenchmarkOperation implements Bench
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getLeastSquaresSolver();
+        myOperation = library.getOperationEquationSystemSolver(dim + dim, dim, 1, false);
 
         body = this.makeRandom(dim + dim, dim, library);
         rhs = this.makeRandom(dim + dim, 1, library);

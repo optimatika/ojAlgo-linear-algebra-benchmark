@@ -1,24 +1,24 @@
 /*
- * Copyright 1997-2017 Optimatika (www.optimatika.se)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+* Copyright 1997-2018 Optimatika (www.optimatika.se)
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
 package org.ojalgo.benchmark.lab;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
@@ -156,9 +156,30 @@ FillByMultiplying.execute   1000        MTJ  thrpt    3   1706,836 ±  200,497  
  * </pre>
  *
  * <h1>MacBook Pro</h1>
- * <h2>2017-11-26</h2>
+ * <h2>2018-02-18</h2>
  *
  * <pre>
+# Run complete. Total time: 00:55:34
+
+Benchmark                  (dim)   (lib)   Mode  Cnt        Score        Error    Units
+FillByMultiplying.execute    100    EJML  thrpt    3   104466,112 ±  12858,837  ops/min
+FillByMultiplying.execute    100  ojAlgo  thrpt    3   187823,159 ±  75227,149  ops/min
+FillByMultiplying.execute    100     MTJ  thrpt    3  1055800,735 ±  94181,457  ops/min
+FillByMultiplying.execute    200    EJML  thrpt    3    13343,216 ±    810,210  ops/min
+FillByMultiplying.execute    200  ojAlgo  thrpt    3    28358,169 ±   5036,854  ops/min
+FillByMultiplying.execute    200     MTJ  thrpt    3   207054,612 ± 363281,490  ops/min
+FillByMultiplying.execute    500    EJML  thrpt    3      848,180 ±    134,510  ops/min
+FillByMultiplying.execute    500  ojAlgo  thrpt    3     1745,767 ±    255,289  ops/min
+FillByMultiplying.execute    500     MTJ  thrpt    3    16927,409 ±  18080,689  ops/min
+FillByMultiplying.execute   1000    EJML  thrpt    3       91,859 ±     85,520  ops/min
+FillByMultiplying.execute   1000  ojAlgo  thrpt    3      214,194 ±    177,195  ops/min
+FillByMultiplying.execute   1000     MTJ  thrpt    3     2475,510 ±    211,499  ops/min
+FillByMultiplying.execute   2000    EJML  thrpt    3       11,469 ±      1,537  ops/min
+FillByMultiplying.execute   2000  ojAlgo  thrpt    3       27,661 ±      3,262  ops/min
+FillByMultiplying.execute   2000     MTJ  thrpt    3      331,002 ±     14,727  ops/min
+FillByMultiplying.execute   5000    EJML  thrpt    3        0,695 ±      0,044  ops/min
+FillByMultiplying.execute   5000  ojAlgo  thrpt    3        0,740 ±      0,013  ops/min
+FillByMultiplying.execute   5000     MTJ  thrpt    3       21,268 ±      1,937  ops/min
  * </pre>
  *
  * @author apete
@@ -170,10 +191,10 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
     }
 
-    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
+    @Param({ "100", "200", "500", "1000", "2000", "5000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

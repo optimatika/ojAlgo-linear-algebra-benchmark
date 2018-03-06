@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2017 Optimatika (www.optimatika.se)
+ * Copyright 1997-2018 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,17 @@
  */
 package org.ojalgo.benchmark.lab.library;
 
+import org.ejml.LinearSolverSafe;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.EigenOps_DDRM;
 import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
@@ -40,32 +43,6 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
  * Efficient Java Matrix Library
  */
 public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
-
-    @Override
-    public HermitianSolver getHermitianSolver() {
-        return new HermitianSolver() {
-
-            @Override
-            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        };
-    }
-
-    @Override
-    public LeastSquaresSolver getLeastSquaresSolver() {
-        return new LeastSquaresSolver() {
-
-            @Override
-            public DMatrixRMaj apply(final DMatrixRMaj body, final DMatrixRMaj rhs) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        };
-    }
 
     @Override
     public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
@@ -92,28 +69,65 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEigenvectors(final int dim) {
-        final EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
-        return (input) -> {
-            evd.decompose(input);
-            return evd.getEigenVector(0); // Only 1 vector - all other libraries return all vectors at once
-        };
+    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
+            final int numbSolutions, final boolean spd) {
+
+        final DMatrixRMaj result = new DMatrixRMaj(numbVariables, numbSolutions);
+
+        if (numbEquations == numbVariables) {
+            if (spd) {
+                final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.symmPosDef(numbVariables));
+                return (body, rhs) -> {
+                    if (!solver.setA(body)) {
+                        throw new BenchmarkRequirementsException();
+                    }
+                    solver.solve(rhs, result);
+                    return result;
+                };
+            } else {
+                final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.linear(numbVariables));
+                return (body, rhs) -> {
+                    if (!solver.setA(body)) {
+                        throw new BenchmarkRequirementsException();
+                    }
+                    solver.solve(rhs, result);
+                    return result;
+                };
+            }
+        } else if (numbEquations > numbVariables) {
+            final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
+            return (body, rhs) -> {
+                if (!solver.setA(body)) {
+                    throw new BenchmarkRequirementsException();
+                }
+                solver.solve(rhs, result);
+                return result;
+            };
+        } else {
+            return null;
+        }
     }
 
     @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationEvD(final int dim) {
 
-        final DMatrixRMaj[] ret = new DMatrixRMaj[2];
-
+        final DMatrixRMaj[] ret = this.makeArray(3);
         final EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
+        final DMatrixRMaj vt = new DMatrixRMaj(dim, dim);
 
-        throw new UnsupportedOperationException();
+        return input -> {
 
-        //        return (matrix) -> {
-        //            evd.decompose(matrix);
-        //
-        //            return ret;
-        //        };
+            if (!DecompositionFactory_DDRM.decomposeSafe(evd, input)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
+
+            ret[0] = EigenOps_DDRM.createMatrixV(evd);
+            ret[1] = EigenOps_DDRM.createMatrixD(evd);
+            ret[2] = CommonOps_DDRM.transpose(ret[0], vt);
+
+            return ret;
+        };
+
     }
 
     @Override
@@ -149,21 +163,9 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationSolveGeneral(final int dim) {
-        final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(dim);
-        return (body, rhs, sol) -> {
-            if (!solver.setA(body)) {
-                throw new RuntimeException();
-            }
-            solver.solve(rhs, sol);
-        };
-    }
-
-    @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationSVD(final int dim) {
 
-        final DMatrixRMaj[] ret = new DMatrixRMaj[3];
-
+        final DMatrixRMaj[] ret = this.makeArray(3);
         final SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, true, true, true);
 
         return (matrix) -> {
@@ -196,6 +198,11 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     protected DMatrixRMaj copy(final DMatrixRMaj source, final DMatrixRMaj destination) {
         System.arraycopy(source.data, 0, destination.data, 0, source.data.length);
         return destination;
+    }
+
+    @Override
+    protected DMatrixRMaj[] makeArray(final int length) {
+        return new DMatrixRMaj[length];
     }
 
     @Override
