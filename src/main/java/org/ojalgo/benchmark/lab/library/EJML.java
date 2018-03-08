@@ -168,11 +168,15 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
         final DMatrixRMaj[] ret = this.makeArray(3);
         final SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, true, true, true);
 
+        final DMatrixRMaj mtrxU = new DMatrixRMaj(dim, dim);
+        final DMatrixRMaj mtrxW = new DMatrixRMaj(dim, dim);
+        final DMatrixRMaj mtrxV = new DMatrixRMaj(dim, dim);
+
         return (matrix) -> {
             svd.decompose(matrix);
-            ret[0] = svd.getU(null, false);
-            ret[1] = svd.getW(null);
-            ret[2] = svd.getV(null, true);
+            ret[0] = svd.getU(mtrxU, false);
+            ret[1] = svd.getW(mtrxW);
+            ret[2] = svd.getV(mtrxV, true);
             return ret;
         };
     }
