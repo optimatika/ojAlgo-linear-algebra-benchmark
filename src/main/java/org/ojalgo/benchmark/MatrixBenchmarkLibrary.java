@@ -28,6 +28,7 @@ import java.util.function.Supplier;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.lab.library.ACM;
@@ -116,6 +117,9 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
 
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions,
+            boolean spd);
+
     public abstract DecompositionOperation<I, I> getOperationEvD(int dim);
 
     /**
@@ -127,9 +131,6 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
 
-    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions,
-            boolean spd);
-
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);
@@ -137,6 +138,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract MutatingBinaryMatrixScalarOperation<I, T> getOperationScale();
 
     public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
+
+    public abstract MutatingUnaryMatrixOperation<I, T> getOperationTranspose();
 
     protected abstract double[][] convertFrom(I matrix);
 

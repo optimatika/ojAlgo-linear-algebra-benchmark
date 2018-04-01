@@ -25,6 +25,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.function.PrimitiveFunction;
@@ -65,6 +66,17 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
+            final int numbVariables, final int numbSolutions, final boolean spd) {
+
+        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, spd, spd);
+
+        final PhysicalStore<Double> preallocated = task.preallocate(numbEquations, numbVariables, numbSolutions);
+
+        return (body, rhs) -> task.solve(body, rhs, preallocated);
+    }
+
+    @Override
     public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationEvD(final int dim) {
 
         final MatrixStore<Double>[] ret = this.makeArray(3);
@@ -83,17 +95,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
         return (left, right, product) -> product.fillByMultiplying(left, right);
-    }
-
-    @Override
-    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
-            final int numbVariables, final int numbSolutions, final boolean spd) {
-
-        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, spd, spd);
-
-        final PhysicalStore<Double> preallocated = task.preallocate(numbEquations, numbVariables, numbSolutions);
-
-        return (body, rhs) -> task.solve(body, rhs, preallocated);
     }
 
     @Override
@@ -131,6 +132,11 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
             ret[2] = svd.getQ2().transpose();
             return ret;
         };
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationTranspose() {
+        return (arg, ret) -> ret.fillMatching(arg.transpose());
     }
 
     @Override

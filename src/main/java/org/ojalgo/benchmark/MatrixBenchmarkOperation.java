@@ -87,6 +87,24 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     @FunctionalInterface
+    public interface MutatingUnaryMatrixOperation<I, T extends I> {
+
+        public abstract void operate(I arg, T ret) throws Exception;
+
+        @SuppressWarnings("unchecked")
+        default Object execute(final Object arg, final Object ret) {
+            try {
+                this.operate((I) arg, (T) ret);
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+                return null;
+            }
+            return ret;
+        }
+
+    }
+
+    @FunctionalInterface
     public interface ProducingBinaryMatrixMatrixOperation<I, T extends I> {
 
         public abstract I operate(I arg1, I arg2) throws Exception;
@@ -119,8 +137,8 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
-    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.MINUTES);
-    static final TimeValue TIMEOUT = new TimeValue(10L, TimeUnit.MINUTES);
+    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
+    static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(7).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)

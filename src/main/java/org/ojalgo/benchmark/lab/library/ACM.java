@@ -32,6 +32,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 
@@ -135,6 +136,11 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
             ret[2] = svd.getVT();
             return ret;
         };
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationTranspose() {
+        return (matA, result) -> this.copy(matA.transpose(), result);
     }
 
     @Override
