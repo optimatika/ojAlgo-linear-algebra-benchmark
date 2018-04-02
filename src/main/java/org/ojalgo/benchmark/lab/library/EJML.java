@@ -24,6 +24,7 @@ package org.ojalgo.benchmark.lab.library;
 import org.ejml.LinearSolverSafe;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.CovarianceOps_DDRM;
 import org.ejml.dense.row.EigenOps_DDRM;
 import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
@@ -39,6 +40,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarO
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 
 /**
  * Efficient Java Matrix Library
@@ -67,6 +69,11 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationAdd() {
         return (a, b, c) -> CommonOps_DDRM.add(a, b, c);
+    }
+
+    @Override
+    public PropertyOperation<DMatrixRMaj, DMatrixRMaj> getOperationDeterminant(int dim) {
+        return (matA) -> CommonOps_DDRM.det(matA);
     }
 
     @Override
@@ -134,6 +141,15 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
         return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationInvert(int dim, boolean spd) {
+        if (spd) {
+            return (matA, result) -> CovarianceOps_DDRM.invert(matA, result);
+        } else {
+            return (matA, result) -> CommonOps_DDRM.invert(matA, result);
+        }
     }
 
     @Override

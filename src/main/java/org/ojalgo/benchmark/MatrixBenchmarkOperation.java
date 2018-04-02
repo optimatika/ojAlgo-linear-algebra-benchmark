@@ -137,6 +137,23 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
+    @FunctionalInterface
+    public interface PropertyOperation<I, T extends I> {
+
+        public abstract double operate(I arg) throws Exception;
+
+        @SuppressWarnings("unchecked")
+        default double execute(final Object arg) {
+            try {
+                return this.operate((I) arg);
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+                return Double.NaN;
+            }
+        }
+
+    }
+
     static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
     static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
 

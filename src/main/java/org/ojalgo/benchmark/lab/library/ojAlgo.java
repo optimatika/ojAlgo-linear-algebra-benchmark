@@ -28,12 +28,15 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarO
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 import org.ojalgo.function.PrimitiveFunction;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
+import org.ojalgo.matrix.task.DeterminantTask;
+import org.ojalgo.matrix.task.InverterTask;
 import org.ojalgo.matrix.task.SolverTask;
 
 /**
@@ -66,6 +69,12 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
+    public PropertyOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationDeterminant(int dim) {
+        final DeterminantTask<Double> task = DeterminantTask.PRIMITIVE.make(dim, false);
+        return (matA) -> task.calculateDeterminant(matA);
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions, final boolean spd) {
 
@@ -95,6 +104,12 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
         return (left, right, product) -> product.fillByMultiplying(left, right);
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationInvert(int dim, boolean spd) {
+        final InverterTask<Double> task = InverterTask.PRIMITIVE.make(dim, spd);
+        return (a, r) -> task.invert(a, r);
     }
 
     @Override

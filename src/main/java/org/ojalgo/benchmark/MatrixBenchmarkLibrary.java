@@ -31,6 +31,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarO
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 import org.ojalgo.benchmark.lab.library.ACM;
 import org.ojalgo.benchmark.lab.library.EJML;
 import org.ojalgo.benchmark.lab.library.MTJ;
@@ -117,6 +118,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
 
+    public abstract PropertyOperation<I, T> getOperationDeterminant(int dim);
+
     public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions,
             boolean spd);
 
@@ -130,6 +133,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      * </pre>
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying();
+
+    public abstract MutatingUnaryMatrixOperation<I, T> getOperationInvert(int dim, boolean spd);
 
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 

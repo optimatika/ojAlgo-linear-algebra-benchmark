@@ -35,6 +35,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarO
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 
 /**
  * Apache Commons Math
@@ -63,6 +64,14 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationAdd() {
         return (a, b, c) -> this.copy(a.add(b), c);
+    }
+
+    @Override
+    public PropertyOperation<RealMatrix, Array2DRowRealMatrix> getOperationDeterminant(int dim) {
+        return (matA) -> {
+            LUDecomposition lu = new LUDecomposition(matA);
+            return lu.getDeterminant();
+        };
     }
 
     @Override
@@ -107,6 +116,21 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying() {
         return (left, right, product) -> this.copy(left.multiply(right), product);
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationInvert(int dim, boolean spd) {
+        if (spd) {
+            return (matA, result) -> {
+                CholeskyDecomposition chol = new CholeskyDecomposition(matA);
+                this.copy(chol.getSolver().getInverse(), result);
+            };
+        } else {
+            return (matA, result) -> {
+                LUDecomposition lu = new LUDecomposition(matA);
+                this.copy(lu.getSolver().getInverse(), result);
+            };
+        }
     }
 
     @Override
