@@ -86,50 +86,13 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
 
         final Matrix[] ret = this.makeArray(3);
         final double[] offDiag = new double[dim - 1];
+        final DenseMatrix transp = new DenseMatrix(dim, dim);
 
         return (matrix) -> {
-
-            //            final Eigenvalue<Double> hghjk = Eigenvalue.PRIMITIVE.make(true);
-            //
-            //            hghjk.decompose(new ElementsSupplier<Double>() {
-            //
-            //                public long countColumns() {
-            //                    // TODO Auto-generated method stub
-            //                    return dim;
-            //                }
-            //
-            //                public long countRows() {
-            //                    // TODO Auto-generated method stub
-            //                    return dim;
-            //                }
-            //
-            //                public Factory<Double, ?> physical() {
-            //                    // TODO Auto-generated method stub
-            //                    return PrimitiveDenseStore.FACTORY;
-            //                }
-            //
-            //                public void supplyTo(final ElementsConsumer<Double> receiver) {
-            //                    for (int i = 0; i < dim; i++) {
-            //                        for (int j = 0; j < dim; j++) {
-            //                            receiver.set(i, j, matrix.get(i, j));
-            //                        }
-            //                    }
-            //                }
-            //            });
-            //            BasicLogger.DEBUG.println("ojAlgo");
-            //            BasicLogger.DEBUG.println(hghjk.getD());
-            //            BasicLogger.DEBUG.println(hghjk.getV());
-
             final SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
             ret[0] = evd.getEigenvectors();
             ret[1] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
-            ret[2] = evd.getEigenvectors().transpose();
-
-            //            BasicLogger.DEBUG.println("MTJ");
-            //
-            //            BasicLogger.DEBUG.println(ret[1]);
-            //            BasicLogger.DEBUG.println(ret[0]);
-
+            ret[2] = evd.getEigenvectors().transpose(transp);
             return ret;
         };
     }

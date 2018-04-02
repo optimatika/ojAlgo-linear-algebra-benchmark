@@ -87,6 +87,27 @@ DecomposeEigen.execute   1000        MTJ  thrpt    3        122.480 ±      43.2
 DecomposeEigen.execute   1000     ojAlgo  thrpt    3         28.640 ±       5.896  ops/min
  * </pre>
  *
+ * <h1>MacBook Pro (2017)</h1>
+ * <h2>2018-04-02</h2>
+ *
+ * <pre>
+# Run complete. Total time: 00:22:30
+
+Benchmark             (dim)   (lib)   Mode  Cnt         Score         Error    Units
+DecomposeEvD.execute     10     ACM  thrpt    3   5442405.572 ±  265042.555  ops/min
+DecomposeEvD.execute     10    EJML  thrpt    3   8178797.869 ± 5412544.163  ops/min
+DecomposeEvD.execute     10  ojAlgo  thrpt    3  11565317.217 ±  404159.267  ops/min
+DecomposeEvD.execute     10     MTJ  thrpt    3   2881351.395 ±  988968.345  ops/min
+DecomposeEvD.execute    100     ACM  thrpt    3     16507.930 ±    1150.860  ops/min
+DecomposeEvD.execute    100    EJML  thrpt    3     25445.140 ±    1938.831  ops/min
+DecomposeEvD.execute    100  ojAlgo  thrpt    3     47068.451 ±    6624.771  ops/min
+DecomposeEvD.execute    100     MTJ  thrpt    3     41896.833 ±   68360.220  ops/min
+DecomposeEvD.execute   1000     ACM  thrpt    3         7.601 ±       1.521  ops/min
+DecomposeEvD.execute   1000    EJML  thrpt    3        29.728 ±       4.718  ops/min
+DecomposeEvD.execute   1000  ojAlgo  thrpt    3        51.252 ±       0.353  ops/min
+DecomposeEvD.execute   1000     MTJ  thrpt    3       252.679 ±     162.917  ops/min
+ * </pre>
+ *
  * MacBook Air: 2015-06-16
  *
  * <pre>
@@ -144,7 +165,7 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
 
     @Param({ "10", "100", "1000" })
     public int dim;
-    @Param({ "MTJ", "ACM", "EJML", "ojAlgo" })
+    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
     private DecompositionOperation<?, ?> myOperation;
