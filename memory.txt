@@ -39,4 +39,6 @@ wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2F
 
 nohup java -jar benchmark.jar runtime --Size=2:20000 --MaxTime=10m --Memory=18432 &
 
+nohup java -jar benchmark.jar runtime --Size=2:20000 --MaxTime=10m --Memory=16384 &
+
 ps aux | grep java
