@@ -24,6 +24,7 @@ package org.ojalgo.benchmark.lab.library;
 import org.ejml.LinearSolverSafe;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.CovarianceOps_DDRM;
 import org.ejml.dense.row.EigenOps_DDRM;
 import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
@@ -36,8 +37,10 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 
 /**
  * Efficient Java Matrix Library
@@ -66,6 +69,11 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationAdd() {
         return (a, b, c) -> CommonOps_DDRM.add(a, b, c);
+    }
+
+    @Override
+    public PropertyOperation<DMatrixRMaj, DMatrixRMaj> getOperationDeterminant(final int dim) {
+        return (matA) -> CommonOps_DDRM.det(matA);
     }
 
     @Override
@@ -131,8 +139,29 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
-        return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
+    public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        if (transpL) {
+            if (transpR) {
+                return (left, right, product) -> CommonOps_DDRM.multTransAB(left, right, product);
+            } else {
+                return (left, right, product) -> CommonOps_DDRM.multTransA(left, right, product);
+            }
+        } else {
+            if (transpR) {
+                return (left, right, product) -> CommonOps_DDRM.multTransB(left, right, product);
+            } else {
+                return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
+            }
+        }
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationInvert(final int dim, final boolean spd) {
+        if (spd) {
+            return (matA, result) -> CovarianceOps_DDRM.invert(matA, result);
+        } else {
+            return (matA, result) -> CommonOps_DDRM.invert(matA, result);
+        }
     }
 
     @Override
@@ -168,30 +197,22 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
         final DMatrixRMaj[] ret = this.makeArray(3);
         final SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, true, true, true);
 
+        final DMatrixRMaj mtrxU = new DMatrixRMaj(dim, dim);
+        final DMatrixRMaj mtrxW = new DMatrixRMaj(dim, dim);
+        final DMatrixRMaj mtrxV = new DMatrixRMaj(dim, dim);
+
         return (matrix) -> {
             svd.decompose(matrix);
-            ret[0] = svd.getU(null, false);
-            ret[1] = svd.getW(null);
-            ret[2] = svd.getV(null, true);
+            ret[0] = svd.getU(mtrxU, false);
+            ret[1] = svd.getW(mtrxW);
+            ret[2] = svd.getV(mtrxV, true);
             return ret;
         };
     }
 
     @Override
-    protected double[][] convertFrom(final DMatrixRMaj matrix) {
-        final double[][] retVal = new double[matrix.getNumRows()][matrix.getNumCols()];
-        for (int i = 0; i < retVal.length; i++) {
-            final double[] tmpRow = retVal[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = matrix.get(i, j);
-            }
-        }
-        return retVal;
-    }
-
-    @Override
-    protected DMatrixRMaj convertTo(final double[][] raw) {
-        return new DMatrixRMaj(raw);
+    public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationTranspose() {
+        return (matA, result) -> CommonOps_DDRM.transpose(matA, result);
     }
 
     @Override

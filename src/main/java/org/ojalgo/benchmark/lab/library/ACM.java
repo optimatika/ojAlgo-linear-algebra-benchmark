@@ -32,8 +32,10 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 
 /**
  * Apache Commons Math
@@ -62,6 +64,14 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationAdd() {
         return (a, b, c) -> this.copy(a.add(b), c);
+    }
+
+    @Override
+    public PropertyOperation<RealMatrix, Array2DRowRealMatrix> getOperationDeterminant(final int dim) {
+        return (matA) -> {
+            final LUDecomposition lu = new LUDecomposition(matA);
+            return lu.getDeterminant();
+        };
     }
 
     @Override
@@ -104,8 +114,23 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying() {
-        return (left, right, product) -> this.copy(left.multiply(right), product);
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        return (left, right, product) -> this.copy((transpL ? left.transpose() : left).multiply((transpR ? right.transpose() : right)), product);
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationInvert(final int dim, final boolean spd) {
+        if (spd) {
+            return (matA, result) -> {
+                final CholeskyDecomposition chol = new CholeskyDecomposition(matA);
+                this.copy(chol.getSolver().getInverse(), result);
+            };
+        } else {
+            return (matA, result) -> {
+                final LUDecomposition lu = new LUDecomposition(matA);
+                this.copy(lu.getSolver().getInverse(), result);
+            };
+        }
     }
 
     @Override
@@ -138,13 +163,8 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
-    protected double[][] convertFrom(final RealMatrix matrix) {
-        return matrix.getData();
-    }
-
-    @Override
-    protected RealMatrix convertTo(final double[][] raw) {
-        return new Array2DRowRealMatrix(raw);
+    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationTranspose() {
+        return (matA, result) -> this.copy(matA.transpose(), result);
     }
 
     @Override

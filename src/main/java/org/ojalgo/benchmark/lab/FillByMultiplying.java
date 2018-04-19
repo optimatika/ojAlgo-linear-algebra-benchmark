@@ -191,10 +191,10 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
     }
 
-    @Param({ "100", "200", "500", "1000", "2000", "5000" })
+    @Param({ "10", "20", "50", "100", "200", "500", "1000", "2000", "5000" })
     public int dim;
 
-    @Param({ "EJML", "ojAlgo", "MTJ" })
+    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
@@ -215,7 +215,7 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getOperationFillByMultiplying();
+        myOperation = library.getOperationFillByMultiplying(false, false);
 
         left = this.makeRandom(dim, dim, library);
         right = this.makeRandom(dim, dim, library);

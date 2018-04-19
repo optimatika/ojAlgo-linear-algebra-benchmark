@@ -25,14 +25,18 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 import org.ojalgo.function.PrimitiveFunction;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
+import org.ojalgo.matrix.task.DeterminantTask;
+import org.ojalgo.matrix.task.InverterTask;
 import org.ojalgo.matrix.task.SolverTask;
 
 /**
@@ -65,6 +69,23 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
+    public PropertyOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationDeterminant(final int dim) {
+        final DeterminantTask<Double> task = DeterminantTask.PRIMITIVE.make(dim, false);
+        return (matA) -> task.calculateDeterminant(matA);
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
+            final int numbVariables, final int numbSolutions, final boolean spd) {
+
+        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, spd, spd);
+
+        final PhysicalStore<Double> preallocated = task.preallocate(numbEquations, numbVariables, numbSolutions);
+
+        return (body, rhs) -> task.solve(body, rhs, preallocated);
+    }
+
+    @Override
     public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationEvD(final int dim) {
 
         final MatrixStore<Double>[] ret = this.makeArray(3);
@@ -81,19 +102,15 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
-        return (left, right, product) -> product.fillByMultiplying(left, right);
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying(final boolean transpL,
+            final boolean transpR) {
+        return (left, right, product) -> product.fillByMultiplying(transpL ? left.transpose() : left, transpR ? right.transpose() : right);
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
-            final int numbVariables, final int numbSolutions, final boolean spd) {
-
-        final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, spd, spd);
-
-        final PhysicalStore<Double> preallocated = task.preallocate(numbEquations, numbVariables, numbSolutions);
-
-        return (body, rhs) -> task.solve(body, rhs, preallocated);
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationInvert(final int dim, final boolean spd) {
+        final InverterTask<Double> task = InverterTask.PRIMITIVE.make(dim, spd);
+        return (a, r) -> task.invert(a, r);
     }
 
     @Override
@@ -134,13 +151,8 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    protected double[][] convertFrom(final MatrixStore<Double> matrix) {
-        return matrix.toRawCopy2D();
-    }
-
-    @Override
-    protected MatrixStore<Double> convertTo(final double[][] raw) {
-        return PrimitiveDenseStore.FACTORY.rows(raw);
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationTranspose() {
+        return (arg, ret) -> ret.fillMatching(arg.transpose());
     }
 
     @Override

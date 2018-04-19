@@ -25,16 +25,15 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
-import org.ojalgo.matrix.decomposition.Eigenvalue;
-import org.ojalgo.matrix.store.ElementsConsumer;
-import org.ojalgo.matrix.store.ElementsSupplier;
-import org.ojalgo.matrix.store.PhysicalStore.Factory;
-import org.ojalgo.matrix.store.PrimitiveDenseStore;
-import org.ojalgo.netio.BasicLogger;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 
+import no.uib.cipr.matrix.DenseCholesky;
 import no.uib.cipr.matrix.DenseMatrix;
+import no.uib.cipr.matrix.LowerSPDDenseMatrix;
+import no.uib.cipr.matrix.Matrices;
 import no.uib.cipr.matrix.Matrix;
 import no.uib.cipr.matrix.Matrix.Norm;
 import no.uib.cipr.matrix.SVD;
@@ -71,61 +70,8 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    public DecompositionOperation<Matrix, Matrix> getOperationEvD(final int dim) {
-
-        final Matrix[] ret = this.makeArray(3);
-        final double[] offDiag = new double[dim - 1];
-
-        return (matrix) -> {
-
-            final Eigenvalue<Double> hghjk = Eigenvalue.PRIMITIVE.make(true);
-
-            hghjk.decompose(new ElementsSupplier<Double>() {
-
-                public void supplyTo(final ElementsConsumer<Double> receiver) {
-                    for (int i = 0; i < dim; i++) {
-                        for (int j = 0; j < dim; j++) {
-                            receiver.set(i, j, matrix.get(i, j));
-                        }
-                    }
-                }
-
-                public long countColumns() {
-                    // TODO Auto-generated method stub
-                    return dim;
-                }
-
-                public long countRows() {
-                    // TODO Auto-generated method stub
-                    return dim;
-                }
-
-                public Factory<Double, ?> physical() {
-                    // TODO Auto-generated method stub
-                    return PrimitiveDenseStore.FACTORY;
-                }
-            });
-            BasicLogger.DEBUG.println("ojAlgo");
-            BasicLogger.DEBUG.println(hghjk.getD());
-            BasicLogger.DEBUG.println(hghjk.getV());
-
-            final SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
-            ret[0] = evd.getEigenvectors();
-            ret[1] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
-            ret[2] = evd.getEigenvectors().transpose();
-
-            BasicLogger.DEBUG.println("MTJ");
-
-            BasicLogger.DEBUG.println(ret[1]);
-            BasicLogger.DEBUG.println(ret[0]);
-
-            return ret;
-        };
-    }
-
-    @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationFillByMultiplying() {
-        return (left, right, product) -> left.mult(right, product);
+    public PropertyOperation<Matrix, DenseMatrix> getOperationDeterminant(final int dim) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -133,6 +79,57 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
             final int numbSolutions, final boolean spd) {
         final DenseMatrix result = new DenseMatrix(numbVariables, numbSolutions);
         return (body, rhs) -> body.solve(rhs, result);
+    }
+
+    @Override
+    public DecompositionOperation<Matrix, Matrix> getOperationEvD(final int dim) {
+
+        final Matrix[] ret = this.makeArray(3);
+        final double[] offDiag = new double[dim - 1];
+        final DenseMatrix transp = new DenseMatrix(dim, dim);
+
+        return (matrix) -> {
+            final SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
+            ret[0] = evd.getEigenvectors();
+            ret[1] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
+            ret[2] = evd.getEigenvectors().transpose(transp);
+            return ret;
+        };
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        if (transpL) {
+            if (transpR) {
+                return (left, right, product) -> left.transABmult(right, product);
+            } else {
+                return (left, right, product) -> left.transAmult(right, product);
+            }
+        } else {
+            if (transpR) {
+                return (left, right, product) -> left.transBmult(right, product);
+            } else {
+                return (left, right, product) -> left.mult(right, product);
+            }
+        }
+    }
+
+    @Override
+    public MutatingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationInvert(final int dim, final boolean spd) {
+        if (spd) {
+            final DenseCholesky cholesky = new DenseCholesky(dim, false);
+            return (matA, result) -> {
+                final LowerSPDDenseMatrix uspd = new LowerSPDDenseMatrix(matA);
+                uspd.set(matA);
+                cholesky.factor(uspd);
+            };
+        } else {
+            final DenseMatrix I = Matrices.identity(dim);
+            final DenseMatrix inv = new DenseMatrix(dim, dim);
+            return (matA, result) -> {
+                matA.solve(I, inv);
+            };
+        }
     }
 
     @Override
@@ -169,20 +166,8 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    protected double[][] convertFrom(final Matrix matrix) {
-        final double[][] retVal = new double[matrix.numRows()][matrix.numColumns()];
-        for (int i = 0; i < retVal.length; i++) {
-            final double[] tmpRow = retVal[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = matrix.get(i, j);
-            }
-        }
-        return retVal;
-    }
-
-    @Override
-    protected Matrix convertTo(final double[][] raw) {
-        return new DenseMatrix(raw);
+    public MutatingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationTranspose() {
+        return (matA, result) -> matA.transpose(result);
     }
 
     @Override
