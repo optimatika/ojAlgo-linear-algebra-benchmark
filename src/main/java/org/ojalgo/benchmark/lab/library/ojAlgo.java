@@ -69,7 +69,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public PropertyOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationDeterminant(int dim) {
+    public PropertyOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationDeterminant(final int dim) {
         final DeterminantTask<Double> task = DeterminantTask.PRIMITIVE.make(dim, false);
         return (matA) -> task.calculateDeterminant(matA);
     }
@@ -102,12 +102,13 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying() {
-        return (left, right, product) -> product.fillByMultiplying(left, right);
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying(final boolean transpL,
+            final boolean transpR) {
+        return (left, right, product) -> product.fillByMultiplying(transpL ? left.transpose() : left, transpR ? right.transpose() : right);
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationInvert(int dim, boolean spd) {
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationInvert(final int dim, final boolean spd) {
         final InverterTask<Double> task = InverterTask.PRIMITIVE.make(dim, spd);
         return (a, r) -> task.invert(a, r);
     }
@@ -152,16 +153,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationTranspose() {
         return (arg, ret) -> ret.fillMatching(arg.transpose());
-    }
-
-    @Override
-    protected double[][] convertFrom(final MatrixStore<Double> matrix) {
-        return matrix.toRawCopy2D();
-    }
-
-    @Override
-    protected MatrixStore<Double> convertTo(final double[][] raw) {
-        return PrimitiveDenseStore.FACTORY.rows(raw);
     }
 
     @Override

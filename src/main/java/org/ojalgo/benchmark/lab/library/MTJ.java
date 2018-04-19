@@ -70,7 +70,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    public PropertyOperation<Matrix, DenseMatrix> getOperationDeterminant(int dim) {
+    public PropertyOperation<Matrix, DenseMatrix> getOperationDeterminant(final int dim) {
         throw new UnsupportedOperationException();
     }
 
@@ -98,22 +98,34 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationFillByMultiplying() {
-        return (left, right, product) -> left.mult(right, product);
+    public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        if (transpL) {
+            if (transpR) {
+                return (left, right, product) -> left.transABmult(right, product);
+            } else {
+                return (left, right, product) -> left.transAmult(right, product);
+            }
+        } else {
+            if (transpR) {
+                return (left, right, product) -> left.transBmult(right, product);
+            } else {
+                return (left, right, product) -> left.mult(right, product);
+            }
+        }
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationInvert(int dim, boolean spd) {
+    public MutatingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationInvert(final int dim, final boolean spd) {
         if (spd) {
-            DenseCholesky cholesky = new DenseCholesky(dim, false);
+            final DenseCholesky cholesky = new DenseCholesky(dim, false);
             return (matA, result) -> {
-                LowerSPDDenseMatrix uspd = new LowerSPDDenseMatrix(matA);
+                final LowerSPDDenseMatrix uspd = new LowerSPDDenseMatrix(matA);
                 uspd.set(matA);
                 cholesky.factor(uspd);
             };
         } else {
-            DenseMatrix I = Matrices.identity(dim);
-            DenseMatrix inv = new DenseMatrix(dim, dim);
+            final DenseMatrix I = Matrices.identity(dim);
+            final DenseMatrix inv = new DenseMatrix(dim, dim);
             return (matA, result) -> {
                 matA.solve(I, inv);
             };
@@ -156,23 +168,6 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     @Override
     public MutatingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationTranspose() {
         return (matA, result) -> matA.transpose(result);
-    }
-
-    @Override
-    protected double[][] convertFrom(final Matrix matrix) {
-        final double[][] retVal = new double[matrix.numRows()][matrix.numColumns()];
-        for (int i = 0; i < retVal.length; i++) {
-            final double[] tmpRow = retVal[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = matrix.get(i, j);
-            }
-        }
-        return retVal;
-    }
-
-    @Override
-    protected Matrix convertTo(final double[][] raw) {
-        return new DenseMatrix(raw);
     }
 
     @Override

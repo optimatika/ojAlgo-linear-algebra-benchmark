@@ -72,7 +72,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public PropertyOperation<DMatrixRMaj, DMatrixRMaj> getOperationDeterminant(int dim) {
+    public PropertyOperation<DMatrixRMaj, DMatrixRMaj> getOperationDeterminant(final int dim) {
         return (matA) -> CommonOps_DDRM.det(matA);
     }
 
@@ -139,12 +139,24 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying() {
-        return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
+    public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        if (transpL) {
+            if (transpR) {
+                return (left, right, product) -> CommonOps_DDRM.multTransAB(left, right, product);
+            } else {
+                return (left, right, product) -> CommonOps_DDRM.multTransA(left, right, product);
+            }
+        } else {
+            if (transpR) {
+                return (left, right, product) -> CommonOps_DDRM.multTransB(left, right, product);
+            } else {
+                return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
+            }
+        }
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationInvert(int dim, boolean spd) {
+    public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationInvert(final int dim, final boolean spd) {
         if (spd) {
             return (matA, result) -> CovarianceOps_DDRM.invert(matA, result);
         } else {
@@ -201,23 +213,6 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationTranspose() {
         return (matA, result) -> CommonOps_DDRM.transpose(matA, result);
-    }
-
-    @Override
-    protected double[][] convertFrom(final DMatrixRMaj matrix) {
-        final double[][] retVal = new double[matrix.getNumRows()][matrix.getNumCols()];
-        for (int i = 0; i < retVal.length; i++) {
-            final double[] tmpRow = retVal[i];
-            for (int j = 0; j < tmpRow.length; j++) {
-                tmpRow[j] = matrix.get(i, j);
-            }
-        }
-        return retVal;
-    }
-
-    @Override
-    protected DMatrixRMaj convertTo(final double[][] raw) {
-        return new DMatrixRMaj(raw);
     }
 
     @Override

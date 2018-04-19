@@ -67,9 +67,9 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
-    public PropertyOperation<RealMatrix, Array2DRowRealMatrix> getOperationDeterminant(int dim) {
+    public PropertyOperation<RealMatrix, Array2DRowRealMatrix> getOperationDeterminant(final int dim) {
         return (matA) -> {
-            LUDecomposition lu = new LUDecomposition(matA);
+            final LUDecomposition lu = new LUDecomposition(matA);
             return lu.getDeterminant();
         };
     }
@@ -114,20 +114,20 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying() {
-        return (left, right, product) -> this.copy(left.multiply(right), product);
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        return (left, right, product) -> this.copy((transpL ? left.transpose() : left).multiply((transpR ? right.transpose() : right)), product);
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationInvert(int dim, boolean spd) {
+    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationInvert(final int dim, final boolean spd) {
         if (spd) {
             return (matA, result) -> {
-                CholeskyDecomposition chol = new CholeskyDecomposition(matA);
+                final CholeskyDecomposition chol = new CholeskyDecomposition(matA);
                 this.copy(chol.getSolver().getInverse(), result);
             };
         } else {
             return (matA, result) -> {
-                LUDecomposition lu = new LUDecomposition(matA);
+                final LUDecomposition lu = new LUDecomposition(matA);
                 this.copy(lu.getSolver().getInverse(), result);
             };
         }
@@ -165,16 +165,6 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationTranspose() {
         return (matA, result) -> this.copy(matA.transpose(), result);
-    }
-
-    @Override
-    protected double[][] convertFrom(final RealMatrix matrix) {
-        return matrix.getData();
-    }
-
-    @Override
-    protected RealMatrix convertTo(final double[][] raw) {
-        return new Array2DRowRealMatrix(raw);
     }
 
     @Override
