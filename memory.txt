@@ -41,4 +41,7 @@ nohup java -jar benchmark.jar runtime --Size=2:20000 --MaxTime=10m --Memory=1843
 
 nohup java -jar benchmark.jar runtime --Size=2:20000 --MaxTime=10m --Memory=16384 &
 
+nohup java -jar benchmark.jar runtime --Resume=./results/runtime_04-04-2018-17_46_33/ &
+nohup java -jar benchmark.jar runtime --Resume=./results/runtime_04-04-2018-17_45_49/ &
+
 ps aux | grep java
