@@ -60,7 +60,7 @@ public class FillByMultiplyingTransposedRight extends MatrixBenchmarkOperation i
         MatrixBenchmarkOperation.run(FillByMultiplyingTransposedRight.class);
     }
 
-    @Param({ "10", "20", "50", "100", "200", "500", "1000", "2000" })
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
