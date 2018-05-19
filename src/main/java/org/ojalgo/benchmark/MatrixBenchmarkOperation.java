@@ -194,22 +194,22 @@ public abstract class MatrixBenchmarkOperation {
 
     protected final Object makeSPD(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
 
-        final double[] tmpRandom = new double[size];
+        final double[] random = new double[size];
 
-        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(size, size);
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
 
         for (int i = 0; i < size; i++) {
 
-            tmpRandom[i] = Math.random();
+            random[i] = Math.random();
 
             for (int j = 0; j < i; j++) {
-                tmpSupplier.set(i, j, tmpRandom[i] * tmpRandom[j]);
-                tmpSupplier.set(j, i, tmpRandom[j] * tmpRandom[i]);
+                builder.set(i, j, random[i] * random[j]);
+                builder.set(j, i, random[j] * random[i]);
             }
-            tmpSupplier.set(i, i, tmpRandom[i] + 1.0);
+            builder.set(i, i, random[i] + 1.0);
         }
 
-        return tmpSupplier.get();
+        return builder.get();
     }
 
     protected final Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {

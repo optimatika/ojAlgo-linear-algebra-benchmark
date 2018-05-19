@@ -22,6 +22,7 @@
 package org.ojalgo.benchmark.lab;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -129,7 +130,7 @@ GeneralSolve.execute   1000     ojAlgo  thrpt   15        2.199 ±      0.048  o
  * @author apete
  */
 @State(Scope.Benchmark)
-public class GeneralSolve extends MatrixBenchmarkOperation {
+public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(GeneralSolve.class);
