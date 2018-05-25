@@ -45,3 +45,9 @@ nohup java -jar benchmark.jar runtime --Resume=./results/runtime_04-04-2018-17_4
 nohup java -jar benchmark.jar runtime --Resume=./results/runtime_04-04-2018-17_45_49/ &
 
 ps aux | grep java
+
+[anders@instance-1 ~]$ java -version
+Error occurred during initialization of VM
+Memory management: unable to fund java heap account
+[anders@instance-1 ~]$ 
+
