@@ -111,7 +111,7 @@ public final class BenchmarkResultsParser implements BasicParser<ParsedLineData>
 
         for (int i = 2; i < args.length; i += 2) {
             BenchmarkResultsParser parser = new BenchmarkResultsParser(args[i]);
-            parser.parse(new File(directory, args[i + 1]), false, consumer);
+            parser.parse(new File(directory, args[i + 1]), consumer);
         }
 
         try {
