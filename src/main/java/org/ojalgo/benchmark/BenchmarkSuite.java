@@ -39,10 +39,10 @@ public interface BenchmarkSuite {
      * <li>SVD</li>
      * <li>EvD</li>
      * </ul>
+     * https://lessthanoptimal.github.io/Java-Matrix-Benchmark/
+     * https://github.com/lessthanoptimal/Java-Matrix-Benchmark
      *
      * @author apete
-     * @see https://lessthanoptimal.github.io/Java-Matrix-Benchmark/
-     * @see https://github.com/lessthanoptimal/Java-Matrix-Benchmark
      */
     public interface JavaMatrixBenchmark extends BenchmarkSuite {
 
