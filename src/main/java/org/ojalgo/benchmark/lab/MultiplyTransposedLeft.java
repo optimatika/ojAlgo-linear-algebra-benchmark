@@ -133,10 +133,10 @@ FillByMultiplyingTransposedLeft.execute   1000     MTJ  thrpt    3        1387.0
  * @author apete
  */
 @State(Scope.Benchmark)
-public class FillByMultiplyingTransposedLeft extends MatrixBenchmarkOperation {
+public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(FillByMultiplyingTransposedLeft.class);
+        MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class);
     }
 
     @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })

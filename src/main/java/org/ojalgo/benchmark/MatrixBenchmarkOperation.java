@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.ChainedOptionsBuilder;
@@ -159,7 +160,7 @@ public abstract class MatrixBenchmarkOperation {
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(7).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx6g");
+                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx6g").resultFormat(ResultFormatType.CSV);
     }
 
     protected static void run(final Class<?> clazz) throws RunnerException {

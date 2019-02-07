@@ -192,7 +192,7 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
     }
 
-    @Param({ "10", "20", "50", "100", "200", "500", "1000", "2000", "5000" })
+    @Param({ "100", "150", "200", "350", "500", "750", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })

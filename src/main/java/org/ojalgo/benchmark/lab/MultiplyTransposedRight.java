@@ -55,10 +55,10 @@ import org.openjdk.jmh.runner.RunnerException;
  * @author apete
  */
 @State(Scope.Benchmark)
-public class FillByMultiplyingTransposedRight extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class MultiplyTransposedRight extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(FillByMultiplyingTransposedRight.class);
+        MatrixBenchmarkOperation.run(MultiplyTransposedRight.class);
     }
 
     @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
