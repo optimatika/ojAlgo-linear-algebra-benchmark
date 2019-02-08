@@ -22,6 +22,7 @@
 package org.ojalgo.benchmark.lab;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -54,13 +55,13 @@ import org.openjdk.jmh.runner.RunnerException;
  * @author apete
  */
 @State(Scope.Benchmark)
-public class FillByMultiplyingTransposedLeft extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class MultiplyTransposedRight extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(FillByMultiplyingTransposedLeft.class);
+        MatrixBenchmarkOperation.run(MultiplyTransposedRight.class);
     }
 
-    @Param({ "10", "20", "50", "100", "200", "500", "1000", "2000", "5000" })
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -84,7 +85,7 @@ public class FillByMultiplyingTransposedLeft extends MatrixBenchmarkOperation im
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        myOperation = library.getOperationFillByMultiplying(true, false);
+        myOperation = library.getOperationFillByMultiplying(false, true);
 
         left = this.makeRandom(dim, dim, library);
         right = this.makeRandom(dim, dim, library);

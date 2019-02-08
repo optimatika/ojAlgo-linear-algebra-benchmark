@@ -22,6 +22,7 @@
 package org.ojalgo.benchmark.lab;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;

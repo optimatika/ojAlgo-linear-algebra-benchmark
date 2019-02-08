@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 import org.ojalgo.RecoverableCondition;
-import org.ojalgo.access.Structure1D.IndexMapper;
 import org.ojalgo.benchmark.results.BenchmarkResultsParser.ParsedLineData;
 import org.ojalgo.netio.BasicParser;
 import org.ojalgo.netio.LineSplittingParser;
 import org.ojalgo.netio.TableData;
+import org.ojalgo.structure.Structure1D.IndexMapper;
 
 public final class BenchmarkResultsParser implements BasicParser<ParsedLineData> {
 

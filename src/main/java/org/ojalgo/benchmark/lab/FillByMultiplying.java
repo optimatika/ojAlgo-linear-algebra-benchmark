@@ -22,6 +22,7 @@
 package org.ojalgo.benchmark.lab;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
+import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -191,7 +192,7 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
     }
 
-    @Param({ "10", "20", "50", "100", "200", "500", "1000", "2000", "5000" })
+    @Param({ "100", "150", "200", "350", "500", "750", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })

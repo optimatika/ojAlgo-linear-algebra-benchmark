@@ -42,7 +42,7 @@ import org.ojalgo.netio.BasicLogger;
 /**
  * <p>
  * The type paramater I is intended to be some high level interface that defines the shape of the matrix as
- * well as how to get individual elements.
+ * well as how to get individual elements (as a minimum).
  * </p>
  * <p>
  * The type paramater T should be set to some specific, fully mutable, implementation.
@@ -124,6 +124,7 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      * arg2 == right input matrix
      * ret == product - the results of matrix multiplication [left]x[right] should end up in that matrix
      * </pre>
+     * 
      * @param transpL TODO
      * @param transpR TODO
      */

@@ -1,0 +1,1516 @@
+[
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "100",
+            "lib" : "ACM"
+        },
+        "primaryMetric" : {
+            "score" : 52172.68517440864,
+            "scoreError" : 3789.684519718778,
+            "scoreConfidence" : [
+                48383.00065468986,
+                55962.36969412742
+            ],
+            "scorePercentiles" : {
+                "0.0" : 51976.329447648044,
+                "50.0" : 52151.56022277296,
+                "90.0" : 52390.16585280491,
+                "95.0" : 52390.16585280491,
+                "99.0" : 52390.16585280491,
+                "99.9" : 52390.16585280491,
+                "99.99" : 52390.16585280491,
+                "99.999" : 52390.16585280491,
+                "99.9999" : 52390.16585280491,
+                "100.0" : 52390.16585280491
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    52151.56022277296,
+                    51976.329447648044,
+                    52390.16585280491
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "100",
+            "lib" : "EJML"
+        },
+        "primaryMetric" : {
+            "score" : 103565.46832542164,
+            "scoreError" : 42966.90268598736,
+            "scoreConfidence" : [
+                60598.56563943427,
+                146532.371011409
+            ],
+            "scorePercentiles" : {
+                "0.0" : 100889.1802093507,
+                "50.0" : 104485.40859799585,
+                "90.0" : 105321.8161689184,
+                "95.0" : 105321.8161689184,
+                "99.0" : 105321.8161689184,
+                "99.9" : 105321.8161689184,
+                "99.99" : 105321.8161689184,
+                "99.999" : 105321.8161689184,
+                "99.9999" : 105321.8161689184,
+                "100.0" : 105321.8161689184
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    100889.1802093507,
+                    105321.8161689184,
+                    104485.40859799585
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "100",
+            "lib" : "ojAlgo"
+        },
+        "primaryMetric" : {
+            "score" : 181736.41520279107,
+            "scoreError" : 17383.40644384275,
+            "scoreConfidence" : [
+                164353.00875894833,
+                199119.82164663382
+            ],
+            "scorePercentiles" : {
+                "0.0" : 180878.1718008981,
+                "50.0" : 181569.32067269375,
+                "90.0" : 182761.7531347813,
+                "95.0" : 182761.7531347813,
+                "99.0" : 182761.7531347813,
+                "99.9" : 182761.7531347813,
+                "99.99" : 182761.7531347813,
+                "99.999" : 182761.7531347813,
+                "99.9999" : 182761.7531347813,
+                "100.0" : 182761.7531347813
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    182761.7531347813,
+                    180878.1718008981,
+                    181569.32067269375
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "100",
+            "lib" : "MTJ"
+        },
+        "primaryMetric" : {
+            "score" : 1055724.2420240522,
+            "scoreError" : 205721.82581450653,
+            "scoreConfidence" : [
+                850002.4162095457,
+                1261446.0678385587
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1044924.2831144163,
+                "50.0" : 1054825.3505187798,
+                "90.0" : 1067423.0924389607,
+                "95.0" : 1067423.0924389607,
+                "99.0" : 1067423.0924389607,
+                "99.9" : 1067423.0924389607,
+                "99.99" : 1067423.0924389607,
+                "99.999" : 1067423.0924389607,
+                "99.9999" : 1067423.0924389607,
+                "100.0" : 1067423.0924389607
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    1067423.0924389607,
+                    1054825.3505187798,
+                    1044924.2831144163
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "150",
+            "lib" : "ACM"
+        },
+        "primaryMetric" : {
+            "score" : 15251.113052289968,
+            "scoreError" : 569.6407173657719,
+            "scoreConfidence" : [
+                14681.472334924196,
+                15820.75376965574
+            ],
+            "scorePercentiles" : {
+                "0.0" : 15221.221113495823,
+                "50.0" : 15248.600848992586,
+                "90.0" : 15283.517194381486,
+                "95.0" : 15283.517194381486,
+                "99.0" : 15283.517194381486,
+                "99.9" : 15283.517194381486,
+                "99.99" : 15283.517194381486,
+                "99.999" : 15283.517194381486,
+                "99.9999" : 15283.517194381486,
+                "100.0" : 15283.517194381486
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    15283.517194381486,
+                    15248.600848992586,
+                    15221.221113495823
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "150",
+            "lib" : "EJML"
+        },
+        "primaryMetric" : {
+            "score" : 31585.6038617858,
+            "scoreError" : 2386.95476081809,
+            "scoreConfidence" : [
+                29198.64910096771,
+                33972.55862260389
+            ],
+            "scorePercentiles" : {
+                "0.0" : 31450.763021729872,
+                "50.0" : 31594.017560187567,
+                "90.0" : 31712.03100343996,
+                "95.0" : 31712.03100343996,
+                "99.0" : 31712.03100343996,
+                "99.9" : 31712.03100343996,
+                "99.99" : 31712.03100343996,
+                "99.999" : 31712.03100343996,
+                "99.9999" : 31712.03100343996,
+                "100.0" : 31712.03100343996
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    31450.763021729872,
+                    31712.03100343996,
+                    31594.017560187567
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "150",
+            "lib" : "ojAlgo"
+        },
+        "primaryMetric" : {
+            "score" : 62035.98888620933,
+            "scoreError" : 13551.021970891727,
+            "scoreConfidence" : [
+                48484.9669153176,
+                75587.01085710105
+            ],
+            "scorePercentiles" : {
+                "0.0" : 61510.94258013098,
+                "50.0" : 61711.1766914565,
+                "90.0" : 62885.847387040514,
+                "95.0" : 62885.847387040514,
+                "99.0" : 62885.847387040514,
+                "99.9" : 62885.847387040514,
+                "99.99" : 62885.847387040514,
+                "99.999" : 62885.847387040514,
+                "99.9999" : 62885.847387040514,
+                "100.0" : 62885.847387040514
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    61711.1766914565,
+                    61510.94258013098,
+                    62885.847387040514
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "150",
+            "lib" : "MTJ"
+        },
+        "primaryMetric" : {
+            "score" : 554848.063004809,
+            "scoreError" : 40831.73726880425,
+            "scoreConfidence" : [
+                514016.32573600474,
+                595679.8002736132
+            ],
+            "scorePercentiles" : {
+                "0.0" : 552612.5491687491,
+                "50.0" : 554842.8491858576,
+                "90.0" : 557088.7906598201,
+                "95.0" : 557088.7906598201,
+                "99.0" : 557088.7906598201,
+                "99.9" : 557088.7906598201,
+                "99.99" : 557088.7906598201,
+                "99.999" : 557088.7906598201,
+                "99.9999" : 557088.7906598201,
+                "100.0" : 557088.7906598201
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    554842.8491858576,
+                    557088.7906598201,
+                    552612.5491687491
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "200",
+            "lib" : "ACM"
+        },
+        "primaryMetric" : {
+            "score" : 6036.33837719078,
+            "scoreError" : 704.537499471789,
+            "scoreConfidence" : [
+                5331.800877718992,
+                6740.875876662569
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5991.786523744546,
+                "50.0" : 6056.969557359777,
+                "90.0" : 6060.2590504680165,
+                "95.0" : 6060.2590504680165,
+                "99.0" : 6060.2590504680165,
+                "99.9" : 6060.2590504680165,
+                "99.99" : 6060.2590504680165,
+                "99.999" : 6060.2590504680165,
+                "99.9999" : 6060.2590504680165,
+                "100.0" : 6060.2590504680165
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    6056.969557359777,
+                    6060.2590504680165,
+                    5991.786523744546
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "200",
+            "lib" : "EJML"
+        },
+        "primaryMetric" : {
+            "score" : 13640.626539626544,
+            "scoreError" : 1307.7333937568235,
+            "scoreConfidence" : [
+                12332.89314586972,
+                14948.359933383368
+            ],
+            "scorePercentiles" : {
+                "0.0" : 13575.76285158675,
+                "50.0" : 13628.53050034261,
+                "90.0" : 13717.586266950273,
+                "95.0" : 13717.586266950273,
+                "99.0" : 13717.586266950273,
+                "99.9" : 13717.586266950273,
+                "99.99" : 13717.586266950273,
+                "99.999" : 13717.586266950273,
+                "99.9999" : 13717.586266950273,
+                "100.0" : 13717.586266950273
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    13628.53050034261,
+                    13575.76285158675,
+                    13717.586266950273
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "200",
+            "lib" : "ojAlgo"
+        },
+        "primaryMetric" : {
+            "score" : 27903.513678789768,
+            "scoreError" : 4546.9931522470915,
+            "scoreConfidence" : [
+                23356.520526542678,
+                32450.50683103686
+            ],
+            "scorePercentiles" : {
+                "0.0" : 27627.971461252793,
+                "50.0" : 27969.34059173783,
+                "90.0" : 28113.228983378678,
+                "95.0" : 28113.228983378678,
+                "99.0" : 28113.228983378678,
+                "99.9" : 28113.228983378678,
+                "99.99" : 28113.228983378678,
+                "99.999" : 28113.228983378678,
+                "99.9999" : 28113.228983378678,
+                "100.0" : 28113.228983378678
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    27969.34059173783,
+                    27627.971461252793,
+                    28113.228983378678
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "200",
+            "lib" : "MTJ"
+        },
+        "primaryMetric" : {
+            "score" : 219521.30595150217,
+            "scoreError" : 27893.375371718408,
+            "scoreConfidence" : [
+                191627.93057978377,
+                247414.68132322057
+            ],
+            "scorePercentiles" : {
+                "0.0" : 218455.04513596388,
+                "50.0" : 218835.85401504656,
+                "90.0" : 221273.01870349608,
+                "95.0" : 221273.01870349608,
+                "99.0" : 221273.01870349608,
+                "99.9" : 221273.01870349608,
+                "99.99" : 221273.01870349608,
+                "99.999" : 221273.01870349608,
+                "99.9999" : 221273.01870349608,
+                "100.0" : 221273.01870349608
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    218835.85401504656,
+                    218455.04513596388,
+                    221273.01870349608
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "350",
+            "lib" : "ACM"
+        },
+        "primaryMetric" : {
+            "score" : 953.9709270669922,
+            "scoreError" : 93.235901085383,
+            "scoreConfidence" : [
+                860.7350259816092,
+                1047.2068281523752
+            ],
+            "scorePercentiles" : {
+                "0.0" : 948.1666677863263,
+                "50.0" : 955.9506138482719,
+                "90.0" : 957.795499566378,
+                "95.0" : 957.795499566378,
+                "99.0" : 957.795499566378,
+                "99.9" : 957.795499566378,
+                "99.99" : 957.795499566378,
+                "99.999" : 957.795499566378,
+                "99.9999" : 957.795499566378,
+                "100.0" : 957.795499566378
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    957.795499566378,
+                    955.9506138482719,
+                    948.1666677863263
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "350",
+            "lib" : "EJML"
+        },
+        "primaryMetric" : {
+            "score" : 2504.0961649850046,
+            "scoreError" : 289.8941951480881,
+            "scoreConfidence" : [
+                2214.2019698369168,
+                2793.9903601330925
+            ],
+            "scorePercentiles" : {
+                "0.0" : 2485.749641473836,
+                "50.0" : 2513.049385392437,
+                "90.0" : 2513.48946808874,
+                "95.0" : 2513.48946808874,
+                "99.0" : 2513.48946808874,
+                "99.9" : 2513.48946808874,
+                "99.99" : 2513.48946808874,
+                "99.999" : 2513.48946808874,
+                "99.9999" : 2513.48946808874,
+                "100.0" : 2513.48946808874
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    2513.48946808874,
+                    2513.049385392437,
+                    2485.749641473836
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "350",
+            "lib" : "ojAlgo"
+        },
+        "primaryMetric" : {
+            "score" : 5131.745719204926,
+            "scoreError" : 202.34263876217864,
+            "scoreConfidence" : [
+                4929.4030804427475,
+                5334.0883579671045
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5124.2315115872325,
+                "50.0" : 5126.521473966962,
+                "90.0" : 5144.484172060583,
+                "95.0" : 5144.484172060583,
+                "99.0" : 5144.484172060583,
+                "99.9" : 5144.484172060583,
+                "99.99" : 5144.484172060583,
+                "99.999" : 5144.484172060583,
+                "99.9999" : 5144.484172060583,
+                "100.0" : 5144.484172060583
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    5124.2315115872325,
+                    5144.484172060583,
+                    5126.521473966962
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "350",
+            "lib" : "MTJ"
+        },
+        "primaryMetric" : {
+            "score" : 53693.62535973813,
+            "scoreError" : 1327.9004575489494,
+            "scoreConfidence" : [
+                52365.72490218918,
+                55021.52581728708
+            ],
+            "scorePercentiles" : {
+                "0.0" : 53617.417134376235,
+                "50.0" : 53701.03526779766,
+                "90.0" : 53762.42367704048,
+                "95.0" : 53762.42367704048,
+                "99.0" : 53762.42367704048,
+                "99.9" : 53762.42367704048,
+                "99.99" : 53762.42367704048,
+                "99.999" : 53762.42367704048,
+                "99.9999" : 53762.42367704048,
+                "100.0" : 53762.42367704048
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    53617.417134376235,
+                    53701.03526779766,
+                    53762.42367704048
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "500",
+            "lib" : "ACM"
+        },
+        "primaryMetric" : {
+            "score" : 310.1581359459099,
+            "scoreError" : 39.20723958233811,
+            "scoreConfidence" : [
+                270.9508963635718,
+                349.365375528248
+            ],
+            "scorePercentiles" : {
+                "0.0" : 307.7257532937071,
+                "50.0" : 310.94866831099154,
+                "90.0" : 311.79998623303123,
+                "95.0" : 311.79998623303123,
+                "99.0" : 311.79998623303123,
+                "99.9" : 311.79998623303123,
+                "99.99" : 311.79998623303123,
+                "99.999" : 311.79998623303123,
+                "99.9999" : 311.79998623303123,
+                "100.0" : 311.79998623303123
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    311.79998623303123,
+                    310.94866831099154,
+                    307.7257532937071
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "500",
+            "lib" : "EJML"
+        },
+        "primaryMetric" : {
+            "score" : 871.7072007390465,
+            "scoreError" : 106.56639945531754,
+            "scoreConfidence" : [
+                765.1408012837289,
+                978.273600194364
+            ],
+            "scorePercentiles" : {
+                "0.0" : 866.467730977309,
+                "50.0" : 870.6484397380544,
+                "90.0" : 878.0054315017759,
+                "95.0" : 878.0054315017759,
+                "99.0" : 878.0054315017759,
+                "99.9" : 878.0054315017759,
+                "99.99" : 878.0054315017759,
+                "99.999" : 878.0054315017759,
+                "99.9999" : 878.0054315017759,
+                "100.0" : 878.0054315017759
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    878.0054315017759,
+                    866.467730977309,
+                    870.6484397380544
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "500",
+            "lib" : "ojAlgo"
+        },
+        "primaryMetric" : {
+            "score" : 1740.5373138607813,
+            "scoreError" : 648.1909958241947,
+            "scoreConfidence" : [
+                1092.3463180365866,
+                2388.728309684976
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1716.3795887480567,
+                "50.0" : 1723.8994366064992,
+                "90.0" : 1781.3329162277885,
+                "95.0" : 1781.3329162277885,
+                "99.0" : 1781.3329162277885,
+                "99.9" : 1781.3329162277885,
+                "99.99" : 1781.3329162277885,
+                "99.999" : 1781.3329162277885,
+                "99.9999" : 1781.3329162277885,
+                "100.0" : 1781.3329162277885
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    1716.3795887480567,
+                    1723.8994366064992,
+                    1781.3329162277885
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "500",
+            "lib" : "MTJ"
+        },
+        "primaryMetric" : {
+            "score" : 18894.564017268644,
+            "scoreError" : 935.3471399162984,
+            "scoreConfidence" : [
+                17959.216877352344,
+                19829.911157184943
+            ],
+            "scorePercentiles" : {
+                "0.0" : 18841.968012423476,
+                "50.0" : 18897.32884709947,
+                "90.0" : 18944.39519228299,
+                "95.0" : 18944.39519228299,
+                "99.0" : 18944.39519228299,
+                "99.9" : 18944.39519228299,
+                "99.99" : 18944.39519228299,
+                "99.999" : 18944.39519228299,
+                "99.9999" : 18944.39519228299,
+                "100.0" : 18944.39519228299
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    18841.968012423476,
+                    18897.32884709947,
+                    18944.39519228299
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "750",
+            "lib" : "ACM"
+        },
+        "primaryMetric" : {
+            "score" : 69.97826441913016,
+            "scoreError" : 43.78046534176261,
+            "scoreConfidence" : [
+                26.19779907736755,
+                113.75872976089276
+            ],
+            "scorePercentiles" : {
+                "0.0" : 67.22703065882907,
+                "50.0" : 71.06777147826668,
+                "90.0" : 71.63999112029474,
+                "95.0" : 71.63999112029474,
+                "99.0" : 71.63999112029474,
+                "99.9" : 71.63999112029474,
+                "99.99" : 71.63999112029474,
+                "99.999" : 71.63999112029474,
+                "99.9999" : 71.63999112029474,
+                "100.0" : 71.63999112029474
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    71.63999112029474,
+                    71.06777147826668,
+                    67.22703065882907
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "750",
+            "lib" : "EJML"
+        },
+        "primaryMetric" : {
+            "score" : 242.7349260662518,
+            "scoreError" : 103.32914161289885,
+            "scoreConfidence" : [
+                139.40578445335296,
+                346.06406767915064
+            ],
+            "scorePercentiles" : {
+                "0.0" : 237.02383074807082,
+                "50.0" : 242.83069339662347,
+                "90.0" : 248.3502540540611,
+                "95.0" : 248.3502540540611,
+                "99.0" : 248.3502540540611,
+                "99.9" : 248.3502540540611,
+                "99.99" : 248.3502540540611,
+                "99.999" : 248.3502540540611,
+                "99.9999" : 248.3502540540611,
+                "100.0" : 248.3502540540611
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    237.02383074807082,
+                    242.83069339662347,
+                    248.3502540540611
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "750",
+            "lib" : "ojAlgo"
+        },
+        "primaryMetric" : {
+            "score" : 509.5209695487984,
+            "scoreError" : 80.68476777286479,
+            "scoreConfidence" : [
+                428.8362017759336,
+                590.2057373216632
+            ],
+            "scorePercentiles" : {
+                "0.0" : 504.4260299898812,
+                "50.0" : 511.76740333062565,
+                "90.0" : 512.3694753258883,
+                "95.0" : 512.3694753258883,
+                "99.0" : 512.3694753258883,
+                "99.9" : 512.3694753258883,
+                "99.99" : 512.3694753258883,
+                "99.999" : 512.3694753258883,
+                "99.9999" : 512.3694753258883,
+                "100.0" : 512.3694753258883
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    511.76740333062565,
+                    512.3694753258883,
+                    504.4260299898812
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "750",
+            "lib" : "MTJ"
+        },
+        "primaryMetric" : {
+            "score" : 5409.408584189238,
+            "scoreError" : 1218.322017346316,
+            "scoreConfidence" : [
+                4191.086566842922,
+                6627.730601535554
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5342.286949830515,
+                "50.0" : 5410.096485920922,
+                "90.0" : 5475.842316816279,
+                "95.0" : 5475.842316816279,
+                "99.0" : 5475.842316816279,
+                "99.9" : 5475.842316816279,
+                "99.99" : 5475.842316816279,
+                "99.999" : 5475.842316816279,
+                "99.9999" : 5475.842316816279,
+                "100.0" : 5475.842316816279
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    5410.096485920922,
+                    5342.286949830515,
+                    5475.842316816279
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "1000",
+            "lib" : "ACM"
+        },
+        "primaryMetric" : {
+            "score" : 12.588836793761354,
+            "scoreError" : 2.4853445774875476,
+            "scoreConfidence" : [
+                10.103492216273807,
+                15.074181371248901
+            ],
+            "scorePercentiles" : {
+                "0.0" : 12.440714607805202,
+                "50.0" : 12.617033850123198,
+                "90.0" : 12.70876192335567,
+                "95.0" : 12.70876192335567,
+                "99.0" : 12.70876192335567,
+                "99.9" : 12.70876192335567,
+                "99.99" : 12.70876192335567,
+                "99.999" : 12.70876192335567,
+                "99.9999" : 12.70876192335567,
+                "100.0" : 12.70876192335567
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    12.440714607805202,
+                    12.617033850123198,
+                    12.70876192335567
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "1000",
+            "lib" : "EJML"
+        },
+        "primaryMetric" : {
+            "score" : 99.06263668848413,
+            "scoreError" : 21.445169215103768,
+            "scoreConfidence" : [
+                77.61746747338037,
+                120.5078059035879
+            ],
+            "scorePercentiles" : {
+                "0.0" : 97.7808320035116,
+                "50.0" : 99.31689875658459,
+                "90.0" : 100.0901793053562,
+                "95.0" : 100.0901793053562,
+                "99.0" : 100.0901793053562,
+                "99.9" : 100.0901793053562,
+                "99.99" : 100.0901793053562,
+                "99.999" : 100.0901793053562,
+                "99.9999" : 100.0901793053562,
+                "100.0" : 100.0901793053562
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    100.0901793053562,
+                    99.31689875658459,
+                    97.7808320035116
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "1000",
+            "lib" : "ojAlgo"
+        },
+        "primaryMetric" : {
+            "score" : 205.71901192565971,
+            "scoreError" : 34.028915796449986,
+            "scoreConfidence" : [
+                171.69009612920973,
+                239.7479277221097
+            ],
+            "scorePercentiles" : {
+                "0.0" : 203.56536177636377,
+                "50.0" : 206.7743331595388,
+                "90.0" : 206.81734084107651,
+                "95.0" : 206.81734084107651,
+                "99.0" : 206.81734084107651,
+                "99.9" : 206.81734084107651,
+                "99.99" : 206.81734084107651,
+                "99.999" : 206.81734084107651,
+                "99.9999" : 206.81734084107651,
+                "100.0" : 206.81734084107651
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    206.7743331595388,
+                    203.56536177636377,
+                    206.81734084107651
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "org.ojalgo.benchmark.lab.FillByMultiplying.execute",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/apete/Library/jdk-11.0.2+9/Contents/Home/bin/java",
+        "jvmArgs" : [
+            "-Xmx6g"
+        ],
+        "jdkVersion" : "11.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.2+9",
+        "warmupIterations" : 3,
+        "warmupTime" : "5 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "dim" : "1000",
+            "lib" : "MTJ"
+        },
+        "primaryMetric" : {
+            "score" : 2393.4342296075465,
+            "scoreError" : 773.3735726932673,
+            "scoreConfidence" : [
+                1620.0606569142792,
+                3166.807802300814
+            ],
+            "scorePercentiles" : {
+                "0.0" : 2345.089359350861,
+                "50.0" : 2410.966238399904,
+                "90.0" : 2424.2470910718744,
+                "95.0" : 2424.2470910718744,
+                "99.0" : 2424.2470910718744,
+                "99.9" : 2424.2470910718744,
+                "99.99" : 2424.2470910718744,
+                "99.999" : 2424.2470910718744,
+                "99.9999" : 2424.2470910718744,
+                "100.0" : 2424.2470910718744
+            },
+            "scoreUnit" : "ops/min",
+            "rawData" : [
+                [
+                    2345.089359350861,
+                    2410.966238399904,
+                    2424.2470910718744
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+

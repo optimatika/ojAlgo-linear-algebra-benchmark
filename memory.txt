@@ -1,3 +1,39 @@
+https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.2%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.2_9.tar.gz
+https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.2%2B9_openj9-0.12.1/OpenJDK11U-jdk_x64_linux_openj9_11.0.2_9_openj9-0.12.1_openj9-0.12.1.tar.gz
+https://github.com/oracle/graal/releases/download/vm-1.0.0-rc12/graalvm-ce-1.0.0-rc12-linux-amd64.tar.gz
+
+
+Different JVM:s
+================================================================================
+
+
+
+AdoptOpenJDK
+------------
+https://adoptopenjdk.net/
+
+Based on OpenJDK with either HotSpot or OpenJ9 
+
+Amazon Corretto
+---------------
+https://aws.amazon.com/corretto/
+
+HotSpot is the VM from the OpenJDK community. It is the most widely used VM today and is used in Oracle’s JDK. It is suitable for all workloads.
+For more details see OpenJDK HotSpot.
+
+OpenJ9 is the VM from the Eclipse community. It is an enterprise-grade VM designed for low memory usage and fast start-up and is used in IBM’s JDK. It is also suitable for running all workloads.
+For more details see Eclipse OpenJ9.
+
+https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
+https://jdk.java.net/11/
+
+
+"1", "2", "3", "4", "5", "8", "10"
+"10", "15", "20", "35", "50", "75", "100"
+"100", "150", "200", "350", "500", "750", "1000"
+"1000", "1500", "2000", "3500", "5000", "7500", "10000"
+
+
 "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096", "5000", "8192", "10000"
 "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000"
 "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096", "5000", "8192", "10000"
@@ -41,4 +77,17 @@ nohup java -jar benchmark.jar runtime --Size=2:20000 --MaxTime=10m --Memory=1843
 
 nohup java -jar benchmark.jar runtime --Size=2:20000 --MaxTime=10m --Memory=16384 &
 
+nohup java -jar benchmark.jar runtime --Resume=./results/runtime_04-04-2018-17_46_33/ &
+nohup java -jar benchmark.jar runtime --Resume=./results/runtime_04-04-2018-17_45_49/ &
+
 ps aux | grep java
+
+[anders@instance-1 ~]$ java -version
+Error occurred during initialization of VM
+Memory management: unable to fund java heap account
+[anders@instance-1 ~]$ 
+
+
+yum update
+
+

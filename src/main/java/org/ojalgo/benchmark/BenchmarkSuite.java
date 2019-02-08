@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark;
 
 public interface BenchmarkSuite {
 
@@ -39,10 +39,10 @@ public interface BenchmarkSuite {
      * <li>SVD</li>
      * <li>EvD</li>
      * </ul>
+     * https://lessthanoptimal.github.io/Java-Matrix-Benchmark/
+     * https://github.com/lessthanoptimal/Java-Matrix-Benchmark
      *
      * @author apete
-     * @see https://lessthanoptimal.github.io/Java-Matrix-Benchmark/
-     * @see https://github.com/lessthanoptimal/Java-Matrix-Benchmark
      */
     public interface JavaMatrixBenchmark extends BenchmarkSuite {
 
