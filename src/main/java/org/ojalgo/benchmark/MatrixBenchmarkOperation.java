@@ -155,11 +155,11 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
-    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
+    static final TimeValue ITERATION_TIME = new TimeValue(5L, TimeUnit.SECONDS);
     static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
 
     protected static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(1).warmupIterations(7).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
+        return new OptionsBuilder().forks(1).warmupIterations(5).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
                 .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx6g").resultFormat(ResultFormatType.CSV);
     }
 
