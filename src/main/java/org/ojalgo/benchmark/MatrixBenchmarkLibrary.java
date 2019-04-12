@@ -21,6 +21,8 @@
  */
 package org.ojalgo.benchmark;
 
+import static org.ojalgo.function.constant.PrimitiveMath.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -36,7 +38,6 @@ import org.ojalgo.benchmark.lab.library.ACM;
 import org.ojalgo.benchmark.lab.library.EJML;
 import org.ojalgo.benchmark.lab.library.MTJ;
 import org.ojalgo.benchmark.lab.library.ojAlgo;
-import org.ojalgo.constant.PrimitiveMath;
 import org.ojalgo.netio.BasicLogger;
 
 /**
@@ -64,7 +65,7 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     }
 
-    public static final Map<String, MatrixBenchmarkLibrary<?, ?>> LIBRARIES = new HashMap<String, MatrixBenchmarkLibrary<?, ?>>();
+    public static final Map<String, MatrixBenchmarkLibrary<?, ?>> LIBRARIES = new HashMap<>();
 
     static {
         LIBRARIES.put(ACM.class.getSimpleName(), new ACM());
@@ -98,7 +99,7 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
         final double error = this.norm(diff);
 
-        final boolean retVal = (error <= (dim * dim * PrimitiveMath.MACHINE_EPSILON));
+        final boolean retVal = (error <= (dim * dim * MACHINE_EPSILON));
 
         if (!retVal) {
             BasicLogger.debug("Error {} too large for {}", error, dim);
@@ -124,7 +125,7 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      * arg2 == right input matrix
      * ret == product - the results of matrix multiplication [left]x[right] should end up in that matrix
      * </pre>
-     * 
+     *
      * @param transpL TODO
      * @param transpR TODO
      */
