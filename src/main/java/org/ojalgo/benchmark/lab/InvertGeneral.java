@@ -49,7 +49,7 @@ public class InvertGeneral extends MatrixBenchmarkOperation implements Benchmark
         MatrixBenchmarkOperation.run(InvertGeneral.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "100", "150", "200", "350", "500", "750", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })

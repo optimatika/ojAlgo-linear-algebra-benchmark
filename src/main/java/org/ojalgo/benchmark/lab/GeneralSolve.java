@@ -35,9 +35,38 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Mac Pro 2015-06-13
+ * Mac Pro 2019-04-25
  *
  * <pre>
+Benchmark             (dim)   (lib)   Mode  Cnt       Score       Error    Units
+GeneralSolve.execute    100     ACM  thrpt    3   76829.676 ±   376.617  ops/min
+GeneralSolve.execute    100    EJML  thrpt    3  112353.132 ±  2415.676  ops/min
+GeneralSolve.execute    100  ojAlgo  thrpt    3  151254.020 ± 33432.911  ops/min
+GeneralSolve.execute    100     MTJ  thrpt    3  181700.828 ±  8332.440  ops/min
+GeneralSolve.execute    150     ACM  thrpt    3   25117.912 ±   324.016  ops/min
+GeneralSolve.execute    150    EJML  thrpt    3   35967.812 ±   180.928  ops/min
+GeneralSolve.execute    150  ojAlgo  thrpt    3   53531.554 ±  4897.544  ops/min
+GeneralSolve.execute    150     MTJ  thrpt    3  102333.557 ±   809.716  ops/min
+GeneralSolve.execute    200     ACM  thrpt    3   10168.823 ±   436.685  ops/min
+GeneralSolve.execute    200    EJML  thrpt    3   16234.192 ±    88.036  ops/min
+GeneralSolve.execute    200  ojAlgo  thrpt    3   22816.241 ±   694.026  ops/min
+GeneralSolve.execute    200     MTJ  thrpt    3   56216.569 ±  2686.112  ops/min
+GeneralSolve.execute    350     ACM  thrpt    3    1229.603 ±   163.314  ops/min
+GeneralSolve.execute    350    EJML  thrpt    3    3052.124 ±    98.379  ops/min
+GeneralSolve.execute    350  ojAlgo  thrpt    3    4531.994 ±    27.974  ops/min
+GeneralSolve.execute    350     MTJ  thrpt    3   23549.221 ±  3641.883  ops/min
+GeneralSolve.execute    500     ACM  thrpt    3     416.870 ±    39.162  ops/min
+GeneralSolve.execute    500    EJML  thrpt    3    1068.753 ±    11.845  ops/min
+GeneralSolve.execute    500  ojAlgo  thrpt    3    1580.098 ±    18.463  ops/min
+GeneralSolve.execute    500     MTJ  thrpt    3   12840.903 ±   819.886  ops/min
+GeneralSolve.execute    750     ACM  thrpt    3      56.558 ±     5.425  ops/min
+GeneralSolve.execute    750    EJML  thrpt    3     310.525 ±    21.612  ops/min
+GeneralSolve.execute    750  ojAlgo  thrpt    3     458.277 ±    26.930  ops/min
+GeneralSolve.execute    750     MTJ  thrpt    3    5277.724 ±   139.050  ops/min
+GeneralSolve.execute   1000     ACM  thrpt    3      15.396 ±     2.846  ops/min
+GeneralSolve.execute   1000    EJML  thrpt    3     131.186 ±     5.045  ops/min
+GeneralSolve.execute   1000  ojAlgo  thrpt    3     221.659 ±     6.588  ops/min
+GeneralSolve.execute   1000     MTJ  thrpt    3    2548.826 ±   193.396  ops/min
  * </pre>
  *
  * MacBook Air: 2015-06-20
@@ -136,8 +165,9 @@ public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkS
         MatrixBenchmarkOperation.run(GeneralSolve.class);
     }
 
-    @Param({ "10", "100", "200", "500" })
+    @Param({ "100", "150", "200", "350", "500", "750", "1000" })
     public int dim;
+
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
