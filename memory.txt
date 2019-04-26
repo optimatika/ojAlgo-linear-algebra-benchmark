@@ -16,25 +16,39 @@ nohup java -classpath ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying &
 
 tail -f nohup.out
 
-mv nohup.out oracle12_solve.log
-mv jmh-result.csv oracle12_solve.csv
-
-/home/anders/oracle12_solve.log
-/home/anders/oracle12_solve.csv
-
 nohup jdk-12.0.1+12/bin/java -classpath ojlab.jar org.ojalgo.benchmark.lab.GeneralSolve &
+
+mv nohup.out oracle12_hotspot_solve.log
+mv jmh-result.csv oracle12_hotspot_solve.csv
+/home/anders/oracle12_hotspot_solve.log
+/home/anders/oracle12_hotspot_solve.csv
 
 mv nohup.out adopt12_hotspot_solve.log
 mv jmh-result.csv adopt12_hotspot_solve.csv
-
 /home/anders/adopt12_hotspot_solve.log
 /home/anders/adopt12_hotspot_solve.csv
 
 mv nohup.out adopt12_openj9_solve.log
 mv jmh-result.csv adopt12_openj9_solve.csv
-
 /home/anders/adopt12_openj9_solve.log
 /home/anders/adopt12_openj9_solve.csv
+
+mv nohup.out adopt12_openj9_multiply.log
+mv jmh-result.csv adopt12_openj9_multiply.csv
+/home/anders/adopt12_openj9_multiply.log
+/home/anders/adopt12_openj9_multiply.csv
+
+mv nohup.out adopt12_hotspot_multiply.log
+mv jmh-result.csv adopt12_hotspot_multiply.csv
+/home/anders/adopt12_hotspot_multiply.log
+/home/anders/adopt12_hotspot_multiply.csv
+
+mv nohup.out oracle12_hotspot_multiply.log
+mv jmh-result.csv oracle12_hotspot_multiply.csv
+/home/anders/oracle12_hotspot_multiply.log
+/home/anders/oracle12_hotspot_multiply.csv
+
+
 
 
 
