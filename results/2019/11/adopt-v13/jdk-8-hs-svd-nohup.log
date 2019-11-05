@@ -1,0 +1,991 @@
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = ACM)
+
+# Run progress: 0.00% complete, ETA 00:46:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 5198.894 ops/min
+# Warmup Iteration   2: 5376.521 ops/min
+# Warmup Iteration   3: 5371.614 ops/min
+# Warmup Iteration   4: 5377.027 ops/min
+# Warmup Iteration   5: 5381.293 ops/min
+# Warmup Iteration   6: 5385.869 ops/min
+# Warmup Iteration   7: 5394.714 ops/min
+Iteration   1: 5380.097 ops/min
+Iteration   2: 5376.759 ops/min
+Iteration   3: 5380.641 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  5379.166 ±(99.9%) 38.348 ops/min [Average]
+  (min, avg, max) = (5376.759, 5379.166, 5380.641), stdev = 2.102
+  CI (99.9%): [5340.818, 5417.514] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = EJML)
+
+# Run progress: 3.57% complete, ETA 00:45:16
+# Fork: 1 of 1
+# Warmup Iteration   1: 9756.765 ops/min
+# Warmup Iteration   2: 9895.878 ops/min
+# Warmup Iteration   3: 9902.374 ops/min
+# Warmup Iteration   4: 9843.086 ops/min
+# Warmup Iteration   5: 9886.324 ops/min
+# Warmup Iteration   6: 9874.758 ops/min
+# Warmup Iteration   7: 9867.214 ops/min
+Iteration   1: 9876.272 ops/min
+Iteration   2: 9868.991 ops/min
+Iteration   3: 9871.848 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  9872.370 ±(99.9%) 66.931 ops/min [Average]
+  (min, avg, max) = (9868.991, 9872.370, 9876.272), stdev = 3.669
+  CI (99.9%): [9805.439, 9939.302] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+# Run progress: 7.14% complete, ETA 00:43:33
+# Fork: 1 of 1
+# Warmup Iteration   1: 12065.073 ops/min
+# Warmup Iteration   2: 12338.016 ops/min
+# Warmup Iteration   3: 12341.099 ops/min
+# Warmup Iteration   4: 12144.708 ops/min
+# Warmup Iteration   5: 12077.447 ops/min
+# Warmup Iteration   6: 12062.622 ops/min
+# Warmup Iteration   7: 12029.205 ops/min
+Iteration   1: 12076.385 ops/min
+Iteration   2: 12083.974 ops/min
+Iteration   3: 12066.822 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  12075.727 ±(99.9%) 156.798 ops/min [Average]
+  (min, avg, max) = (12066.822, 12075.727, 12083.974), stdev = 8.595
+  CI (99.9%): [11918.928, 12232.525] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+# Run progress: 10.71% complete, ETA 00:41:53
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 04, 2019 6:07:23 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 04, 2019 6:07:23 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader7154367260363479091netlib-native_ref-linux-x86_64.so
+Nov 04, 2019 6:07:33 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 04, 2019 6:07:33 AM com.github.fommil.jni.JniLoader load
+INFO: already loaded netlib-native_ref-linux-x86_64.so
+12197.153 ops/min
+# Warmup Iteration   2: 12698.177 ops/min
+# Warmup Iteration   3: 12755.057 ops/min
+# Warmup Iteration   4: 12629.123 ops/min
+# Warmup Iteration   5: 12695.851 ops/min
+# Warmup Iteration   6: 12862.071 ops/min
+# Warmup Iteration   7: 12838.507 ops/min
+Iteration   1: 12839.688 ops/min
+Iteration   2: 12904.410 ops/min
+Iteration   3: 12886.476 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  12876.858 ±(99.9%) 609.627 ops/min [Average]
+  (min, avg, max) = (12839.688, 12876.858, 12904.410), stdev = 33.416
+  CI (99.9%): [12267.232, 13486.485] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = ACM)
+
+# Run progress: 14.29% complete, ETA 00:40:12
+# Fork: 1 of 1
+# Warmup Iteration   1: 1526.293 ops/min
+# Warmup Iteration   2: 1575.460 ops/min
+# Warmup Iteration   3: 1578.120 ops/min
+# Warmup Iteration   4: 1578.668 ops/min
+# Warmup Iteration   5: 1576.886 ops/min
+# Warmup Iteration   6: 1576.409 ops/min
+# Warmup Iteration   7: 1577.155 ops/min
+Iteration   1: 1577.008 ops/min
+Iteration   2: 1564.328 ops/min
+Iteration   3: 1573.228 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  1571.521 ±(99.9%) 118.766 ops/min [Average]
+  (min, avg, max) = (1564.328, 1571.521, 1577.008), stdev = 6.510
+  CI (99.9%): [1452.755, 1690.287] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = EJML)
+
+# Run progress: 17.86% complete, ETA 00:38:32
+# Fork: 1 of 1
+# Warmup Iteration   1: 3119.484 ops/min
+# Warmup Iteration   2: 3168.980 ops/min
+# Warmup Iteration   3: 3169.221 ops/min
+# Warmup Iteration   4: 3165.129 ops/min
+# Warmup Iteration   5: 3166.365 ops/min
+# Warmup Iteration   6: 3169.906 ops/min
+# Warmup Iteration   7: 3162.678 ops/min
+Iteration   1: 3161.632 ops/min
+Iteration   2: 3172.455 ops/min
+Iteration   3: 3165.729 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  3166.606 ±(99.9%) 99.688 ops/min [Average]
+  (min, avg, max) = (3161.632, 3166.606, 3172.455), stdev = 5.464
+  CI (99.9%): [3066.918, 3266.293] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+# Run progress: 21.43% complete, ETA 00:36:52
+# Fork: 1 of 1
+# Warmup Iteration   1: 3934.025 ops/min
+# Warmup Iteration   2: 4060.736 ops/min
+# Warmup Iteration   3: 4072.644 ops/min
+# Warmup Iteration   4: 4072.013 ops/min
+# Warmup Iteration   5: 4076.648 ops/min
+# Warmup Iteration   6: 4073.589 ops/min
+# Warmup Iteration   7: 4075.925 ops/min
+Iteration   1: 4073.319 ops/min
+Iteration   2: 4074.626 ops/min
+Iteration   3: 4064.006 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  4070.650 ±(99.9%) 105.646 ops/min [Average]
+  (min, avg, max) = (4064.006, 4070.650, 4074.626), stdev = 5.791
+  CI (99.9%): [3965.004, 4176.296] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+# Run progress: 25.00% complete, ETA 00:35:11
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 04, 2019 6:14:05 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 04, 2019 6:14:05 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader8024146453594618976netlib-native_ref-linux-x86_64.so
+Nov 04, 2019 6:14:15 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 04, 2019 6:14:15 AM com.github.fommil.jni.JniLoader load
+INFO: already loaded netlib-native_ref-linux-x86_64.so
+4190.957 ops/min
+# Warmup Iteration   2: 4411.259 ops/min
+# Warmup Iteration   3: 4458.797 ops/min
+# Warmup Iteration   4: 4498.550 ops/min
+# Warmup Iteration   5: 4541.819 ops/min
+# Warmup Iteration   6: 4552.050 ops/min
+# Warmup Iteration   7: 4549.569 ops/min
+Iteration   1: 4497.446 ops/min
+Iteration   2: 4523.417 ops/min
+Iteration   3: 4512.244 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  4511.035 ±(99.9%) 237.677 ops/min [Average]
+  (min, avg, max) = (4497.446, 4511.035, 4523.417), stdev = 13.028
+  CI (99.9%): [4273.358, 4748.713] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = ACM)
+
+# Run progress: 28.57% complete, ETA 00:33:31
+# Fork: 1 of 1
+# Warmup Iteration   1: 597.450 ops/min
+# Warmup Iteration   2: 618.994 ops/min
+# Warmup Iteration   3: 619.342 ops/min
+# Warmup Iteration   4: 620.062 ops/min
+# Warmup Iteration   5: 620.325 ops/min
+# Warmup Iteration   6: 618.641 ops/min
+# Warmup Iteration   7: 620.252 ops/min
+Iteration   1: 617.064 ops/min
+Iteration   2: 617.745 ops/min
+Iteration   3: 620.428 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  618.413 ±(99.9%) 32.453 ops/min [Average]
+  (min, avg, max) = (617.064, 618.413, 620.428), stdev = 1.779
+  CI (99.9%): [585.959, 650.866] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = EJML)
+
+# Run progress: 32.14% complete, ETA 00:31:52
+# Fork: 1 of 1
+# Warmup Iteration   1: 1347.747 ops/min
+# Warmup Iteration   2: 1366.519 ops/min
+# Warmup Iteration   3: 1369.385 ops/min
+# Warmup Iteration   4: 1370.468 ops/min
+# Warmup Iteration   5: 1370.226 ops/min
+# Warmup Iteration   6: 1370.391 ops/min
+# Warmup Iteration   7: 1368.665 ops/min
+Iteration   1: 1370.987 ops/min
+Iteration   2: 1370.626 ops/min
+Iteration   3: 1368.951 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  1370.188 ±(99.9%) 19.817 ops/min [Average]
+  (min, avg, max) = (1368.951, 1370.188, 1370.987), stdev = 1.086
+  CI (99.9%): [1350.371, 1390.005] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+# Run progress: 35.71% complete, ETA 00:30:11
+# Fork: 1 of 1
+# Warmup Iteration   1: 1758.563 ops/min
+# Warmup Iteration   2: 1792.452 ops/min
+# Warmup Iteration   3: 1795.281 ops/min
+# Warmup Iteration   4: 1796.178 ops/min
+# Warmup Iteration   5: 1794.843 ops/min
+# Warmup Iteration   6: 1796.972 ops/min
+# Warmup Iteration   7: 1797.021 ops/min
+Iteration   1: 1798.236 ops/min
+Iteration   2: 1799.657 ops/min
+Iteration   3: 1795.777 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  1797.890 ±(99.9%) 35.817 ops/min [Average]
+  (min, avg, max) = (1795.777, 1797.890, 1799.657), stdev = 1.963
+  CI (99.9%): [1762.073, 1833.707] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+# Run progress: 39.29% complete, ETA 00:28:31
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 04, 2019 6:20:48 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 04, 2019 6:20:49 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader3429244718415715377netlib-native_ref-linux-x86_64.so
+Nov 04, 2019 6:20:58 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 04, 2019 6:20:58 AM com.github.fommil.jni.JniLoader load
+INFO: already loaded netlib-native_ref-linux-x86_64.so
+1860.099 ops/min
+# Warmup Iteration   2: 1947.072 ops/min
+# Warmup Iteration   3: 1969.316 ops/min
+# Warmup Iteration   4: 1976.799 ops/min
+# Warmup Iteration   5: 1986.127 ops/min
+# Warmup Iteration   6: 2000.862 ops/min
+# Warmup Iteration   7: 2012.340 ops/min
+Iteration   1: 2020.597 ops/min
+Iteration   2: 2013.884 ops/min
+Iteration   3: 2013.572 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  2016.018 ±(99.9%) 72.407 ops/min [Average]
+  (min, avg, max) = (2013.572, 2016.018, 2020.597), stdev = 3.969
+  CI (99.9%): [1943.610, 2088.425] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = ACM)
+
+# Run progress: 42.86% complete, ETA 00:26:51
+# Fork: 1 of 1
+# Warmup Iteration   1: 106.228 ops/min
+# Warmup Iteration   2: 112.673 ops/min
+# Warmup Iteration   3: 112.705 ops/min
+# Warmup Iteration   4: 112.537 ops/min
+# Warmup Iteration   5: 112.191 ops/min
+# Warmup Iteration   6: 113.450 ops/min
+# Warmup Iteration   7: 113.649 ops/min
+Iteration   1: 113.235 ops/min
+Iteration   2: 113.633 ops/min
+Iteration   3: 112.120 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  112.996 ±(99.9%) 14.302 ops/min [Average]
+  (min, avg, max) = (112.120, 112.996, 113.633), stdev = 0.784
+  CI (99.9%): [98.694, 127.298] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = EJML)
+
+# Run progress: 46.43% complete, ETA 00:25:12
+# Fork: 1 of 1
+# Warmup Iteration   1: 258.365 ops/min
+# Warmup Iteration   2: 260.948 ops/min
+# Warmup Iteration   3: 261.614 ops/min
+# Warmup Iteration   4: 261.893 ops/min
+# Warmup Iteration   5: 261.840 ops/min
+# Warmup Iteration   6: 261.678 ops/min
+# Warmup Iteration   7: 261.613 ops/min
+Iteration   1: 261.310 ops/min
+Iteration   2: 261.560 ops/min
+Iteration   3: 261.788 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  261.553 ±(99.9%) 4.359 ops/min [Average]
+  (min, avg, max) = (261.310, 261.553, 261.788), stdev = 0.239
+  CI (99.9%): [257.194, 265.911] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+# Run progress: 50.00% complete, ETA 00:23:32
+# Fork: 1 of 1
+# Warmup Iteration   1: 344.414 ops/min
+# Warmup Iteration   2: 351.636 ops/min
+# Warmup Iteration   3: 354.027 ops/min
+# Warmup Iteration   4: 354.779 ops/min
+# Warmup Iteration   5: 354.662 ops/min
+# Warmup Iteration   6: 354.784 ops/min
+# Warmup Iteration   7: 354.557 ops/min
+Iteration   1: 355.059 ops/min
+Iteration   2: 353.891 ops/min
+Iteration   3: 353.969 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  354.307 ±(99.9%) 11.916 ops/min [Average]
+  (min, avg, max) = (353.891, 354.307, 355.059), stdev = 0.653
+  CI (99.9%): [342.390, 366.223] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+# Run progress: 53.57% complete, ETA 00:21:53
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 04, 2019 6:27:37 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 04, 2019 6:27:37 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader6579632986556432631netlib-native_ref-linux-x86_64.so
+Nov 04, 2019 6:27:47 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 04, 2019 6:27:47 AM com.github.fommil.jni.JniLoader load
+INFO: already loaded netlib-native_ref-linux-x86_64.so
+385.536 ops/min
+# Warmup Iteration   2: 402.994 ops/min
+# Warmup Iteration   3: 405.453 ops/min
+# Warmup Iteration   4: 409.728 ops/min
+# Warmup Iteration   5: 411.455 ops/min
+# Warmup Iteration   6: 412.389 ops/min
+# Warmup Iteration   7: 413.823 ops/min
+Iteration   1: 413.666 ops/min
+Iteration   2: 414.133 ops/min
+Iteration   3: 414.724 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  414.174 ±(99.9%) 9.674 ops/min [Average]
+  (min, avg, max) = (413.666, 414.174, 414.724), stdev = 0.530
+  CI (99.9%): [404.501, 423.848] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = ACM)
+
+# Run progress: 57.14% complete, ETA 00:20:13
+# Fork: 1 of 1
+# Warmup Iteration   1: 34.413 ops/min
+# Warmup Iteration   2: 39.286 ops/min
+# Warmup Iteration   3: 39.286 ops/min
+# Warmup Iteration   4: 39.684 ops/min
+# Warmup Iteration   5: 39.522 ops/min
+# Warmup Iteration   6: 39.385 ops/min
+# Warmup Iteration   7: 39.655 ops/min
+Iteration   1: 39.348 ops/min
+Iteration   2: 38.294 ops/min
+Iteration   3: 39.066 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  38.903 ±(99.9%) 9.955 ops/min [Average]
+  (min, avg, max) = (38.294, 38.903, 39.348), stdev = 0.546
+  CI (99.9%): [28.948, 48.858] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = EJML)
+
+# Run progress: 60.71% complete, ETA 00:18:37
+# Fork: 1 of 1
+# Warmup Iteration   1: 89.224 ops/min
+# Warmup Iteration   2: 90.213 ops/min
+# Warmup Iteration   3: 90.198 ops/min
+# Warmup Iteration   4: 90.104 ops/min
+# Warmup Iteration   5: 90.270 ops/min
+# Warmup Iteration   6: 90.353 ops/min
+# Warmup Iteration   7: 90.170 ops/min
+Iteration   1: 90.310 ops/min
+Iteration   2: 89.904 ops/min
+Iteration   3: 90.163 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  90.126 ±(99.9%) 3.754 ops/min [Average]
+  (min, avg, max) = (89.904, 90.126, 90.310), stdev = 0.206
+  CI (99.9%): [86.371, 93.880] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+# Run progress: 64.29% complete, ETA 00:16:59
+# Fork: 1 of 1
+# Warmup Iteration   1: 101.850 ops/min
+# Warmup Iteration   2: 105.439 ops/min
+# Warmup Iteration   3: 105.625 ops/min
+# Warmup Iteration   4: 105.711 ops/min
+# Warmup Iteration   5: 105.796 ops/min
+# Warmup Iteration   6: 105.592 ops/min
+# Warmup Iteration   7: 105.739 ops/min
+Iteration   1: 105.740 ops/min
+Iteration   2: 105.830 ops/min
+Iteration   3: 105.164 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  105.578 ±(99.9%) 6.593 ops/min [Average]
+  (min, avg, max) = (105.164, 105.578, 105.830), stdev = 0.361
+  CI (99.9%): [98.985, 112.171] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+# Run progress: 67.86% complete, ETA 00:15:19
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 04, 2019 6:34:42 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 04, 2019 6:34:42 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader18595748299005132netlib-native_ref-linux-x86_64.so
+Nov 04, 2019 6:34:53 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 04, 2019 6:34:53 AM com.github.fommil.jni.JniLoader load
+INFO: already loaded netlib-native_ref-linux-x86_64.so
+137.132 ops/min
+# Warmup Iteration   2: 142.553 ops/min
+# Warmup Iteration   3: 143.472 ops/min
+# Warmup Iteration   4: 144.519 ops/min
+# Warmup Iteration   5: 144.561 ops/min
+# Warmup Iteration   6: 145.040 ops/min
+# Warmup Iteration   7: 145.219 ops/min
+Iteration   1: 145.291 ops/min
+Iteration   2: 145.314 ops/min
+Iteration   3: 145.528 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  145.378 ±(99.9%) 2.385 ops/min [Average]
+  (min, avg, max) = (145.291, 145.378, 145.528), stdev = 0.131
+  CI (99.9%): [142.992, 147.763] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = ACM)
+
+# Run progress: 71.43% complete, ETA 00:13:38
+# Fork: 1 of 1
+# Warmup Iteration   1: 10.878 ops/min
+# Warmup Iteration   2: 8.830 ops/min
+# Warmup Iteration   3: 10.321 ops/min
+# Warmup Iteration   4: 11.650 ops/min
+# Warmup Iteration   5: 10.713 ops/min
+# Warmup Iteration   6: 11.058 ops/min
+# Warmup Iteration   7: 11.269 ops/min
+Iteration   1: 10.914 ops/min
+Iteration   2: 11.191 ops/min
+Iteration   3: 9.013 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  10.373 ±(99.9%) 21.630 ops/min [Average]
+  (min, avg, max) = (9.013, 10.373, 11.191), stdev = 1.186
+  CI (99.9%): [≈ 0, 32.002] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = EJML)
+
+# Run progress: 75.00% complete, ETA 00:12:03
+# Fork: 1 of 1
+# Warmup Iteration   1: 27.475 ops/min
+# Warmup Iteration   2: 27.567 ops/min
+# Warmup Iteration   3: 27.576 ops/min
+# Warmup Iteration   4: 27.612 ops/min
+# Warmup Iteration   5: 27.638 ops/min
+# Warmup Iteration   6: 27.616 ops/min
+# Warmup Iteration   7: 27.604 ops/min
+Iteration   1: 27.568 ops/min
+Iteration   2: 27.624 ops/min
+Iteration   3: 27.625 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  27.606 ±(99.9%) 0.593 ops/min [Average]
+  (min, avg, max) = (27.568, 27.606, 27.625), stdev = 0.032
+  CI (99.9%): [27.013, 28.199] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+# Run progress: 78.57% complete, ETA 00:10:23
+# Fork: 1 of 1
+# Warmup Iteration   1: 31.694 ops/min
+# Warmup Iteration   2: 32.849 ops/min
+# Warmup Iteration   3: 32.825 ops/min
+# Warmup Iteration   4: 32.835 ops/min
+# Warmup Iteration   5: 32.424 ops/min
+# Warmup Iteration   6: 32.471 ops/min
+# Warmup Iteration   7: 32.409 ops/min
+Iteration   1: 32.380 ops/min
+Iteration   2: 32.357 ops/min
+Iteration   3: 32.376 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  32.371 ±(99.9%) 0.223 ops/min [Average]
+  (min, avg, max) = (32.357, 32.371, 32.380), stdev = 0.012
+  CI (99.9%): [32.148, 32.595] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+# Run progress: 82.14% complete, ETA 00:08:43
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 04, 2019 6:42:30 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 04, 2019 6:42:30 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader2094791960398585554netlib-native_ref-linux-x86_64.so
+Nov 04, 2019 6:42:42 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 04, 2019 6:42:42 AM com.github.fommil.jni.JniLoader load
+INFO: already loaded netlib-native_ref-linux-x86_64.so
+41.625 ops/min
+# Warmup Iteration   2: 43.118 ops/min
+# Warmup Iteration   3: 43.462 ops/min
+# Warmup Iteration   4: 43.732 ops/min
+# Warmup Iteration   5: 44.031 ops/min
+# Warmup Iteration   6: 44.071 ops/min
+# Warmup Iteration   7: 44.295 ops/min
+Iteration   1: 44.463 ops/min
+Iteration   2: 44.486 ops/min
+Iteration   3: 44.544 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  44.498 ±(99.9%) 0.766 ops/min [Average]
+  (min, avg, max) = (44.463, 44.498, 44.544), stdev = 0.042
+  CI (99.9%): [43.732, 45.263] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+# Run progress: 85.71% complete, ETA 00:07:01
+# Fork: 1 of 1
+# Warmup Iteration   1: 3.815 ops/min
+# Warmup Iteration   2: 3.974 ops/min
+# Warmup Iteration   3: 4.337 ops/min
+# Warmup Iteration   4: 4.321 ops/min
+# Warmup Iteration   5: 3.428 ops/min
+# Warmup Iteration   6: 4.579 ops/min
+# Warmup Iteration   7: 4.852 ops/min
+Iteration   1: 4.967 ops/min
+Iteration   2: 3.059 ops/min
+Iteration   3: 4.565 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  4.197 ±(99.9%) 18.352 ops/min [Average]
+  (min, avg, max) = (3.059, 4.197, 4.967), stdev = 1.006
+  CI (99.9%): [≈ 0, 22.549] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+# Run progress: 89.29% complete, ETA 00:05:23
+# Fork: 1 of 1
+# Warmup Iteration   1: 11.748 ops/min
+# Warmup Iteration   2: 11.626 ops/min
+# Warmup Iteration   3: 11.692 ops/min
+# Warmup Iteration   4: 11.671 ops/min
+# Warmup Iteration   5: 11.538 ops/min
+# Warmup Iteration   6: 11.390 ops/min
+# Warmup Iteration   7: 11.521 ops/min
+Iteration   1: 11.687 ops/min
+Iteration   2: 11.620 ops/min
+Iteration   3: 11.673 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  11.660 ±(99.9%) 0.647 ops/min [Average]
+  (min, avg, max) = (11.620, 11.660, 11.687), stdev = 0.035
+  CI (99.9%): [11.013, 12.307] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+# Run progress: 92.86% complete, ETA 00:03:36
+# Fork: 1 of 1
+# Warmup Iteration   1: 12.450 ops/min
+# Warmup Iteration   2: 13.602 ops/min
+# Warmup Iteration   3: 13.610 ops/min
+# Warmup Iteration   4: 13.547 ops/min
+# Warmup Iteration   5: 13.597 ops/min
+# Warmup Iteration   6: 13.631 ops/min
+# Warmup Iteration   7: 13.587 ops/min
+Iteration   1: 13.603 ops/min
+Iteration   2: 13.469 ops/min
+Iteration   3: 13.504 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  13.525 ±(99.9%) 1.269 ops/min [Average]
+  (min, avg, max) = (13.469, 13.525, 13.603), stdev = 0.070
+  CI (99.9%): [12.256, 14.794] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 1.8.0_232, OpenJDK 64-Bit Server VM, 25.232-b09
+# VM invoker: /home/anders/jdk8u232-b09/jre/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 10 s each
+# Measurement: 3 iterations, 10 s each
+# Timeout: 1 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+# Run progress: 96.43% complete, ETA 00:01:50
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 04, 2019 6:51:57 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 04, 2019 6:51:57 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader867519164299073255netlib-native_ref-linux-x86_64.so
+Nov 04, 2019 6:52:11 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 04, 2019 6:52:11 AM com.github.fommil.jni.JniLoader load
+INFO: already loaded netlib-native_ref-linux-x86_64.so
+17.873 ops/min
+# Warmup Iteration   2: 18.602 ops/min
+# Warmup Iteration   3: 18.747 ops/min
+# Warmup Iteration   4: 18.756 ops/min
+# Warmup Iteration   5: 18.888 ops/min
+# Warmup Iteration   6: 18.784 ops/min
+# Warmup Iteration   7: 18.816 ops/min
+Iteration   1: 18.930 ops/min
+Iteration   2: 18.929 ops/min
+Iteration   3: 18.895 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  18.918 ±(99.9%) 0.361 ops/min [Average]
+  (min, avg, max) = (18.895, 18.918, 18.930), stdev = 0.020
+  CI (99.9%): [18.557, 19.279] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:52:06
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark             (dim)   (lib)   Mode  Cnt      Score     Error    Units
+DecomposeSVD.execute    100     ACM  thrpt    3   5379.166 ±  38.348  ops/min
+DecomposeSVD.execute    100    EJML  thrpt    3   9872.370 ±  66.931  ops/min
+DecomposeSVD.execute    100  ojAlgo  thrpt    3  12075.727 ± 156.798  ops/min
+DecomposeSVD.execute    100     MTJ  thrpt    3  12876.858 ± 609.627  ops/min
+DecomposeSVD.execute    150     ACM  thrpt    3   1571.521 ± 118.766  ops/min
+DecomposeSVD.execute    150    EJML  thrpt    3   3166.606 ±  99.688  ops/min
+DecomposeSVD.execute    150  ojAlgo  thrpt    3   4070.650 ± 105.646  ops/min
+DecomposeSVD.execute    150     MTJ  thrpt    3   4511.035 ± 237.677  ops/min
+DecomposeSVD.execute    200     ACM  thrpt    3    618.413 ±  32.453  ops/min
+DecomposeSVD.execute    200    EJML  thrpt    3   1370.188 ±  19.817  ops/min
+DecomposeSVD.execute    200  ojAlgo  thrpt    3   1797.890 ±  35.817  ops/min
+DecomposeSVD.execute    200     MTJ  thrpt    3   2016.018 ±  72.407  ops/min
+DecomposeSVD.execute    350     ACM  thrpt    3    112.996 ±  14.302  ops/min
+DecomposeSVD.execute    350    EJML  thrpt    3    261.553 ±   4.359  ops/min
+DecomposeSVD.execute    350  ojAlgo  thrpt    3    354.307 ±  11.916  ops/min
+DecomposeSVD.execute    350     MTJ  thrpt    3    414.174 ±   9.674  ops/min
+DecomposeSVD.execute    500     ACM  thrpt    3     38.903 ±   9.955  ops/min
+DecomposeSVD.execute    500    EJML  thrpt    3     90.126 ±   3.754  ops/min
+DecomposeSVD.execute    500  ojAlgo  thrpt    3    105.578 ±   6.593  ops/min
+DecomposeSVD.execute    500     MTJ  thrpt    3    145.378 ±   2.385  ops/min
+DecomposeSVD.execute    750     ACM  thrpt    3     10.373 ±  21.630  ops/min
+DecomposeSVD.execute    750    EJML  thrpt    3     27.606 ±   0.593  ops/min
+DecomposeSVD.execute    750  ojAlgo  thrpt    3     32.371 ±   0.223  ops/min
+DecomposeSVD.execute    750     MTJ  thrpt    3     44.498 ±   0.766  ops/min
+DecomposeSVD.execute   1000     ACM  thrpt    3      4.197 ±  18.352  ops/min
+DecomposeSVD.execute   1000    EJML  thrpt    3     11.660 ±   0.647  ops/min
+DecomposeSVD.execute   1000  ojAlgo  thrpt    3     13.525 ±   1.269  ops/min
+DecomposeSVD.execute   1000     MTJ  thrpt    3     18.918 ±   0.361  ops/min
+
+Benchmark result is saved to jmh-result.csv

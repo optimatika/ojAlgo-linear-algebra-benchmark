@@ -143,9 +143,9 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
         return (matrix) -> {
             svd.decompose(matrix);
-            ret[0] = svd.getQ1();
+            ret[0] = svd.getU();
             ret[1] = svd.getD();
-            ret[2] = svd.getQ2().transpose();
+            ret[2] = svd.getV().transpose();
             return ret;
         };
     }

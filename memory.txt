@@ -1,3 +1,6 @@
+nohup "java" -classpath ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying &
+nohup "java" -classpath ojlab.jar org.ojalgo.benchmark.lab.GeneralSolve &
+nohup "java" -classpath ojlab.jar org.ojalgo.benchmark.lab.DecomposeSVD &
 
 
 https://download.oracle.com/otn-pub/java/jdk/12.0.1+12/69cfe15208a647278a19ef0990eea691/jdk-12.0.1_linux-x64_bin.rpm
@@ -96,6 +99,9 @@ https://jdk.java.net/11/
 "10", "100", "1000", "10000"
 "10", "100", "1000"
 "10", "100"
+
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
+
 
 "ACM", "EJML", "ojAlgo", "MTJ" 
 "EJML", "ojAlgo", "MTJ" 
