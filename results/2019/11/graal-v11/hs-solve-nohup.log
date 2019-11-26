@@ -1,0 +1,968 @@
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.openjdk.jmh.util.Utils (file:/home/anders/ojlab.jar) to field java.io.PrintStream.charOut
+WARNING: Please consider reporting this to the maintainers of org.openjdk.jmh.util.Utils
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = ACM)
+
+# Run progress: 0.00% complete, ETA 04:40:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 100687.469 ops/min
+# Warmup Iteration   2: 101299.150 ops/min
+# Warmup Iteration   3: 101306.626 ops/min
+# Warmup Iteration   4: 101126.261 ops/min
+# Warmup Iteration   5: 101096.880 ops/min
+# Warmup Iteration   6: 101224.803 ops/min
+# Warmup Iteration   7: 101243.333 ops/min
+Iteration   1: 101280.985 ops/min
+Iteration   2: 101246.393 ops/min
+Iteration   3: 101131.452 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  101219.610 ±(99.9%) 1428.151 ops/min [Average]
+  (min, avg, max) = (101131.452, 101219.610, 101280.985), stdev = 78.282
+  CI (99.9%): [99791.459, 102647.761] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = EJML)
+
+# Run progress: 3.57% complete, ETA 04:30:15
+# Fork: 1 of 1
+# Warmup Iteration   1: 123681.718 ops/min
+# Warmup Iteration   2: 123895.998 ops/min
+# Warmup Iteration   3: 124048.355 ops/min
+# Warmup Iteration   4: 124079.104 ops/min
+# Warmup Iteration   5: 124015.975 ops/min
+# Warmup Iteration   6: 123891.218 ops/min
+# Warmup Iteration   7: 124080.886 ops/min
+Iteration   1: 123975.816 ops/min
+Iteration   2: 124047.466 ops/min
+Iteration   3: 123947.265 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  123990.182 ±(99.9%) 941.786 ops/min [Average]
+  (min, avg, max) = (123947.265, 123990.182, 124047.466), stdev = 51.622
+  CI (99.9%): [123048.397, 124931.968] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+# Run progress: 7.14% complete, ETA 04:20:15
+# Fork: 1 of 1
+# Warmup Iteration   1: 159931.209 ops/min
+# Warmup Iteration   2: 158138.380 ops/min
+# Warmup Iteration   3: 160041.661 ops/min
+# Warmup Iteration   4: 159678.293 ops/min
+# Warmup Iteration   5: 160983.394 ops/min
+# Warmup Iteration   6: 159990.347 ops/min
+# Warmup Iteration   7: 160685.608 ops/min
+Iteration   1: 162004.624 ops/min
+Iteration   2: 160230.100 ops/min
+Iteration   3: 160480.657 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  160905.127 ±(99.9%) 17521.243 ops/min [Average]
+  (min, avg, max) = (160230.100, 160905.127, 162004.624), stdev = 960.398
+  CI (99.9%): [143383.884, 178426.370] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+# Run progress: 10.71% complete, ETA 04:10:15
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 23, 2019 7:55:48 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 23, 2019 7:55:48 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader12110646614263905252netlib-native_ref-linux-x86_64.so
+204276.774 ops/min
+# Warmup Iteration   2: 206472.852 ops/min
+# Warmup Iteration   3: 206593.117 ops/min
+# Warmup Iteration   4: 206569.333 ops/min
+# Warmup Iteration   5: 206466.375 ops/min
+# Warmup Iteration   6: 206287.511 ops/min
+# Warmup Iteration   7: 206476.766 ops/min
+Iteration   1: 206565.541 ops/min
+Iteration   2: 206422.136 ops/min
+Iteration   3: 206486.629 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  206491.435 ±(99.9%) 1310.322 ops/min [Average]
+  (min, avg, max) = (206422.136, 206491.435, 206565.541), stdev = 71.823
+  CI (99.9%): [205181.114, 207801.757] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = ACM)
+
+# Run progress: 14.29% complete, ETA 04:00:13
+# Fork: 1 of 1
+# Warmup Iteration   1: 30984.103 ops/min
+# Warmup Iteration   2: 31141.549 ops/min
+# Warmup Iteration   3: 31141.041 ops/min
+# Warmup Iteration   4: 31176.351 ops/min
+# Warmup Iteration   5: 31171.545 ops/min
+# Warmup Iteration   6: 31175.959 ops/min
+# Warmup Iteration   7: 31162.395 ops/min
+Iteration   1: 31182.392 ops/min
+Iteration   2: 31167.701 ops/min
+Iteration   3: 31163.234 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  31171.109 ±(99.9%) 182.858 ops/min [Average]
+  (min, avg, max) = (31163.234, 31171.109, 31182.392), stdev = 10.023
+  CI (99.9%): [30988.251, 31353.967] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = EJML)
+
+# Run progress: 17.86% complete, ETA 03:50:13
+# Fork: 1 of 1
+# Warmup Iteration   1: 37404.877 ops/min
+# Warmup Iteration   2: 37395.445 ops/min
+# Warmup Iteration   3: 37448.694 ops/min
+# Warmup Iteration   4: 37324.361 ops/min
+# Warmup Iteration   5: 37421.149 ops/min
+# Warmup Iteration   6: 37360.782 ops/min
+# Warmup Iteration   7: 37427.771 ops/min
+Iteration   1: 37469.794 ops/min
+Iteration   2: 37441.344 ops/min
+Iteration   3: 37437.753 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  37449.630 ±(99.9%) 320.257 ops/min [Average]
+  (min, avg, max) = (37437.753, 37449.630, 37469.794), stdev = 17.554
+  CI (99.9%): [37129.373, 37769.888] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+# Run progress: 21.43% complete, ETA 03:40:12
+# Fork: 1 of 1
+# Warmup Iteration   1: 82317.256 ops/min
+# Warmup Iteration   2: 70189.081 ops/min
+# Warmup Iteration   3: 72169.309 ops/min
+# Warmup Iteration   4: 74519.498 ops/min
+# Warmup Iteration   5: 76664.193 ops/min
+# Warmup Iteration   6: 72238.996 ops/min
+# Warmup Iteration   7: 83514.841 ops/min
+Iteration   1: 79876.894 ops/min
+Iteration   2: 77248.251 ops/min
+Iteration   3: 77579.420 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  78234.855 ±(99.9%) 26118.723 ops/min [Average]
+  (min, avg, max) = (77248.251, 78234.855, 79876.894), stdev = 1431.655
+  CI (99.9%): [52116.132, 104353.577] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+# Run progress: 25.00% complete, ETA 03:30:12
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 23, 2019 8:35:50 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 23, 2019 8:35:50 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader13991600566428674179netlib-native_ref-linux-x86_64.so
+67024.302 ops/min
+# Warmup Iteration   2: 67311.058 ops/min
+# Warmup Iteration   3: 67428.915 ops/min
+# Warmup Iteration   4: 67388.599 ops/min
+# Warmup Iteration   5: 67378.374 ops/min
+# Warmup Iteration   6: 67373.966 ops/min
+# Warmup Iteration   7: 67303.334 ops/min
+Iteration   1: 67282.720 ops/min
+Iteration   2: 67392.379 ops/min
+Iteration   3: 67386.007 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  67353.702 ±(99.9%) 1122.993 ops/min [Average]
+  (min, avg, max) = (67282.720, 67353.702, 67392.379), stdev = 61.555
+  CI (99.9%): [66230.709, 68476.695] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = ACM)
+
+# Run progress: 28.57% complete, ETA 03:20:11
+# Fork: 1 of 1
+# Warmup Iteration   1: 13134.203 ops/min
+# Warmup Iteration   2: 13205.879 ops/min
+# Warmup Iteration   3: 13192.030 ops/min
+# Warmup Iteration   4: 13193.921 ops/min
+# Warmup Iteration   5: 13190.014 ops/min
+# Warmup Iteration   6: 13193.039 ops/min
+# Warmup Iteration   7: 13195.701 ops/min
+Iteration   1: 13187.028 ops/min
+Iteration   2: 13199.625 ops/min
+Iteration   3: 13197.930 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  13194.861 ±(99.9%) 124.715 ops/min [Average]
+  (min, avg, max) = (13187.028, 13194.861, 13199.625), stdev = 6.836
+  CI (99.9%): [13070.146, 13319.576] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = EJML)
+
+# Run progress: 32.14% complete, ETA 03:10:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 16154.017 ops/min
+# Warmup Iteration   2: 16170.436 ops/min
+# Warmup Iteration   3: 16171.210 ops/min
+# Warmup Iteration   4: 16179.322 ops/min
+# Warmup Iteration   5: 16191.037 ops/min
+# Warmup Iteration   6: 16185.888 ops/min
+# Warmup Iteration   7: 16155.784 ops/min
+Iteration   1: 16143.173 ops/min
+Iteration   2: 16156.032 ops/min
+Iteration   3: 16156.314 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  16151.839 ±(99.9%) 136.955 ops/min [Average]
+  (min, avg, max) = (16143.173, 16151.839, 16156.314), stdev = 7.507
+  CI (99.9%): [16014.884, 16288.795] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+# Run progress: 35.71% complete, ETA 03:00:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 36185.566 ops/min
+# Warmup Iteration   2: 35883.715 ops/min
+# Warmup Iteration   3: 35350.382 ops/min
+# Warmup Iteration   4: 34970.557 ops/min
+# Warmup Iteration   5: 34395.402 ops/min
+# Warmup Iteration   6: 34587.003 ops/min
+# Warmup Iteration   7: 36428.409 ops/min
+Iteration   1: 35858.071 ops/min
+Iteration   2: 34674.145 ops/min
+Iteration   3: 34639.697 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  35057.304 ±(99.9%) 12655.640 ops/min [Average]
+  (min, avg, max) = (34639.697, 35057.304, 35858.071), stdev = 693.698
+  CI (99.9%): [22401.664, 47712.944] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+# Run progress: 39.29% complete, ETA 02:50:09
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 23, 2019 9:15:52 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 23, 2019 9:15:52 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader5302424752516662017netlib-native_ref-linux-x86_64.so
+31414.900 ops/min
+# Warmup Iteration   2: 31588.790 ops/min
+# Warmup Iteration   3: 31594.248 ops/min
+# Warmup Iteration   4: 31508.467 ops/min
+# Warmup Iteration   5: 31654.702 ops/min
+# Warmup Iteration   6: 31626.626 ops/min
+# Warmup Iteration   7: 31559.888 ops/min
+Iteration   1: 31588.517 ops/min
+Iteration   2: 31606.060 ops/min
+Iteration   3: 31647.117 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  31613.898 ±(99.9%) 548.697 ops/min [Average]
+  (min, avg, max) = (31588.517, 31613.898, 31647.117), stdev = 30.076
+  CI (99.9%): [31065.201, 32162.595] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = ACM)
+
+# Run progress: 42.86% complete, ETA 02:40:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 2303.533 ops/min
+# Warmup Iteration   2: 2320.351 ops/min
+# Warmup Iteration   3: 2316.243 ops/min
+# Warmup Iteration   4: 2314.190 ops/min
+# Warmup Iteration   5: 2319.587 ops/min
+# Warmup Iteration   6: 2323.202 ops/min
+# Warmup Iteration   7: 2320.397 ops/min
+Iteration   1: 2320.718 ops/min
+Iteration   2: 2311.611 ops/min
+Iteration   3: 2317.668 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  2316.666 ±(99.9%) 84.563 ops/min [Average]
+  (min, avg, max) = (2311.611, 2316.666, 2320.718), stdev = 4.635
+  CI (99.9%): [2232.103, 2401.229] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = EJML)
+
+# Run progress: 46.43% complete, ETA 02:30:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 2954.074 ops/min
+# Warmup Iteration   2: 2964.442 ops/min
+# Warmup Iteration   3: 2958.788 ops/min
+# Warmup Iteration   4: 2963.857 ops/min
+# Warmup Iteration   5: 2956.646 ops/min
+# Warmup Iteration   6: 2960.832 ops/min
+# Warmup Iteration   7: 2961.285 ops/min
+Iteration   1: 2960.258 ops/min
+Iteration   2: 2959.000 ops/min
+Iteration   3: 2954.998 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  2958.085 ±(99.9%) 50.111 ops/min [Average]
+  (min, avg, max) = (2954.998, 2958.085, 2960.258), stdev = 2.747
+  CI (99.9%): [2907.974, 3008.197] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+# Run progress: 50.00% complete, ETA 02:20:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 9579.488 ops/min
+# Warmup Iteration   2: 9057.043 ops/min
+# Warmup Iteration   3: 9015.644 ops/min
+# Warmup Iteration   4: 9050.283 ops/min
+# Warmup Iteration   5: 9009.629 ops/min
+# Warmup Iteration   6: 9038.844 ops/min
+# Warmup Iteration   7: 9076.721 ops/min
+Iteration   1: 9053.783 ops/min
+Iteration   2: 9065.674 ops/min
+Iteration   3: 9034.711 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  9051.389 ±(99.9%) 284.960 ops/min [Average]
+  (min, avg, max) = (9034.711, 9051.389, 9065.674), stdev = 15.620
+  CI (99.9%): [8766.429, 9336.349] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+# Run progress: 53.57% complete, ETA 02:10:07
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 23, 2019 9:55:55 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 23, 2019 9:55:55 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader3126631087833197713netlib-native_ref-linux-x86_64.so
+6547.189 ops/min
+# Warmup Iteration   2: 6639.408 ops/min
+# Warmup Iteration   3: 6635.306 ops/min
+# Warmup Iteration   4: 6628.454 ops/min
+# Warmup Iteration   5: 6618.181 ops/min
+# Warmup Iteration   6: 6626.438 ops/min
+# Warmup Iteration   7: 6518.855 ops/min
+Iteration   1: 6615.132 ops/min
+Iteration   2: 6635.554 ops/min
+Iteration   3: 6621.376 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  6624.021 ±(99.9%) 190.917 ops/min [Average]
+  (min, avg, max) = (6615.132, 6624.021, 6635.554), stdev = 10.465
+  CI (99.9%): [6433.103, 6814.938] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = ACM)
+
+# Run progress: 57.14% complete, ETA 02:00:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 782.068 ops/min
+# Warmup Iteration   2: 789.214 ops/min
+# Warmup Iteration   3: 790.699 ops/min
+# Warmup Iteration   4: 790.410 ops/min
+# Warmup Iteration   5: 790.482 ops/min
+# Warmup Iteration   6: 790.967 ops/min
+# Warmup Iteration   7: 791.787 ops/min
+Iteration   1: 791.941 ops/min
+Iteration   2: 790.635 ops/min
+Iteration   3: 789.100 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  790.559 ±(99.9%) 25.947 ops/min [Average]
+  (min, avg, max) = (789.100, 790.559, 791.941), stdev = 1.422
+  CI (99.9%): [764.612, 816.506] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = EJML)
+
+# Run progress: 60.71% complete, ETA 01:50:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 973.705 ops/min
+# Warmup Iteration   2: 977.534 ops/min
+# Warmup Iteration   3: 976.948 ops/min
+# Warmup Iteration   4: 976.378 ops/min
+# Warmup Iteration   5: 975.849 ops/min
+# Warmup Iteration   6: 976.154 ops/min
+# Warmup Iteration   7: 976.843 ops/min
+Iteration   1: 976.180 ops/min
+Iteration   2: 976.948 ops/min
+Iteration   3: 976.849 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  976.659 ±(99.9%) 7.625 ops/min [Average]
+  (min, avg, max) = (976.180, 976.659, 976.948), stdev = 0.418
+  CI (99.9%): [969.034, 984.284] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+# Run progress: 64.29% complete, ETA 01:40:05
+# Fork: 1 of 1
+# Warmup Iteration   1: 2878.721 ops/min
+# Warmup Iteration   2: 2901.045 ops/min
+# Warmup Iteration   3: 2892.101 ops/min
+# Warmup Iteration   4: 2884.472 ops/min
+# Warmup Iteration   5: 2886.822 ops/min
+# Warmup Iteration   6: 2889.031 ops/min
+# Warmup Iteration   7: 2896.678 ops/min
+Iteration   1: 2890.623 ops/min
+Iteration   2: 2896.159 ops/min
+Iteration   3: 2888.469 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  2891.750 ±(99.9%) 72.377 ops/min [Average]
+  (min, avg, max) = (2888.469, 2891.750, 2896.159), stdev = 3.967
+  CI (99.9%): [2819.373, 2964.127] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+# Run progress: 67.86% complete, ETA 01:30:05
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 23, 2019 10:35:57 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 23, 2019 10:35:58 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader200961162725376924netlib-native_ref-linux-x86_64.so
+2408.723 ops/min
+# Warmup Iteration   2: 2416.434 ops/min
+# Warmup Iteration   3: 2429.413 ops/min
+# Warmup Iteration   4: 2430.697 ops/min
+# Warmup Iteration   5: 2422.292 ops/min
+# Warmup Iteration   6: 2423.452 ops/min
+# Warmup Iteration   7: 2413.052 ops/min
+Iteration   1: 2431.651 ops/min
+Iteration   2: 2423.015 ops/min
+Iteration   3: 2419.640 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  2424.769 ±(99.9%) 113.008 ops/min [Average]
+  (min, avg, max) = (2419.640, 2424.769, 2431.651), stdev = 6.194
+  CI (99.9%): [2311.760, 2537.777] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = ACM)
+
+# Run progress: 71.43% complete, ETA 01:20:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 230.032 ops/min
+# Warmup Iteration   2: 230.823 ops/min
+# Warmup Iteration   3: 231.192 ops/min
+# Warmup Iteration   4: 230.984 ops/min
+# Warmup Iteration   5: 231.353 ops/min
+# Warmup Iteration   6: 231.161 ops/min
+# Warmup Iteration   7: 231.198 ops/min
+Iteration   1: 230.838 ops/min
+Iteration   2: 231.227 ops/min
+Iteration   3: 231.064 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  231.043 ±(99.9%) 3.557 ops/min [Average]
+  (min, avg, max) = (230.838, 231.043, 231.227), stdev = 0.195
+  CI (99.9%): [227.487, 234.600] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = EJML)
+
+# Run progress: 75.00% complete, ETA 01:10:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 280.611 ops/min
+# Warmup Iteration   2: 280.291 ops/min
+# Warmup Iteration   3: 280.659 ops/min
+# Warmup Iteration   4: 280.903 ops/min
+# Warmup Iteration   5: 280.961 ops/min
+# Warmup Iteration   6: 280.461 ops/min
+# Warmup Iteration   7: 280.633 ops/min
+Iteration   1: 280.885 ops/min
+Iteration   2: 281.054 ops/min
+Iteration   3: 280.910 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  280.950 ±(99.9%) 1.669 ops/min [Average]
+  (min, avg, max) = (280.885, 280.950, 281.054), stdev = 0.091
+  CI (99.9%): [279.281, 282.618] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+# Run progress: 78.57% complete, ETA 01:00:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 502.172 ops/min
+# Warmup Iteration   2: 511.103 ops/min
+# Warmup Iteration   3: 493.696 ops/min
+# Warmup Iteration   4: 499.116 ops/min
+# Warmup Iteration   5: 502.446 ops/min
+# Warmup Iteration   6: 507.901 ops/min
+# Warmup Iteration   7: 495.263 ops/min
+Iteration   1: 480.256 ops/min
+Iteration   2: 494.837 ops/min
+Iteration   3: 491.174 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  488.756 ±(99.9%) 138.385 ops/min [Average]
+  (min, avg, max) = (480.256, 488.756, 494.837), stdev = 7.585
+  CI (99.9%): [350.371, 627.141] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+# Run progress: 82.14% complete, ETA 00:50:03
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 23, 2019 11:16:03 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 23, 2019 11:16:03 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader12772127916663255671netlib-native_ref-linux-x86_64.so
+723.518 ops/min
+# Warmup Iteration   2: 728.042 ops/min
+# Warmup Iteration   3: 725.433 ops/min
+# Warmup Iteration   4: 727.259 ops/min
+# Warmup Iteration   5: 725.807 ops/min
+# Warmup Iteration   6: 727.903 ops/min
+# Warmup Iteration   7: 727.752 ops/min
+Iteration   1: 726.594 ops/min
+Iteration   2: 733.097 ops/min
+Iteration   3: 736.323 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  732.005 ±(99.9%) 90.411 ops/min [Average]
+  (min, avg, max) = (726.594, 732.005, 736.323), stdev = 4.956
+  CI (99.9%): [641.593, 822.416] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+# Run progress: 85.71% complete, ETA 00:40:02
+# Fork: 1 of 1
+# Warmup Iteration   1: 90.052 ops/min
+# Warmup Iteration   2: 90.611 ops/min
+# Warmup Iteration   3: 90.351 ops/min
+# Warmup Iteration   4: 90.553 ops/min
+# Warmup Iteration   5: 90.273 ops/min
+# Warmup Iteration   6: 90.540 ops/min
+# Warmup Iteration   7: 90.536 ops/min
+Iteration   1: 90.545 ops/min
+Iteration   2: 90.629 ops/min
+Iteration   3: 90.581 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  90.585 ±(99.9%) 0.768 ops/min [Average]
+  (min, avg, max) = (90.545, 90.585, 90.629), stdev = 0.042
+  CI (99.9%): [89.817, 91.354] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+# Run progress: 89.29% complete, ETA 00:30:02
+# Fork: 1 of 1
+# Warmup Iteration   1: 118.029 ops/min
+# Warmup Iteration   2: 118.268 ops/min
+# Warmup Iteration   3: 118.247 ops/min
+# Warmup Iteration   4: 118.141 ops/min
+# Warmup Iteration   5: 118.096 ops/min
+# Warmup Iteration   6: 118.236 ops/min
+# Warmup Iteration   7: 118.297 ops/min
+Iteration   1: 118.303 ops/min
+Iteration   2: 118.219 ops/min
+Iteration   3: 116.358 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  117.626 ±(99.9%) 20.060 ops/min [Average]
+  (min, avg, max) = (116.358, 117.626, 118.303), stdev = 1.100
+  CI (99.9%): [97.566, 137.687] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+# Run progress: 92.86% complete, ETA 00:20:02
+# Fork: 1 of 1
+# Warmup Iteration   1: 239.760 ops/min
+# Warmup Iteration   2: 245.135 ops/min
+# Warmup Iteration   3: 245.274 ops/min
+# Warmup Iteration   4: 238.641 ops/min
+# Warmup Iteration   5: 244.837 ops/min
+# Warmup Iteration   6: 246.407 ops/min
+# Warmup Iteration   7: 246.454 ops/min
+Iteration   1: 246.360 ops/min
+Iteration   2: 239.702 ops/min
+Iteration   3: 241.719 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  242.594 ±(99.9%) 62.280 ops/min [Average]
+  (min, avg, max) = (239.702, 242.594, 246.360), stdev = 3.414
+  CI (99.9%): [180.314, 304.873] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-LTS
+# VM invoker: /usr/java/jdk-11.0.5/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+# Run progress: 96.43% complete, ETA 00:10:01
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 23, 2019 11:56:14 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 23, 2019 11:56:14 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader4751314685299485460netlib-native_ref-linux-x86_64.so
+310.564 ops/min
+# Warmup Iteration   2: 313.037 ops/min
+# Warmup Iteration   3: 312.595 ops/min
+# Warmup Iteration   4: 312.630 ops/min
+# Warmup Iteration   5: 312.474 ops/min
+# Warmup Iteration   6: 316.207 ops/min
+# Warmup Iteration   7: 315.525 ops/min
+Iteration   1: 316.229 ops/min
+Iteration   2: 315.673 ops/min
+Iteration   3: 316.689 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  316.197 ±(99.9%) 9.284 ops/min [Average]
+  (min, avg, max) = (315.673, 316.197, 316.689), stdev = 0.509
+  CI (99.9%): [306.913, 325.481] (assumes normal distribution)
+
+
+# Run complete. Total time: 04:40:29
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark             (dim)   (lib)   Mode  Cnt       Score       Error    Units
+GeneralSolve.execute    100     ACM  thrpt    3  101219.610 ±  1428.151  ops/min
+GeneralSolve.execute    100    EJML  thrpt    3  123990.182 ±   941.786  ops/min
+GeneralSolve.execute    100  ojAlgo  thrpt    3  160905.127 ± 17521.243  ops/min
+GeneralSolve.execute    100     MTJ  thrpt    3  206491.435 ±  1310.322  ops/min
+GeneralSolve.execute    150     ACM  thrpt    3   31171.109 ±   182.858  ops/min
+GeneralSolve.execute    150    EJML  thrpt    3   37449.630 ±   320.257  ops/min
+GeneralSolve.execute    150  ojAlgo  thrpt    3   78234.855 ± 26118.723  ops/min
+GeneralSolve.execute    150     MTJ  thrpt    3   67353.702 ±  1122.993  ops/min
+GeneralSolve.execute    200     ACM  thrpt    3   13194.861 ±   124.715  ops/min
+GeneralSolve.execute    200    EJML  thrpt    3   16151.839 ±   136.955  ops/min
+GeneralSolve.execute    200  ojAlgo  thrpt    3   35057.304 ± 12655.640  ops/min
+GeneralSolve.execute    200     MTJ  thrpt    3   31613.898 ±   548.697  ops/min
+GeneralSolve.execute    350     ACM  thrpt    3    2316.666 ±    84.563  ops/min
+GeneralSolve.execute    350    EJML  thrpt    3    2958.085 ±    50.111  ops/min
+GeneralSolve.execute    350  ojAlgo  thrpt    3    9051.389 ±   284.960  ops/min
+GeneralSolve.execute    350     MTJ  thrpt    3    6624.021 ±   190.917  ops/min
+GeneralSolve.execute    500     ACM  thrpt    3     790.559 ±    25.947  ops/min
+GeneralSolve.execute    500    EJML  thrpt    3     976.659 ±     7.625  ops/min
+GeneralSolve.execute    500  ojAlgo  thrpt    3    2891.750 ±    72.377  ops/min
+GeneralSolve.execute    500     MTJ  thrpt    3    2424.769 ±   113.008  ops/min
+GeneralSolve.execute    750     ACM  thrpt    3     231.043 ±     3.557  ops/min
+GeneralSolve.execute    750    EJML  thrpt    3     280.950 ±     1.669  ops/min
+GeneralSolve.execute    750  ojAlgo  thrpt    3     488.756 ±   138.385  ops/min
+GeneralSolve.execute    750     MTJ  thrpt    3     732.005 ±    90.411  ops/min
+GeneralSolve.execute   1000     ACM  thrpt    3      90.585 ±     0.768  ops/min
+GeneralSolve.execute   1000    EJML  thrpt    3     117.626 ±    20.060  ops/min
+GeneralSolve.execute   1000  ojAlgo  thrpt    3     242.594 ±    62.280  ops/min
+GeneralSolve.execute   1000     MTJ  thrpt    3     316.197 ±     9.284  ops/min
+
+Benchmark result is saved to jmh-result.csv
