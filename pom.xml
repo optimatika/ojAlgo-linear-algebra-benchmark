@@ -29,12 +29,12 @@
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <version>${jmh.version}</version>
+            <version>1.26</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
-            <version>${jmh.version}</version>
+            <version>1.26</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -46,7 +46,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jmh.version>1.26</jmh.version>
         <javac.target>1.8</javac.target>
         <uberjar.name>ojlab</uberjar.name>
     </properties>
@@ -147,4 +146,8 @@
     <organization>
         <url>http://ojalgo.org/</url>
     </organization>
+    <issueManagement>
+        <url>https://github.com/optimatika/ojAlgo-linear-algebra-benchmark/issues</url>
+        <system>GitHub</system>
+    </issueManagement>
 </project>
