@@ -29,7 +29,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperatio
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
-import org.ojalgo.function.PrimitiveFunction;
+import org.ojalgo.function.constant.PrimitiveMath;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
@@ -65,13 +65,13 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationAdd() {
-        return (a, b, c) -> c.fillMatching(a, PrimitiveFunction.ADD, b);
+        return (a, b, c) -> c.fillMatching(a, PrimitiveMath.ADD, b);
     }
 
     @Override
     public PropertyOperation<MatrixStore<Double>, Primitive64Store> getOperationDeterminant(final int dim) {
         final DeterminantTask<Double> task = DeterminantTask.PRIMITIVE.make(dim, false);
-        return (matA) -> task.calculateDeterminant(matA);
+        return matA -> task.calculateDeterminant(matA);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
         final Eigenvalue<Double> evd = Eigenvalue.PRIMITIVE.make(dim, true);
 
-        return (matrix) -> {
+        return matrix -> {
             evd.decompose(matrix);
             ret[0] = evd.getV();
             ret[1] = evd.getD();
@@ -115,7 +115,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationMultiplyToProduce() {
-        return (left, right) -> left.multiply(right);
+        return MatrixStore::multiply;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
         final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
         final PhysicalStore<Double> preallocated = svd.preallocate(dim, dim);
 
-        return (matrix) -> {
+        return matrix -> {
             svd.decompose(matrix);
             return svd.getInverse(preallocated);
         };
@@ -132,7 +132,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public MutatingBinaryMatrixScalarOperation<MatrixStore<Double>, Primitive64Store> getOperationScale() {
-        return (a, s, b) -> b.fillMatching(PrimitiveFunction.MULTIPLY.first(s), a);
+        return (a, s, b) -> b.fillMatching(PrimitiveMath.MULTIPLY.first(s), a);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
         final MatrixStore<Double>[] ret = this.makeArray(3);
         final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
 
-        return (matrix) -> {
+        return matrix -> {
             svd.decompose(matrix);
             ret[0] = svd.getU();
             ret[1] = svd.getD();
