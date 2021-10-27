@@ -10,6 +10,15 @@
         <maven>3.0</maven>
     </prerequisites>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javac.target>1.8</javac.target>
+        <uberjar.name>ojlab</uberjar.name>
+        <version.org.junit.jupiter>5.8.1</version.org.junit.jupiter>
+        <version.org.openjdk.jmh>1.33</version.org.openjdk.jmh>
+        <version.org.ojalgo>49.2.1</version.org.ojalgo>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.github.andreas-solti.matrix-toolkits-java</groupId>
@@ -29,26 +38,26 @@
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <version>1.33</version>
+            <version>${version.org.openjdk.jmh}</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
-            <version>1.33</version>
+            <version>${version.org.openjdk.jmh}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.ojalgo</groupId>
             <artifactId>ojalgo</artifactId>
-            <version>49.2.0</version>
+            <version>${version.org.ojalgo}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo</artifactId>
+            <version>${version.org.ojalgo}</version>
+            <type>test-jar</type>
         </dependency>
     </dependencies>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javac.target>1.8</javac.target>
-        <uberjar.name>ojlab</uberjar.name>
-    </properties>
 
     <build>
         <plugins>
