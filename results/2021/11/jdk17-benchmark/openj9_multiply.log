@@ -1,0 +1,1047 @@
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 0.00% complete, ETA 00:46:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 36662.254 ops/min
+# Warmup Iteration   2: 42534.016 ops/min
+# Warmup Iteration   3: 42976.631 ops/min
+# Warmup Iteration   4: 43034.123 ops/min
+# Warmup Iteration   5: 43022.793 ops/min
+Iteration   1: 42997.913 ops/min
+Iteration   2: 43008.064 ops/min
+Iteration   3: 43011.823 ops/min
+Iteration   4: 42896.159 ops/min
+Iteration   5: 42996.490 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  42982.090 ±(99.9%) 186.673 ops/min [Average]
+  (min, avg, max) = (42896.159, 42982.090, 43011.823), stdev = 48.478
+  CI (99.9%): [42795.417, 43168.763] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 3.57% complete, ETA 00:45:18
+# Fork: 1 of 1
+# Warmup Iteration   1: 64017.507 ops/min
+# Warmup Iteration   2: 65957.957 ops/min
+# Warmup Iteration   3: 66055.317 ops/min
+# Warmup Iteration   4: 66033.571 ops/min
+# Warmup Iteration   5: 66027.190 ops/min
+Iteration   1: 66042.672 ops/min
+Iteration   2: 66021.660 ops/min
+Iteration   3: 66032.810 ops/min
+Iteration   4: 66022.417 ops/min
+Iteration   5: 66016.546 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  66027.221 ±(99.9%) 40.290 ops/min [Average]
+  (min, avg, max) = (66016.546, 66027.221, 66042.672), stdev = 10.463
+  CI (99.9%): [65986.931, 66067.511] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 7.14% complete, ETA 00:43:34
+# Fork: 1 of 1
+# Warmup Iteration   1: 173717.433 ops/min
+# Warmup Iteration   2: 188179.439 ops/min
+# Warmup Iteration   3: 209815.762 ops/min
+# Warmup Iteration   4: 211588.774 ops/min
+# Warmup Iteration   5: 208679.318 ops/min
+Iteration   1: 209535.329 ops/min
+Iteration   2: 209907.402 ops/min
+Iteration   3: 209316.828 ops/min
+Iteration   4: 209696.341 ops/min
+Iteration   5: 209876.604 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  209666.501 ±(99.9%) 948.197 ops/min [Average]
+  (min, avg, max) = (209316.828, 209666.501, 209907.402), stdev = 246.244
+  CI (99.9%): [208718.304, 210614.698] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 10.71% complete, ETA 00:41:52
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 10, 2021 6:13:35 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 10, 2021 6:13:35 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+72327.136 ops/min
+# Warmup Iteration   2: 85426.324 ops/min
+# Warmup Iteration   3: 85453.090 ops/min
+# Warmup Iteration   4: 85442.145 ops/min
+# Warmup Iteration   5: 85416.558 ops/min
+Iteration   1: 85389.244 ops/min
+Iteration   2: 85422.902 ops/min
+Iteration   3: 85361.984 ops/min
+Iteration   4: 85456.015 ops/min
+Iteration   5: 85473.806 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  85420.790 ±(99.9%) 177.601 ops/min [Average]
+  (min, avg, max) = (85361.984, 85420.790, 85473.806), stdev = 46.123
+  CI (99.9%): [85243.189, 85598.392] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 14.29% complete, ETA 00:40:11
+# Fork: 1 of 1
+# Warmup Iteration   1: 5532.527 ops/min
+# Warmup Iteration   2: 6235.608 ops/min
+# Warmup Iteration   3: 6253.830 ops/min
+# Warmup Iteration   4: 6254.429 ops/min
+# Warmup Iteration   5: 6258.345 ops/min
+Iteration   1: 6257.573 ops/min
+Iteration   2: 6290.073 ops/min
+Iteration   3: 6291.550 ops/min
+Iteration   4: 6288.120 ops/min
+Iteration   5: 6291.493 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  6283.762 ±(99.9%) 56.629 ops/min [Average]
+  (min, avg, max) = (6257.573, 6283.762, 6291.550), stdev = 14.706
+  CI (99.9%): [6227.133, 6340.391] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 17.86% complete, ETA 00:38:30
+# Fork: 1 of 1
+# Warmup Iteration   1: 17195.284 ops/min
+# Warmup Iteration   2: 17562.288 ops/min
+# Warmup Iteration   3: 17583.258 ops/min
+# Warmup Iteration   4: 17596.742 ops/min
+# Warmup Iteration   5: 17597.207 ops/min
+Iteration   1: 17594.388 ops/min
+Iteration   2: 17598.426 ops/min
+Iteration   3: 17596.215 ops/min
+Iteration   4: 17598.673 ops/min
+Iteration   5: 17612.244 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  17599.989 ±(99.9%) 27.227 ops/min [Average]
+  (min, avg, max) = (17594.388, 17599.989, 17612.244), stdev = 7.071
+  CI (99.9%): [17572.762, 17627.216] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 21.43% complete, ETA 00:36:49
+# Fork: 1 of 1
+# Warmup Iteration   1: 59705.009 ops/min
+# Warmup Iteration   2: 67737.660 ops/min
+# Warmup Iteration   3: 75972.466 ops/min
+# Warmup Iteration   4: 75987.450 ops/min
+# Warmup Iteration   5: 76273.269 ops/min
+Iteration   1: 76138.255 ops/min
+Iteration   2: 76081.626 ops/min
+Iteration   3: 76075.350 ops/min
+Iteration   4: 76023.854 ops/min
+Iteration   5: 75866.296 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  76037.076 ±(99.9%) 399.372 ops/min [Average]
+  (min, avg, max) = (75866.296, 76037.076, 76138.255), stdev = 103.716
+  CI (99.9%): [75637.704, 76436.448] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 25.00% complete, ETA 00:35:09
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 10, 2021 6:20:16 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 10, 2021 6:20:16 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+21121.715 ops/min
+# Warmup Iteration   2: 25384.452 ops/min
+# Warmup Iteration   3: 25392.072 ops/min
+# Warmup Iteration   4: 25412.368 ops/min
+# Warmup Iteration   5: 25406.323 ops/min
+Iteration   1: 25413.371 ops/min
+Iteration   2: 25427.766 ops/min
+Iteration   3: 25428.846 ops/min
+Iteration   4: 25420.804 ops/min
+Iteration   5: 25424.779 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  25423.113 ±(99.9%) 24.166 ops/min [Average]
+  (min, avg, max) = (25413.371, 25423.113, 25428.846), stdev = 6.276
+  CI (99.9%): [25398.947, 25447.279] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 28.57% complete, ETA 00:33:28
+# Fork: 1 of 1
+# Warmup Iteration   1: 2877.786 ops/min
+# Warmup Iteration   2: 3290.086 ops/min
+# Warmup Iteration   3: 3284.109 ops/min
+# Warmup Iteration   4: 3309.371 ops/min
+# Warmup Iteration   5: 3305.305 ops/min
+Iteration   1: 3312.461 ops/min
+Iteration   2: 3311.004 ops/min
+Iteration   3: 3312.960 ops/min
+Iteration   4: 3306.407 ops/min
+Iteration   5: 3311.767 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  3310.920 ±(99.9%) 10.120 ops/min [Average]
+  (min, avg, max) = (3306.407, 3310.920, 3312.960), stdev = 2.628
+  CI (99.9%): [3300.800, 3321.040] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 32.14% complete, ETA 00:31:47
+# Fork: 1 of 1
+# Warmup Iteration   1: 7409.559 ops/min
+# Warmup Iteration   2: 7575.641 ops/min
+# Warmup Iteration   3: 7581.556 ops/min
+# Warmup Iteration   4: 7584.026 ops/min
+# Warmup Iteration   5: 7587.058 ops/min
+Iteration   1: 7578.415 ops/min
+Iteration   2: 7581.248 ops/min
+Iteration   3: 7584.126 ops/min
+Iteration   4: 7587.735 ops/min
+Iteration   5: 7585.848 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  7583.475 ±(99.9%) 14.248 ops/min [Average]
+  (min, avg, max) = (7578.415, 7583.475, 7587.735), stdev = 3.700
+  CI (99.9%): [7569.226, 7597.723] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 35.71% complete, ETA 00:30:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 29773.688 ops/min
+# Warmup Iteration   2: 30613.539 ops/min
+# Warmup Iteration   3: 32059.570 ops/min
+# Warmup Iteration   4: 31898.265 ops/min
+# Warmup Iteration   5: 31767.698 ops/min
+Iteration   1: 32004.155 ops/min
+Iteration   2: 31945.169 ops/min
+Iteration   3: 32053.491 ops/min
+Iteration   4: 31876.635 ops/min
+Iteration   5: 32008.066 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  31977.503 ±(99.9%) 262.851 ops/min [Average]
+  (min, avg, max) = (31876.635, 31977.503, 32053.491), stdev = 68.262
+  CI (99.9%): [31714.652, 32240.354] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 39.29% complete, ETA 00:28:27
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 10, 2021 6:26:58 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 10, 2021 6:26:58 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+8941.141 ops/min
+# Warmup Iteration   2: 10807.165 ops/min
+# Warmup Iteration   3: 10833.879 ops/min
+# Warmup Iteration   4: 10818.383 ops/min
+# Warmup Iteration   5: 10825.783 ops/min
+Iteration   1: 10827.374 ops/min
+Iteration   2: 10833.314 ops/min
+Iteration   3: 10831.764 ops/min
+Iteration   4: 10837.725 ops/min
+Iteration   5: 10841.413 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  10834.318 ±(99.9%) 20.888 ops/min [Average]
+  (min, avg, max) = (10827.374, 10834.318, 10841.413), stdev = 5.425
+  CI (99.9%): [10813.430, 10855.206] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 42.86% complete, ETA 00:26:46
+# Fork: 1 of 1
+# Warmup Iteration   1: 489.103 ops/min
+# Warmup Iteration   2: 614.023 ops/min
+# Warmup Iteration   3: 614.646 ops/min
+# Warmup Iteration   4: 613.627 ops/min
+# Warmup Iteration   5: 614.806 ops/min
+Iteration   1: 616.308 ops/min
+Iteration   2: 615.129 ops/min
+Iteration   3: 615.081 ops/min
+Iteration   4: 614.738 ops/min
+Iteration   5: 615.965 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  615.444 ±(99.9%) 2.544 ops/min [Average]
+  (min, avg, max) = (614.738, 615.444, 616.308), stdev = 0.661
+  CI (99.9%): [612.900, 617.988] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 46.43% complete, ETA 00:25:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 1406.792 ops/min
+# Warmup Iteration   2: 1441.804 ops/min
+# Warmup Iteration   3: 1440.405 ops/min
+# Warmup Iteration   4: 1438.930 ops/min
+# Warmup Iteration   5: 1441.530 ops/min
+Iteration   1: 1442.373 ops/min
+Iteration   2: 1442.978 ops/min
+Iteration   3: 1442.565 ops/min
+Iteration   4: 1442.081 ops/min
+Iteration   5: 1441.388 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  1442.277 ±(99.9%) 2.288 ops/min [Average]
+  (min, avg, max) = (1441.388, 1442.277, 1442.978), stdev = 0.594
+  CI (99.9%): [1439.989, 1444.565] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 50.00% complete, ETA 00:23:26
+# Fork: 1 of 1
+# Warmup Iteration   1: 7059.916 ops/min
+# Warmup Iteration   2: 7106.366 ops/min
+# Warmup Iteration   3: 7399.743 ops/min
+# Warmup Iteration   4: 7446.359 ops/min
+# Warmup Iteration   5: 7434.694 ops/min
+Iteration   1: 7438.010 ops/min
+Iteration   2: 7427.433 ops/min
+Iteration   3: 7439.358 ops/min
+Iteration   4: 7416.839 ops/min
+Iteration   5: 7395.356 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  7423.399 ±(99.9%) 69.788 ops/min [Average]
+  (min, avg, max) = (7395.356, 7423.399, 7439.358), stdev = 18.124
+  CI (99.9%): [7353.612, 7493.187] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 53.57% complete, ETA 00:21:45
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 10, 2021 6:33:40 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 10, 2021 6:33:40 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+1665.225 ops/min
+# Warmup Iteration   2: 2051.639 ops/min
+# Warmup Iteration   3: 2051.236 ops/min
+# Warmup Iteration   4: 2050.782 ops/min
+# Warmup Iteration   5: 2050.391 ops/min
+Iteration   1: 2053.542 ops/min
+Iteration   2: 2054.853 ops/min
+Iteration   3: 2054.256 ops/min
+Iteration   4: 2051.582 ops/min
+Iteration   5: 2055.432 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  2053.933 ±(99.9%) 5.737 ops/min [Average]
+  (min, avg, max) = (2051.582, 2053.933, 2055.432), stdev = 1.490
+  CI (99.9%): [2048.197, 2059.670] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 57.14% complete, ETA 00:20:05
+# Fork: 1 of 1
+# Warmup Iteration   1: 99.839 ops/min
+# Warmup Iteration   2: 200.760 ops/min
+# Warmup Iteration   3: 202.002 ops/min
+# Warmup Iteration   4: 206.842 ops/min
+# Warmup Iteration   5: 210.826 ops/min
+Iteration   1: 210.971 ops/min
+Iteration   2: 209.801 ops/min
+Iteration   3: 209.381 ops/min
+Iteration   4: 209.507 ops/min
+Iteration   5: 209.193 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  209.771 ±(99.9%) 2.720 ops/min [Average]
+  (min, avg, max) = (209.193, 209.771, 210.971), stdev = 0.706
+  CI (99.9%): [207.050, 212.491] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 60.71% complete, ETA 00:18:25
+# Fork: 1 of 1
+# Warmup Iteration   1: 479.042 ops/min
+# Warmup Iteration   2: 501.272 ops/min
+# Warmup Iteration   3: 501.926 ops/min
+# Warmup Iteration   4: 501.389 ops/min
+# Warmup Iteration   5: 501.939 ops/min
+Iteration   1: 501.896 ops/min
+Iteration   2: 501.828 ops/min
+Iteration   3: 501.105 ops/min
+Iteration   4: 501.866 ops/min
+Iteration   5: 501.327 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  501.604 ±(99.9%) 1.402 ops/min [Average]
+  (min, avg, max) = (501.105, 501.604, 501.896), stdev = 0.364
+  CI (99.9%): [500.202, 503.006] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 64.29% complete, ETA 00:16:45
+# Fork: 1 of 1
+# Warmup Iteration   1: 2658.168 ops/min
+# Warmup Iteration   2: 2734.824 ops/min
+# Warmup Iteration   3: 2757.280 ops/min
+# Warmup Iteration   4: 2768.518 ops/min
+# Warmup Iteration   5: 2765.128 ops/min
+Iteration   1: 2772.080 ops/min
+Iteration   2: 2763.615 ops/min
+Iteration   3: 2777.241 ops/min
+Iteration   4: 2770.297 ops/min
+Iteration   5: 2774.774 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  2771.601 ±(99.9%) 19.969 ops/min [Average]
+  (min, avg, max) = (2763.615, 2771.601, 2777.241), stdev = 5.186
+  CI (99.9%): [2751.632, 2791.571] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 67.86% complete, ETA 00:15:04
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 10, 2021 6:40:23 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 10, 2021 6:40:24 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+531.924 ops/min
+# Warmup Iteration   2: 653.681 ops/min
+# Warmup Iteration   3: 653.801 ops/min
+# Warmup Iteration   4: 653.899 ops/min
+# Warmup Iteration   5: 654.841 ops/min
+Iteration   1: 655.181 ops/min
+Iteration   2: 655.337 ops/min
+Iteration   3: 655.476 ops/min
+Iteration   4: 654.991 ops/min
+Iteration   5: 655.159 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  655.229 ±(99.9%) 0.711 ops/min [Average]
+  (min, avg, max) = (654.991, 655.229, 655.476), stdev = 0.185
+  CI (99.9%): [654.518, 655.940] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 71.43% complete, ETA 00:13:24
+# Fork: 1 of 1
+# Warmup Iteration   1: 16.975 ops/min
+# Warmup Iteration   2: 29.623 ops/min
+# Warmup Iteration   3: 77.886 ops/min
+# Warmup Iteration   4: 78.617 ops/min
+# Warmup Iteration   5: 79.664 ops/min
+Iteration   1: 79.736 ops/min
+Iteration   2: 80.028 ops/min
+Iteration   3: 79.485 ops/min
+Iteration   4: 79.684 ops/min
+Iteration   5: 79.933 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  79.773 ±(99.9%) 0.823 ops/min [Average]
+  (min, avg, max) = (79.485, 79.773, 80.028), stdev = 0.214
+  CI (99.9%): [78.950, 80.596] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 75.00% complete, ETA 00:11:45
+# Fork: 1 of 1
+# Warmup Iteration   1: 127.243 ops/min
+# Warmup Iteration   2: 149.416 ops/min
+# Warmup Iteration   3: 149.556 ops/min
+# Warmup Iteration   4: 149.428 ops/min
+# Warmup Iteration   5: 149.611 ops/min
+Iteration   1: 149.642 ops/min
+Iteration   2: 149.602 ops/min
+Iteration   3: 149.592 ops/min
+Iteration   4: 149.640 ops/min
+Iteration   5: 149.699 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  149.635 ±(99.9%) 0.163 ops/min [Average]
+  (min, avg, max) = (149.592, 149.635, 149.699), stdev = 0.042
+  CI (99.9%): [149.472, 149.798] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 78.57% complete, ETA 00:10:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 758.357 ops/min
+# Warmup Iteration   2: 778.279 ops/min
+# Warmup Iteration   3: 785.061 ops/min
+# Warmup Iteration   4: 783.035 ops/min
+# Warmup Iteration   5: 781.742 ops/min
+Iteration   1: 787.085 ops/min
+Iteration   2: 785.578 ops/min
+Iteration   3: 784.690 ops/min
+Iteration   4: 788.215 ops/min
+Iteration   5: 789.175 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  786.949 ±(99.9%) 7.091 ops/min [Average]
+  (min, avg, max) = (784.690, 786.949, 789.175), stdev = 1.841
+  CI (99.9%): [779.858, 794.039] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 82.14% complete, ETA 00:08:23
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 10, 2021 6:47:11 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 10, 2021 6:47:11 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+135.547 ops/min
+# Warmup Iteration   2: 194.546 ops/min
+# Warmup Iteration   3: 194.884 ops/min
+# Warmup Iteration   4: 195.076 ops/min
+# Warmup Iteration   5: 194.913 ops/min
+Iteration   1: 194.795 ops/min
+Iteration   2: 194.830 ops/min
+Iteration   3: 194.952 ops/min
+Iteration   4: 195.131 ops/min
+Iteration   5: 195.025 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  194.947 ±(99.9%) 0.534 ops/min [Average]
+  (min, avg, max) = (194.795, 194.947, 195.131), stdev = 0.139
+  CI (99.9%): [194.413, 195.480] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 85.71% complete, ETA 00:06:43
+# Fork: 1 of 1
+# Warmup Iteration   1: 4.255 ops/min
+# Warmup Iteration   2: 5.366 ops/min
+# Warmup Iteration   3: 7.636 ops/min
+# Warmup Iteration   4: 21.456 ops/min
+# Warmup Iteration   5: 22.353 ops/min
+Iteration   1: 22.317 ops/min
+Iteration   2: 22.156 ops/min
+Iteration   3: 22.374 ops/min
+Iteration   4: 21.441 ops/min
+Iteration   5: 21.546 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  21.967 ±(99.9%) 1.697 ops/min [Average]
+  (min, avg, max) = (21.441, 21.967, 22.374), stdev = 0.441
+  CI (99.9%): [20.269, 23.664] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 89.29% complete, ETA 00:05:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 44.631 ops/min
+# Warmup Iteration   2: 62.266 ops/min
+# Warmup Iteration   3: 62.204 ops/min
+# Warmup Iteration   4: 62.374 ops/min
+# Warmup Iteration   5: 62.409 ops/min
+Iteration   1: 62.572 ops/min
+Iteration   2: 62.946 ops/min
+Iteration   3: 63.127 ops/min
+Iteration   4: 63.130 ops/min
+Iteration   5: 63.062 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  62.967 ±(99.9%) 0.899 ops/min [Average]
+  (min, avg, max) = (62.572, 62.967, 63.130), stdev = 0.233
+  CI (99.9%): [62.068, 63.866] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 92.86% complete, ETA 00:03:25
+# Fork: 1 of 1
+# Warmup Iteration   1: 312.310 ops/min
+# Warmup Iteration   2: 322.620 ops/min
+# Warmup Iteration   3: 324.940 ops/min
+# Warmup Iteration   4: 325.510 ops/min
+# Warmup Iteration   5: 326.638 ops/min
+Iteration   1: 325.886 ops/min
+Iteration   2: 325.755 ops/min
+Iteration   3: 326.905 ops/min
+Iteration   4: 324.362 ops/min
+Iteration   5: 324.545 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  325.491 ±(99.9%) 4.036 ops/min [Average]
+  (min, avg, max) = (324.362, 325.491, 326.905), stdev = 1.048
+  CI (99.9%): [321.454, 329.527] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Eclipse OpenJ9 VM, openj9-0.29.1-m1
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-17.0.1+12/bin/java
+# VM options: -Xoptionsfile=/home/anders/jdk-17.0.1+12/lib/options.default -Xlockword:mode=default,noLockword=java/lang/String,noLockword=java/util/MapEntry,noLockword=java/util/HashMap$Entry,noLockword=org/apache/harmony/luni/util/ModifiedMap$Entry,noLockword=java/util/Hashtable$Entry,noLockword=java/lang/invoke/MethodType,noLockword=java/lang/invoke/MethodHandle,noLockword=java/lang/invoke/CollectHandle,noLockword=java/lang/invoke/ConstructorHandle,noLockword=java/lang/invoke/ConvertHandle,noLockword=java/lang/invoke/ArgumentConversionHandle,noLockword=java/lang/invoke/AsTypeHandle,noLockword=java/lang/invoke/ExplicitCastHandle,noLockword=java/lang/invoke/FilterReturnHandle,noLockword=java/lang/invoke/DirectHandle,noLockword=java/lang/invoke/ReceiverBoundHandle,noLockword=java/lang/invoke/DynamicInvokerHandle,noLockword=java/lang/invoke/FieldHandle,noLockword=java/lang/invoke/FieldGetterHandle,noLockword=java/lang/invoke/FieldSetterHandle,noLockword=java/lang/invoke/StaticFieldGetterHandle,noLockword=java/lang/invoke/StaticFieldSetterHandle,noLockword=java/lang/invoke/IndirectHandle,noLockword=java/lang/invoke/InterfaceHandle,noLockword=java/lang/invoke/VirtualHandle,noLockword=java/lang/invoke/PrimitiveHandle,noLockword=java/lang/invoke/InvokeExactHandle,noLockword=java/lang/invoke/InvokeGenericHandle,noLockword=java/lang/invoke/VarargsCollectorHandle,noLockword=java/lang/invoke/ThunkTuple -Xjcl:jclse29 -Dcom.ibm.oti.vm.bootstrap.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Dsun.boot.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib -Djava.library.path=/home/anders/jdk-17.0.1+12/lib/default:/home/anders/jdk-17.0.1+12/lib:/usr/lib64:/usr/lib -Djava.home=/home/anders/jdk-17.0.1+12 -Duser.dir=/home/anders -Djava.class.path=ojlab.jar -Dsun.java.command=ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv -Dsun.java.launcher=SUN_STANDARD
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-17.0.1"), compilerHints are disabled.
+# Run progress: 96.43% complete, ETA 00:01:42
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 10, 2021 6:54:44 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 10, 2021 6:54:45 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+32.253 ops/min
+# Warmup Iteration   2: 81.859 ops/min
+# Warmup Iteration   3: 81.895 ops/min
+# Warmup Iteration   4: 81.982 ops/min
+# Warmup Iteration   5: 82.249 ops/min
+Iteration   1: 82.210 ops/min
+Iteration   2: 82.262 ops/min
+Iteration   3: 82.247 ops/min
+Iteration   4: 82.027 ops/min
+Iteration   5: 82.195 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  82.188 ±(99.9%) 0.363 ops/min [Average]
+  (min, avg, max) = (82.027, 82.188, 82.262), stdev = 0.094
+  CI (99.9%): [81.825, 82.551] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:47:54
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                  (dim)   (lib)   Mode  Cnt       Score     Error    Units
+FillByMultiplying.execute    100     ACM  thrpt    5   42982.090 ± 186.673  ops/min
+FillByMultiplying.execute    100    EJML  thrpt    5   66027.221 ±  40.290  ops/min
+FillByMultiplying.execute    100  ojAlgo  thrpt    5  209666.501 ± 948.197  ops/min
+FillByMultiplying.execute    100     MTJ  thrpt    5   85420.790 ± 177.601  ops/min
+FillByMultiplying.execute    150     ACM  thrpt    5    6283.762 ±  56.629  ops/min
+FillByMultiplying.execute    150    EJML  thrpt    5   17599.989 ±  27.227  ops/min
+FillByMultiplying.execute    150  ojAlgo  thrpt    5   76037.076 ± 399.372  ops/min
+FillByMultiplying.execute    150     MTJ  thrpt    5   25423.113 ±  24.166  ops/min
+FillByMultiplying.execute    200     ACM  thrpt    5    3310.920 ±  10.120  ops/min
+FillByMultiplying.execute    200    EJML  thrpt    5    7583.475 ±  14.248  ops/min
+FillByMultiplying.execute    200  ojAlgo  thrpt    5   31977.503 ± 262.851  ops/min
+FillByMultiplying.execute    200     MTJ  thrpt    5   10834.318 ±  20.888  ops/min
+FillByMultiplying.execute    350     ACM  thrpt    5     615.444 ±   2.544  ops/min
+FillByMultiplying.execute    350    EJML  thrpt    5    1442.277 ±   2.288  ops/min
+FillByMultiplying.execute    350  ojAlgo  thrpt    5    7423.399 ±  69.788  ops/min
+FillByMultiplying.execute    350     MTJ  thrpt    5    2053.933 ±   5.737  ops/min
+FillByMultiplying.execute    500     ACM  thrpt    5     209.771 ±   2.720  ops/min
+FillByMultiplying.execute    500    EJML  thrpt    5     501.604 ±   1.402  ops/min
+FillByMultiplying.execute    500  ojAlgo  thrpt    5    2771.601 ±  19.969  ops/min
+FillByMultiplying.execute    500     MTJ  thrpt    5     655.229 ±   0.711  ops/min
+FillByMultiplying.execute    750     ACM  thrpt    5      79.773 ±   0.823  ops/min
+FillByMultiplying.execute    750    EJML  thrpt    5     149.635 ±   0.163  ops/min
+FillByMultiplying.execute    750  ojAlgo  thrpt    5     786.949 ±   7.091  ops/min
+FillByMultiplying.execute    750     MTJ  thrpt    5     194.947 ±   0.534  ops/min
+FillByMultiplying.execute   1000     ACM  thrpt    5      21.967 ±   1.697  ops/min
+FillByMultiplying.execute   1000    EJML  thrpt    5      62.967 ±   0.899  ops/min
+FillByMultiplying.execute   1000  ojAlgo  thrpt    5     325.491 ±   4.036  ops/min
+FillByMultiplying.execute   1000     MTJ  thrpt    5      82.188 ±   0.363  ops/min
+
+Benchmark result is saved to jmh-result.csv
