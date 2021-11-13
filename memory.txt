@@ -1,3 +1,14 @@
+nohup /usr/lib/jvm/jdk-17/bin/java -jar ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv &
+nohup graalvm-ee-java17-21.3.0/bin/java -jar ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv &
+
+
+
+
+anders@instance-1:~$ mv nohup.out hotspot_multiply.log
+anders@instance-1:~$ mv jmh-result.csv hotspot_multiply.csv
+anders@instance-1:~$ 
+
+
 nohup "java" -classpath ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying &
 nohup "java" -classpath ojlab.jar org.ojalgo.benchmark.lab.GeneralSolve &
 nohup "java" -classpath ojlab.jar org.ojalgo.benchmark.lab.DecomposeSVD &

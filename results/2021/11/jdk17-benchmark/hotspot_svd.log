@@ -1,0 +1,1019 @@
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = ACM)
+
+# Run progress: 0.00% complete, ETA 00:46:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 6659.312 ops/min
+# Warmup Iteration   2: 7324.235 ops/min
+# Warmup Iteration   3: 7349.745 ops/min
+# Warmup Iteration   4: 7356.038 ops/min
+# Warmup Iteration   5: 7349.407 ops/min
+Iteration   1: 7352.475 ops/min
+Iteration   2: 7339.458 ops/min
+Iteration   3: 7333.112 ops/min
+Iteration   4: 7322.354 ops/min
+Iteration   5: 7346.383 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  7338.756 ±(99.9%) 45.061 ops/min [Average]
+  (min, avg, max) = (7322.354, 7338.756, 7352.475), stdev = 11.702
+  CI (99.9%): [7293.696, 7383.817] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = EJML)
+
+# Run progress: 3.57% complete, ETA 00:45:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 12346.769 ops/min
+# Warmup Iteration   2: 12458.132 ops/min
+# Warmup Iteration   3: 12429.623 ops/min
+# Warmup Iteration   4: 12421.339 ops/min
+# Warmup Iteration   5: 12422.598 ops/min
+Iteration   1: 12419.522 ops/min
+Iteration   2: 12412.963 ops/min
+Iteration   3: 12419.083 ops/min
+Iteration   4: 12420.986 ops/min
+Iteration   5: 12420.769 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  12418.665 ±(99.9%) 12.660 ops/min [Average]
+  (min, avg, max) = (12412.963, 12418.665, 12420.986), stdev = 3.288
+  CI (99.9%): [12406.005, 12431.324] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+# Run progress: 7.14% complete, ETA 00:43:29
+# Fork: 1 of 1
+# Warmup Iteration   1: 22049.077 ops/min
+# Warmup Iteration   2: 22773.195 ops/min
+# Warmup Iteration   3: 22198.710 ops/min
+# Warmup Iteration   4: 22172.909 ops/min
+# Warmup Iteration   5: 22173.291 ops/min
+Iteration   1: 22178.856 ops/min
+Iteration   2: 22175.027 ops/min
+Iteration   3: 22096.116 ops/min
+Iteration   4: 21911.993 ops/min
+Iteration   5: 21939.022 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  22060.203 ±(99.9%) 491.631 ops/min [Average]
+  (min, avg, max) = (21911.993, 22060.203, 22178.856), stdev = 127.675
+  CI (99.9%): [21568.572, 22551.834] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+# Run progress: 10.71% complete, ETA 00:41:49
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 11, 2021 7:52:30 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 7:52:30 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 7:52:40 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 7:52:40 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+7666.953 ops/min
+# Warmup Iteration   2: 8945.454 ops/min
+# Warmup Iteration   3: 9105.734 ops/min
+# Warmup Iteration   4: 9191.176 ops/min
+# Warmup Iteration   5: 9185.327 ops/min
+Iteration   1: 9098.911 ops/min
+Iteration   2: 9194.026 ops/min
+Iteration   3: 9211.166 ops/min
+Iteration   4: 9282.860 ops/min
+Iteration   5: 9326.995 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  9222.792 ±(99.9%) 337.759 ops/min [Average]
+  (min, avg, max) = (9098.911, 9222.792, 9326.995), stdev = 87.715
+  CI (99.9%): [8885.033, 9560.550] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = ACM)
+
+# Run progress: 14.29% complete, ETA 00:40:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 1922.327 ops/min
+# Warmup Iteration   2: 2148.488 ops/min
+# Warmup Iteration   3: 2148.467 ops/min
+# Warmup Iteration   4: 2151.841 ops/min
+# Warmup Iteration   5: 2149.890 ops/min
+Iteration   1: 2149.252 ops/min
+Iteration   2: 2148.604 ops/min
+Iteration   3: 2147.850 ops/min
+Iteration   4: 2149.932 ops/min
+Iteration   5: 2153.011 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  2149.730 ±(99.9%) 7.662 ops/min [Average]
+  (min, avg, max) = (2147.850, 2149.730, 2153.011), stdev = 1.990
+  CI (99.9%): [2142.068, 2157.392] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = EJML)
+
+# Run progress: 17.86% complete, ETA 00:38:29
+# Fork: 1 of 1
+# Warmup Iteration   1: 3961.296 ops/min
+# Warmup Iteration   2: 4002.330 ops/min
+# Warmup Iteration   3: 3995.790 ops/min
+# Warmup Iteration   4: 3996.767 ops/min
+# Warmup Iteration   5: 3998.283 ops/min
+Iteration   1: 3997.808 ops/min
+Iteration   2: 4000.926 ops/min
+Iteration   3: 3998.269 ops/min
+Iteration   4: 3996.319 ops/min
+Iteration   5: 3995.252 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  3997.715 ±(99.9%) 8.313 ops/min [Average]
+  (min, avg, max) = (3995.252, 3997.715, 4000.926), stdev = 2.159
+  CI (99.9%): [3989.402, 4006.028] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+# Run progress: 21.43% complete, ETA 00:36:49
+# Fork: 1 of 1
+# Warmup Iteration   1: 8397.972 ops/min
+# Warmup Iteration   2: 8870.510 ops/min
+# Warmup Iteration   3: 8879.501 ops/min
+# Warmup Iteration   4: 8544.088 ops/min
+# Warmup Iteration   5: 8503.743 ops/min
+Iteration   1: 8491.110 ops/min
+Iteration   2: 8562.074 ops/min
+Iteration   3: 8560.923 ops/min
+Iteration   4: 8496.605 ops/min
+Iteration   5: 8529.051 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  8527.953 ±(99.9%) 130.477 ops/min [Average]
+  (min, avg, max) = (8491.110, 8527.953, 8562.074), stdev = 33.884
+  CI (99.9%): [8397.476, 8658.429] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+# Run progress: 25.00% complete, ETA 00:35:09
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 11, 2021 7:59:12 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 7:59:12 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 7:59:22 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 7:59:22 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+2589.771 ops/min
+# Warmup Iteration   2: 3015.556 ops/min
+# Warmup Iteration   3: 3058.202 ops/min
+# Warmup Iteration   4: 3094.290 ops/min
+# Warmup Iteration   5: 3103.046 ops/min
+Iteration   1: 3119.763 ops/min
+Iteration   2: 3123.156 ops/min
+Iteration   3: 3147.772 ops/min
+Iteration   4: 3159.297 ops/min
+Iteration   5: 3163.001 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  3142.598 ±(99.9%) 77.524 ops/min [Average]
+  (min, avg, max) = (3119.763, 3142.598, 3163.001), stdev = 20.133
+  CI (99.9%): [3065.074, 3220.122] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = ACM)
+
+# Run progress: 28.57% complete, ETA 00:33:28
+# Fork: 1 of 1
+# Warmup Iteration   1: 796.798 ops/min
+# Warmup Iteration   2: 875.259 ops/min
+# Warmup Iteration   3: 875.428 ops/min
+# Warmup Iteration   4: 875.866 ops/min
+# Warmup Iteration   5: 876.805 ops/min
+Iteration   1: 876.186 ops/min
+Iteration   2: 876.417 ops/min
+Iteration   3: 876.888 ops/min
+Iteration   4: 877.258 ops/min
+Iteration   5: 876.616 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  876.673 ±(99.9%) 1.605 ops/min [Average]
+  (min, avg, max) = (876.186, 876.673, 877.258), stdev = 0.417
+  CI (99.9%): [875.068, 878.278] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = EJML)
+
+# Run progress: 32.14% complete, ETA 00:31:49
+# Fork: 1 of 1
+# Warmup Iteration   1: 1740.350 ops/min
+# Warmup Iteration   2: 1757.190 ops/min
+# Warmup Iteration   3: 1767.589 ops/min
+# Warmup Iteration   4: 1772.739 ops/min
+# Warmup Iteration   5: 1758.565 ops/min
+Iteration   1: 1758.673 ops/min
+Iteration   2: 1759.070 ops/min
+Iteration   3: 1758.437 ops/min
+Iteration   4: 1759.202 ops/min
+Iteration   5: 1759.773 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  1759.031 ±(99.9%) 1.985 ops/min [Average]
+  (min, avg, max) = (1758.437, 1759.031, 1759.773), stdev = 0.515
+  CI (99.9%): [1757.046, 1761.016] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+# Run progress: 35.71% complete, ETA 00:30:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 3843.276 ops/min
+# Warmup Iteration   2: 3944.937 ops/min
+# Warmup Iteration   3: 3934.294 ops/min
+# Warmup Iteration   4: 3935.848 ops/min
+# Warmup Iteration   5: 4021.550 ops/min
+Iteration   1: 4040.382 ops/min
+Iteration   2: 4057.415 ops/min
+Iteration   3: 4060.720 ops/min
+Iteration   4: 3964.334 ops/min
+Iteration   5: 3956.481 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  4015.867 ±(99.9%) 197.487 ops/min [Average]
+  (min, avg, max) = (3956.481, 4015.867, 4060.720), stdev = 51.287
+  CI (99.9%): [3818.379, 4213.354] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+# Run progress: 39.29% complete, ETA 00:28:28
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 11, 2021 8:05:55 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 8:05:55 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 8:06:05 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 8:06:05 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+1180.831 ops/min
+# Warmup Iteration   2: 1374.651 ops/min
+# Warmup Iteration   3: 1377.209 ops/min
+# Warmup Iteration   4: 1397.806 ops/min
+# Warmup Iteration   5: 1393.274 ops/min
+Iteration   1: 1403.903 ops/min
+Iteration   2: 1411.288 ops/min
+Iteration   3: 1425.062 ops/min
+Iteration   4: 1424.542 ops/min
+Iteration   5: 1452.890 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  1423.537 ±(99.9%) 72.050 ops/min [Average]
+  (min, avg, max) = (1403.903, 1423.537, 1452.890), stdev = 18.711
+  CI (99.9%): [1351.487, 1495.587] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = ACM)
+
+# Run progress: 42.86% complete, ETA 00:26:48
+# Fork: 1 of 1
+# Warmup Iteration   1: 144.863 ops/min
+# Warmup Iteration   2: 155.391 ops/min
+# Warmup Iteration   3: 155.314 ops/min
+# Warmup Iteration   4: 155.639 ops/min
+# Warmup Iteration   5: 155.495 ops/min
+Iteration   1: 155.246 ops/min
+Iteration   2: 155.784 ops/min
+Iteration   3: 155.581 ops/min
+Iteration   4: 155.566 ops/min
+Iteration   5: 155.469 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  155.529 ±(99.9%) 0.752 ops/min [Average]
+  (min, avg, max) = (155.246, 155.529, 155.784), stdev = 0.195
+  CI (99.9%): [154.777, 156.281] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = EJML)
+
+# Run progress: 46.43% complete, ETA 00:25:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 338.308 ops/min
+# Warmup Iteration   2: 340.460 ops/min
+# Warmup Iteration   3: 341.351 ops/min
+# Warmup Iteration   4: 341.435 ops/min
+# Warmup Iteration   5: 341.119 ops/min
+Iteration   1: 341.846 ops/min
+Iteration   2: 341.741 ops/min
+Iteration   3: 341.092 ops/min
+Iteration   4: 341.260 ops/min
+Iteration   5: 341.344 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  341.456 ±(99.9%) 1.243 ops/min [Average]
+  (min, avg, max) = (341.092, 341.456, 341.846), stdev = 0.323
+  CI (99.9%): [340.214, 342.699] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+# Run progress: 50.00% complete, ETA 00:23:29
+# Fork: 1 of 1
+# Warmup Iteration   1: 833.343 ops/min
+# Warmup Iteration   2: 873.805 ops/min
+# Warmup Iteration   3: 871.301 ops/min
+# Warmup Iteration   4: 873.014 ops/min
+# Warmup Iteration   5: 872.691 ops/min
+Iteration   1: 826.348 ops/min
+Iteration   2: 825.321 ops/min
+Iteration   3: 821.109 ops/min
+Iteration   4: 823.114 ops/min
+Iteration   5: 823.981 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  823.975 ±(99.9%) 7.797 ops/min [Average]
+  (min, avg, max) = (821.109, 823.975, 826.348), stdev = 2.025
+  CI (99.9%): [816.178, 831.772] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+# Run progress: 53.57% complete, ETA 00:21:49
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 11, 2021 8:12:40 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 8:12:40 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 8:12:50 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 8:12:50 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+266.178 ops/min
+# Warmup Iteration   2: 312.270 ops/min
+# Warmup Iteration   3: 313.204 ops/min
+# Warmup Iteration   4: 319.021 ops/min
+# Warmup Iteration   5: 318.235 ops/min
+Iteration   1: 322.468 ops/min
+Iteration   2: 322.403 ops/min
+Iteration   3: 322.965 ops/min
+Iteration   4: 323.522 ops/min
+Iteration   5: 323.655 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  323.003 ±(99.9%) 2.230 ops/min [Average]
+  (min, avg, max) = (322.403, 323.003, 323.655), stdev = 0.579
+  CI (99.9%): [320.772, 325.233] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = ACM)
+
+# Run progress: 57.14% complete, ETA 00:20:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 46.627 ops/min
+# Warmup Iteration   2: 50.017 ops/min
+# Warmup Iteration   3: 51.527 ops/min
+# Warmup Iteration   4: 51.344 ops/min
+# Warmup Iteration   5: 51.697 ops/min
+Iteration   1: 51.393 ops/min
+Iteration   2: 51.738 ops/min
+Iteration   3: 47.903 ops/min
+Iteration   4: 51.558 ops/min
+Iteration   5: 51.638 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  50.846 ±(99.9%) 6.353 ops/min [Average]
+  (min, avg, max) = (47.903, 50.846, 51.738), stdev = 1.650
+  CI (99.9%): [44.493, 57.199] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = EJML)
+
+# Run progress: 60.71% complete, ETA 00:18:33
+# Fork: 1 of 1
+# Warmup Iteration   1: 117.509 ops/min
+# Warmup Iteration   2: 117.699 ops/min
+# Warmup Iteration   3: 117.886 ops/min
+# Warmup Iteration   4: 117.951 ops/min
+# Warmup Iteration   5: 117.912 ops/min
+Iteration   1: 117.951 ops/min
+Iteration   2: 117.938 ops/min
+Iteration   3: 118.032 ops/min
+Iteration   4: 117.969 ops/min
+Iteration   5: 118.150 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  118.008 ±(99.9%) 0.336 ops/min [Average]
+  (min, avg, max) = (117.938, 118.008, 118.150), stdev = 0.087
+  CI (99.9%): [117.672, 118.344] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+# Run progress: 64.29% complete, ETA 00:16:53
+# Fork: 1 of 1
+# Warmup Iteration   1: 279.047 ops/min
+# Warmup Iteration   2: 266.885 ops/min
+# Warmup Iteration   3: 264.637 ops/min
+# Warmup Iteration   4: 265.992 ops/min
+# Warmup Iteration   5: 263.851 ops/min
+Iteration   1: 265.686 ops/min
+Iteration   2: 265.554 ops/min
+Iteration   3: 266.078 ops/min
+Iteration   4: 264.477 ops/min
+Iteration   5: 265.241 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  265.407 ±(99.9%) 2.312 ops/min [Average]
+  (min, avg, max) = (264.477, 265.407, 266.078), stdev = 0.601
+  CI (99.9%): [263.095, 267.720] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+# Run progress: 67.86% complete, ETA 00:15:13
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 11, 2021 8:19:37 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 8:19:37 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 8:19:48 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 8:19:48 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+96.687 ops/min
+# Warmup Iteration   2: 110.204 ops/min
+# Warmup Iteration   3: 111.452 ops/min
+# Warmup Iteration   4: 112.570 ops/min
+# Warmup Iteration   5: 110.948 ops/min
+Iteration   1: 113.504 ops/min
+Iteration   2: 113.367 ops/min
+Iteration   3: 114.312 ops/min
+Iteration   4: 114.287 ops/min
+Iteration   5: 114.948 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  114.083 ±(99.9%) 2.503 ops/min [Average]
+  (min, avg, max) = (113.367, 114.083, 114.948), stdev = 0.650
+  CI (99.9%): [111.580, 116.587] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = ACM)
+
+# Run progress: 71.43% complete, ETA 00:13:34
+# Fork: 1 of 1
+# Warmup Iteration   1: 14.621 ops/min
+# Warmup Iteration   2: 14.838 ops/min
+# Warmup Iteration   3: 15.175 ops/min
+# Warmup Iteration   4: 15.272 ops/min
+# Warmup Iteration   5: 15.252 ops/min
+Iteration   1: 15.277 ops/min
+Iteration   2: 15.122 ops/min
+Iteration   3: 15.154 ops/min
+Iteration   4: 15.231 ops/min
+Iteration   5: 15.138 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  15.184 ±(99.9%) 0.256 ops/min [Average]
+  (min, avg, max) = (15.122, 15.184, 15.277), stdev = 0.066
+  CI (99.9%): [14.929, 15.440] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = EJML)
+
+# Run progress: 75.00% complete, ETA 00:12:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 36.754 ops/min
+# Warmup Iteration   2: 36.193 ops/min
+# Warmup Iteration   3: 36.143 ops/min
+# Warmup Iteration   4: 36.109 ops/min
+# Warmup Iteration   5: 36.311 ops/min
+Iteration   1: 36.133 ops/min
+Iteration   2: 36.146 ops/min
+Iteration   3: 36.165 ops/min
+Iteration   4: 36.160 ops/min
+Iteration   5: 36.171 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  36.155 ±(99.9%) 0.059 ops/min [Average]
+  (min, avg, max) = (36.133, 36.155, 36.171), stdev = 0.015
+  CI (99.9%): [36.096, 36.214] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+# Run progress: 78.57% complete, ETA 00:10:22
+# Fork: 1 of 1
+# Warmup Iteration   1: 84.993 ops/min
+# Warmup Iteration   2: 84.295 ops/min
+# Warmup Iteration   3: 86.430 ops/min
+# Warmup Iteration   4: 86.065 ops/min
+# Warmup Iteration   5: 84.429 ops/min
+Iteration   1: 83.490 ops/min
+Iteration   2: 84.700 ops/min
+Iteration   3: 84.226 ops/min
+Iteration   4: 83.964 ops/min
+Iteration   5: 84.515 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  84.179 ±(99.9%) 1.834 ops/min [Average]
+  (min, avg, max) = (83.490, 84.179, 84.700), stdev = 0.476
+  CI (99.9%): [82.345, 86.013] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+# Run progress: 82.14% complete, ETA 00:08:41
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 11, 2021 8:27:27 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 8:27:27 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 8:27:39 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 8:27:39 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+32.644 ops/min
+# Warmup Iteration   2: 36.509 ops/min
+# Warmup Iteration   3: 37.048 ops/min
+# Warmup Iteration   4: 37.248 ops/min
+# Warmup Iteration   5: 36.718 ops/min
+Iteration   1: 37.555 ops/min
+Iteration   2: 37.731 ops/min
+Iteration   3: 37.715 ops/min
+Iteration   4: 37.763 ops/min
+Iteration   5: 37.883 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  37.730 ±(99.9%) 0.453 ops/min [Average]
+  (min, avg, max) = (37.555, 37.730, 37.883), stdev = 0.118
+  CI (99.9%): [37.277, 38.182] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+# Run progress: 85.71% complete, ETA 00:07:01
+# Fork: 1 of 1
+# Warmup Iteration   1: 4.988 ops/min
+# Warmup Iteration   2: 3.909 ops/min
+# Warmup Iteration   3: 3.785 ops/min
+# Warmup Iteration   4: 4.001 ops/min
+# Warmup Iteration   5: 5.150 ops/min
+Iteration   1: 5.064 ops/min
+Iteration   2: 4.918 ops/min
+Iteration   3: 5.154 ops/min
+Iteration   4: 5.019 ops/min
+Iteration   5: 5.103 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  5.052 ±(99.9%) 0.346 ops/min [Average]
+  (min, avg, max) = (4.918, 5.052, 5.154), stdev = 0.090
+  CI (99.9%): [4.706, 5.397] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+# Run progress: 89.29% complete, ETA 00:05:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 15.810 ops/min
+# Warmup Iteration   2: 15.602 ops/min
+# Warmup Iteration   3: 15.146 ops/min
+# Warmup Iteration   4: 15.209 ops/min
+# Warmup Iteration   5: 15.144 ops/min
+Iteration   1: 15.067 ops/min
+Iteration   2: 15.141 ops/min
+Iteration   3: 15.113 ops/min
+Iteration   4: 15.173 ops/min
+Iteration   5: 15.125 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  15.124 ±(99.9%) 0.150 ops/min [Average]
+  (min, avg, max) = (15.067, 15.124, 15.173), stdev = 0.039
+  CI (99.9%): [14.973, 15.274] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+# Run progress: 92.86% complete, ETA 00:03:35
+# Fork: 1 of 1
+# Warmup Iteration   1: 33.340 ops/min
+# Warmup Iteration   2: 34.644 ops/min
+# Warmup Iteration   3: 34.812 ops/min
+# Warmup Iteration   4: 34.936 ops/min
+# Warmup Iteration   5: 34.483 ops/min
+Iteration   1: 34.480 ops/min
+Iteration   2: 34.801 ops/min
+Iteration   3: 34.983 ops/min
+Iteration   4: 34.908 ops/min
+Iteration   5: 34.487 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  34.732 ±(99.9%) 0.908 ops/min [Average]
+  (min, avg, max) = (34.480, 34.732, 34.983), stdev = 0.236
+  CI (99.9%): [33.824, 35.639] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39
+# VM invoker: /usr/lib/jvm/jdk-17/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+# Run progress: 96.43% complete, ETA 00:01:48
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 11, 2021 8:36:14 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 8:36:14 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 8:36:31 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 8:36:31 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+13.749 ops/min
+# Warmup Iteration   2: 15.446 ops/min
+# Warmup Iteration   3: 15.442 ops/min
+# Warmup Iteration   4: 15.719 ops/min
+# Warmup Iteration   5: 15.649 ops/min
+Iteration   1: 15.833 ops/min
+Iteration   2: 15.893 ops/min
+Iteration   3: 15.886 ops/min
+Iteration   4: 15.779 ops/min
+Iteration   5: 15.909 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  15.860 ±(99.9%) 0.206 ops/min [Average]
+  (min, avg, max) = (15.779, 15.860, 15.909), stdev = 0.053
+  CI (99.9%): [15.654, 16.066] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:51:19
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark             (dim)   (lib)   Mode  Cnt      Score     Error    Units
+DecomposeSVD.execute    100     ACM  thrpt    5   7338.756 ±  45.061  ops/min
+DecomposeSVD.execute    100    EJML  thrpt    5  12418.665 ±  12.660  ops/min
+DecomposeSVD.execute    100  ojAlgo  thrpt    5  22060.203 ± 491.631  ops/min
+DecomposeSVD.execute    100     MTJ  thrpt    5   9222.792 ± 337.759  ops/min
+DecomposeSVD.execute    150     ACM  thrpt    5   2149.730 ±   7.662  ops/min
+DecomposeSVD.execute    150    EJML  thrpt    5   3997.715 ±   8.313  ops/min
+DecomposeSVD.execute    150  ojAlgo  thrpt    5   8527.953 ± 130.477  ops/min
+DecomposeSVD.execute    150     MTJ  thrpt    5   3142.598 ±  77.524  ops/min
+DecomposeSVD.execute    200     ACM  thrpt    5    876.673 ±   1.605  ops/min
+DecomposeSVD.execute    200    EJML  thrpt    5   1759.031 ±   1.985  ops/min
+DecomposeSVD.execute    200  ojAlgo  thrpt    5   4015.867 ± 197.487  ops/min
+DecomposeSVD.execute    200     MTJ  thrpt    5   1423.537 ±  72.050  ops/min
+DecomposeSVD.execute    350     ACM  thrpt    5    155.529 ±   0.752  ops/min
+DecomposeSVD.execute    350    EJML  thrpt    5    341.456 ±   1.243  ops/min
+DecomposeSVD.execute    350  ojAlgo  thrpt    5    823.975 ±   7.797  ops/min
+DecomposeSVD.execute    350     MTJ  thrpt    5    323.003 ±   2.230  ops/min
+DecomposeSVD.execute    500     ACM  thrpt    5     50.846 ±   6.353  ops/min
+DecomposeSVD.execute    500    EJML  thrpt    5    118.008 ±   0.336  ops/min
+DecomposeSVD.execute    500  ojAlgo  thrpt    5    265.407 ±   2.312  ops/min
+DecomposeSVD.execute    500     MTJ  thrpt    5    114.083 ±   2.503  ops/min
+DecomposeSVD.execute    750     ACM  thrpt    5     15.184 ±   0.256  ops/min
+DecomposeSVD.execute    750    EJML  thrpt    5     36.155 ±   0.059  ops/min
+DecomposeSVD.execute    750  ojAlgo  thrpt    5     84.179 ±   1.834  ops/min
+DecomposeSVD.execute    750     MTJ  thrpt    5     37.730 ±   0.453  ops/min
+DecomposeSVD.execute   1000     ACM  thrpt    5      5.052 ±   0.346  ops/min
+DecomposeSVD.execute   1000    EJML  thrpt    5     15.124 ±   0.150  ops/min
+DecomposeSVD.execute   1000  ojAlgo  thrpt    5     34.732 ±   0.908  ops/min
+DecomposeSVD.execute   1000     MTJ  thrpt    5     15.860 ±   0.206  ops/min
+
+Benchmark result is saved to jmh-result.csv
