@@ -1,0 +1,1047 @@
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = ACM)
+
+# Run progress: 0.00% complete, ETA 00:46:40
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 8400.247 ops/min
+# Warmup Iteration   2: 9342.406 ops/min
+# Warmup Iteration   3: 9356.030 ops/min
+# Warmup Iteration   4: 9358.412 ops/min
+# Warmup Iteration   5: 9377.397 ops/min
+Iteration   1: 9382.380 ops/min
+Iteration   2: 9386.723 ops/min
+Iteration   3: 9369.317 ops/min
+Iteration   4: 9379.655 ops/min
+Iteration   5: 9371.729 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  9377.961 ±(99.9%) 28.082 ops/min [Average]
+  (min, avg, max) = (9369.317, 9377.961, 9386.723), stdev = 7.293
+  CI (99.9%): [9349.879, 9406.043] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = EJML)
+
+# Run progress: 3.57% complete, ETA 00:45:11
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 13421.238 ops/min
+# Warmup Iteration   2: 13637.289 ops/min
+# Warmup Iteration   3: 13645.084 ops/min
+# Warmup Iteration   4: 13663.906 ops/min
+# Warmup Iteration   5: 13694.357 ops/min
+Iteration   1: 13673.262 ops/min
+Iteration   2: 13660.571 ops/min
+Iteration   3: 13675.404 ops/min
+Iteration   4: 13677.277 ops/min
+Iteration   5: 13676.897 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  13672.682 ±(99.9%) 26.768 ops/min [Average]
+  (min, avg, max) = (13660.571, 13672.682, 13677.277), stdev = 6.952
+  CI (99.9%): [13645.914, 13699.451] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+# Run progress: 7.14% complete, ETA 00:43:30
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 22816.403 ops/min
+# Warmup Iteration   2: 23924.723 ops/min
+# Warmup Iteration   3: 23929.890 ops/min
+# Warmup Iteration   4: 23900.798 ops/min
+# Warmup Iteration   5: 23908.430 ops/min
+Iteration   1: 23890.238 ops/min
+Iteration   2: 23897.555 ops/min
+Iteration   3: 23890.162 ops/min
+Iteration   4: 23901.450 ops/min
+Iteration   5: 23981.574 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  23912.196 ±(99.9%) 150.505 ops/min [Average]
+  (min, avg, max) = (23890.162, 23912.196, 23981.574), stdev = 39.086
+  CI (99.9%): [23761.691, 24062.701] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+# Run progress: 10.71% complete, ETA 00:41:49
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 11, 2021 9:00:58 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 9:00:58 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 9:01:08 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 9:01:08 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+10246.282 ops/min
+# Warmup Iteration   2: 12165.856 ops/min
+# Warmup Iteration   3: 9609.324 ops/min
+# Warmup Iteration   4: 12520.086 ops/min
+# Warmup Iteration   5: 12497.043 ops/min
+Iteration   1: 12253.651 ops/min
+Iteration   2: 12624.314 ops/min
+Iteration   3: 12653.246 ops/min
+Iteration   4: 12751.489 ops/min
+Iteration   5: 12704.373 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  12597.415 ±(99.9%) 763.345 ops/min [Average]
+  (min, avg, max) = (12253.651, 12597.415, 12751.489), stdev = 198.238
+  CI (99.9%): [11834.070, 13360.759] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = ACM)
+
+# Run progress: 14.29% complete, ETA 00:40:10
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 2443.782 ops/min
+# Warmup Iteration   2: 2724.465 ops/min
+# Warmup Iteration   3: 2723.862 ops/min
+# Warmup Iteration   4: 2724.911 ops/min
+# Warmup Iteration   5: 2719.909 ops/min
+Iteration   1: 2729.291 ops/min
+Iteration   2: 2726.315 ops/min
+Iteration   3: 2722.233 ops/min
+Iteration   4: 2726.428 ops/min
+Iteration   5: 2729.980 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  2726.849 ±(99.9%) 11.796 ops/min [Average]
+  (min, avg, max) = (2722.233, 2726.849, 2729.980), stdev = 3.063
+  CI (99.9%): [2715.053, 2738.645] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = EJML)
+
+# Run progress: 17.86% complete, ETA 00:38:30
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 4328.310 ops/min
+# Warmup Iteration   2: 4343.581 ops/min
+# Warmup Iteration   3: 4339.187 ops/min
+# Warmup Iteration   4: 4342.053 ops/min
+# Warmup Iteration   5: 4351.532 ops/min
+Iteration   1: 4351.453 ops/min
+Iteration   2: 4351.204 ops/min
+Iteration   3: 4350.147 ops/min
+Iteration   4: 4350.206 ops/min
+Iteration   5: 4348.635 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  4350.329 ±(99.9%) 4.283 ops/min [Average]
+  (min, avg, max) = (4348.635, 4350.329, 4351.453), stdev = 1.112
+  CI (99.9%): [4346.046, 4354.612] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+# Run progress: 21.43% complete, ETA 00:36:49
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 8215.111 ops/min
+# Warmup Iteration   2: 8554.814 ops/min
+# Warmup Iteration   3: 8566.103 ops/min
+# Warmup Iteration   4: 8398.225 ops/min
+# Warmup Iteration   5: 8411.005 ops/min
+Iteration   1: 8343.117 ops/min
+Iteration   2: 8386.210 ops/min
+Iteration   3: 8345.066 ops/min
+Iteration   4: 8358.513 ops/min
+Iteration   5: 8353.129 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  8357.207 ±(99.9%) 66.846 ops/min [Average]
+  (min, avg, max) = (8343.117, 8357.207, 8386.210), stdev = 17.360
+  CI (99.9%): [8290.361, 8424.053] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+# Run progress: 25.00% complete, ETA 00:35:09
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 11, 2021 9:07:40 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 9:07:40 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 9:07:50 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 9:07:50 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+3407.566 ops/min
+# Warmup Iteration   2: 4081.323 ops/min
+# Warmup Iteration   3: 4281.236 ops/min
+# Warmup Iteration   4: 3947.451 ops/min
+# Warmup Iteration   5: 4339.088 ops/min
+Iteration   1: 4277.661 ops/min
+Iteration   2: 4352.502 ops/min
+Iteration   3: 4367.656 ops/min
+Iteration   4: 4388.693 ops/min
+Iteration   5: 4366.810 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  4350.665 ±(99.9%) 164.819 ops/min [Average]
+  (min, avg, max) = (4277.661, 4350.665, 4388.693), stdev = 42.803
+  CI (99.9%): [4185.845, 4515.484] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = ACM)
+
+# Run progress: 28.57% complete, ETA 00:33:29
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 1013.320 ops/min
+# Warmup Iteration   2: 1132.877 ops/min
+# Warmup Iteration   3: 1131.897 ops/min
+# Warmup Iteration   4: 1132.043 ops/min
+# Warmup Iteration   5: 1133.745 ops/min
+Iteration   1: 1135.654 ops/min
+Iteration   2: 1135.139 ops/min
+Iteration   3: 1133.034 ops/min
+Iteration   4: 1132.501 ops/min
+Iteration   5: 1134.168 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  1134.099 ±(99.9%) 5.163 ops/min [Average]
+  (min, avg, max) = (1132.501, 1134.099, 1135.654), stdev = 1.341
+  CI (99.9%): [1128.936, 1139.263] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = EJML)
+
+# Run progress: 32.14% complete, ETA 00:31:49
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 1894.195 ops/min
+# Warmup Iteration   2: 1871.906 ops/min
+# Warmup Iteration   3: 1876.905 ops/min
+# Warmup Iteration   4: 1873.185 ops/min
+# Warmup Iteration   5: 1873.700 ops/min
+Iteration   1: 1873.599 ops/min
+Iteration   2: 1874.404 ops/min
+Iteration   3: 1875.087 ops/min
+Iteration   4: 1873.080 ops/min
+Iteration   5: 1877.127 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  1874.659 ±(99.9%) 6.075 ops/min [Average]
+  (min, avg, max) = (1873.080, 1874.659, 1877.127), stdev = 1.578
+  CI (99.9%): [1868.584, 1880.735] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+# Run progress: 35.71% complete, ETA 00:30:09
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 3474.414 ops/min
+# Warmup Iteration   2: 3590.155 ops/min
+# Warmup Iteration   3: 3590.851 ops/min
+# Warmup Iteration   4: 3591.582 ops/min
+# Warmup Iteration   5: 3628.570 ops/min
+Iteration   1: 3680.219 ops/min
+Iteration   2: 3629.749 ops/min
+Iteration   3: 3628.470 ops/min
+Iteration   4: 3621.233 ops/min
+Iteration   5: 3619.007 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  3635.736 ±(99.9%) 97.367 ops/min [Average]
+  (min, avg, max) = (3619.007, 3635.736, 3680.219), stdev = 25.286
+  CI (99.9%): [3538.368, 3733.103] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+# Run progress: 39.29% complete, ETA 00:28:29
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 11, 2021 9:14:23 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 9:14:23 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 9:14:33 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 9:14:33 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+1637.782 ops/min
+# Warmup Iteration   2: 1920.769 ops/min
+# Warmup Iteration   3: 1989.845 ops/min
+# Warmup Iteration   4: 2001.028 ops/min
+# Warmup Iteration   5: 2014.369 ops/min
+Iteration   1: 2014.861 ops/min
+Iteration   2: 2016.942 ops/min
+Iteration   3: 2033.635 ops/min
+Iteration   4: 2019.591 ops/min
+Iteration   5: 2030.663 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  2023.139 ±(99.9%) 32.577 ops/min [Average]
+  (min, avg, max) = (2014.861, 2023.139, 2033.635), stdev = 8.460
+  CI (99.9%): [1990.562, 2055.715] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = ACM)
+
+# Run progress: 42.86% complete, ETA 00:26:48
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 157.316 ops/min
+# Warmup Iteration   2: 179.280 ops/min
+# Warmup Iteration   3: 181.032 ops/min
+# Warmup Iteration   4: 179.343 ops/min
+# Warmup Iteration   5: 180.810 ops/min
+Iteration   1: 180.408 ops/min
+Iteration   2: 180.119 ops/min
+Iteration   3: 181.037 ops/min
+Iteration   4: 180.043 ops/min
+Iteration   5: 181.208 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  180.563 ±(99.9%) 2.049 ops/min [Average]
+  (min, avg, max) = (180.043, 180.563, 181.208), stdev = 0.532
+  CI (99.9%): [178.514, 182.612] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = EJML)
+
+# Run progress: 46.43% complete, ETA 00:25:11
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 379.281 ops/min
+# Warmup Iteration   2: 367.251 ops/min
+# Warmup Iteration   3: 367.543 ops/min
+# Warmup Iteration   4: 367.476 ops/min
+# Warmup Iteration   5: 367.358 ops/min
+Iteration   1: 367.958 ops/min
+Iteration   2: 367.675 ops/min
+Iteration   3: 367.939 ops/min
+Iteration   4: 367.537 ops/min
+Iteration   5: 367.738 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  367.769 ±(99.9%) 0.690 ops/min [Average]
+  (min, avg, max) = (367.537, 367.769, 367.958), stdev = 0.179
+  CI (99.9%): [367.079, 368.459] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+# Run progress: 50.00% complete, ETA 00:23:32
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 771.743 ops/min
+# Warmup Iteration   2: 746.649 ops/min
+# Warmup Iteration   3: 742.388 ops/min
+# Warmup Iteration   4: 744.339 ops/min
+# Warmup Iteration   5: 743.245 ops/min
+Iteration   1: 738.711 ops/min
+Iteration   2: 743.774 ops/min
+Iteration   3: 746.002 ops/min
+Iteration   4: 740.471 ops/min
+Iteration   5: 741.072 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  742.006 ±(99.9%) 11.090 ops/min [Average]
+  (min, avg, max) = (738.711, 742.006, 746.002), stdev = 2.880
+  CI (99.9%): [730.916, 753.096] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+# Run progress: 53.57% complete, ETA 00:21:52
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 11, 2021 9:21:11 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 9:21:11 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 9:21:21 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 9:21:22 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+373.561 ops/min
+# Warmup Iteration   2: 416.027 ops/min
+# Warmup Iteration   3: 417.526 ops/min
+# Warmup Iteration   4: 435.027 ops/min
+# Warmup Iteration   5: 444.566 ops/min
+Iteration   1: 442.017 ops/min
+Iteration   2: 447.264 ops/min
+Iteration   3: 448.673 ops/min
+Iteration   4: 447.876 ops/min
+Iteration   5: 450.551 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  447.276 ±(99.9%) 12.282 ops/min [Average]
+  (min, avg, max) = (442.017, 447.276, 450.551), stdev = 3.190
+  CI (99.9%): [434.994, 459.559] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = ACM)
+
+# Run progress: 57.14% complete, ETA 00:20:12
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 55.845 ops/min
+# Warmup Iteration   2: 63.485 ops/min
+# Warmup Iteration   3: 63.227 ops/min
+# Warmup Iteration   4: 63.641 ops/min
+# Warmup Iteration   5: 63.952 ops/min
+Iteration   1: 63.846 ops/min
+Iteration   2: 63.512 ops/min
+Iteration   3: 63.618 ops/min
+Iteration   4: 63.519 ops/min
+Iteration   5: 63.732 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  63.645 ±(99.9%) 0.553 ops/min [Average]
+  (min, avg, max) = (63.512, 63.645, 63.846), stdev = 0.144
+  CI (99.9%): [63.092, 64.198] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = EJML)
+
+# Run progress: 60.71% complete, ETA 00:18:35
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 135.457 ops/min
+# Warmup Iteration   2: 134.040 ops/min
+# Warmup Iteration   3: 129.958 ops/min
+# Warmup Iteration   4: 127.380 ops/min
+# Warmup Iteration   5: 127.408 ops/min
+Iteration   1: 127.290 ops/min
+Iteration   2: 127.288 ops/min
+Iteration   3: 127.360 ops/min
+Iteration   4: 127.430 ops/min
+Iteration   5: 127.403 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  127.354 ±(99.9%) 0.248 ops/min [Average]
+  (min, avg, max) = (127.288, 127.354, 127.430), stdev = 0.064
+  CI (99.9%): [127.106, 127.602] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+# Run progress: 64.29% complete, ETA 00:16:56
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 253.604 ops/min
+# Warmup Iteration   2: 252.798 ops/min
+# Warmup Iteration   3: 249.382 ops/min
+# Warmup Iteration   4: 251.305 ops/min
+# Warmup Iteration   5: 252.892 ops/min
+Iteration   1: 252.885 ops/min
+Iteration   2: 252.704 ops/min
+Iteration   3: 254.145 ops/min
+Iteration   4: 252.471 ops/min
+Iteration   5: 253.248 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  253.090 ±(99.9%) 2.520 ops/min [Average]
+  (min, avg, max) = (252.471, 253.090, 254.145), stdev = 0.654
+  CI (99.9%): [250.571, 255.610] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+# Run progress: 67.86% complete, ETA 00:15:16
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 11, 2021 9:28:11 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 9:28:11 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 9:28:22 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 9:28:22 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+130.420 ops/min
+# Warmup Iteration   2: 147.711 ops/min
+# Warmup Iteration   3: 149.601 ops/min
+# Warmup Iteration   4: 157.201 ops/min
+# Warmup Iteration   5: 159.855 ops/min
+Iteration   1: 159.918 ops/min
+Iteration   2: 160.214 ops/min
+Iteration   3: 160.477 ops/min
+Iteration   4: 158.996 ops/min
+Iteration   5: 161.270 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  160.175 ±(99.9%) 3.192 ops/min [Average]
+  (min, avg, max) = (158.996, 160.175, 161.270), stdev = 0.829
+  CI (99.9%): [156.984, 163.367] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = ACM)
+
+# Run progress: 71.43% complete, ETA 00:13:35
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 6.271 ops/min
+# Warmup Iteration   2: 16.956 ops/min
+# Warmup Iteration   3: 17.111 ops/min
+# Warmup Iteration   4: 17.703 ops/min
+# Warmup Iteration   5: 16.679 ops/min
+Iteration   1: 12.172 ops/min
+Iteration   2: 17.457 ops/min
+Iteration   3: 17.043 ops/min
+Iteration   4: 17.248 ops/min
+Iteration   5: 17.145 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  16.213 ±(99.9%) 8.718 ops/min [Average]
+  (min, avg, max) = (12.172, 16.213, 17.457), stdev = 2.264
+  CI (99.9%): [7.495, 24.931] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = EJML)
+
+# Run progress: 75.00% complete, ETA 00:12:01
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 40.783 ops/min
+# Warmup Iteration   2: 41.779 ops/min
+# Warmup Iteration   3: 41.697 ops/min
+# Warmup Iteration   4: 41.128 ops/min
+# Warmup Iteration   5: 40.940 ops/min
+Iteration   1: 40.507 ops/min
+Iteration   2: 37.814 ops/min
+Iteration   3: 38.314 ops/min
+Iteration   4: 38.227 ops/min
+Iteration   5: 38.310 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  38.634 ±(99.9%) 4.109 ops/min [Average]
+  (min, avg, max) = (37.814, 38.634, 40.507), stdev = 1.067
+  CI (99.9%): [34.525, 42.744] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+# Run progress: 78.57% complete, ETA 00:10:20
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 78.877 ops/min
+# Warmup Iteration   2: 77.682 ops/min
+# Warmup Iteration   3: 77.671 ops/min
+# Warmup Iteration   4: 77.854 ops/min
+# Warmup Iteration   5: 77.541 ops/min
+Iteration   1: 78.004 ops/min
+Iteration   2: 76.473 ops/min
+Iteration   3: 77.704 ops/min
+Iteration   4: 77.563 ops/min
+Iteration   5: 77.173 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  77.384 ±(99.9%) 2.272 ops/min [Average]
+  (min, avg, max) = (76.473, 77.384, 78.004), stdev = 0.590
+  CI (99.9%): [75.111, 79.656] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+# Run progress: 82.14% complete, ETA 00:08:38
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 11, 2021 9:35:44 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 9:35:44 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 9:35:55 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 9:35:55 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+40.844 ops/min
+# Warmup Iteration   2: 47.293 ops/min
+# Warmup Iteration   3: 46.841 ops/min
+# Warmup Iteration   4: 48.018 ops/min
+# Warmup Iteration   5: 48.412 ops/min
+Iteration   1: 48.969 ops/min
+Iteration   2: 50.359 ops/min
+Iteration   3: 50.516 ops/min
+Iteration   4: 50.521 ops/min
+Iteration   5: 50.795 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  50.232 ±(99.9%) 2.785 ops/min [Average]
+  (min, avg, max) = (48.969, 50.232, 50.795), stdev = 0.723
+  CI (99.9%): [47.447, 53.017] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+# Run progress: 85.71% complete, ETA 00:06:56
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 4.731 ops/min
+# Warmup Iteration   2: 3.590 ops/min
+# Warmup Iteration   3: 5.106 ops/min
+# Warmup Iteration   4: 5.058 ops/min
+# Warmup Iteration   5: 4.354 ops/min
+Iteration   1: 4.916 ops/min
+Iteration   2: 4.412 ops/min
+Iteration   3: 4.738 ops/min
+Iteration   4: 5.016 ops/min
+Iteration   5: 5.064 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  4.829 ±(99.9%) 1.018 ops/min [Average]
+  (min, avg, max) = (4.412, 4.829, 5.064), stdev = 0.264
+  CI (99.9%): [3.811, 5.847] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+# Run progress: 89.29% complete, ETA 00:05:17
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 16.810 ops/min
+# Warmup Iteration   2: 17.032 ops/min
+# Warmup Iteration   3: 17.167 ops/min
+# Warmup Iteration   4: 17.123 ops/min
+# Warmup Iteration   5: 17.100 ops/min
+Iteration   1: 17.128 ops/min
+Iteration   2: 17.013 ops/min
+Iteration   3: 17.074 ops/min
+Iteration   4: 17.119 ops/min
+Iteration   5: 17.118 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  17.090 ±(99.9%) 0.185 ops/min [Average]
+  (min, avg, max) = (17.013, 17.090, 17.128), stdev = 0.048
+  CI (99.9%): [16.906, 17.275] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+# Run progress: 92.86% complete, ETA 00:03:32
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 27.749 ops/min
+# Warmup Iteration   2: 27.100 ops/min
+# Warmup Iteration   3: 28.046 ops/min
+# Warmup Iteration   4: 28.296 ops/min
+# Warmup Iteration   5: 28.477 ops/min
+Iteration   1: 28.174 ops/min
+Iteration   2: 28.071 ops/min
+Iteration   3: 28.029 ops/min
+Iteration   4: 28.183 ops/min
+Iteration   5: 28.021 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  28.096 ±(99.9%) 0.301 ops/min [Average]
+  (min, avg, max) = (28.021, 28.096, 28.183), stdev = 0.078
+  CI (99.9%): [27.795, 28.397] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.DecomposeSVD.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+# Run progress: 96.43% complete, ETA 00:01:47
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 11, 2021 9:44:08 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 11, 2021 9:44:08 AM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+Nov 11, 2021 9:44:19 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 11, 2021 9:44:19 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+17.195 ops/min
+# Warmup Iteration   2: 19.561 ops/min
+# Warmup Iteration   3: 20.061 ops/min
+# Warmup Iteration   4: 20.209 ops/min
+# Warmup Iteration   5: 20.300 ops/min
+Iteration   1: 20.373 ops/min
+Iteration   2: 20.402 ops/min
+Iteration   3: 20.469 ops/min
+Iteration   4: 20.722 ops/min
+Iteration   5: 21.197 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.DecomposeSVD.execute":
+  20.633 ±(99.9%) 1.326 ops/min [Average]
+  (min, avg, max) = (20.373, 20.633, 21.197), stdev = 0.344
+  CI (99.9%): [19.306, 21.959] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:50:22
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark             (dim)   (lib)   Mode  Cnt      Score     Error    Units
+DecomposeSVD.execute    100     ACM  thrpt    5   9377.961 ±  28.082  ops/min
+DecomposeSVD.execute    100    EJML  thrpt    5  13672.682 ±  26.768  ops/min
+DecomposeSVD.execute    100  ojAlgo  thrpt    5  23912.196 ± 150.505  ops/min
+DecomposeSVD.execute    100     MTJ  thrpt    5  12597.415 ± 763.345  ops/min
+DecomposeSVD.execute    150     ACM  thrpt    5   2726.849 ±  11.796  ops/min
+DecomposeSVD.execute    150    EJML  thrpt    5   4350.329 ±   4.283  ops/min
+DecomposeSVD.execute    150  ojAlgo  thrpt    5   8357.207 ±  66.846  ops/min
+DecomposeSVD.execute    150     MTJ  thrpt    5   4350.665 ± 164.819  ops/min
+DecomposeSVD.execute    200     ACM  thrpt    5   1134.099 ±   5.163  ops/min
+DecomposeSVD.execute    200    EJML  thrpt    5   1874.659 ±   6.075  ops/min
+DecomposeSVD.execute    200  ojAlgo  thrpt    5   3635.736 ±  97.367  ops/min
+DecomposeSVD.execute    200     MTJ  thrpt    5   2023.139 ±  32.577  ops/min
+DecomposeSVD.execute    350     ACM  thrpt    5    180.563 ±   2.049  ops/min
+DecomposeSVD.execute    350    EJML  thrpt    5    367.769 ±   0.690  ops/min
+DecomposeSVD.execute    350  ojAlgo  thrpt    5    742.006 ±  11.090  ops/min
+DecomposeSVD.execute    350     MTJ  thrpt    5    447.276 ±  12.282  ops/min
+DecomposeSVD.execute    500     ACM  thrpt    5     63.645 ±   0.553  ops/min
+DecomposeSVD.execute    500    EJML  thrpt    5    127.354 ±   0.248  ops/min
+DecomposeSVD.execute    500  ojAlgo  thrpt    5    253.090 ±   2.520  ops/min
+DecomposeSVD.execute    500     MTJ  thrpt    5    160.175 ±   3.192  ops/min
+DecomposeSVD.execute    750     ACM  thrpt    5     16.213 ±   8.718  ops/min
+DecomposeSVD.execute    750    EJML  thrpt    5     38.634 ±   4.109  ops/min
+DecomposeSVD.execute    750  ojAlgo  thrpt    5     77.384 ±   2.272  ops/min
+DecomposeSVD.execute    750     MTJ  thrpt    5     50.232 ±   2.785  ops/min
+DecomposeSVD.execute   1000     ACM  thrpt    5      4.829 ±   1.018  ops/min
+DecomposeSVD.execute   1000    EJML  thrpt    5     17.090 ±   0.185  ops/min
+DecomposeSVD.execute   1000  ojAlgo  thrpt    5     28.096 ±   0.301  ops/min
+DecomposeSVD.execute   1000     MTJ  thrpt    5     20.633 ±   1.326  ops/min
+
+Benchmark result is saved to jmh-result.csv

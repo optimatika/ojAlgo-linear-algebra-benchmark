@@ -1,0 +1,1019 @@
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = ACM)
+
+# Run progress: 0.00% complete, ETA 00:46:40
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 154527.892 ops/min
+# Warmup Iteration   2: 156950.930 ops/min
+# Warmup Iteration   3: 155814.091 ops/min
+# Warmup Iteration   4: 155647.596 ops/min
+# Warmup Iteration   5: 156917.425 ops/min
+Iteration   1: 156366.618 ops/min
+Iteration   2: 156268.981 ops/min
+Iteration   3: 156429.657 ops/min
+Iteration   4: 156354.056 ops/min
+Iteration   5: 156248.921 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  156333.647 ±(99.9%) 286.102 ops/min [Average]
+  (min, avg, max) = (156248.921, 156333.647, 156429.657), stdev = 74.300
+  CI (99.9%): [156047.545, 156619.749] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = EJML)
+
+# Run progress: 3.57% complete, ETA 00:45:09
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 144782.318 ops/min
+# Warmup Iteration   2: 145464.215 ops/min
+# Warmup Iteration   3: 146756.712 ops/min
+# Warmup Iteration   4: 148493.845 ops/min
+# Warmup Iteration   5: 147299.660 ops/min
+Iteration   1: 147590.176 ops/min
+Iteration   2: 147662.366 ops/min
+Iteration   3: 147944.814 ops/min
+Iteration   4: 147830.898 ops/min
+Iteration   5: 149037.237 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  148013.098 ±(99.9%) 2268.774 ops/min [Average]
+  (min, avg, max) = (147590.176, 148013.098, 149037.237), stdev = 589.193
+  CI (99.9%): [145744.324, 150281.872] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+# Run progress: 7.14% complete, ETA 00:43:28
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 299862.957 ops/min
+# Warmup Iteration   2: 298291.525 ops/min
+# Warmup Iteration   3: 309083.948 ops/min
+# Warmup Iteration   4: 299796.464 ops/min
+# Warmup Iteration   5: 296279.680 ops/min
+Iteration   1: 295437.650 ops/min
+Iteration   2: 297726.636 ops/min
+Iteration   3: 298495.998 ops/min
+Iteration   4: 297945.648 ops/min
+Iteration   5: 297908.362 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  297502.859 ±(99.9%) 4581.289 ops/min [Average]
+  (min, avg, max) = (295437.650, 297502.859, 298495.998), stdev = 1189.746
+  CI (99.9%): [292921.570, 302084.148] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+# Run progress: 10.71% complete, ETA 00:41:48
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 10, 2021 9:30:02 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 10, 2021 9:30:02 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+159798.795 ops/min
+# Warmup Iteration   2: 161168.129 ops/min
+# Warmup Iteration   3: 161394.217 ops/min
+# Warmup Iteration   4: 161298.960 ops/min
+# Warmup Iteration   5: 161060.857 ops/min
+Iteration   1: 162129.723 ops/min
+Iteration   2: 162259.053 ops/min
+Iteration   3: 162193.259 ops/min
+Iteration   4: 162195.718 ops/min
+Iteration   5: 162262.140 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  162207.979 ±(99.9%) 211.199 ops/min [Average]
+  (min, avg, max) = (162129.723, 162207.979, 162262.140), stdev = 54.848
+  CI (99.9%): [161996.779, 162419.178] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = ACM)
+
+# Run progress: 14.29% complete, ETA 00:40:07
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 47231.778 ops/min
+# Warmup Iteration   2: 48262.182 ops/min
+# Warmup Iteration   3: 48296.782 ops/min
+# Warmup Iteration   4: 48309.686 ops/min
+# Warmup Iteration   5: 48324.357 ops/min
+Iteration   1: 48323.601 ops/min
+Iteration   2: 48297.136 ops/min
+Iteration   3: 48240.265 ops/min
+Iteration   4: 48079.821 ops/min
+Iteration   5: 48125.782 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  48213.321 ±(99.9%) 410.223 ops/min [Average]
+  (min, avg, max) = (48079.821, 48213.321, 48323.601), stdev = 106.534
+  CI (99.9%): [47803.098, 48623.544] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = EJML)
+
+# Run progress: 17.86% complete, ETA 00:38:27
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 44062.388 ops/min
+# Warmup Iteration   2: 45084.196 ops/min
+# Warmup Iteration   3: 44683.115 ops/min
+# Warmup Iteration   4: 44690.170 ops/min
+# Warmup Iteration   5: 44718.716 ops/min
+Iteration   1: 44760.001 ops/min
+Iteration   2: 44757.357 ops/min
+Iteration   3: 44719.922 ops/min
+Iteration   4: 44500.753 ops/min
+Iteration   5: 44523.176 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  44652.242 ±(99.9%) 497.794 ops/min [Average]
+  (min, avg, max) = (44500.753, 44652.242, 44760.001), stdev = 129.276
+  CI (99.9%): [44154.447, 45150.036] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+# Run progress: 21.43% complete, ETA 00:36:46
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 111277.546 ops/min
+# Warmup Iteration   2: 108199.964 ops/min
+# Warmup Iteration   3: 108251.906 ops/min
+# Warmup Iteration   4: 109957.335 ops/min
+# Warmup Iteration   5: 110333.648 ops/min
+Iteration   1: 110200.298 ops/min
+Iteration   2: 108715.156 ops/min
+Iteration   3: 110387.410 ops/min
+Iteration   4: 109780.828 ops/min
+Iteration   5: 109928.145 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  109802.367 ±(99.9%) 2509.528 ops/min [Average]
+  (min, avg, max) = (108715.156, 109802.367, 110387.410), stdev = 651.716
+  CI (99.9%): [107292.839, 112311.896] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+# Run progress: 25.00% complete, ETA 00:35:06
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 10, 2021 9:36:43 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 10, 2021 9:36:43 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+54697.429 ops/min
+# Warmup Iteration   2: 53404.920 ops/min
+# Warmup Iteration   3: 53414.514 ops/min
+# Warmup Iteration   4: 53462.776 ops/min
+# Warmup Iteration   5: 53462.040 ops/min
+Iteration   1: 53452.692 ops/min
+Iteration   2: 53444.018 ops/min
+Iteration   3: 53476.707 ops/min
+Iteration   4: 53445.015 ops/min
+Iteration   5: 53458.289 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  53455.344 ±(99.9%) 51.195 ops/min [Average]
+  (min, avg, max) = (53444.018, 53455.344, 53476.707), stdev = 13.295
+  CI (99.9%): [53404.149, 53506.540] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = ACM)
+
+# Run progress: 28.57% complete, ETA 00:33:26
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 20259.609 ops/min
+# Warmup Iteration   2: 20406.575 ops/min
+# Warmup Iteration   3: 20246.999 ops/min
+# Warmup Iteration   4: 20255.348 ops/min
+# Warmup Iteration   5: 20268.193 ops/min
+Iteration   1: 20272.556 ops/min
+Iteration   2: 20268.915 ops/min
+Iteration   3: 20265.479 ops/min
+Iteration   4: 20274.034 ops/min
+Iteration   5: 20270.472 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  20270.291 ±(99.9%) 12.802 ops/min [Average]
+  (min, avg, max) = (20265.479, 20270.291, 20274.034), stdev = 3.325
+  CI (99.9%): [20257.489, 20283.094] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = EJML)
+
+# Run progress: 32.14% complete, ETA 00:31:46
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 18689.205 ops/min
+# Warmup Iteration   2: 18876.801 ops/min
+# Warmup Iteration   3: 18986.015 ops/min
+# Warmup Iteration   4: 18988.911 ops/min
+# Warmup Iteration   5: 19047.783 ops/min
+Iteration   1: 19075.988 ops/min
+Iteration   2: 19073.190 ops/min
+Iteration   3: 19177.876 ops/min
+Iteration   4: 19114.282 ops/min
+Iteration   5: 19011.818 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  19090.631 ±(99.9%) 235.024 ops/min [Average]
+  (min, avg, max) = (19011.818, 19090.631, 19177.876), stdev = 61.035
+  CI (99.9%): [18855.607, 19325.655] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+# Run progress: 35.71% complete, ETA 00:30:05
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 53766.058 ops/min
+# Warmup Iteration   2: 50504.999 ops/min
+# Warmup Iteration   3: 50704.892 ops/min
+# Warmup Iteration   4: 50708.878 ops/min
+# Warmup Iteration   5: 50593.509 ops/min
+Iteration   1: 50598.668 ops/min
+Iteration   2: 50555.329 ops/min
+Iteration   3: 51092.696 ops/min
+Iteration   4: 50338.761 ops/min
+Iteration   5: 50338.151 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  50584.721 ±(99.9%) 1187.457 ops/min [Average]
+  (min, avg, max) = (50338.151, 50584.721, 51092.696), stdev = 308.379
+  CI (99.9%): [49397.264, 51772.178] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+# Run progress: 39.29% complete, ETA 00:28:25
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 10, 2021 9:43:24 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 10, 2021 9:43:24 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+25021.388 ops/min
+# Warmup Iteration   2: 25660.640 ops/min
+# Warmup Iteration   3: 25190.986 ops/min
+# Warmup Iteration   4: 25194.028 ops/min
+# Warmup Iteration   5: 25197.110 ops/min
+Iteration   1: 25203.778 ops/min
+Iteration   2: 25204.540 ops/min
+Iteration   3: 25177.277 ops/min
+Iteration   4: 25203.539 ops/min
+Iteration   5: 25188.171 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  25195.461 ±(99.9%) 47.186 ops/min [Average]
+  (min, avg, max) = (25177.277, 25195.461, 25204.540), stdev = 12.254
+  CI (99.9%): [25148.275, 25242.647] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = ACM)
+
+# Run progress: 42.86% complete, ETA 00:26:45
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 3455.055 ops/min
+# Warmup Iteration   2: 3553.308 ops/min
+# Warmup Iteration   3: 3579.489 ops/min
+# Warmup Iteration   4: 3580.795 ops/min
+# Warmup Iteration   5: 3577.799 ops/min
+Iteration   1: 3578.999 ops/min
+Iteration   2: 3579.230 ops/min
+Iteration   3: 3576.874 ops/min
+Iteration   4: 3576.504 ops/min
+Iteration   5: 3569.653 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  3576.252 ±(99.9%) 14.964 ops/min [Average]
+  (min, avg, max) = (3569.653, 3576.252, 3579.230), stdev = 3.886
+  CI (99.9%): [3561.287, 3591.216] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = EJML)
+
+# Run progress: 46.43% complete, ETA 00:25:04
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 3435.321 ops/min
+# Warmup Iteration   2: 3469.144 ops/min
+# Warmup Iteration   3: 3472.214 ops/min
+# Warmup Iteration   4: 3471.454 ops/min
+# Warmup Iteration   5: 3474.221 ops/min
+Iteration   1: 3474.381 ops/min
+Iteration   2: 3475.473 ops/min
+Iteration   3: 3474.369 ops/min
+Iteration   4: 3477.911 ops/min
+Iteration   5: 3486.997 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  3477.826 ±(99.9%) 20.509 ops/min [Average]
+  (min, avg, max) = (3474.369, 3477.826, 3486.997), stdev = 5.326
+  CI (99.9%): [3457.317, 3498.335] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+# Run progress: 50.00% complete, ETA 00:23:24
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 12553.447 ops/min
+# Warmup Iteration   2: 13177.813 ops/min
+# Warmup Iteration   3: 12922.315 ops/min
+# Warmup Iteration   4: 11011.566 ops/min
+# Warmup Iteration   5: 11002.198 ops/min
+Iteration   1: 11008.952 ops/min
+Iteration   2: 10997.730 ops/min
+Iteration   3: 11028.165 ops/min
+Iteration   4: 11040.336 ops/min
+Iteration   5: 11012.582 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  11017.553 ±(99.9%) 64.528 ops/min [Average]
+  (min, avg, max) = (10997.730, 11017.553, 11040.336), stdev = 16.758
+  CI (99.9%): [10953.025, 11082.081] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+# Run progress: 53.57% complete, ETA 00:21:44
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 10, 2021 9:50:05 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 10, 2021 9:50:06 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+4908.776 ops/min
+# Warmup Iteration   2: 5302.030 ops/min
+# Warmup Iteration   3: 5303.422 ops/min
+# Warmup Iteration   4: 5302.251 ops/min
+# Warmup Iteration   5: 5304.889 ops/min
+Iteration   1: 5303.232 ops/min
+Iteration   2: 5270.330 ops/min
+Iteration   3: 5261.278 ops/min
+Iteration   4: 5264.694 ops/min
+Iteration   5: 5266.447 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  5273.196 ±(99.9%) 65.863 ops/min [Average]
+  (min, avg, max) = (5261.278, 5273.196, 5303.232), stdev = 17.104
+  CI (99.9%): [5207.333, 5339.060] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = ACM)
+
+# Run progress: 57.14% complete, ETA 00:20:03
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 1220.707 ops/min
+# Warmup Iteration   2: 1239.457 ops/min
+# Warmup Iteration   3: 1245.004 ops/min
+# Warmup Iteration   4: 1246.851 ops/min
+# Warmup Iteration   5: 1244.908 ops/min
+Iteration   1: 1245.260 ops/min
+Iteration   2: 1245.505 ops/min
+Iteration   3: 1246.864 ops/min
+Iteration   4: 1245.168 ops/min
+Iteration   5: 1247.460 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  1246.051 ±(99.9%) 4.015 ops/min [Average]
+  (min, avg, max) = (1245.168, 1246.051, 1247.460), stdev = 1.043
+  CI (99.9%): [1242.036, 1250.066] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = EJML)
+
+# Run progress: 60.71% complete, ETA 00:18:23
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 1147.434 ops/min
+# Warmup Iteration   2: 1156.327 ops/min
+# Warmup Iteration   3: 1153.996 ops/min
+# Warmup Iteration   4: 1152.391 ops/min
+# Warmup Iteration   5: 1151.082 ops/min
+Iteration   1: 1152.315 ops/min
+Iteration   2: 1150.062 ops/min
+Iteration   3: 1152.344 ops/min
+Iteration   4: 1153.491 ops/min
+Iteration   5: 1151.289 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  1151.900 ±(99.9%) 4.966 ops/min [Average]
+  (min, avg, max) = (1150.062, 1151.900, 1153.491), stdev = 1.290
+  CI (99.9%): [1146.934, 1156.866] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+# Run progress: 64.29% complete, ETA 00:16:43
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 3656.878 ops/min
+# Warmup Iteration   2: 3681.307 ops/min
+# Warmup Iteration   3: 3790.986 ops/min
+# Warmup Iteration   4: 3762.793 ops/min
+# Warmup Iteration   5: 3759.108 ops/min
+Iteration   1: 3795.021 ops/min
+Iteration   2: 3748.931 ops/min
+Iteration   3: 3817.320 ops/min
+Iteration   4: 3773.049 ops/min
+Iteration   5: 3759.301 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  3778.724 ±(99.9%) 106.370 ops/min [Average]
+  (min, avg, max) = (3748.931, 3778.724, 3817.320), stdev = 27.624
+  CI (99.9%): [3672.354, 3885.094] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+# Run progress: 67.86% complete, ETA 00:15:03
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 10, 2021 9:56:47 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 10, 2021 9:56:47 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+1745.549 ops/min
+# Warmup Iteration   2: 1892.499 ops/min
+# Warmup Iteration   3: 1892.187 ops/min
+# Warmup Iteration   4: 1892.497 ops/min
+# Warmup Iteration   5: 1892.145 ops/min
+Iteration   1: 1892.856 ops/min
+Iteration   2: 1893.240 ops/min
+Iteration   3: 1894.821 ops/min
+Iteration   4: 1893.333 ops/min
+Iteration   5: 1894.129 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  1893.676 ±(99.9%) 3.042 ops/min [Average]
+  (min, avg, max) = (1892.856, 1893.676, 1894.821), stdev = 0.790
+  CI (99.9%): [1890.634, 1896.717] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = ACM)
+
+# Run progress: 71.43% complete, ETA 00:13:22
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 338.627 ops/min
+# Warmup Iteration   2: 351.351 ops/min
+# Warmup Iteration   3: 347.674 ops/min
+# Warmup Iteration   4: 351.670 ops/min
+# Warmup Iteration   5: 350.791 ops/min
+Iteration   1: 355.556 ops/min
+Iteration   2: 349.163 ops/min
+Iteration   3: 352.372 ops/min
+Iteration   4: 350.037 ops/min
+Iteration   5: 353.059 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  352.037 ±(99.9%) 9.780 ops/min [Average]
+  (min, avg, max) = (349.163, 352.037, 355.556), stdev = 2.540
+  CI (99.9%): [342.258, 361.817] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = EJML)
+
+# Run progress: 75.00% complete, ETA 00:11:42
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 333.702 ops/min
+# Warmup Iteration   2: 336.319 ops/min
+# Warmup Iteration   3: 335.114 ops/min
+# Warmup Iteration   4: 335.690 ops/min
+# Warmup Iteration   5: 335.917 ops/min
+Iteration   1: 335.210 ops/min
+Iteration   2: 336.380 ops/min
+Iteration   3: 335.543 ops/min
+Iteration   4: 335.720 ops/min
+Iteration   5: 336.073 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  335.785 ±(99.9%) 1.754 ops/min [Average]
+  (min, avg, max) = (335.210, 335.785, 336.380), stdev = 0.456
+  CI (99.9%): [334.031, 337.539] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+# Run progress: 78.57% complete, ETA 00:10:02
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 1000.111 ops/min
+# Warmup Iteration   2: 1055.000 ops/min
+# Warmup Iteration   3: 1070.123 ops/min
+# Warmup Iteration   4: 1072.778 ops/min
+# Warmup Iteration   5: 1069.271 ops/min
+Iteration   1: 1068.599 ops/min
+Iteration   2: 1065.681 ops/min
+Iteration   3: 1080.990 ops/min
+Iteration   4: 1059.236 ops/min
+Iteration   5: 1074.525 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  1069.806 ±(99.9%) 32.075 ops/min [Average]
+  (min, avg, max) = (1059.236, 1069.806, 1080.990), stdev = 8.330
+  CI (99.9%): [1037.732, 1101.881] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+# Run progress: 82.14% complete, ETA 00:08:22
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 10, 2021 10:03:30 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 10, 2021 10:03:31 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+529.196 ops/min
+# Warmup Iteration   2: 557.794 ops/min
+# Warmup Iteration   3: 569.357 ops/min
+# Warmup Iteration   4: 570.996 ops/min
+# Warmup Iteration   5: 569.947 ops/min
+Iteration   1: 570.699 ops/min
+Iteration   2: 570.529 ops/min
+Iteration   3: 570.513 ops/min
+Iteration   4: 571.210 ops/min
+Iteration   5: 571.638 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  570.918 ±(99.9%) 1.893 ops/min [Average]
+  (min, avg, max) = (570.513, 570.918, 571.638), stdev = 0.492
+  CI (99.9%): [569.024, 572.811] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+# Run progress: 85.71% complete, ETA 00:06:41
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 124.992 ops/min
+# Warmup Iteration   2: 133.085 ops/min
+# Warmup Iteration   3: 135.268 ops/min
+# Warmup Iteration   4: 135.495 ops/min
+# Warmup Iteration   5: 135.843 ops/min
+Iteration   1: 135.203 ops/min
+Iteration   2: 135.742 ops/min
+Iteration   3: 136.877 ops/min
+Iteration   4: 136.868 ops/min
+Iteration   5: 136.896 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  136.317 ±(99.9%) 3.059 ops/min [Average]
+  (min, avg, max) = (135.203, 136.317, 136.896), stdev = 0.794
+  CI (99.9%): [133.259, 139.376] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+# Run progress: 89.29% complete, ETA 00:05:01
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 142.828 ops/min
+# Warmup Iteration   2: 142.354 ops/min
+# Warmup Iteration   3: 143.352 ops/min
+# Warmup Iteration   4: 142.323 ops/min
+# Warmup Iteration   5: 142.251 ops/min
+Iteration   1: 142.302 ops/min
+Iteration   2: 142.285 ops/min
+Iteration   3: 142.771 ops/min
+Iteration   4: 143.096 ops/min
+Iteration   5: 142.324 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  142.556 ±(99.9%) 1.401 ops/min [Average]
+  (min, avg, max) = (142.285, 142.556, 143.096), stdev = 0.364
+  CI (99.9%): [141.155, 143.957] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+# Run progress: 92.86% complete, ETA 00:03:21
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: 502.416 ops/min
+# Warmup Iteration   2: 510.927 ops/min
+# Warmup Iteration   3: 529.063 ops/min
+# Warmup Iteration   4: 525.364 ops/min
+# Warmup Iteration   5: 524.120 ops/min
+Iteration   1: 522.732 ops/min
+Iteration   2: 530.403 ops/min
+Iteration   3: 528.464 ops/min
+Iteration   4: 525.315 ops/min
+Iteration   5: 523.706 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  526.124 ±(99.9%) 12.447 ops/min [Average]
+  (min, avg, max) = (522.732, 526.124, 530.403), stdev = 3.232
+  CI (99.9%): [513.677, 538.570] (assumes normal distribution)
+
+
+# JMH version: 1.33
+# VM version: JDK 17.0.1, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-jvmci-21.3-b05
+# VM invoker: /home/anders/graalvm-ee-java17-21.3.0/bin/java
+# VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:-UnlockExperimentalVMOptions
+# Blackhole mode: full + dont-inline hint (default, use -Djmh.blackhole.autoDetect=true to auto-detect)
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.GeneralSolve.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+# Run progress: 96.43% complete, ETA 00:01:40
+# Fork: 1 of 1
+Java HotSpot(TM) 64-Bit Server VM warning: -XX:ThreadPriorityPolicy=1 may require system level permission, e.g., being the root user. If the necessary permission is not possessed, changes to priority will be silently ignored.
+# Warmup Iteration   1: Nov 10, 2021 10:10:16 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+Nov 10, 2021 10:10:16 PM com.github.fommil.netlib.LAPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+227.542 ops/min
+# Warmup Iteration   2: 236.026 ops/min
+# Warmup Iteration   3: 238.760 ops/min
+# Warmup Iteration   4: 241.730 ops/min
+# Warmup Iteration   5: 242.795 ops/min
+Iteration   1: 242.549 ops/min
+Iteration   2: 242.571 ops/min
+Iteration   3: 242.503 ops/min
+Iteration   4: 242.527 ops/min
+Iteration   5: 242.474 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.GeneralSolve.execute":
+  242.525 ±(99.9%) 0.146 ops/min [Average]
+  (min, avg, max) = (242.474, 242.525, 242.571), stdev = 0.038
+  CI (99.9%): [242.379, 242.671] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:46:56
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark             (dim)   (lib)   Mode  Cnt       Score      Error    Units
+GeneralSolve.execute    100     ACM  thrpt    5  156333.647 ±  286.102  ops/min
+GeneralSolve.execute    100    EJML  thrpt    5  148013.098 ± 2268.774  ops/min
+GeneralSolve.execute    100  ojAlgo  thrpt    5  297502.859 ± 4581.289  ops/min
+GeneralSolve.execute    100     MTJ  thrpt    5  162207.979 ±  211.199  ops/min
+GeneralSolve.execute    150     ACM  thrpt    5   48213.321 ±  410.223  ops/min
+GeneralSolve.execute    150    EJML  thrpt    5   44652.242 ±  497.794  ops/min
+GeneralSolve.execute    150  ojAlgo  thrpt    5  109802.367 ± 2509.528  ops/min
+GeneralSolve.execute    150     MTJ  thrpt    5   53455.344 ±   51.195  ops/min
+GeneralSolve.execute    200     ACM  thrpt    5   20270.291 ±   12.802  ops/min
+GeneralSolve.execute    200    EJML  thrpt    5   19090.631 ±  235.024  ops/min
+GeneralSolve.execute    200  ojAlgo  thrpt    5   50584.721 ± 1187.457  ops/min
+GeneralSolve.execute    200     MTJ  thrpt    5   25195.461 ±   47.186  ops/min
+GeneralSolve.execute    350     ACM  thrpt    5    3576.252 ±   14.964  ops/min
+GeneralSolve.execute    350    EJML  thrpt    5    3477.826 ±   20.509  ops/min
+GeneralSolve.execute    350  ojAlgo  thrpt    5   11017.553 ±   64.528  ops/min
+GeneralSolve.execute    350     MTJ  thrpt    5    5273.196 ±   65.863  ops/min
+GeneralSolve.execute    500     ACM  thrpt    5    1246.051 ±    4.015  ops/min
+GeneralSolve.execute    500    EJML  thrpt    5    1151.900 ±    4.966  ops/min
+GeneralSolve.execute    500  ojAlgo  thrpt    5    3778.724 ±  106.370  ops/min
+GeneralSolve.execute    500     MTJ  thrpt    5    1893.676 ±    3.042  ops/min
+GeneralSolve.execute    750     ACM  thrpt    5     352.037 ±    9.780  ops/min
+GeneralSolve.execute    750    EJML  thrpt    5     335.785 ±    1.754  ops/min
+GeneralSolve.execute    750  ojAlgo  thrpt    5    1069.806 ±   32.075  ops/min
+GeneralSolve.execute    750     MTJ  thrpt    5     570.918 ±    1.893  ops/min
+GeneralSolve.execute   1000     ACM  thrpt    5     136.317 ±    3.059  ops/min
+GeneralSolve.execute   1000    EJML  thrpt    5     142.556 ±    1.401  ops/min
+GeneralSolve.execute   1000  ojAlgo  thrpt    5     526.124 ±   12.447  ops/min
+GeneralSolve.execute   1000     MTJ  thrpt    5     242.525 ±    0.146  ops/min
+
+Benchmark result is saved to jmh-result.csv

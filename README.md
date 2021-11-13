@@ -8,6 +8,15 @@ EJML | A pure Java, no dependecies, efficient linear algebra package (just like 
 MTJ | Continuing the fortran tradition of BLAS and LAPACK and bringing it over to Java. MTJ depends on netlib-java that will automatically switch between Java and native code libraries. When used on a Mac it will default to use Apple's built in vecLib library which is very fast. It's included as a reference to what can be achieved with native code.
 Apache Commons Math | Essentially all Java linear algebra libraries available are developed by "small" teams. Apache Commons Math is the only library backed by an organisation that could be described as "large" (I conclude that simply because it is an Apache project). Other libraries must offer some benfit over using Commons Math to justify their existence.
 
-Currently no plans to publish any results, but you'll find some as part of the javadoc comments on the individual benchmark classes. 
 
-Run the benchmarks yourself if you're interested.
+
+## Results
+
+Various benchmark results are sporadically published at the ojAlgo web site: https://www.ojalgo.org/category/benchmarks/
+
+Running these benchmarks is easy. They're based on JMH. Just clone the repository. Do `mvn clean install` and then
+```
+java -jar ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying
+```
+
+Replace FillByMultiplying with which ever benchmark you want to run.

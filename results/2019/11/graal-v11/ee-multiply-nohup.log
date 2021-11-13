@@ -1,0 +1,968 @@
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.openjdk.jmh.util.Utils (file:/home/anders/ojlab.jar) to field java.io.PrintStream.charOut
+WARNING: Please consider reporting this to the maintainers of org.openjdk.jmh.util.Utils
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = ACM)
+
+# Run progress: 0.00% complete, ETA 04:40:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 38771.805 ops/min
+# Warmup Iteration   2: 38787.490 ops/min
+# Warmup Iteration   3: 38466.890 ops/min
+# Warmup Iteration   4: 37293.926 ops/min
+# Warmup Iteration   5: 37254.350 ops/min
+# Warmup Iteration   6: 37229.989 ops/min
+# Warmup Iteration   7: 38171.503 ops/min
+Iteration   1: 38412.442 ops/min
+Iteration   2: 37508.523 ops/min
+Iteration   3: 37011.884 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  37644.283 ±(99.9%) 12954.503 ops/min [Average]
+  (min, avg, max) = (37011.884, 37644.283, 38412.442), stdev = 710.080
+  CI (99.9%): [24689.780, 50598.786] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = EJML)
+
+# Run progress: 3.57% complete, ETA 04:30:25
+# Fork: 1 of 1
+# Warmup Iteration   1: 150674.991 ops/min
+# Warmup Iteration   2: 145648.430 ops/min
+# Warmup Iteration   3: 146942.626 ops/min
+# Warmup Iteration   4: 146265.773 ops/min
+# Warmup Iteration   5: 144846.551 ops/min
+# Warmup Iteration   6: 145133.407 ops/min
+# Warmup Iteration   7: 145298.242 ops/min
+Iteration   1: 145256.245 ops/min
+Iteration   2: 146772.781 ops/min
+Iteration   3: 145669.888 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  145899.638 ±(99.9%) 14301.953 ops/min [Average]
+  (min, avg, max) = (145256.245, 145899.638, 146772.781), stdev = 783.938
+  CI (99.9%): [131597.685, 160201.591] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+# Run progress: 7.14% complete, ETA 04:20:23
+# Fork: 1 of 1
+# Warmup Iteration   1: 163122.337 ops/min
+# Warmup Iteration   2: 164945.595 ops/min
+# Warmup Iteration   3: 155814.612 ops/min
+# Warmup Iteration   4: 166309.139 ops/min
+# Warmup Iteration   5: 180927.759 ops/min
+# Warmup Iteration   6: 158699.836 ops/min
+# Warmup Iteration   7: 158717.382 ops/min
+Iteration   1: 169015.110 ops/min
+Iteration   2: 173797.820 ops/min
+Iteration   3: 162769.688 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  168527.540 ±(99.9%) 100891.607 ops/min [Average]
+  (min, avg, max) = (162769.688, 168527.540, 173797.820), stdev = 5530.209
+  CI (99.9%): [67635.933, 269419.146] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+# Run progress: 10.71% complete, ETA 04:10:23
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 24, 2019 7:39:02 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 24, 2019 7:39:02 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader3279610837387192296netlib-native_ref-linux-x86_64.so
+120716.885 ops/min
+# Warmup Iteration   2: 121041.684 ops/min
+# Warmup Iteration   3: 120977.182 ops/min
+# Warmup Iteration   4: 120839.233 ops/min
+# Warmup Iteration   5: 121153.029 ops/min
+# Warmup Iteration   6: 120859.075 ops/min
+# Warmup Iteration   7: 120909.203 ops/min
+Iteration   1: 120875.528 ops/min
+Iteration   2: 120628.081 ops/min
+Iteration   3: 121000.772 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  120834.793 ±(99.9%) 3460.021 ops/min [Average]
+  (min, avg, max) = (120628.081, 120834.793, 121000.772), stdev = 189.655
+  CI (99.9%): [117374.772, 124294.815] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = ACM)
+
+# Run progress: 14.29% complete, ETA 04:00:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 11292.326 ops/min
+# Warmup Iteration   2: 11109.218 ops/min
+# Warmup Iteration   3: 10853.102 ops/min
+# Warmup Iteration   4: 11267.649 ops/min
+# Warmup Iteration   5: 10944.109 ops/min
+# Warmup Iteration   6: 10793.565 ops/min
+# Warmup Iteration   7: 10812.154 ops/min
+Iteration   1: 10963.618 ops/min
+Iteration   2: 11370.804 ops/min
+Iteration   3: 11014.855 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  11116.425 ±(99.9%) 4046.137 ops/min [Average]
+  (min, avg, max) = (10963.618, 11116.425, 11370.804), stdev = 221.782
+  CI (99.9%): [7070.288, 15162.563] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = EJML)
+
+# Run progress: 17.86% complete, ETA 03:50:19
+# Fork: 1 of 1
+# Warmup Iteration   1: 52466.745 ops/min
+# Warmup Iteration   2: 51178.582 ops/min
+# Warmup Iteration   3: 50738.181 ops/min
+# Warmup Iteration   4: 53461.984 ops/min
+# Warmup Iteration   5: 48957.588 ops/min
+# Warmup Iteration   6: 48594.753 ops/min
+# Warmup Iteration   7: 48531.382 ops/min
+Iteration   1: 48387.859 ops/min
+Iteration   2: 48134.907 ops/min
+Iteration   3: 47829.944 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  48117.570 ±(99.9%) 5096.589 ops/min [Average]
+  (min, avg, max) = (47829.944, 48117.570, 48387.859), stdev = 279.361
+  CI (99.9%): [43020.981, 53214.160] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+# Run progress: 21.43% complete, ETA 03:40:18
+# Fork: 1 of 1
+# Warmup Iteration   1: 54974.282 ops/min
+# Warmup Iteration   2: 58547.579 ops/min
+# Warmup Iteration   3: 65810.302 ops/min
+# Warmup Iteration   4: 68039.635 ops/min
+# Warmup Iteration   5: 68193.704 ops/min
+# Warmup Iteration   6: 67599.095 ops/min
+# Warmup Iteration   7: 65112.844 ops/min
+Iteration   1: 66532.883 ops/min
+Iteration   2: 66953.777 ops/min
+Iteration   3: 66416.567 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  66634.409 ±(99.9%) 5156.209 ops/min [Average]
+  (min, avg, max) = (66416.567, 66634.409, 66953.777), stdev = 282.629
+  CI (99.9%): [61478.200, 71790.618] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+# Run progress: 25.00% complete, ETA 03:30:18
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 24, 2019 8:19:05 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 24, 2019 8:19:05 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader10295629330832769540netlib-native_ref-linux-x86_64.so
+32329.726 ops/min
+# Warmup Iteration   2: 32061.768 ops/min
+# Warmup Iteration   3: 31764.900 ops/min
+# Warmup Iteration   4: 31665.556 ops/min
+# Warmup Iteration   5: 31704.562 ops/min
+# Warmup Iteration   6: 32241.981 ops/min
+# Warmup Iteration   7: 32589.676 ops/min
+Iteration   1: 31849.303 ops/min
+Iteration   2: 31786.679 ops/min
+Iteration   3: 31830.488 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  31822.157 ±(99.9%) 586.213 ops/min [Average]
+  (min, avg, max) = (31786.679, 31822.157, 31849.303), stdev = 32.132
+  CI (99.9%): [31235.944, 32408.369] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = ACM)
+
+# Run progress: 28.57% complete, ETA 03:20:16
+# Fork: 1 of 1
+# Warmup Iteration   1: 4570.930 ops/min
+# Warmup Iteration   2: 4706.622 ops/min
+# Warmup Iteration   3: 4724.206 ops/min
+# Warmup Iteration   4: 4606.180 ops/min
+# Warmup Iteration   5: 4582.206 ops/min
+# Warmup Iteration   6: 4567.484 ops/min
+# Warmup Iteration   7: 4602.083 ops/min
+Iteration   1: 4741.343 ops/min
+Iteration   2: 4636.438 ops/min
+Iteration   3: 4580.142 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  4652.641 ±(99.9%) 1492.570 ops/min [Average]
+  (min, avg, max) = (4580.142, 4652.641, 4741.343), stdev = 81.813
+  CI (99.9%): [3160.071, 6145.211] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = EJML)
+
+# Run progress: 32.14% complete, ETA 03:10:16
+# Fork: 1 of 1
+# Warmup Iteration   1: 25137.236 ops/min
+# Warmup Iteration   2: 25549.754 ops/min
+# Warmup Iteration   3: 25554.094 ops/min
+# Warmup Iteration   4: 25524.729 ops/min
+# Warmup Iteration   5: 24985.577 ops/min
+# Warmup Iteration   6: 25296.532 ops/min
+# Warmup Iteration   7: 25651.614 ops/min
+Iteration   1: 26481.604 ops/min
+Iteration   2: 25930.026 ops/min
+Iteration   3: 25406.920 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  25939.517 ±(99.9%) 9804.259 ops/min [Average]
+  (min, avg, max) = (25406.920, 25939.517, 26481.604), stdev = 537.405
+  CI (99.9%): [16135.257, 35743.776] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+# Run progress: 35.71% complete, ETA 03:00:15
+# Fork: 1 of 1
+# Warmup Iteration   1: 30094.519 ops/min
+# Warmup Iteration   2: 31332.877 ops/min
+# Warmup Iteration   3: 33203.672 ops/min
+# Warmup Iteration   4: 31935.128 ops/min
+# Warmup Iteration   5: 31901.404 ops/min
+# Warmup Iteration   6: 31185.611 ops/min
+# Warmup Iteration   7: 31683.872 ops/min
+Iteration   1: 31601.868 ops/min
+Iteration   2: 31656.563 ops/min
+Iteration   3: 31262.912 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  31507.114 ±(99.9%) 3890.411 ops/min [Average]
+  (min, avg, max) = (31262.912, 31507.114, 31656.563), stdev = 213.247
+  CI (99.9%): [27616.704, 35397.525] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+# Run progress: 39.29% complete, ETA 02:50:14
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 24, 2019 8:59:09 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 24, 2019 8:59:09 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader3406976696793790241netlib-native_ref-linux-x86_64.so
+13752.412 ops/min
+# Warmup Iteration   2: 13760.352 ops/min
+# Warmup Iteration   3: 13890.295 ops/min
+# Warmup Iteration   4: 13965.891 ops/min
+# Warmup Iteration   5: 13820.612 ops/min
+# Warmup Iteration   6: 13585.444 ops/min
+# Warmup Iteration   7: 13524.920 ops/min
+Iteration   1: 13795.369 ops/min
+Iteration   2: 13971.881 ops/min
+Iteration   3: 13494.573 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  13753.941 ±(99.9%) 4402.863 ops/min [Average]
+  (min, avg, max) = (13494.573, 13753.941, 13971.881), stdev = 241.336
+  CI (99.9%): [9351.078, 18156.805] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = ACM)
+
+# Run progress: 42.86% complete, ETA 02:40:13
+# Fork: 1 of 1
+# Warmup Iteration   1: 668.032 ops/min
+# Warmup Iteration   2: 675.722 ops/min
+# Warmup Iteration   3: 734.696 ops/min
+# Warmup Iteration   4: 697.453 ops/min
+# Warmup Iteration   5: 561.643 ops/min
+# Warmup Iteration   6: 771.371 ops/min
+# Warmup Iteration   7: 770.731 ops/min
+Iteration   1: 769.637 ops/min
+Iteration   2: 770.613 ops/min
+Iteration   3: 771.123 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  770.458 ±(99.9%) 13.779 ops/min [Average]
+  (min, avg, max) = (769.637, 770.458, 771.123), stdev = 0.755
+  CI (99.9%): [756.679, 784.237] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = EJML)
+
+# Run progress: 46.43% complete, ETA 02:30:13
+# Fork: 1 of 1
+# Warmup Iteration   1: 4106.970 ops/min
+# Warmup Iteration   2: 4124.449 ops/min
+# Warmup Iteration   3: 4151.271 ops/min
+# Warmup Iteration   4: 4136.895 ops/min
+# Warmup Iteration   5: 4145.512 ops/min
+# Warmup Iteration   6: 4144.236 ops/min
+# Warmup Iteration   7: 4142.475 ops/min
+Iteration   1: 4147.255 ops/min
+Iteration   2: 4131.330 ops/min
+Iteration   3: 4145.618 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  4141.401 ±(99.9%) 159.810 ops/min [Average]
+  (min, avg, max) = (4131.330, 4141.401, 4147.255), stdev = 8.760
+  CI (99.9%): [3981.591, 4301.211] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+# Run progress: 50.00% complete, ETA 02:20:12
+# Fork: 1 of 1
+# Warmup Iteration   1: 8885.335 ops/min
+# Warmup Iteration   2: 8875.184 ops/min
+# Warmup Iteration   3: 8813.071 ops/min
+# Warmup Iteration   4: 8829.065 ops/min
+# Warmup Iteration   5: 8830.742 ops/min
+# Warmup Iteration   6: 8847.850 ops/min
+# Warmup Iteration   7: 8822.932 ops/min
+Iteration   1: 8880.142 ops/min
+Iteration   2: 8848.532 ops/min
+Iteration   3: 8820.364 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  8849.679 ±(99.9%) 545.586 ops/min [Average]
+  (min, avg, max) = (8820.364, 8849.679, 8880.142), stdev = 29.905
+  CI (99.9%): [8304.093, 9395.265] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+# Run progress: 53.57% complete, ETA 02:10:11
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 24, 2019 9:39:12 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 24, 2019 9:39:12 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader15603134897345917346netlib-native_ref-linux-x86_64.so
+2718.053 ops/min
+# Warmup Iteration   2: 2730.753 ops/min
+# Warmup Iteration   3: 2730.244 ops/min
+# Warmup Iteration   4: 2728.440 ops/min
+# Warmup Iteration   5: 2716.465 ops/min
+# Warmup Iteration   6: 2724.222 ops/min
+# Warmup Iteration   7: 2730.219 ops/min
+Iteration   1: 2726.597 ops/min
+Iteration   2: 2726.246 ops/min
+Iteration   3: 2726.483 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  2726.442 ±(99.9%) 3.264 ops/min [Average]
+  (min, avg, max) = (2726.246, 2726.442, 2726.597), stdev = 0.179
+  CI (99.9%): [2723.178, 2729.706] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = ACM)
+
+# Run progress: 57.14% complete, ETA 02:00:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 256.971 ops/min
+# Warmup Iteration   2: 258.339 ops/min
+# Warmup Iteration   3: 258.466 ops/min
+# Warmup Iteration   4: 258.737 ops/min
+# Warmup Iteration   5: 258.128 ops/min
+# Warmup Iteration   6: 258.820 ops/min
+# Warmup Iteration   7: 258.781 ops/min
+Iteration   1: 258.836 ops/min
+Iteration   2: 258.832 ops/min
+Iteration   3: 258.674 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  258.781 ±(99.9%) 1.687 ops/min [Average]
+  (min, avg, max) = (258.674, 258.781, 258.836), stdev = 0.092
+  CI (99.9%): [257.094, 260.468] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = EJML)
+
+# Run progress: 60.71% complete, ETA 01:50:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 1170.118 ops/min
+# Warmup Iteration   2: 1172.591 ops/min
+# Warmup Iteration   3: 1170.753 ops/min
+# Warmup Iteration   4: 1175.452 ops/min
+# Warmup Iteration   5: 1170.641 ops/min
+# Warmup Iteration   6: 1168.722 ops/min
+# Warmup Iteration   7: 1155.764 ops/min
+Iteration   1: 1169.603 ops/min
+Iteration   2: 1169.692 ops/min
+Iteration   3: 1172.906 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  1170.734 ±(99.9%) 34.330 ops/min [Average]
+  (min, avg, max) = (1169.603, 1170.734, 1172.906), stdev = 1.882
+  CI (99.9%): [1136.405, 1205.064] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+# Run progress: 64.29% complete, ETA 01:40:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 2699.496 ops/min
+# Warmup Iteration   2: 2721.383 ops/min
+# Warmup Iteration   3: 2721.751 ops/min
+# Warmup Iteration   4: 2722.823 ops/min
+# Warmup Iteration   5: 2720.562 ops/min
+# Warmup Iteration   6: 2717.009 ops/min
+# Warmup Iteration   7: 2713.132 ops/min
+Iteration   1: 2720.504 ops/min
+Iteration   2: 2717.134 ops/min
+Iteration   3: 2722.607 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  2720.082 ±(99.9%) 50.367 ops/min [Average]
+  (min, avg, max) = (2717.134, 2720.082, 2722.607), stdev = 2.761
+  CI (99.9%): [2669.715, 2770.449] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+# Run progress: 67.86% complete, ETA 01:30:07
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 24, 2019 10:19:15 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 24, 2019 10:19:16 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader14485501620698358520netlib-native_ref-linux-x86_64.so
+937.158 ops/min
+# Warmup Iteration   2: 940.541 ops/min
+# Warmup Iteration   3: 939.980 ops/min
+# Warmup Iteration   4: 940.467 ops/min
+# Warmup Iteration   5: 941.745 ops/min
+# Warmup Iteration   6: 940.646 ops/min
+# Warmup Iteration   7: 942.610 ops/min
+Iteration   1: 942.200 ops/min
+Iteration   2: 941.581 ops/min
+Iteration   3: 942.525 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  942.102 ±(99.9%) 8.749 ops/min [Average]
+  (min, avg, max) = (941.581, 942.102, 942.525), stdev = 0.480
+  CI (99.9%): [933.353, 950.851] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = ACM)
+
+# Run progress: 71.43% complete, ETA 01:20:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 57.313 ops/min
+# Warmup Iteration   2: 57.533 ops/min
+# Warmup Iteration   3: 57.878 ops/min
+# Warmup Iteration   4: 57.117 ops/min
+# Warmup Iteration   5: 57.929 ops/min
+# Warmup Iteration   6: 57.966 ops/min
+# Warmup Iteration   7: 57.834 ops/min
+Iteration   1: 58.158 ops/min
+Iteration   2: 57.772 ops/min
+Iteration   3: 57.844 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  57.925 ±(99.9%) 3.745 ops/min [Average]
+  (min, avg, max) = (57.772, 57.925, 58.158), stdev = 0.205
+  CI (99.9%): [54.180, 61.670] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = EJML)
+
+# Run progress: 75.00% complete, ETA 01:10:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 392.118 ops/min
+# Warmup Iteration   2: 391.896 ops/min
+# Warmup Iteration   3: 389.033 ops/min
+# Warmup Iteration   4: 392.255 ops/min
+# Warmup Iteration   5: 389.936 ops/min
+# Warmup Iteration   6: 389.305 ops/min
+# Warmup Iteration   7: 388.264 ops/min
+Iteration   1: 390.574 ops/min
+Iteration   2: 390.612 ops/min
+Iteration   3: 392.260 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  391.149 ±(99.9%) 17.566 ops/min [Average]
+  (min, avg, max) = (390.574, 391.149, 392.260), stdev = 0.963
+  CI (99.9%): [373.583, 408.715] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+# Run progress: 78.57% complete, ETA 01:00:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 740.019 ops/min
+# Warmup Iteration   2: 739.408 ops/min
+# Warmup Iteration   3: 742.977 ops/min
+# Warmup Iteration   4: 742.011 ops/min
+# Warmup Iteration   5: 741.530 ops/min
+# Warmup Iteration   6: 741.184 ops/min
+# Warmup Iteration   7: 742.224 ops/min
+Iteration   1: 741.930 ops/min
+Iteration   2: 740.126 ops/min
+Iteration   3: 741.285 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  741.114 ±(99.9%) 16.677 ops/min [Average]
+  (min, avg, max) = (740.126, 741.114, 741.930), stdev = 0.914
+  CI (99.9%): [724.437, 757.790] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+# Run progress: 82.14% complete, ETA 00:50:05
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 24, 2019 10:59:23 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 24, 2019 10:59:23 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader3735936854545898868netlib-native_ref-linux-x86_64.so
+277.556 ops/min
+# Warmup Iteration   2: 277.010 ops/min
+# Warmup Iteration   3: 276.845 ops/min
+# Warmup Iteration   4: 277.353 ops/min
+# Warmup Iteration   5: 278.121 ops/min
+# Warmup Iteration   6: 278.583 ops/min
+# Warmup Iteration   7: 277.986 ops/min
+Iteration   1: 277.645 ops/min
+Iteration   2: 278.526 ops/min
+Iteration   3: 278.121 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  278.097 ±(99.9%) 8.042 ops/min [Average]
+  (min, avg, max) = (277.645, 278.097, 278.526), stdev = 0.441
+  CI (99.9%): [270.055, 286.140] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+# Run progress: 85.71% complete, ETA 00:40:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 16.273 ops/min
+# Warmup Iteration   2: 18.906 ops/min
+# Warmup Iteration   3: 15.720 ops/min
+# Warmup Iteration   4: 17.322 ops/min
+# Warmup Iteration   5: 17.927 ops/min
+# Warmup Iteration   6: 20.724 ops/min
+# Warmup Iteration   7: 20.295 ops/min
+Iteration   1: 22.314 ops/min
+Iteration   2: 21.818 ops/min
+Iteration   3: 23.418 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  22.517 ±(99.9%) 14.938 ops/min [Average]
+  (min, avg, max) = (21.818, 22.517, 23.418), stdev = 0.819
+  CI (99.9%): [7.579, 37.455] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+# Run progress: 89.29% complete, ETA 00:30:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 147.021 ops/min
+# Warmup Iteration   2: 147.414 ops/min
+# Warmup Iteration   3: 146.406 ops/min
+# Warmup Iteration   4: 146.957 ops/min
+# Warmup Iteration   5: 146.700 ops/min
+# Warmup Iteration   6: 146.389 ops/min
+# Warmup Iteration   7: 147.635 ops/min
+Iteration   1: 146.845 ops/min
+Iteration   2: 146.862 ops/min
+Iteration   3: 146.440 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  146.716 ±(99.9%) 4.356 ops/min [Average]
+  (min, avg, max) = (146.440, 146.716, 146.862), stdev = 0.239
+  CI (99.9%): [142.360, 151.071] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+# Run progress: 92.86% complete, ETA 00:20:03
+# Fork: 1 of 1
+# Warmup Iteration   1: 296.442 ops/min
+# Warmup Iteration   2: 297.663 ops/min
+# Warmup Iteration   3: 296.495 ops/min
+# Warmup Iteration   4: 296.297 ops/min
+# Warmup Iteration   5: 297.152 ops/min
+# Warmup Iteration   6: 297.260 ops/min
+# Warmup Iteration   7: 297.704 ops/min
+Iteration   1: 297.193 ops/min
+Iteration   2: 297.249 ops/min
+Iteration   3: 297.033 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  297.158 ±(99.9%) 2.040 ops/min [Average]
+  (min, avg, max) = (297.033, 297.158, 297.249), stdev = 0.112
+  CI (99.9%): [295.118, 299.198] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 11.0.5, Java HotSpot(TM) 64-Bit Server VM, 11.0.5+10-jvmci-19.3-b05-LTS
+# VM invoker: /home/anders/graalvm-ee-java11-19.3.0/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+# Run progress: 96.43% complete, ETA 00:10:01
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 24, 2019 11:39:44 PM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 24, 2019 11:39:44 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader16290031121710206601netlib-native_ref-linux-x86_64.so
+115.487 ops/min
+# Warmup Iteration   2: 115.988 ops/min
+# Warmup Iteration   3: 116.408 ops/min
+# Warmup Iteration   4: 115.376 ops/min
+# Warmup Iteration   5: 115.782 ops/min
+# Warmup Iteration   6: 116.207 ops/min
+# Warmup Iteration   7: 116.141 ops/min
+Iteration   1: 115.980 ops/min
+Iteration   2: 115.295 ops/min
+Iteration   3: 115.990 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  115.755 ±(99.9%) 7.277 ops/min [Average]
+  (min, avg, max) = (115.295, 115.755, 115.990), stdev = 0.399
+  CI (99.9%): [108.478, 123.032] (assumes normal distribution)
+
+
+# Run complete. Total time: 04:40:47
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                  (dim)   (lib)   Mode  Cnt       Score        Error    Units
+FillByMultiplying.execute    100     ACM  thrpt    3   37644.283 ±  12954.503  ops/min
+FillByMultiplying.execute    100    EJML  thrpt    3  145899.638 ±  14301.953  ops/min
+FillByMultiplying.execute    100  ojAlgo  thrpt    3  168527.540 ± 100891.607  ops/min
+FillByMultiplying.execute    100     MTJ  thrpt    3  120834.793 ±   3460.021  ops/min
+FillByMultiplying.execute    150     ACM  thrpt    3   11116.425 ±   4046.137  ops/min
+FillByMultiplying.execute    150    EJML  thrpt    3   48117.570 ±   5096.589  ops/min
+FillByMultiplying.execute    150  ojAlgo  thrpt    3   66634.409 ±   5156.209  ops/min
+FillByMultiplying.execute    150     MTJ  thrpt    3   31822.157 ±    586.213  ops/min
+FillByMultiplying.execute    200     ACM  thrpt    3    4652.641 ±   1492.570  ops/min
+FillByMultiplying.execute    200    EJML  thrpt    3   25939.517 ±   9804.259  ops/min
+FillByMultiplying.execute    200  ojAlgo  thrpt    3   31507.114 ±   3890.411  ops/min
+FillByMultiplying.execute    200     MTJ  thrpt    3   13753.941 ±   4402.863  ops/min
+FillByMultiplying.execute    350     ACM  thrpt    3     770.458 ±     13.779  ops/min
+FillByMultiplying.execute    350    EJML  thrpt    3    4141.401 ±    159.810  ops/min
+FillByMultiplying.execute    350  ojAlgo  thrpt    3    8849.679 ±    545.586  ops/min
+FillByMultiplying.execute    350     MTJ  thrpt    3    2726.442 ±      3.264  ops/min
+FillByMultiplying.execute    500     ACM  thrpt    3     258.781 ±      1.687  ops/min
+FillByMultiplying.execute    500    EJML  thrpt    3    1170.734 ±     34.330  ops/min
+FillByMultiplying.execute    500  ojAlgo  thrpt    3    2720.082 ±     50.367  ops/min
+FillByMultiplying.execute    500     MTJ  thrpt    3     942.102 ±      8.749  ops/min
+FillByMultiplying.execute    750     ACM  thrpt    3      57.925 ±      3.745  ops/min
+FillByMultiplying.execute    750    EJML  thrpt    3     391.149 ±     17.566  ops/min
+FillByMultiplying.execute    750  ojAlgo  thrpt    3     741.114 ±     16.677  ops/min
+FillByMultiplying.execute    750     MTJ  thrpt    3     278.097 ±      8.042  ops/min
+FillByMultiplying.execute   1000     ACM  thrpt    3      22.517 ±     14.938  ops/min
+FillByMultiplying.execute   1000    EJML  thrpt    3     146.716 ±      4.356  ops/min
+FillByMultiplying.execute   1000  ojAlgo  thrpt    3     297.158 ±      2.040  ops/min
+FillByMultiplying.execute   1000     MTJ  thrpt    3     115.755 ±      7.277  ops/min
+
+Benchmark result is saved to jmh-result.csv

@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2019 Optimatika (www.optimatika.se)
+ * Copyright 1997-2021 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,12 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperatio
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
-import org.ojalgo.function.PrimitiveFunction;
+import org.ojalgo.function.constant.PrimitiveMath;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
-import org.ojalgo.matrix.store.PrimitiveDenseStore;
+import org.ojalgo.matrix.store.Primitive64Store;
 import org.ojalgo.matrix.task.DeterminantTask;
 import org.ojalgo.matrix.task.InverterTask;
 import org.ojalgo.matrix.task.SolverTask;
@@ -42,13 +42,13 @@ import org.ojalgo.matrix.task.SolverTask;
 /**
  * oj! Algorithms
  */
-public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore> {
+public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitive64Store> {
 
     @Override
-    public MatrixBenchmarkLibrary<MatrixStore<Double>, PrimitiveDenseStore>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<MatrixStore<Double>, Primitive64Store>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
-            private final PrimitiveDenseStore myMatrix = PrimitiveDenseStore.FACTORY.makeZero(numberOfRows, numberOfColumns);
+            private final Primitive64Store myMatrix = Primitive64Store.FACTORY.makeZero(numberOfRows, numberOfColumns);
 
             public MatrixStore<Double> get() {
                 return myMatrix;
@@ -64,18 +64,18 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationAdd() {
-        return (a, b, c) -> c.fillMatching(a, PrimitiveFunction.ADD, b);
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationAdd() {
+        return (a, b, c) -> c.fillMatching(a, PrimitiveMath.ADD, b);
     }
 
     @Override
-    public PropertyOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationDeterminant(final int dim) {
+    public PropertyOperation<MatrixStore<Double>, Primitive64Store> getOperationDeterminant(final int dim) {
         final DeterminantTask<Double> task = DeterminantTask.PRIMITIVE.make(dim, false);
-        return (matA) -> task.calculateDeterminant(matA);
+        return matA -> task.calculateDeterminant(matA);
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationEquationSystemSolver(final int numbEquations,
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions, final boolean spd) {
 
         final SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, spd, spd);
@@ -92,7 +92,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
         final Eigenvalue<Double> evd = Eigenvalue.PRIMITIVE.make(dim, true);
 
-        return (matrix) -> {
+        return matrix -> {
             evd.decompose(matrix);
             ret[0] = evd.getV();
             ret[1] = evd.getD();
@@ -102,37 +102,37 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationFillByMultiplying(final boolean transpL,
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationFillByMultiplying(final boolean transpL,
             final boolean transpR) {
         return (left, right, product) -> product.fillByMultiplying(transpL ? left.transpose() : left, transpR ? right.transpose() : right);
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationInvert(final int dim, final boolean spd) {
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationInvert(final int dim, final boolean spd) {
         final InverterTask<Double> task = InverterTask.PRIMITIVE.make(dim, spd);
         return (a, r) -> task.invert(a, r);
     }
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationMultiplyToProduce() {
-        return (left, right) -> left.multiply(right);
+        return MatrixStore::multiply;
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationPseudoinverse(final int dim) {
 
         final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
         final PhysicalStore<Double> preallocated = svd.preallocate(dim, dim);
 
-        return (matrix) -> {
+        return matrix -> {
             svd.decompose(matrix);
             return svd.getInverse(preallocated);
         };
     }
 
     @Override
-    public MutatingBinaryMatrixScalarOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationScale() {
-        return (a, s, b) -> b.fillMatching(PrimitiveFunction.MULTIPLY.first(s), a);
+    public MutatingBinaryMatrixScalarOperation<MatrixStore<Double>, Primitive64Store> getOperationScale() {
+        return (a, s, b) -> b.fillMatching(PrimitiveMath.MULTIPLY.first(s), a);
     }
 
     @Override
@@ -141,22 +141,22 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
         final MatrixStore<Double>[] ret = this.makeArray(3);
         final SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
 
-        return (matrix) -> {
+        return matrix -> {
             svd.decompose(matrix);
-            ret[0] = svd.getQ1();
+            ret[0] = svd.getU();
             ret[1] = svd.getD();
-            ret[2] = svd.getQ2().transpose();
+            ret[2] = svd.getV().transpose();
             return ret;
         };
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<MatrixStore<Double>, PrimitiveDenseStore> getOperationTranspose() {
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationTranspose() {
         return (arg, ret) -> ret.fillMatching(arg.transpose());
     }
 
     @Override
-    protected PrimitiveDenseStore copy(final MatrixStore<Double> source, final PrimitiveDenseStore destination) {
+    protected Primitive64Store copy(final MatrixStore<Double> source, final Primitive64Store destination) {
         source.supplyTo(destination);
         return destination;
     }

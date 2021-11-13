@@ -1,5 +1,5 @@
 /*
- * Copyright 1997-2019 Optimatika (www.optimatika.se)
+ * Copyright 1997-2021 Optimatika (www.optimatika.se)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface DecompositionOperation<I, T extends I> {
 
-        public abstract I[] operate(I arg) throws Exception;
+        I[] operate(I arg) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg) {
@@ -54,7 +54,7 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface MutatingBinaryMatrixMatrixOperation<I, T extends I> {
 
-        public abstract void operate(I arg1, I arg2, T ret) throws Exception;
+        void operate(I arg1, I arg2, T ret) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg1, final Object arg2, final Object ret) {
@@ -72,7 +72,7 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface MutatingBinaryMatrixScalarOperation<I, T extends I> {
 
-        public abstract void operate(I arg1, double arg2, T ret) throws Exception;
+        void operate(I arg1, double arg2, T ret) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg1, final double arg2, final Object ret) {
@@ -90,7 +90,7 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface MutatingUnaryMatrixOperation<I, T extends I> {
 
-        public abstract void operate(I arg, T ret) throws Exception;
+        void operate(I arg, T ret) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg, final Object ret) {
@@ -108,7 +108,7 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface ProducingBinaryMatrixMatrixOperation<I, T extends I> {
 
-        public abstract I operate(I arg1, I arg2) throws Exception;
+        I operate(I arg1, I arg2) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg1, final Object arg2) {
@@ -124,7 +124,7 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface ProducingUnaryMatrixOperation<I, T extends I> {
 
-        public abstract I operate(I arg) throws Exception;
+        I operate(I arg) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg) {
@@ -141,7 +141,7 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface PropertyOperation<I, T extends I> {
 
-        public abstract double operate(I arg) throws Exception;
+        double operate(I arg) throws Exception;
 
         @SuppressWarnings("unchecked")
         default double execute(final Object arg) {
@@ -155,8 +155,8 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
-    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
-    static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
+    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.MINUTES);
+    static final TimeValue TIMEOUT = new TimeValue(2L, TimeUnit.MINUTES);
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(7).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)

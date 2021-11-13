@@ -1,0 +1,1024 @@
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.openjdk.jmh.util.Utils (file:/home/anders/ojlab.jar) to field java.io.PrintStream.charOut
+WARNING: Please consider reporting this to the maintainers of org.openjdk.jmh.util.Utils
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 0.00% complete, ETA 04:40:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 14530.930 ops/min
+# Warmup Iteration   2: 14992.645 ops/min
+# Warmup Iteration   3: 15011.040 ops/min
+# Warmup Iteration   4: 15007.759 ops/min
+# Warmup Iteration   5: 15007.164 ops/min
+# Warmup Iteration   6: 15014.262 ops/min
+# Warmup Iteration   7: 15005.151 ops/min
+Iteration   1: 14992.785 ops/min
+Iteration   2: 15015.585 ops/min
+Iteration   3: 15008.664 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  15005.678 ±(99.9%) 213.261 ops/min [Average]
+  (min, avg, max) = (14992.785, 15005.678, 15015.585), stdev = 11.690
+  CI (99.9%): [14792.417, 15218.939] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 3.57% complete, ETA 04:30:18
+# Fork: 1 of 1
+# Warmup Iteration   1: 77002.936 ops/min
+# Warmup Iteration   2: 77750.305 ops/min
+# Warmup Iteration   3: 78025.393 ops/min
+# Warmup Iteration   4: 77819.068 ops/min
+# Warmup Iteration   5: 78007.470 ops/min
+# Warmup Iteration   6: 78052.360 ops/min
+# Warmup Iteration   7: 77337.880 ops/min
+Iteration   1: 77983.692 ops/min
+Iteration   2: 78024.070 ops/min
+Iteration   3: 77976.393 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  77994.718 ±(99.9%) 468.491 ops/min [Average]
+  (min, avg, max) = (77976.393, 77994.718, 78024.070), stdev = 25.680
+  CI (99.9%): [77526.228, 78463.209] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 7.14% complete, ETA 04:20:16
+# Fork: 1 of 1
+# Warmup Iteration   1: 141981.768 ops/min
+# Warmup Iteration   2: 147057.494 ops/min
+# Warmup Iteration   3: 143543.701 ops/min
+# Warmup Iteration   4: 147121.549 ops/min
+# Warmup Iteration   5: 145192.123 ops/min
+# Warmup Iteration   6: 146661.602 ops/min
+# Warmup Iteration   7: 147318.707 ops/min
+Iteration   1: 143637.514 ops/min
+Iteration   2: 147538.498 ops/min
+Iteration   3: 145062.471 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  145412.828 ±(99.9%) 36012.205 ops/min [Average]
+  (min, avg, max) = (143637.514, 145412.828, 147538.498), stdev = 1973.950
+  CI (99.9%): [109400.623, 181425.033] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 100, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 10.71% complete, ETA 04:10:16
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 08, 2019 7:52:59 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 08, 2019 7:52:59 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader17490128357979764762netlib-native_ref-linux-x86_64.so
+119674.261 ops/min
+# Warmup Iteration   2: 114374.520 ops/min
+# Warmup Iteration   3: 114453.384 ops/min
+# Warmup Iteration   4: 114391.242 ops/min
+# Warmup Iteration   5: 115119.922 ops/min
+# Warmup Iteration   6: 115003.033 ops/min
+# Warmup Iteration   7: 115215.245 ops/min
+Iteration   1: 115142.211 ops/min
+Iteration   2: 114995.230 ops/min
+Iteration   3: 115141.072 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  115092.838 ±(99.9%) 1542.192 ops/min [Average]
+  (min, avg, max) = (114995.230, 115092.838, 115142.211), stdev = 84.533
+  CI (99.9%): [113550.646, 116635.029] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 14.29% complete, ETA 04:00:14
+# Fork: 1 of 1
+# Warmup Iteration   1: 4382.329 ops/min
+# Warmup Iteration   2: 4530.465 ops/min
+# Warmup Iteration   3: 4530.192 ops/min
+# Warmup Iteration   4: 4531.637 ops/min
+# Warmup Iteration   5: 4528.017 ops/min
+# Warmup Iteration   6: 4534.762 ops/min
+# Warmup Iteration   7: 4531.534 ops/min
+Iteration   1: 4531.238 ops/min
+Iteration   2: 4529.127 ops/min
+Iteration   3: 4530.163 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  4530.176 ±(99.9%) 19.255 ops/min [Average]
+  (min, avg, max) = (4529.127, 4530.176, 4531.238), stdev = 1.055
+  CI (99.9%): [4510.921, 4549.431] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 17.86% complete, ETA 03:50:14
+# Fork: 1 of 1
+# Warmup Iteration   1: 21007.799 ops/min
+# Warmup Iteration   2: 21278.404 ops/min
+# Warmup Iteration   3: 21292.907 ops/min
+# Warmup Iteration   4: 21265.881 ops/min
+# Warmup Iteration   5: 21277.141 ops/min
+# Warmup Iteration   6: 21246.151 ops/min
+# Warmup Iteration   7: 21285.304 ops/min
+Iteration   1: 21282.518 ops/min
+Iteration   2: 21271.704 ops/min
+Iteration   3: 21236.418 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  21263.547 ±(99.9%) 439.828 ops/min [Average]
+  (min, avg, max) = (21236.418, 21263.547, 21282.518), stdev = 24.108
+  CI (99.9%): [20823.718, 21703.375] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 21.43% complete, ETA 03:40:13
+# Fork: 1 of 1
+# Warmup Iteration   1: 52387.895 ops/min
+# Warmup Iteration   2: 54311.573 ops/min
+# Warmup Iteration   3: 54304.982 ops/min
+# Warmup Iteration   4: 53681.516 ops/min
+# Warmup Iteration   5: 54361.575 ops/min
+# Warmup Iteration   6: 53872.169 ops/min
+# Warmup Iteration   7: 54349.388 ops/min
+Iteration   1: 54144.002 ops/min
+Iteration   2: 53742.313 ops/min
+Iteration   3: 54380.589 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  54088.968 ±(99.9%) 5886.839 ops/min [Average]
+  (min, avg, max) = (53742.313, 54088.968, 54380.589), stdev = 322.677
+  CI (99.9%): [48202.129, 59975.807] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 150, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 25.00% complete, ETA 03:30:12
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 08, 2019 8:33:01 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 08, 2019 8:33:01 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader4539348423163457066netlib-native_ref-linux-x86_64.so
+32861.417 ops/min
+# Warmup Iteration   2: 32915.442 ops/min
+# Warmup Iteration   3: 32942.744 ops/min
+# Warmup Iteration   4: 32945.430 ops/min
+# Warmup Iteration   5: 32953.306 ops/min
+# Warmup Iteration   6: 32960.172 ops/min
+# Warmup Iteration   7: 32975.347 ops/min
+Iteration   1: 32967.029 ops/min
+Iteration   2: 32974.663 ops/min
+Iteration   3: 32945.945 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  32962.546 ±(99.9%) 271.371 ops/min [Average]
+  (min, avg, max) = (32945.945, 32962.546, 32974.663), stdev = 14.875
+  CI (99.9%): [32691.175, 33233.916] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 28.57% complete, ETA 03:20:11
+# Fork: 1 of 1
+# Warmup Iteration   1: 1845.492 ops/min
+# Warmup Iteration   2: 1899.622 ops/min
+# Warmup Iteration   3: 1898.700 ops/min
+# Warmup Iteration   4: 1899.766 ops/min
+# Warmup Iteration   5: 1897.268 ops/min
+# Warmup Iteration   6: 1899.348 ops/min
+# Warmup Iteration   7: 1899.866 ops/min
+Iteration   1: 1899.079 ops/min
+Iteration   2: 1900.822 ops/min
+Iteration   3: 1900.071 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  1899.990 ±(99.9%) 15.952 ops/min [Average]
+  (min, avg, max) = (1899.079, 1899.990, 1900.822), stdev = 0.874
+  CI (99.9%): [1884.038, 1915.942] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 32.14% complete, ETA 03:10:11
+# Fork: 1 of 1
+# Warmup Iteration   1: 9495.404 ops/min
+# Warmup Iteration   2: 9616.247 ops/min
+# Warmup Iteration   3: 9622.199 ops/min
+# Warmup Iteration   4: 9619.213 ops/min
+# Warmup Iteration   5: 9582.031 ops/min
+# Warmup Iteration   6: 9617.888 ops/min
+# Warmup Iteration   7: 9615.795 ops/min
+Iteration   1: 9613.796 ops/min
+Iteration   2: 9614.971 ops/min
+Iteration   3: 9613.910 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  9614.225 ±(99.9%) 11.820 ops/min [Average]
+  (min, avg, max) = (9613.796, 9614.225, 9614.971), stdev = 0.648
+  CI (99.9%): [9602.406, 9626.045] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 35.71% complete, ETA 03:00:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 25442.813 ops/min
+# Warmup Iteration   2: 26232.590 ops/min
+# Warmup Iteration   3: 26243.831 ops/min
+# Warmup Iteration   4: 26319.285 ops/min
+# Warmup Iteration   5: 26313.113 ops/min
+# Warmup Iteration   6: 26115.457 ops/min
+# Warmup Iteration   7: 26188.257 ops/min
+Iteration   1: 26314.457 ops/min
+Iteration   2: 26333.862 ops/min
+Iteration   3: 26278.683 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  26309.001 ±(99.9%) 510.670 ops/min [Average]
+  (min, avg, max) = (26278.683, 26309.001, 26333.862), stdev = 27.992
+  CI (99.9%): [25798.331, 26819.671] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 200, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 39.29% complete, ETA 02:50:10
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 08, 2019 9:13:03 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 08, 2019 9:13:03 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader13729489610101330442netlib-native_ref-linux-x86_64.so
+14195.375 ops/min
+# Warmup Iteration   2: 14023.584 ops/min
+# Warmup Iteration   3: 14250.049 ops/min
+# Warmup Iteration   4: 14327.841 ops/min
+# Warmup Iteration   5: 14322.377 ops/min
+# Warmup Iteration   6: 14317.853 ops/min
+# Warmup Iteration   7: 14317.814 ops/min
+Iteration   1: 14325.423 ops/min
+Iteration   2: 14325.746 ops/min
+Iteration   3: 14327.271 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  14326.147 ±(99.9%) 18.005 ops/min [Average]
+  (min, avg, max) = (14325.423, 14326.147, 14327.271), stdev = 0.987
+  CI (99.9%): [14308.141, 14344.152] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 42.86% complete, ETA 02:40:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 514.045 ops/min
+# Warmup Iteration   2: 555.058 ops/min
+# Warmup Iteration   3: 554.767 ops/min
+# Warmup Iteration   4: 556.046 ops/min
+# Warmup Iteration   5: 554.691 ops/min
+# Warmup Iteration   6: 553.958 ops/min
+# Warmup Iteration   7: 550.823 ops/min
+Iteration   1: 551.282 ops/min
+Iteration   2: 550.587 ops/min
+Iteration   3: 551.165 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  551.011 ±(99.9%) 6.789 ops/min [Average]
+  (min, avg, max) = (550.587, 551.011, 551.282), stdev = 0.372
+  CI (99.9%): [544.222, 557.801] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 46.43% complete, ETA 02:30:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 1735.322 ops/min
+# Warmup Iteration   2: 1763.852 ops/min
+# Warmup Iteration   3: 1766.715 ops/min
+# Warmup Iteration   4: 1765.039 ops/min
+# Warmup Iteration   5: 1765.817 ops/min
+# Warmup Iteration   6: 1767.458 ops/min
+# Warmup Iteration   7: 1764.129 ops/min
+Iteration   1: 1760.736 ops/min
+Iteration   2: 1766.707 ops/min
+Iteration   3: 1766.811 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  1764.751 ±(99.9%) 63.447 ops/min [Average]
+  (min, avg, max) = (1760.736, 1764.751, 1766.811), stdev = 3.478
+  CI (99.9%): [1701.304, 1828.199] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 50.00% complete, ETA 02:20:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 5816.949 ops/min
+# Warmup Iteration   2: 5905.077 ops/min
+# Warmup Iteration   3: 5930.641 ops/min
+# Warmup Iteration   4: 5927.842 ops/min
+# Warmup Iteration   5: 5931.235 ops/min
+# Warmup Iteration   6: 5923.631 ops/min
+# Warmup Iteration   7: 5908.334 ops/min
+Iteration   1: 5926.620 ops/min
+Iteration   2: 5918.160 ops/min
+Iteration   3: 5937.291 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  5927.357 ±(99.9%) 174.901 ops/min [Average]
+  (min, avg, max) = (5918.160, 5927.357, 5937.291), stdev = 9.587
+  CI (99.9%): [5752.457, 6102.258] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 350, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 53.57% complete, ETA 02:10:08
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 08, 2019 9:53:06 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 08, 2019 9:53:07 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader16768468878834402658netlib-native_ref-linux-x86_64.so
+2683.729 ops/min
+# Warmup Iteration   2: 2685.907 ops/min
+# Warmup Iteration   3: 2687.380 ops/min
+# Warmup Iteration   4: 2689.486 ops/min
+# Warmup Iteration   5: 2689.709 ops/min
+# Warmup Iteration   6: 2692.963 ops/min
+# Warmup Iteration   7: 2688.819 ops/min
+Iteration   1: 2687.068 ops/min
+Iteration   2: 2689.549 ops/min
+Iteration   3: 2691.486 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  2689.368 ±(99.9%) 40.402 ops/min [Average]
+  (min, avg, max) = (2687.068, 2689.368, 2691.486), stdev = 2.215
+  CI (99.9%): [2648.966, 2729.770] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 57.14% complete, ETA 02:00:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 136.579 ops/min
+# Warmup Iteration   2: 165.746 ops/min
+# Warmup Iteration   3: 165.941 ops/min
+# Warmup Iteration   4: 165.586 ops/min
+# Warmup Iteration   5: 166.264 ops/min
+# Warmup Iteration   6: 166.041 ops/min
+# Warmup Iteration   7: 166.133 ops/min
+Iteration   1: 165.789 ops/min
+Iteration   2: 166.009 ops/min
+Iteration   3: 165.688 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  165.829 ±(99.9%) 3.000 ops/min [Average]
+  (min, avg, max) = (165.688, 165.829, 166.009), stdev = 0.164
+  CI (99.9%): [162.828, 168.829] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 60.71% complete, ETA 01:50:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 596.613 ops/min
+# Warmup Iteration   2: 618.864 ops/min
+# Warmup Iteration   3: 614.930 ops/min
+# Warmup Iteration   4: 619.359 ops/min
+# Warmup Iteration   5: 619.448 ops/min
+# Warmup Iteration   6: 619.771 ops/min
+# Warmup Iteration   7: 619.584 ops/min
+Iteration   1: 618.373 ops/min
+Iteration   2: 619.602 ops/min
+Iteration   3: 619.973 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  619.316 ±(99.9%) 15.282 ops/min [Average]
+  (min, avg, max) = (618.373, 619.316, 619.973), stdev = 0.838
+  CI (99.9%): [604.034, 634.598] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 64.29% complete, ETA 01:40:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 1995.112 ops/min
+# Warmup Iteration   2: 2031.939 ops/min
+# Warmup Iteration   3: 2031.287 ops/min
+# Warmup Iteration   4: 2035.126 ops/min
+# Warmup Iteration   5: 2037.664 ops/min
+# Warmup Iteration   6: 2034.287 ops/min
+# Warmup Iteration   7: 2034.922 ops/min
+Iteration   1: 2031.858 ops/min
+Iteration   2: 2032.323 ops/min
+Iteration   3: 2032.872 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  2032.351 ±(99.9%) 9.261 ops/min [Average]
+  (min, avg, max) = (2031.858, 2032.351, 2032.872), stdev = 0.508
+  CI (99.9%): [2023.090, 2041.613] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 500, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 67.86% complete, ETA 01:30:06
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 08, 2019 10:33:11 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 08, 2019 10:33:11 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader10531446791318634022netlib-native_ref-linux-x86_64.so
+921.390 ops/min
+# Warmup Iteration   2: 924.507 ops/min
+# Warmup Iteration   3: 923.812 ops/min
+# Warmup Iteration   4: 924.041 ops/min
+# Warmup Iteration   5: 924.281 ops/min
+# Warmup Iteration   6: 924.714 ops/min
+# Warmup Iteration   7: 924.671 ops/min
+Iteration   1: 923.627 ops/min
+Iteration   2: 922.920 ops/min
+Iteration   3: 924.564 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  923.704 ±(99.9%) 15.046 ops/min [Average]
+  (min, avg, max) = (922.920, 923.704, 924.564), stdev = 0.825
+  CI (99.9%): [908.657, 938.750] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 71.43% complete, ETA 01:20:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 22.597 ops/min
+# Warmup Iteration   2: 48.750 ops/min
+# Warmup Iteration   3: 48.531 ops/min
+# Warmup Iteration   4: 48.699 ops/min
+# Warmup Iteration   5: 48.803 ops/min
+# Warmup Iteration   6: 48.771 ops/min
+# Warmup Iteration   7: 48.832 ops/min
+Iteration   1: 48.883 ops/min
+Iteration   2: 48.707 ops/min
+Iteration   3: 49.015 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  48.869 ±(99.9%) 2.819 ops/min [Average]
+  (min, avg, max) = (48.707, 48.869, 49.015), stdev = 0.155
+  CI (99.9%): [46.049, 51.688] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 75.00% complete, ETA 01:10:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 59.701 ops/min
+# Warmup Iteration   2: 60.540 ops/min
+# Warmup Iteration   3: 60.558 ops/min
+# Warmup Iteration   4: 60.446 ops/min
+# Warmup Iteration   5: 60.556 ops/min
+# Warmup Iteration   6: 60.588 ops/min
+# Warmup Iteration   7: 60.533 ops/min
+Iteration   1: 60.456 ops/min
+Iteration   2: 60.467 ops/min
+Iteration   3: 60.563 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  60.495 ±(99.9%) 1.074 ops/min [Average]
+  (min, avg, max) = (60.456, 60.495, 60.563), stdev = 0.059
+  CI (99.9%): [59.421, 61.569] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 78.57% complete, ETA 01:00:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 630.896 ops/min
+# Warmup Iteration   2: 648.680 ops/min
+# Warmup Iteration   3: 650.284 ops/min
+# Warmup Iteration   4: 649.368 ops/min
+# Warmup Iteration   5: 647.862 ops/min
+# Warmup Iteration   6: 650.152 ops/min
+# Warmup Iteration   7: 650.054 ops/min
+Iteration   1: 650.120 ops/min
+Iteration   2: 638.881 ops/min
+Iteration   3: 649.339 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  646.113 ±(99.9%) 114.487 ops/min [Average]
+  (min, avg, max) = (638.881, 646.113, 650.120), stdev = 6.275
+  CI (99.9%): [531.626, 760.600] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 750, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 82.14% complete, ETA 00:50:05
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 08, 2019 11:13:24 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 08, 2019 11:13:24 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader17359041301960885851netlib-native_ref-linux-x86_64.so
+275.192 ops/min
+# Warmup Iteration   2: 276.151 ops/min
+# Warmup Iteration   3: 274.406 ops/min
+# Warmup Iteration   4: 276.091 ops/min
+# Warmup Iteration   5: 275.956 ops/min
+# Warmup Iteration   6: 276.479 ops/min
+# Warmup Iteration   7: 276.256 ops/min
+Iteration   1: 276.220 ops/min
+Iteration   2: 275.991 ops/min
+Iteration   3: 276.133 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  276.115 ±(99.9%) 2.109 ops/min [Average]
+  (min, avg, max) = (275.991, 276.115, 276.220), stdev = 0.116
+  CI (99.9%): [274.005, 278.224] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = ACM)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 85.71% complete, ETA 00:40:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 3.200 ops/min
+# Warmup Iteration   2: 3.651 ops/min
+# Warmup Iteration   3: 6.507 ops/min
+# Warmup Iteration   4: 6.453 ops/min
+# Warmup Iteration   5: 6.459 ops/min
+# Warmup Iteration   6: 6.518 ops/min
+# Warmup Iteration   7: 6.485 ops/min
+Iteration   1: 6.511 ops/min
+Iteration   2: 6.475 ops/min
+Iteration   3: 6.449 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  6.478 ±(99.9%) 0.567 ops/min [Average]
+  (min, avg, max) = (6.449, 6.478, 6.511), stdev = 0.031
+  CI (99.9%): [5.911, 7.045] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = EJML)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 89.29% complete, ETA 00:30:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 22.499 ops/min
+# Warmup Iteration   2: 25.568 ops/min
+# Warmup Iteration   3: 25.553 ops/min
+# Warmup Iteration   4: 25.568 ops/min
+# Warmup Iteration   5: 25.556 ops/min
+# Warmup Iteration   6: 25.581 ops/min
+# Warmup Iteration   7: 25.582 ops/min
+Iteration   1: 25.574 ops/min
+Iteration   2: 25.581 ops/min
+Iteration   3: 25.548 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  25.568 ±(99.9%) 0.322 ops/min [Average]
+  (min, avg, max) = (25.548, 25.568, 25.581), stdev = 0.018
+  CI (99.9%): [25.246, 25.890] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = ojAlgo)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 92.86% complete, ETA 00:20:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 252.804 ops/min
+# Warmup Iteration   2: 267.290 ops/min
+# Warmup Iteration   3: 267.616 ops/min
+# Warmup Iteration   4: 267.325 ops/min
+# Warmup Iteration   5: 267.393 ops/min
+# Warmup Iteration   6: 268.374 ops/min
+# Warmup Iteration   7: 268.457 ops/min
+Iteration   1: 268.438 ops/min
+Iteration   2: 267.898 ops/min
+Iteration   3: 267.571 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  267.969 ±(99.9%) 7.995 ops/min [Average]
+  (min, avg, max) = (267.571, 267.969, 268.438), stdev = 0.438
+  CI (99.9%): [259.974, 275.964] (assumes normal distribution)
+
+
+# JMH version: 1.22
+# VM version: JDK 13.0.1, Eclipse OpenJ9 VM, openj9-0.17.0
+# *** WARNING: This VM is not supported by JMH. The produced benchmark data can be completely wrong.
+# VM invoker: /home/anders/jdk-13.0.1+9/bin/java
+# VM options: -Xmx6g
+# Warmup: 7 iterations, 1 min each
+# Measurement: 3 iterations, 1 min each
+# Timeout: 2 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: org.ojalgo.benchmark.lab.FillByMultiplying.execute
+# Parameters: (dim = 1000, lib = MTJ)
+
+WARNING: Not a HotSpot compiler command compatible VM ("Eclipse OpenJ9 VM-13.0.1"), compilerHints are disabled.
+# Run progress: 96.43% complete, ETA 00:10:03
+# Fork: 1 of 1
+# Warmup Iteration   1: Nov 08, 2019 11:54:39 AM com.github.fommil.netlib.BLAS <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+Nov 08, 2019 11:54:39 AM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded /tmp/jniloader565005160007622891netlib-native_ref-linux-x86_64.so
+115.157 ops/min
+# Warmup Iteration   2: 115.582 ops/min
+# Warmup Iteration   3: 115.763 ops/min
+# Warmup Iteration   4: 115.636 ops/min
+# Warmup Iteration   5: 115.586 ops/min
+# Warmup Iteration   6: 115.795 ops/min
+# Warmup Iteration   7: 115.709 ops/min
+Iteration   1: 115.724 ops/min
+Iteration   2: 115.554 ops/min
+Iteration   3: 115.617 ops/min
+
+
+Result "org.ojalgo.benchmark.lab.FillByMultiplying.execute":
+  115.632 ±(99.9%) 1.565 ops/min [Average]
+  (min, avg, max) = (115.554, 115.632, 115.724), stdev = 0.086
+  CI (99.9%): [114.066, 117.197] (assumes normal distribution)
+
+
+# Run complete. Total time: 04:41:44
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                  (dim)   (lib)   Mode  Cnt       Score       Error    Units
+FillByMultiplying.execute    100     ACM  thrpt    3   15005.678 ±   213.261  ops/min
+FillByMultiplying.execute    100    EJML  thrpt    3   77994.718 ±   468.491  ops/min
+FillByMultiplying.execute    100  ojAlgo  thrpt    3  145412.828 ± 36012.205  ops/min
+FillByMultiplying.execute    100     MTJ  thrpt    3  115092.838 ±  1542.192  ops/min
+FillByMultiplying.execute    150     ACM  thrpt    3    4530.176 ±    19.255  ops/min
+FillByMultiplying.execute    150    EJML  thrpt    3   21263.547 ±   439.828  ops/min
+FillByMultiplying.execute    150  ojAlgo  thrpt    3   54088.968 ±  5886.839  ops/min
+FillByMultiplying.execute    150     MTJ  thrpt    3   32962.546 ±   271.371  ops/min
+FillByMultiplying.execute    200     ACM  thrpt    3    1899.990 ±    15.952  ops/min
+FillByMultiplying.execute    200    EJML  thrpt    3    9614.225 ±    11.820  ops/min
+FillByMultiplying.execute    200  ojAlgo  thrpt    3   26309.001 ±   510.670  ops/min
+FillByMultiplying.execute    200     MTJ  thrpt    3   14326.147 ±    18.005  ops/min
+FillByMultiplying.execute    350     ACM  thrpt    3     551.011 ±     6.789  ops/min
+FillByMultiplying.execute    350    EJML  thrpt    3    1764.751 ±    63.447  ops/min
+FillByMultiplying.execute    350  ojAlgo  thrpt    3    5927.357 ±   174.901  ops/min
+FillByMultiplying.execute    350     MTJ  thrpt    3    2689.368 ±    40.402  ops/min
+FillByMultiplying.execute    500     ACM  thrpt    3     165.829 ±     3.000  ops/min
+FillByMultiplying.execute    500    EJML  thrpt    3     619.316 ±    15.282  ops/min
+FillByMultiplying.execute    500  ojAlgo  thrpt    3    2032.351 ±     9.261  ops/min
+FillByMultiplying.execute    500     MTJ  thrpt    3     923.704 ±    15.046  ops/min
+FillByMultiplying.execute    750     ACM  thrpt    3      48.869 ±     2.819  ops/min
+FillByMultiplying.execute    750    EJML  thrpt    3      60.495 ±     1.074  ops/min
+FillByMultiplying.execute    750  ojAlgo  thrpt    3     646.113 ±   114.487  ops/min
+FillByMultiplying.execute    750     MTJ  thrpt    3     276.115 ±     2.109  ops/min
+FillByMultiplying.execute   1000     ACM  thrpt    3       6.478 ±     0.567  ops/min
+FillByMultiplying.execute   1000    EJML  thrpt    3      25.568 ±     0.322  ops/min
+FillByMultiplying.execute   1000  ojAlgo  thrpt    3     267.969 ±     7.995  ops/min
+FillByMultiplying.execute   1000     MTJ  thrpt    3     115.632 ±     1.565  ops/min
+
+Benchmark result is saved to jmh-result.csv
