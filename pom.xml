@@ -15,7 +15,7 @@
         <javac.target>1.8</javac.target>
         <uberjar.name>ojlab</uberjar.name>
         <version.org.junit.jupiter>5.8.1</version.org.junit.jupiter>
-        <version.org.openjdk.jmh>1.33</version.org.openjdk.jmh>
+        <version.org.openjdk.jmh>1.34</version.org.openjdk.jmh>
         <version.org.ojalgo>49.2.1</version.org.ojalgo>
     </properties>
 
