@@ -48,7 +48,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     public MatrixBenchmarkLibrary<MatrixStore<Double>, Primitive64Store>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
-            private final Primitive64Store myMatrix = Primitive64Store.FACTORY.makeZero(numberOfRows, numberOfColumns);
+            private final Primitive64Store myMatrix = Primitive64Store.FACTORY.make(numberOfRows, numberOfColumns);
 
             public MatrixStore<Double> get() {
                 return myMatrix;
