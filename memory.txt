@@ -1,3 +1,24 @@
+WARNING: The nvidia-drm module will not be installed. As a result, DRM-KMS will not function with this
+         installation of the NVIDIA driver.
+WARNING: nvidia-installer was forced to guess the X library path '/usr/lib64' and X module path
+         '/usr/lib64/xorg/modules'; these paths were not queryable from the system.  If X fails to find the NVIDIA
+         X driver module, please install the `pkg-config` utility and the X.Org SDK/development package for your
+         distribution and reinstall the driver.
+
+
+/home/anders/jdk-17.0.2+8/bin/java -classpath ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -Xjit:enableGPU -Dcom.ibm.gpu.enable=all -Dcom.ibm.gpu.verbose
+
+
+https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.2%2B8/OpenJDK17U-jdk_x64_linux_hotspot_17.0.2_8.tar.gz
+
+/home/anders/jdk-17.0.2+8/bin/java
+
+nohup /home/anders/jdk-17.0.2+8/bin/java -classpath ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -Dcom.ibm.gpu.enable=all -Dcom.ibm.gpu.verbose &
+
+
+-Xmx8g -Dcom.ibm.gpu.enable=all -Dcom.ibm.gpu.verbose
+
+
 nohup /usr/lib/jvm/jdk-17/bin/java -jar ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv &
 nohup graalvm-ee-java17-21.3.0/bin/java -jar ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -wi 5 -i 5 -f 1 -tu m -rf csv &
 
