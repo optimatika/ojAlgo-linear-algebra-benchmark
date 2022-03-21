@@ -51,7 +51,6 @@
             <groupId>org.ojalgo</groupId>
             <artifactId>ojalgo</artifactId>
             <version>${version.org.ojalgo}</version>
-            <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.ojalgo</groupId>
