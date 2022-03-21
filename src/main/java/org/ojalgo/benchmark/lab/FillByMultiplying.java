@@ -35,6 +35,64 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019): 2022-01-05
+ *
+ * <pre>
+Benchmark                  (dim)   (lib)   Mode  Cnt          Score          Error    Units
+FillByMultiplying.execute     10     ACM  thrpt    3   34541339.904 ± 19011969.365  ops/min
+FillByMultiplying.execute     10    EJML  thrpt    3   76180745.857 ±  7207132.439  ops/min
+FillByMultiplying.execute     10  ojAlgo  thrpt    3  154137694.949 ± 29666834.819  ops/min
+FillByMultiplying.execute     10     MTJ  thrpt    3  104681128.479 ± 22462628.661  ops/min
+FillByMultiplying.execute     16     ACM  thrpt    3   10369154.290 ±  1871072.568  ops/min
+FillByMultiplying.execute     16    EJML  thrpt    3   20937323.394 ±   683199.855  ops/min
+FillByMultiplying.execute     16  ojAlgo  thrpt    3   25170654.958 ±  3286555.184  ops/min
+FillByMultiplying.execute     16     MTJ  thrpt    3   60616107.059 ± 11517578.642  ops/min
+FillByMultiplying.execute     20     ACM  thrpt    3    4740924.698 ±   952592.443  ops/min
+FillByMultiplying.execute     20    EJML  thrpt    3   11138247.777 ±  1373202.650  ops/min
+FillByMultiplying.execute     20  ojAlgo  thrpt    3   12753517.323 ±   318679.822  ops/min
+FillByMultiplying.execute     20     MTJ  thrpt    3   38228643.423 ± 11654952.202  ops/min
+FillByMultiplying.execute     32     ACM  thrpt    3    1084934.414 ±   135700.051  ops/min
+FillByMultiplying.execute     32    EJML  thrpt    3    3023816.255 ±   739500.581  ops/min
+FillByMultiplying.execute     32  ojAlgo  thrpt    3    3420437.961 ±   139776.353  ops/min
+FillByMultiplying.execute     32     MTJ  thrpt    3   20442421.808 ±  1962197.410  ops/min
+FillByMultiplying.execute     50     ACM  thrpt    3     343019.832 ±    40615.740  ops/min
+FillByMultiplying.execute     50    EJML  thrpt    3     873157.751 ±    99266.932  ops/min
+FillByMultiplying.execute     50  ojAlgo  thrpt    3    1284225.662 ±   180736.144  ops/min
+FillByMultiplying.execute     50     MTJ  thrpt    3    8199692.243 ±  1686378.565  ops/min
+FillByMultiplying.execute     64     ACM  thrpt    3     159280.472 ±    18882.539  ops/min
+FillByMultiplying.execute     64    EJML  thrpt    3     420104.560 ±   113623.628  ops/min
+FillByMultiplying.execute     64  ojAlgo  thrpt    3     688187.171 ±    30532.669  ops/min
+FillByMultiplying.execute     64     MTJ  thrpt    3    4454363.056 ±   239475.741  ops/min
+FillByMultiplying.execute    100     ACM  thrpt    3      36107.854 ±     9936.717  ops/min
+FillByMultiplying.execute    100    EJML  thrpt    3     112823.673 ±    82273.164  ops/min
+FillByMultiplying.execute    100  ojAlgo  thrpt    3     323930.165 ±   124484.774  ops/min
+FillByMultiplying.execute    100     MTJ  thrpt    3    1219147.320 ±   194014.880  ops/min
+FillByMultiplying.execute    128     ACM  thrpt    3      20399.980 ±     1637.495  ops/min
+FillByMultiplying.execute    128    EJML  thrpt    3      54415.974 ±    18941.114  ops/min
+FillByMultiplying.execute    128  ojAlgo  thrpt    3     177378.682 ±    26270.054  ops/min
+FillByMultiplying.execute    128     MTJ  thrpt    3     866923.444 ±    53994.701  ops/min
+FillByMultiplying.execute    200     ACM  thrpt    3       4931.796 ±     1043.833  ops/min
+FillByMultiplying.execute    200    EJML  thrpt    3      14499.957 ±     3702.570  ops/min
+FillByMultiplying.execute    200  ojAlgo  thrpt    3      56743.370 ±    49832.426  ops/min
+FillByMultiplying.execute    200     MTJ  thrpt    3     293166.266 ±   205546.492  ops/min
+FillByMultiplying.execute    256     ACM  thrpt    3       2083.201 ±     3199.005  ops/min
+FillByMultiplying.execute    256    EJML  thrpt    3       7119.714 ±      541.866  ops/min
+FillByMultiplying.execute    256  ojAlgo  thrpt    3      28558.470 ±    20845.667  ops/min
+FillByMultiplying.execute    256     MTJ  thrpt    3     182250.802 ±    70406.682  ops/min
+FillByMultiplying.execute    500     ACM  thrpt    3        220.718 ±       99.948  ops/min
+FillByMultiplying.execute    500    EJML  thrpt    3        884.511 ±      603.971  ops/min
+FillByMultiplying.execute    500  ojAlgo  thrpt    3       3811.207 ±      352.022  ops/min
+FillByMultiplying.execute    500     MTJ  thrpt    3      33486.789 ±     3794.273  ops/min
+FillByMultiplying.execute    512     ACM  thrpt    3        146.019 ±      108.751  ops/min
+FillByMultiplying.execute    512    EJML  thrpt    3        775.821 ±      170.447  ops/min
+FillByMultiplying.execute    512  ojAlgo  thrpt    3       3561.670 ±     2807.809  ops/min
+FillByMultiplying.execute    512     MTJ  thrpt    3      30905.535 ±     6373.262  ops/min
+FillByMultiplying.execute   1000     ACM  thrpt    3         15.776 ±        4.635  ops/min
+FillByMultiplying.execute   1000    EJML  thrpt    3        108.680 ±       15.403  ops/min
+FillByMultiplying.execute   1000  ojAlgo  thrpt    3        456.097 ±      327.706  ops/min
+FillByMultiplying.execute   1000     MTJ  thrpt    3       3670.238 ±     1960.465  ops/min
+ * </pre>
+ *
  * <h1>Mac Pro (Early 2009)</h1>
  * <h2>2018-01-23</h2>
  *
@@ -192,7 +250,8 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
     }
 
-    @Param({ "100", "150", "200", "350", "500", "750", "1000" })
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096",
+            "5000", "8192", "10000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -218,9 +277,9 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
 
         myOperation = library.getOperationFillByMultiplying(false, false);
 
-        left = this.makeRandom(dim, dim, library);
-        right = this.makeRandom(dim, dim, library);
-        product = this.makeZero(dim, dim, library);
+        left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        product = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override

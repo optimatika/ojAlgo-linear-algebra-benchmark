@@ -34,6 +34,11 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019)
+ *
+ * <pre>
+ * </pre>
+ *
  * <h1>Mac Pro (Early 2009)</h1>
  * <h2>2018-05-03</h2>
  *
@@ -139,7 +144,7 @@ public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class);
     }
 
-    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -165,9 +170,9 @@ public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
 
         myOperation = library.getOperationFillByMultiplying(true, false);
 
-        left = this.makeRandom(dim, dim, library);
-        right = this.makeRandom(dim, dim, library);
-        product = this.makeZero(dim, dim, library);
+        left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        product = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override

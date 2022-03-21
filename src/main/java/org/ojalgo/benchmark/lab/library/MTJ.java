@@ -77,19 +77,19 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     @Override
     public ProducingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
             final int numbSolutions, final boolean spd) {
-        final DenseMatrix result = new DenseMatrix(numbVariables, numbSolutions);
+        DenseMatrix result = new DenseMatrix(numbVariables, numbSolutions);
         return (body, rhs) -> body.solve(rhs, result);
     }
 
     @Override
     public DecompositionOperation<Matrix, Matrix> getOperationEvD(final int dim) {
 
-        final Matrix[] ret = this.makeArray(3);
-        final double[] offDiag = new double[dim - 1];
-        final DenseMatrix transp = new DenseMatrix(dim, dim);
+        Matrix[] ret = this.makeArray(3);
+        double[] offDiag = new double[dim - 1];
+        DenseMatrix transp = new DenseMatrix(dim, dim);
 
-        return (matrix) -> {
-            final SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
+        return matrix -> {
+            SymmDenseEVD evd = SymmDenseEVD.factorize(matrix);
             ret[0] = evd.getEigenvectors();
             ret[1] = new SymmTridiagMatrix(evd.getEigenvalues(), offDiag);
             ret[2] = evd.getEigenvectors().transpose(transp);
@@ -101,41 +101,37 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     public MutatingBinaryMatrixMatrixOperation<Matrix, DenseMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
         if (transpL) {
             if (transpR) {
-                return (left, right, product) -> left.transABmult(right, product);
-            } else {
-                return (left, right, product) -> left.transAmult(right, product);
+                return Matrix::transABmult;
             }
-        } else {
-            if (transpR) {
-                return (left, right, product) -> left.transBmult(right, product);
-            } else {
-                return (left, right, product) -> left.mult(right, product);
-            }
+            return Matrix::transAmult;
         }
+        if (transpR) {
+            return Matrix::transBmult;
+        }
+        return Matrix::mult;
     }
 
     @Override
     public MutatingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationInvert(final int dim, final boolean spd) {
         if (spd) {
-            final DenseCholesky cholesky = new DenseCholesky(dim, false);
+            DenseCholesky cholesky = new DenseCholesky(dim, false);
             return (matA, result) -> {
-                final LowerSPDDenseMatrix uspd = new LowerSPDDenseMatrix(matA);
+                LowerSPDDenseMatrix uspd = new LowerSPDDenseMatrix(matA);
                 uspd.set(matA);
                 cholesky.factor(uspd);
             };
-        } else {
-            final DenseMatrix I = Matrices.identity(dim);
-            final DenseMatrix inv = new DenseMatrix(dim, dim);
-            return (matA, result) -> {
-                matA.solve(I, inv);
-            };
         }
+        DenseMatrix I = Matrices.identity(dim);
+        DenseMatrix inv = new DenseMatrix(dim, dim);
+        return (matA, result) -> {
+            matA.solve(I, inv);
+        };
     }
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<Matrix, Matrix> getOperationMultiplyToProduce() {
         return (left, right) -> {
-            final DenseMatrix product = new DenseMatrix(left.numRows(), left.numColumns());
+            DenseMatrix product = new DenseMatrix(left.numRows(), left.numColumns());
             return left.mult(right, product);
         };
     }
@@ -153,11 +149,11 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
     @Override
     public DecompositionOperation<Matrix, Matrix> getOperationSVD(final int dim) {
 
-        final Matrix[] ret = this.makeArray(3);
-        final double[] offDiag = new double[dim - 1];
+        Matrix[] ret = this.makeArray(3);
+        double[] offDiag = new double[dim - 1];
 
-        return (matrix) -> {
-            final SVD svd = SVD.factorize(matrix);
+        return matrix -> {
+            SVD svd = SVD.factorize(matrix);
             ret[0] = svd.getU();
             ret[1] = new SymmTridiagMatrix(svd.getS(), offDiag);
             ret[2] = svd.getVt();
@@ -167,7 +163,7 @@ public class MTJ extends MatrixBenchmarkLibrary<Matrix, DenseMatrix> {
 
     @Override
     public MutatingUnaryMatrixOperation<Matrix, DenseMatrix> getOperationTranspose() {
-        return (matA, result) -> matA.transpose(result);
+        return Matrix::transpose;
     }
 
     @Override

@@ -35,6 +35,64 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019): 2022-01-14
+ *
+ * <pre>
+Benchmark                   (dim)   (lib)   Mode  Cnt         Score         Error    Units
+LeastSquaresSolver.execute     10     ACM  thrpt    3  14147224.620 ± 1017690.248  ops/min
+LeastSquaresSolver.execute     10    EJML  thrpt    3  26312772.417 ± 1420470.851  ops/min
+LeastSquaresSolver.execute     10  ojAlgo  thrpt    3   8632904.424 ± 1635064.050  ops/min
+LeastSquaresSolver.execute     10     MTJ  thrpt    3  11289497.149 ± 1355003.022  ops/min
+LeastSquaresSolver.execute     16     ACM  thrpt    3   5593856.395 ± 1630200.785  ops/min
+LeastSquaresSolver.execute     16    EJML  thrpt    3   9783792.213 ± 2445552.143  ops/min
+LeastSquaresSolver.execute     16  ojAlgo  thrpt    3   3553651.924 ±  302433.307  ops/min
+LeastSquaresSolver.execute     16     MTJ  thrpt    3   6795619.670 ± 1031563.975  ops/min
+LeastSquaresSolver.execute     20     ACM  thrpt    3   3550160.960 ±  835630.008  ops/min
+LeastSquaresSolver.execute     20    EJML  thrpt    3   5599693.518 ±  625965.378  ops/min
+LeastSquaresSolver.execute     20  ojAlgo  thrpt    3   2106863.092 ±  291629.127  ops/min
+LeastSquaresSolver.execute     20     MTJ  thrpt    3   5042197.010 ±  610886.527  ops/min
+LeastSquaresSolver.execute     32     ACM  thrpt    3   1022704.527 ±  253119.435  ops/min
+LeastSquaresSolver.execute     32    EJML  thrpt    3   1487795.086 ±  199035.170  ops/min
+LeastSquaresSolver.execute     32  ojAlgo  thrpt    3    552000.200 ±   82871.448  ops/min
+LeastSquaresSolver.execute     32     MTJ  thrpt    3   2214962.452 ±  358530.812  ops/min
+LeastSquaresSolver.execute     50     ACM  thrpt    3    325743.095 ±   15955.022  ops/min
+LeastSquaresSolver.execute     50    EJML  thrpt    3    380686.456 ±    1461.407  ops/min
+LeastSquaresSolver.execute     50  ojAlgo  thrpt    3    282929.026 ±  187622.822  ops/min
+LeastSquaresSolver.execute     50     MTJ  thrpt    3   1005124.372 ±  105401.923  ops/min
+LeastSquaresSolver.execute     64     ACM  thrpt    3    175941.150 ±    3675.162  ops/min
+LeastSquaresSolver.execute     64    EJML  thrpt    3    201712.282 ±    8882.430  ops/min
+LeastSquaresSolver.execute     64  ojAlgo  thrpt    3    173618.861 ±   15020.640  ops/min
+LeastSquaresSolver.execute     64     MTJ  thrpt    3    553564.597 ±   19183.910  ops/min
+LeastSquaresSolver.execute    100     ACM  thrpt    3     53322.927 ±    3064.429  ops/min
+LeastSquaresSolver.execute    100    EJML  thrpt    3     57322.787 ±    1928.148  ops/min
+LeastSquaresSolver.execute    100  ojAlgo  thrpt    3     61621.677 ±    3832.334  ops/min
+LeastSquaresSolver.execute    100     MTJ  thrpt    3    205836.811 ±    3005.810  ops/min
+LeastSquaresSolver.execute    128     ACM  thrpt    3     26574.120 ±    2115.893  ops/min
+LeastSquaresSolver.execute    128    EJML  thrpt    3     28108.216 ±    1818.621  ops/min
+LeastSquaresSolver.execute    128  ojAlgo  thrpt    3     34211.704 ±    1934.280  ops/min
+LeastSquaresSolver.execute    128     MTJ  thrpt    3     65906.145 ±    4831.794  ops/min
+LeastSquaresSolver.execute    200     ACM  thrpt    3      7355.808 ±     209.057  ops/min
+LeastSquaresSolver.execute    200    EJML  thrpt    3      7692.234 ±     387.152  ops/min
+LeastSquaresSolver.execute    200  ojAlgo  thrpt    3     10738.984 ±     711.649  ops/min
+LeastSquaresSolver.execute    200     MTJ  thrpt    3     27500.258 ±    2694.902  ops/min
+LeastSquaresSolver.execute    256     ACM  thrpt    3      3577.491 ±    1814.157  ops/min
+LeastSquaresSolver.execute    256    EJML  thrpt    3      3466.631 ±    1076.163  ops/min
+LeastSquaresSolver.execute    256  ojAlgo  thrpt    3      5520.001 ±     191.128  ops/min
+LeastSquaresSolver.execute    256     MTJ  thrpt    3     14046.921 ±     422.035  ops/min
+LeastSquaresSolver.execute    500     ACM  thrpt    3       505.182 ±      82.514  ops/min
+LeastSquaresSolver.execute    500    EJML  thrpt    3       511.017 ±      70.980  ops/min
+LeastSquaresSolver.execute    500  ojAlgo  thrpt    3      1341.534 ±      32.798  ops/min
+LeastSquaresSolver.execute    500     MTJ  thrpt    3      4195.065 ±     119.358  ops/min
+LeastSquaresSolver.execute    512     ACM  thrpt    3       422.181 ±      32.975  ops/min
+LeastSquaresSolver.execute    512    EJML  thrpt    3       420.296 ±      64.136  ops/min
+LeastSquaresSolver.execute    512  ojAlgo  thrpt    3      1159.276 ±      55.956  ops/min
+LeastSquaresSolver.execute    512     MTJ  thrpt    3      3449.016 ±    2660.783  ops/min
+LeastSquaresSolver.execute   1000     ACM  thrpt    3        62.527 ±       3.489  ops/min
+LeastSquaresSolver.execute   1000    EJML  thrpt    3        63.301 ±       6.679  ops/min
+LeastSquaresSolver.execute   1000  ojAlgo  thrpt    3       248.216 ±      60.196  ops/min
+LeastSquaresSolver.execute   1000     MTJ  thrpt    3       880.430 ±      23.485  ops/min
+ * </pre>
+ *
  * Mac Pro 2018-02-23
  *
  * <pre>
@@ -125,7 +183,7 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
         MatrixBenchmarkOperation.run(LeastSquaresSolver.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -150,8 +208,8 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
 
         myOperation = library.getOperationEquationSystemSolver(dim + dim, dim, 1, false);
 
-        body = this.makeRandom(dim + dim, dim, library);
-        rhs = this.makeRandom(dim + dim, 1, library);
+        body = MatrixBenchmarkOperation.makeRandom(dim + dim, dim, library);
+        rhs = MatrixBenchmarkOperation.makeRandom(dim + dim, 1, library);
     }
 
     @Override

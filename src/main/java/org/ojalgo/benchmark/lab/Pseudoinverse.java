@@ -32,6 +32,11 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019)
+ *
+ * <pre>
+ * </pre>
+ *
  * Mac Pro 2017-04-21
  *
  * <pre>
@@ -137,8 +142,9 @@ public class Pseudoinverse extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(Pseudoinverse.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
+
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
@@ -158,7 +164,7 @@ public class Pseudoinverse extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        matrix = this.makeSPD(dim, library);
+        matrix = MatrixBenchmarkOperation.makeSPD(dim, library);
 
         myOperation = library.getOperationPseudoinverse(dim);
     }

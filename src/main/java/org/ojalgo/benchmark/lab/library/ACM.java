@@ -68,8 +68,8 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
 
     @Override
     public PropertyOperation<RealMatrix, Array2DRowRealMatrix> getOperationDeterminant(final int dim) {
-        return (matA) -> {
-            final LUDecomposition lu = new LUDecomposition(matA);
+        return matA -> {
+            LUDecomposition lu = new LUDecomposition(matA);
             return lu.getDeterminant();
         };
     }
@@ -80,32 +80,31 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
         if (numbEquations == numbVariables) {
             if (spd) {
                 return (body, rhs) -> {
-                    final CholeskyDecomposition cholesky = new CholeskyDecomposition(body);
+                    CholeskyDecomposition cholesky = new CholeskyDecomposition(body);
                     return cholesky.getSolver().solve(rhs);
                 };
-            } else {
-                return (body, rhs) -> {
-                    final LUDecomposition lu = new LUDecomposition(body);
-                    return lu.getSolver().solve(rhs);
-                };
             }
-        } else if (numbEquations > numbVariables) {
             return (body, rhs) -> {
-                final QRDecomposition qr = new QRDecomposition(body);
-                return qr.getSolver().solve(rhs);
+                LUDecomposition lu = new LUDecomposition(body);
+                return lu.getSolver().solve(rhs);
             };
-        } else {
+        }
+        if (numbEquations <= numbVariables) {
             return null;
         }
+        return (body, rhs) -> {
+            QRDecomposition qr = new QRDecomposition(body);
+            return qr.getSolver().solve(rhs);
+        };
     }
 
     @Override
     public DecompositionOperation<RealMatrix, RealMatrix> getOperationEvD(final int dim) {
 
-        final RealMatrix[] ret = this.makeArray(3);
+        RealMatrix[] ret = this.makeArray(3);
 
-        return (matrix) -> {
-            final EigenDecomposition svd = new EigenDecomposition(matrix);
+        return matrix -> {
+            EigenDecomposition svd = new EigenDecomposition(matrix);
             ret[0] = svd.getV();
             ret[1] = svd.getD();
             ret[2] = svd.getVT();
@@ -115,32 +114,31 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
 
     @Override
     public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
-        return (left, right, product) -> this.copy((transpL ? left.transpose() : left).multiply((transpR ? right.transpose() : right)), product);
+        return (left, right, product) -> this.copy((transpL ? left.transpose() : left).multiply(transpR ? right.transpose() : right), product);
     }
 
     @Override
     public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationInvert(final int dim, final boolean spd) {
         if (spd) {
             return (matA, result) -> {
-                final CholeskyDecomposition chol = new CholeskyDecomposition(matA);
+                CholeskyDecomposition chol = new CholeskyDecomposition(matA);
                 this.copy(chol.getSolver().getInverse(), result);
             };
-        } else {
-            return (matA, result) -> {
-                final LUDecomposition lu = new LUDecomposition(matA);
-                this.copy(lu.getSolver().getInverse(), result);
-            };
         }
+        return (matA, result) -> {
+            LUDecomposition lu = new LUDecomposition(matA);
+            this.copy(lu.getSolver().getInverse(), result);
+        };
     }
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
-        return (left, right) -> left.multiply(right);
+        return RealMatrix::multiply;
     }
 
     @Override
     public ProducingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationPseudoinverse(final int dim) {
-        return (matrix) -> new SingularValueDecomposition(matrix).getSolver().getInverse();
+        return matrix -> new SingularValueDecomposition(matrix).getSolver().getInverse();
     }
 
     @Override
@@ -151,10 +149,10 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
     @Override
     public DecompositionOperation<RealMatrix, RealMatrix> getOperationSVD(final int dim) {
 
-        final RealMatrix[] ret = this.makeArray(3);
+        RealMatrix[] ret = this.makeArray(3);
 
-        return (matrix) -> {
-            final SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
+        return matrix -> {
+            SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
             ret[0] = svd.getU();
             ret[1] = svd.getS();
             ret[2] = svd.getVT();

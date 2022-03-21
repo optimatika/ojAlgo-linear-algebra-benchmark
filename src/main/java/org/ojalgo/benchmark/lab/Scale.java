@@ -35,6 +35,11 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019)
+ *
+ * <pre>
+ * </pre>
+ *
  * <pre>
 Result "org.ojalgo.benchmark.lab.Scale.execute":
   8049.585 ±(99.9%) 357.424 ops/min [Average]
@@ -68,7 +73,7 @@ public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.Ja
         MatrixBenchmarkOperation.run(Scale.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -94,9 +99,9 @@ public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.Ja
 
         myOperation = library.getOperationScale();
 
-        original = this.makeRandom(dim, dim, library);
+        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
         scale = Math.random();
-        result = this.makeZero(dim, dim, library);
+        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override

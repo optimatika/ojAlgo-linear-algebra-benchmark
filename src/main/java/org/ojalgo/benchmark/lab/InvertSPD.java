@@ -35,6 +35,11 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019)
+ *
+ * <pre>
+ * </pre>
+ *
  * MacBook Pro 2018-04-01
  *
  * <pre>
@@ -49,7 +54,7 @@ public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuit
         MatrixBenchmarkOperation.run(InvertSPD.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -74,8 +79,8 @@ public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuit
 
         myOperation = library.getOperationInvert(dim, true);
 
-        original = this.makeSPD(dim, library);
-        result = this.makeZero(dim, dim, library);
+        original = MatrixBenchmarkOperation.makeSPD(dim, library);
+        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override

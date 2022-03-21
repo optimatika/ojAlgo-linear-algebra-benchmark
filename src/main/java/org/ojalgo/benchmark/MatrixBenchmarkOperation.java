@@ -37,8 +37,6 @@ public abstract class MatrixBenchmarkOperation {
     @FunctionalInterface
     public interface DecompositionOperation<I, T extends I> {
 
-        I[] operate(I arg) throws Exception;
-
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg) {
             try {
@@ -49,12 +47,12 @@ public abstract class MatrixBenchmarkOperation {
             }
         }
 
+        I[] operate(I arg) throws Exception;
+
     }
 
     @FunctionalInterface
     public interface MutatingBinaryMatrixMatrixOperation<I, T extends I> {
-
-        void operate(I arg1, I arg2, T ret) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg1, final Object arg2, final Object ret) {
@@ -67,12 +65,12 @@ public abstract class MatrixBenchmarkOperation {
             return ret;
         }
 
+        void operate(I arg1, I arg2, T ret) throws Exception;
+
     }
 
     @FunctionalInterface
     public interface MutatingBinaryMatrixScalarOperation<I, T extends I> {
-
-        void operate(I arg1, double arg2, T ret) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg1, final double arg2, final Object ret) {
@@ -85,12 +83,12 @@ public abstract class MatrixBenchmarkOperation {
             return ret;
         }
 
+        void operate(I arg1, double arg2, T ret) throws Exception;
+
     }
 
     @FunctionalInterface
     public interface MutatingUnaryMatrixOperation<I, T extends I> {
-
-        void operate(I arg, T ret) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg, final Object ret) {
@@ -103,12 +101,12 @@ public abstract class MatrixBenchmarkOperation {
             return ret;
         }
 
+        void operate(I arg, T ret) throws Exception;
+
     }
 
     @FunctionalInterface
     public interface ProducingBinaryMatrixMatrixOperation<I, T extends I> {
-
-        I operate(I arg1, I arg2) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg1, final Object arg2) {
@@ -119,12 +117,12 @@ public abstract class MatrixBenchmarkOperation {
                 return null;
             }
         }
+
+        I operate(I arg1, I arg2) throws Exception;
     }
 
     @FunctionalInterface
     public interface ProducingUnaryMatrixOperation<I, T extends I> {
-
-        I operate(I arg) throws Exception;
 
         @SuppressWarnings("unchecked")
         default Object execute(final Object arg) {
@@ -136,12 +134,12 @@ public abstract class MatrixBenchmarkOperation {
             }
         }
 
+        I operate(I arg) throws Exception;
+
     }
 
     @FunctionalInterface
     public interface PropertyOperation<I, T extends I> {
-
-        double operate(I arg) throws Exception;
 
         @SuppressWarnings("unchecked")
         default double execute(final Object arg) {
@@ -153,14 +151,55 @@ public abstract class MatrixBenchmarkOperation {
             }
         }
 
+        double operate(I arg) throws Exception;
+
     }
 
-    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.MINUTES);
-    static final TimeValue TIMEOUT = new TimeValue(2L, TimeUnit.MINUTES);
+    private static final String[] _10_1000 = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" };
+    private static final String[] FULL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000",
+            "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
+    private static final String[] JVM = { "100", "150", "200", "350", "500", "750", "1000" };
+
+    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
+    static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
+
+    protected final static Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
+        for (int j = 0; j < numberOfColumns; j++) {
+            for (int i = 0; i < numberOfRows; i++) {
+                tmpSupplier.set(i, j, Math.random());
+            }
+        }
+        return tmpSupplier.get();
+    }
+
+    protected final static Object makeSPD(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
+
+        final double[] random = new double[size];
+
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
+
+        for (int i = 0; i < size; i++) {
+
+            random[i] = Math.random();
+
+            for (int j = 0; j < i; j++) {
+                builder.set(i, j, random[i] * random[j]);
+                builder.set(j, i, random[j] * random[i]);
+            }
+            builder.set(i, i, random[i] + 1.0);
+        }
+
+        return builder.get();
+    }
+
+    protected final static Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
+        return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
+    }
 
     protected static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(7).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx6g").resultFormat(ResultFormatType.CSV);
+                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx8g").resultFormat(ResultFormatType.CSV);
     }
 
     protected static void run(final Class<?> clazz) throws RunnerException {
@@ -182,40 +221,6 @@ public abstract class MatrixBenchmarkOperation {
      * implementation with <code>@TearDown(Level.Iteration)</code>
      */
     public abstract void verify() throws BenchmarkRequirementsException;
-
-    protected final Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
-        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
-        for (int j = 0; j < numberOfColumns; j++) {
-            for (int i = 0; i < numberOfRows; i++) {
-                tmpSupplier.set(i, j, Math.random());
-            }
-        }
-        return tmpSupplier.get();
-    }
-
-    protected final Object makeSPD(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
-
-        final double[] random = new double[size];
-
-        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
-
-        for (int i = 0; i < size; i++) {
-
-            random[i] = Math.random();
-
-            for (int j = 0; j < i; j++) {
-                builder.set(i, j, random[i] * random[j]);
-                builder.set(j, i, random[j] * random[i]);
-            }
-            builder.set(i, i, random[i] + 1.0);
-        }
-
-        return builder.get();
-    }
-
-    protected final Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
-        return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
-    }
 
     protected void verifyStateless(final Class<?> clazz) throws BenchmarkRequirementsException {
 

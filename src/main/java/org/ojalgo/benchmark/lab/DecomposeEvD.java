@@ -35,6 +35,63 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019): 2022-01-04
+ *
+ * <pre>
+Benchmark             (dim)   (lib)   Mode  Cnt         Score         Error    Units
+DecomposeEvD.execute     10     ACM  thrpt    3   6320190.423 ± 2612722.707  ops/min
+DecomposeEvD.execute     10    EJML  thrpt    3  10190309.875 ±  960055.458  ops/min
+DecomposeEvD.execute     10  ojAlgo  thrpt    3  15151371.225 ± 2933426.677  ops/min
+DecomposeEvD.execute     16     ACM  thrpt    3   2258405.664 ±  635915.075  ops/min
+DecomposeEvD.execute     16    EJML  thrpt    3   3483522.569 ±  534696.795  ops/min
+DecomposeEvD.execute     16  ojAlgo  thrpt    3   5167724.773 ±  394446.821  ops/min
+DecomposeEvD.execute     16     MTJ  thrpt    3   1784077.915 ±  968987.134  ops/min
+DecomposeEvD.execute     20     ACM  thrpt    3   1407412.041 ±  104648.111  ops/min
+DecomposeEvD.execute     20    EJML  thrpt    3   2113633.542 ±  400877.389  ops/min
+DecomposeEvD.execute     20  ojAlgo  thrpt    3   2919489.293 ±  805948.716  ops/min
+DecomposeEvD.execute     20     MTJ  thrpt    3   1314468.075 ±  397704.698  ops/min
+DecomposeEvD.execute     32     ACM  thrpt    3    433547.431 ±   24437.010  ops/min
+DecomposeEvD.execute     32    EJML  thrpt    3    586740.359 ±   28730.677  ops/min
+DecomposeEvD.execute     32  ojAlgo  thrpt    3    698577.448 ±  788535.760  ops/min
+DecomposeEvD.execute     32     MTJ  thrpt    3    452424.441 ±  639524.549  ops/min
+DecomposeEvD.execute     50     ACM  thrpt    3     81412.780 ±   11122.576  ops/min
+DecomposeEvD.execute     50    EJML  thrpt    3    123219.241 ±  114361.410  ops/min
+DecomposeEvD.execute     50  ojAlgo  thrpt    3    308883.878 ±  105766.634  ops/min
+DecomposeEvD.execute     50     MTJ  thrpt    3    168028.779 ±  124663.573  ops/min
+DecomposeEvD.execute     64     ACM  thrpt    3     42915.011 ±   71804.570  ops/min
+DecomposeEvD.execute     64    EJML  thrpt    3     95095.680 ±    9790.488  ops/min
+DecomposeEvD.execute     64  ojAlgo  thrpt    3    200808.617 ±   17159.669  ops/min
+DecomposeEvD.execute     64     MTJ  thrpt    3    143592.100 ±   74779.144  ops/min
+DecomposeEvD.execute    100     ACM  thrpt    3     17571.106 ±    6097.191  ops/min
+DecomposeEvD.execute    100    EJML  thrpt    3     30046.875 ±    7385.108  ops/min
+DecomposeEvD.execute    100  ojAlgo  thrpt    3     65202.869 ±    4575.695  ops/min
+DecomposeEvD.execute    100     MTJ  thrpt    3     46954.529 ±   47254.524  ops/min
+DecomposeEvD.execute    128     ACM  thrpt    3      9926.939 ±    3902.090  ops/min
+DecomposeEvD.execute    128    EJML  thrpt    3     14679.895 ±    4486.203  ops/min
+DecomposeEvD.execute    128  ojAlgo  thrpt    3     32426.294 ±   15785.822  ops/min
+DecomposeEvD.execute    128     MTJ  thrpt    3     28581.743 ±   41373.934  ops/min
+DecomposeEvD.execute    200     ACM  thrpt    3      2318.419 ±    1669.914  ops/min
+DecomposeEvD.execute    200    EJML  thrpt    3      2813.243 ±      77.093  ops/min
+DecomposeEvD.execute    200  ojAlgo  thrpt    3      6854.357 ±     289.305  ops/min
+DecomposeEvD.execute    200     MTJ  thrpt    3      7283.414 ±   22644.247  ops/min
+DecomposeEvD.execute    256     ACM  thrpt    3       591.388 ±     290.455  ops/min
+DecomposeEvD.execute    256    EJML  thrpt    3      1570.055 ±     538.748  ops/min
+DecomposeEvD.execute    256  ojAlgo  thrpt    3      3246.703 ±    1277.347  ops/min
+DecomposeEvD.execute    256     MTJ  thrpt    3      3411.191 ±    5275.767  ops/min
+DecomposeEvD.execute    500     ACM  thrpt    3       103.701 ±      33.420  ops/min
+DecomposeEvD.execute    500    EJML  thrpt    3       218.483 ±     134.560  ops/min
+DecomposeEvD.execute    500  ojAlgo  thrpt    3       383.022 ±     546.442  ops/min
+DecomposeEvD.execute    500     MTJ  thrpt    3      1582.760 ±    4153.384  ops/min
+DecomposeEvD.execute    512     ACM  thrpt    3       121.609 ±      55.534  ops/min
+DecomposeEvD.execute    512    EJML  thrpt    3       249.212 ±     305.763  ops/min
+DecomposeEvD.execute    512  ojAlgo  thrpt    3       589.090 ±      16.524  ops/min
+DecomposeEvD.execute    512     MTJ  thrpt    3      1385.008 ±     858.414  ops/min
+DecomposeEvD.execute   1000     ACM  thrpt    3        10.405 ±       1.516  ops/min
+DecomposeEvD.execute   1000    EJML  thrpt    3        37.365 ±       6.811  ops/min
+DecomposeEvD.execute   1000  ojAlgo  thrpt    3        80.501 ±      26.801  ops/min
+DecomposeEvD.execute   1000     MTJ  thrpt    3       314.078 ±     219.011  ops/min
+ * </pre>
+ *
  * <h1>Mac Pro (Early 2009)</h1>
  * <h2>2017-04-22</h2>
  *
@@ -164,8 +221,9 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
         MatrixBenchmarkOperation.run(DecomposeEvD.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
+
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
     public String lib;
 
@@ -186,7 +244,7 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
 
         library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
 
-        matrix = this.makeSPD(dim, library);
+        matrix = MatrixBenchmarkOperation.makeSPD(dim, library);
 
         myOperation = library.getOperationEvD(dim);
     }

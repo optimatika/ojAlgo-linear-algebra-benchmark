@@ -68,32 +68,23 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationAdd() {
-        return (a, b, c) -> CommonOps_DDRM.add(a, b, c);
+        return CommonOps_DDRM::add;
     }
 
     @Override
     public PropertyOperation<DMatrixRMaj, DMatrixRMaj> getOperationDeterminant(final int dim) {
-        return (matA) -> CommonOps_DDRM.det(matA);
+        return CommonOps_DDRM::det;
     }
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
             final int numbSolutions, final boolean spd) {
 
-        final DMatrixRMaj result = new DMatrixRMaj(numbVariables, numbSolutions);
+        DMatrixRMaj result = new DMatrixRMaj(numbVariables, numbSolutions);
 
         if (numbEquations == numbVariables) {
             if (spd) {
-                final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.symmPosDef(numbVariables));
-                return (body, rhs) -> {
-                    if (!solver.setA(body)) {
-                        throw new BenchmarkRequirementsException();
-                    }
-                    solver.solve(rhs, result);
-                    return result;
-                };
-            } else {
-                final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.linear(numbVariables));
+                LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.symmPosDef(numbVariables));
                 return (body, rhs) -> {
                     if (!solver.setA(body)) {
                         throw new BenchmarkRequirementsException();
@@ -102,8 +93,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
                     return result;
                 };
             }
-        } else if (numbEquations > numbVariables) {
-            final LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
+            LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.linear(numbVariables));
             return (body, rhs) -> {
                 if (!solver.setA(body)) {
                     throw new BenchmarkRequirementsException();
@@ -111,17 +101,26 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
                 solver.solve(rhs, result);
                 return result;
             };
-        } else {
+        }
+        if (numbEquations <= numbVariables) {
             return null;
         }
+        LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.leastSquares(numbEquations, numbVariables));
+        return (body, rhs) -> {
+            if (!solver.setA(body)) {
+                throw new BenchmarkRequirementsException();
+            }
+            solver.solve(rhs, result);
+            return result;
+        };
     }
 
     @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationEvD(final int dim) {
 
-        final DMatrixRMaj[] ret = this.makeArray(3);
-        final EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
-        final DMatrixRMaj vt = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj[] ret = this.makeArray(3);
+        EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
+        DMatrixRMaj vt = new DMatrixRMaj(dim, dim);
 
         return input -> {
 
@@ -142,32 +141,28 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
         if (transpL) {
             if (transpR) {
-                return (left, right, product) -> CommonOps_DDRM.multTransAB(left, right, product);
-            } else {
-                return (left, right, product) -> CommonOps_DDRM.multTransA(left, right, product);
+                return CommonOps_DDRM::multTransAB;
             }
-        } else {
-            if (transpR) {
-                return (left, right, product) -> CommonOps_DDRM.multTransB(left, right, product);
-            } else {
-                return (left, right, product) -> CommonOps_DDRM.mult(left, right, product);
-            }
+            return CommonOps_DDRM::multTransA;
         }
+        if (transpR) {
+            return CommonOps_DDRM::multTransB;
+        }
+        return CommonOps_DDRM::mult;
     }
 
     @Override
     public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationInvert(final int dim, final boolean spd) {
         if (spd) {
-            return (matA, result) -> CovarianceOps_DDRM.invert(matA, result);
-        } else {
-            return (matA, result) -> CommonOps_DDRM.invert(matA, result);
+            return CovarianceOps_DDRM::invert;
         }
+        return CommonOps_DDRM::invert;
     }
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationMultiplyToProduce() {
         return (left, right) -> {
-            final DMatrixRMaj product = new DMatrixRMaj(left.getNumRows(), right.getNumCols());
+            DMatrixRMaj product = new DMatrixRMaj(left.getNumRows(), right.getNumCols());
             CommonOps_DDRM.mult(left, right, product);
             return product;
         };
@@ -175,9 +170,9 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public ProducingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationPseudoinverse(final int dim) {
-        final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.pseudoInverse(true);
-        final DMatrixRMaj ret = new DMatrixRMaj(dim, dim);
-        return (matrix) -> {
+        LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.pseudoInverse(true);
+        DMatrixRMaj ret = new DMatrixRMaj(dim, dim);
+        return matrix -> {
             if (!solver.setA(matrix)) {
                 throw new RuntimeException();
             }
@@ -194,14 +189,14 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationSVD(final int dim) {
 
-        final DMatrixRMaj[] ret = this.makeArray(3);
-        final SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, true, true, true);
+        DMatrixRMaj[] ret = this.makeArray(3);
+        SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, true, true, true);
 
-        final DMatrixRMaj mtrxU = new DMatrixRMaj(dim, dim);
-        final DMatrixRMaj mtrxW = new DMatrixRMaj(dim, dim);
-        final DMatrixRMaj mtrxV = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj mtrxU = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj mtrxW = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj mtrxV = new DMatrixRMaj(dim, dim);
 
-        return (matrix) -> {
+        return matrix -> {
             svd.decompose(matrix);
             ret[0] = svd.getU(mtrxU, false);
             ret[1] = svd.getW(mtrxW);
@@ -212,7 +207,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationTranspose() {
-        return (matA, result) -> CommonOps_DDRM.transpose(matA, result);
+        return CommonOps_DDRM::transpose;
     }
 
     @Override
@@ -232,7 +227,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
         DMatrixRMaj retVal = factors[0];
 
         for (int f = 1; f < factors.length; f++) {
-            final DMatrixRMaj prod = new DMatrixRMaj(retVal.numRows, factors[f].numCols);
+            DMatrixRMaj prod = new DMatrixRMaj(retVal.numRows, factors[f].numCols);
             CommonOps_DDRM.mult(retVal, factors[f], prod);
             retVal = prod;
         }
@@ -247,7 +242,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     protected DMatrixRMaj subtract(final DMatrixRMaj left, final DMatrixRMaj right) {
-        final DMatrixRMaj prod = new DMatrixRMaj(left.numRows, right.numCols);
+        DMatrixRMaj prod = new DMatrixRMaj(left.numRows, right.numCols);
         CommonOps_DDRM.subtract(left, right, prod);
         return prod;
     }

@@ -35,8 +35,13 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019)
+ *
+ * <pre>
+ * </pre>
+ *
  * MacBook Pro 2018-04-01
- * 
+ *
  * <pre>
 # Run complete. Total time: 00:20:06
 
@@ -64,7 +69,7 @@ public class Transpose extends MatrixBenchmarkOperation implements BenchmarkSuit
         MatrixBenchmarkOperation.run(Transpose.class);
     }
 
-    @Param({ "10", "100", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -89,8 +94,8 @@ public class Transpose extends MatrixBenchmarkOperation implements BenchmarkSuit
 
         myOperation = library.getOperationTranspose();
 
-        original = this.makeRandom(dim, dim, library);
-        result = this.makeZero(dim, dim, library);
+        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override

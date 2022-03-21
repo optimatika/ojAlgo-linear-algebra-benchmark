@@ -34,6 +34,11 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Pro (16-inch, 2019)
+ *
+ * <pre>
+ * </pre>
+ *
  * <h1>Mac Pro (Early 2009)</h1>
  * <h2>2017-11-27</h2>
  *
@@ -328,7 +333,7 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(MultiplyToProduce.class);
     }
 
-    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
     @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
@@ -353,8 +358,8 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
 
         myOperation = library.getOperationMultiplyToProduce();
 
-        left = this.makeRandom(dim, dim, library);
-        right = this.makeRandom(dim, dim, library);
+        left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
     }
 
     @Override
