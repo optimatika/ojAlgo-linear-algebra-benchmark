@@ -27,7 +27,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import org.ojalgo.RecoverableCondition;
 import org.ojalgo.benchmark.results.BenchmarkResultsParser.ParsedLineData;
 import org.ojalgo.netio.BasicParser;
 import org.ojalgo.netio.LineSplittingParser;
@@ -41,21 +40,21 @@ public final class BenchmarkResultsParser implements BasicParser<ParsedLineData>
         private final TableData<Integer> myTable = new TableData<>(new IndexMapper<Integer>() {
 
             @Override
-            public long toIndex(Integer key) {
+            public long toIndex(final Integer key) {
                 return key.longValue();
             }
 
             @Override
-            public Integer toKey(long index) {
+            public Integer toKey(final long index) {
                 return Integer.valueOf((int) index);
             }
         });
 
-        public void accept(ParsedLineData row) {
+        public void accept(final ParsedLineData row) {
             myTable.put(row.getSize(), row.getContestant(), row.getMeassurement());
         }
 
-        void appendTo(Appendable appendable) {
+        void appendTo(final Appendable appendable) {
             try {
                 appendable.append(myTable.print());
             } catch (IOException e) {
@@ -72,7 +71,7 @@ public final class BenchmarkResultsParser implements BasicParser<ParsedLineData>
         private final int mySize;
         private final double myValue;
 
-        ParsedLineData(int dim, String lib, String jvm, double value) {
+        ParsedLineData(final int dim, final String lib, final String jvm, final double value) {
             super();
             mySize = dim;
             myLibrary = lib;
@@ -102,7 +101,7 @@ public final class BenchmarkResultsParser implements BasicParser<ParsedLineData>
 
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         final ParseConsumer consumer = new ParseConsumer();
 
@@ -128,12 +127,12 @@ public final class BenchmarkResultsParser implements BasicParser<ParsedLineData>
     private final LineSplittingParser myLineSplittingParser = new LineSplittingParser();
     private boolean myRunComplete = false;
 
-    BenchmarkResultsParser(String jvm) {
+    BenchmarkResultsParser(final String jvm) {
         super();
         myJVM = jvm;
     }
 
-    public ParsedLineData parse(String line) throws RecoverableCondition {
+    public ParsedLineData parse(final String line) {
 
         if (!myRunComplete) {
             if (line.startsWith("Benchmark")) {
