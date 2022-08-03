@@ -30,34 +30,19 @@ import java.util.function.Consumer;
 import org.ojalgo.benchmark.results.BenchmarkResultsParser.ParsedLineData;
 import org.ojalgo.netio.BasicParser;
 import org.ojalgo.netio.LineSplittingParser;
-import org.ojalgo.netio.TableData;
-import org.ojalgo.structure.Structure1D.IndexMapper;
 
 public final class BenchmarkResultsParser implements BasicParser<ParsedLineData> {
 
     static class ParseConsumer implements Consumer<BenchmarkResultsParser.ParsedLineData> {
 
-        private final TableData<Integer> myTable = new TableData<>(new IndexMapper<Integer>() {
-
-            @Override
-            public long toIndex(final Integer key) {
-                return key.longValue();
-            }
-
-            @Override
-            public Integer toKey(final long index) {
-                return Integer.valueOf((int) index);
-            }
-        });
-
         public void accept(final ParsedLineData row) {
-            myTable.put(row.getSize(), row.getContestant(), row.getMeassurement());
+            // TODO myTable.put(row.getSize(), row.getContestant(), row.getMeassurement());
         }
 
         void appendTo(final Appendable appendable) {
             try {
-                appendable.append(myTable.print());
-            } catch (IOException e) {
+                // TODO appendable.append(myTable.print());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
