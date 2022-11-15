@@ -16,7 +16,7 @@
         <version.java>11</version.java>
         <version.org.ojalgo>52.0.1</version.org.ojalgo>
         <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
-        <version.org.openjdk.jmh>1.35</version.org.openjdk.jmh>
+        <version.org.openjdk.jmh>1.36</version.org.openjdk.jmh>
         <uberjar.name>ojlab</uberjar.name>
     </properties>
     <dependencies>
