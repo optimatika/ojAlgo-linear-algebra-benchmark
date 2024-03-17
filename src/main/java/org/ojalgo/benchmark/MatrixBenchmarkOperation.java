@@ -160,7 +160,7 @@ public abstract class MatrixBenchmarkOperation {
             "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
     private static final String[] JVM = { "100", "150", "200", "350", "500", "750", "1000" };
 
-    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
+    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.SECONDS);
     static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
 
     protected final static Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
@@ -202,7 +202,7 @@ public abstract class MatrixBenchmarkOperation {
                 .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx8g").resultFormat(ResultFormatType.CSV);
     }
 
-    protected static void run(final Class<?> clazz) throws RunnerException {
+    public static void run(final Class<?> clazz) throws RunnerException {
         new Runner(MatrixBenchmarkOperation.options().include(clazz.getSimpleName()).build()).run();
     }
 
@@ -225,7 +225,7 @@ public abstract class MatrixBenchmarkOperation {
     protected void verifyStateless(final Class<?> clazz) throws BenchmarkRequirementsException {
 
         for (final Field tmpField : clazz.getDeclaredFields()) {
-            if (!tmpField.getName().equals("this$0")) {
+            if (!"this$0".equals(tmpField.getName())) {
                 throw new BenchmarkRequirementsException(tmpField.toString());
             }
         }
