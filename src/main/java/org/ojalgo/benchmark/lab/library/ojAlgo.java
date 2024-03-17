@@ -70,7 +70,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public PropertyOperation<MatrixStore<Double>, Primitive64Store> getOperationDeterminant(final int dim) {
-        DeterminantTask<Double> task = DeterminantTask.PRIMITIVE.make(dim, false);
+        DeterminantTask<Double> task = DeterminantTask.R064.make(dim, false);
         return matA -> task.calculateDeterminant(matA);
     }
 
@@ -78,7 +78,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions, final boolean spd) {
 
-        SolverTask<Double> task = SolverTask.PRIMITIVE.make(numbEquations, numbVariables, numbSolutions, spd, spd);
+        SolverTask<Double> task = SolverTask.R064.make(numbEquations, numbVariables, numbSolutions, spd, spd);
 
         PhysicalStore<Double> preallocated = task.preallocate(numbEquations, numbVariables, numbSolutions);
 
@@ -90,7 +90,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
         MatrixStore<Double>[] ret = this.makeArray(3);
 
-        Eigenvalue<Double> evd = Eigenvalue.PRIMITIVE.make(dim, true);
+        Eigenvalue<Double> evd = Eigenvalue.R064.make(dim, true);
 
         return matrix -> {
             evd.decompose(matrix);
@@ -109,7 +109,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
 
     @Override
     public MutatingUnaryMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationInvert(final int dim, final boolean spd) {
-        InverterTask<Double> task = InverterTask.PRIMITIVE.make(dim, spd);
+        InverterTask<Double> task = InverterTask.R064.make(dim, spd);
         return task::invert;
     }
 
@@ -121,7 +121,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     @Override
     public ProducingUnaryMatrixOperation<MatrixStore<Double>, Primitive64Store> getOperationPseudoinverse(final int dim) {
 
-        SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
+        SingularValue<Double> svd = SingularValue.R064.make(dim, dim);
         PhysicalStore<Double> preallocated = svd.preallocate(dim, dim);
 
         return matrix -> {
@@ -139,7 +139,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, Primitiv
     public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationSVD(final int dim) {
 
         MatrixStore<Double>[] ret = this.makeArray(3);
-        SingularValue<Double> svd = SingularValue.PRIMITIVE.make(dim, dim);
+        SingularValue<Double> svd = SingularValue.R064.make(dim, dim);
 
         return matrix -> {
             svd.decompose(matrix);
