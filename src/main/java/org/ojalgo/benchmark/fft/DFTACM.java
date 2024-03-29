@@ -8,7 +8,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.ojalgo.data.transform.DiscreteFourierTransform;
 import org.ojalgo.function.special.PowerOf2;
 import org.ojalgo.matrix.store.MatrixStore;
-import org.ojalgo.matrix.store.Primitive64Store;
+import org.ojalgo.matrix.store.R064Store;
 import org.ojalgo.random.Uniform;
 import org.ojalgo.scalar.ComplexNumber;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -69,7 +69,7 @@ public class DFTACM {
     @Param({ "0", "1", "2", "3" })
     public int power;
 
-    Primitive64Store input;
+    R064Store input;
     FastFourierTransformer transformerACM;
     DiscreteFourierTransform transformerOjAlgo;
 
@@ -86,7 +86,7 @@ public class DFTACM {
     @Setup
     public void setup() {
         int size = PowerOf2.powerOfInt2(power);
-        input = Primitive64Store.FACTORY.makeFilled(size, 1, Uniform.of(-2, 4));
+        input = R064Store.FACTORY.makeFilled(size, 1, Uniform.of(-2, 4));
         transformerACM = new FastFourierTransformer(DftNormalization.STANDARD);
         transformerOjAlgo = DiscreteFourierTransform.newInstance(size);
 
