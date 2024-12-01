@@ -15,7 +15,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>3.13.0</version>
         <configuration>
           <source>${version.java}</source>
           <target>${version.java}</target>
@@ -24,7 +24,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.5.3</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -64,17 +64,17 @@
     <dependency>
       <groupId>org.ojalgo</groupId>
       <artifactId>ojalgo</artifactId>
-      <version>53.2.0-SNAPSHOT</version>
+      <version>55.0.2</version>
       <type>test-jar</type>
       <scope>compile</scope>
     </dependency>
   </dependencies>
   <properties>
-    <version.org.openjdk.jmh>1.37</version.org.openjdk.jmh>
     <version.java>11</version.java>
     <uberjar.name>ojlab</uberjar.name>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.org.ojalgo>53.2.0-SNAPSHOT</version.org.ojalgo>
+    <version.org.ojalgo>55.0.2</version.org.ojalgo>
+    <version.org.openjdk.jmh>1.37</version.org.openjdk.jmh>
     <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
   </properties>
 </project>
