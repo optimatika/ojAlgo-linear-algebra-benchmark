@@ -177,52 +177,67 @@ SquareMultiply.execute             1000        MTJ  thrpt   15        1598,225 �
 SquareMultiply.execute             1000     ojAlgo  thrpt   15         418,851 ±       16,176  ops/min
  * </pre>
  *
- * <h1>MacBook Air</h1>
- * <h2>2015-06-18</h2>
+ * <h1>MacBook Air M2</h1>
+ * <h2>2025-06-27</h2>
  *
  * <pre>
- * # Run complete. Total time: 00:45:32
+Benchmark                  (dim)   (lib)   Mode  Cnt          Score         Error    Units
+MultiplyToProduce.execute     10    EJML  thrpt    3  117344146.442 ± 9939039.034  ops/min
+MultiplyToProduce.execute     10  ojAlgo  thrpt    3  286226761.203 ± 9538021.820  ops/min
+MultiplyToProduce.execute     16    EJML  thrpt    3   34176343.697 ± 2656289.599  ops/min
+MultiplyToProduce.execute     16  ojAlgo  thrpt    3   34835887.184 ±  729347.255  ops/min
+MultiplyToProduce.execute     20    EJML  thrpt    3   18425427.108 ±  349649.555  ops/min
+MultiplyToProduce.execute     20  ojAlgo  thrpt    3   18560669.990 ±  512610.070  ops/min
+MultiplyToProduce.execute     32    EJML  thrpt    3    5208824.237 ±   91950.352  ops/min
+MultiplyToProduce.execute     32  ojAlgo  thrpt    3    5099996.955 ±   11527.997  ops/min
+MultiplyToProduce.execute     50    EJML  thrpt    3    1542866.364 ±   66675.849  ops/min
+MultiplyToProduce.execute     50  ojAlgo  thrpt    3    1539771.583 ±  151135.515  ops/min
+MultiplyToProduce.execute     64    EJML  thrpt    3     748494.021 ±   79522.750  ops/min
+MultiplyToProduce.execute     64  ojAlgo  thrpt    3     956641.848 ±   62937.637  ops/min
+MultiplyToProduce.execute    100    EJML  thrpt    3     208099.750 ±   10359.775  ops/min
+MultiplyToProduce.execute    100  ojAlgo  thrpt    3     495192.539 ±  105599.377  ops/min
+MultiplyToProduce.execute    128    EJML  thrpt    3      98946.511 ±    5080.888  ops/min
+MultiplyToProduce.execute    128  ojAlgo  thrpt    3     254836.489 ±   78110.942  ops/min
+MultiplyToProduce.execute    200    EJML  thrpt    3      26823.068 ±    2102.820  ops/min
+MultiplyToProduce.execute    200  ojAlgo  thrpt    3      85315.120 ±    2071.969  ops/min
+MultiplyToProduce.execute    256    EJML  thrpt    3      12536.716 ±    2797.214  ops/min
+MultiplyToProduce.execute    256  ojAlgo  thrpt    3      43636.914 ±    5451.053  ops/min
+MultiplyToProduce.execute    500    EJML  thrpt    3       1723.365 ±     238.081  ops/min
+MultiplyToProduce.execute    500  ojAlgo  thrpt    3       6181.203 ±     197.461  ops/min
+MultiplyToProduce.execute    512    EJML  thrpt    3       1572.480 ±     441.612  ops/min
+MultiplyToProduce.execute    512  ojAlgo  thrpt    3       5564.674 ±    2358.382  ops/min
+MultiplyToProduce.execute   1000    EJML  thrpt    3        213.626 ±      77.373  ops/min
+MultiplyToProduce.execute   1000  ojAlgo  thrpt    3        803.233 ±     267.858  ops/min
+ * </pre>
  *
- * Benchmark               (dim)  (library)   Mode  Cnt           Score           Error    Units
- * SquareMultiply.execute      2       EJML  thrpt    3  1195467779,203 ± 226472548,806  ops/min
- * SquareMultiply.execute      2        MTJ  thrpt    3    68093507,462 ±  28552442,060  ops/min
- * SquareMultiply.execute      2     ojAlgo  thrpt    3   791236224,141 ±  74420268,703  ops/min
- * SquareMultiply.execute      3       EJML  thrpt    3   597660733,292 ± 210147150,484  ops/min
- * SquareMultiply.execute      3        MTJ  thrpt    3    59198262,305 ±   8731345,406  ops/min
- * SquareMultiply.execute      3     ojAlgo  thrpt    3   635231267,538 ±  41113421,087  ops/min
- * SquareMultiply.execute      4       EJML  thrpt    3   320325320,379 ± 162160440,911  ops/min
- * SquareMultiply.execute      4        MTJ  thrpt    3    66918434,519 ±  15460325,103  ops/min
- * SquareMultiply.execute      4     ojAlgo  thrpt    3   502872013,149 ± 246595742,019  ops/min
- * SquareMultiply.execute      5       EJML  thrpt    3   229686848,134 ± 276451890,246  ops/min
- * SquareMultiply.execute      5        MTJ  thrpt    3    60015171,918 ±  30914476,116  ops/min
- * SquareMultiply.execute      5     ojAlgo  thrpt    3   337204180,362 ± 241545524,599  ops/min
- * SquareMultiply.execute     10       EJML  thrpt    3    43385012,345 ±  19612952,742  ops/min
- * SquareMultiply.execute     10        MTJ  thrpt    3    43092775,029 ±   4934355,681  ops/min
- * SquareMultiply.execute     10     ojAlgo  thrpt    3    62519765,560 ±   4420042,551  ops/min
- * SquareMultiply.execute     20       EJML  thrpt    3     5408286,250 ±   1521352,504  ops/min
- * SquareMultiply.execute     20        MTJ  thrpt    3    13886250,404 ±  14548216,378  ops/min
- * SquareMultiply.execute     20     ojAlgo  thrpt    3     5964922,895 ±    837405,145  ops/min
- * SquareMultiply.execute     50       EJML  thrpt    3      420594,691 ±     93068,640  ops/min
- * SquareMultiply.execute     50        MTJ  thrpt    3     2476871,010 ±   1462376,949  ops/min
- * SquareMultiply.execute     50     ojAlgo  thrpt    3      417283,841 ±     90941,821  ops/min
- * SquareMultiply.execute    100       EJML  thrpt    3       56811,214 ±     38292,556  ops/min
- * SquareMultiply.execute    100        MTJ  thrpt    3      379821,916 ±     72654,788  ops/min
- * SquareMultiply.execute    100     ojAlgo  thrpt    3       90464,045 ±     24162,344  ops/min
- * SquareMultiply.execute    200       EJML  thrpt    3        8181,786 ±      6394,668  ops/min
- * SquareMultiply.execute    200        MTJ  thrpt    3       68437,831 ±     51847,412  ops/min
- * SquareMultiply.execute    200     ojAlgo  thrpt    3       12869,488 ±      4879,337  ops/min
- * SquareMultiply.execute    500       EJML  thrpt    3         544,871 ±       278,519  ops/min
- * SquareMultiply.execute    500        MTJ  thrpt    3        5140,720 ±       720,539  ops/min
- * SquareMultiply.execute    500     ojAlgo  thrpt    3         996,341 ±       318,266  ops/min
- * SquareMultiply.execute   1000       EJML  thrpt    3          56,580 ±        21,000  ops/min
- * SquareMultiply.execute   1000        MTJ  thrpt    3         572,412 ±      2156,684  ops/min
- * SquareMultiply.execute   1000     ojAlgo  thrpt    3         109,272 ±        41,031  ops/min
- * SquareMultiply.execute   2000       EJML  thrpt    3           7,106 ±         2,328  ops/min
- * SquareMultiply.execute   2000        MTJ  thrpt    3          87,722 ±       134,475  ops/min
- * SquareMultiply.execute   2000     ojAlgo  thrpt    3          13,237 ±         5,812  ops/min
- * SquareMultiply.execute   5000       EJML  thrpt    3           0,449 ±         0,068  ops/min
- * SquareMultiply.execute   5000        MTJ  thrpt    3           6,140 ±         0,781  ops/min
- * SquareMultiply.execute   5000     ojAlgo  thrpt    3           0,845 ±         0,024  ops/min
+ * <pre>
+Benchmark                  (dim)   (lib)   Mode  Cnt          Score          Error    Units
+MultiplyToProduce.execute     10    EJML  thrpt    3  118511227.812 ±  3546364.435  ops/min
+MultiplyToProduce.execute     10  ojAlgo  thrpt    3  287231746.197 ± 10077780.056  ops/min
+MultiplyToProduce.execute     16    EJML  thrpt    3   34253056.989 ±  1315530.838  ops/min
+MultiplyToProduce.execute     16  ojAlgo  thrpt    3   34634268.973 ±  1054324.889  ops/min
+MultiplyToProduce.execute     20    EJML  thrpt    3   18274115.837 ±   383636.612  ops/min
+MultiplyToProduce.execute     20  ojAlgo  thrpt    3   18506214.751 ±   881066.929  ops/min
+MultiplyToProduce.execute     32    EJML  thrpt    3    5100368.735 ±   105783.346  ops/min
+MultiplyToProduce.execute     32  ojAlgo  thrpt    3    5079862.436 ±   150037.260  ops/min
+MultiplyToProduce.execute     50    EJML  thrpt    3    1537743.155 ±    42657.115  ops/min
+MultiplyToProduce.execute     50  ojAlgo  thrpt    3    1672085.291 ±   183748.911  ops/min
+MultiplyToProduce.execute     64    EJML  thrpt    3     749892.301 ±    27614.134  ops/min
+MultiplyToProduce.execute     64  ojAlgo  thrpt    3    1002110.374 ±   211487.580  ops/min
+MultiplyToProduce.execute    100    EJML  thrpt    3     208295.998 ±     3261.987  ops/min
+MultiplyToProduce.execute    100  ojAlgo  thrpt    3     533030.576 ±    37929.732  ops/min
+MultiplyToProduce.execute    128    EJML  thrpt    3      98787.326 ±      767.390  ops/min
+MultiplyToProduce.execute    128  ojAlgo  thrpt    3     281008.352 ±    25857.556  ops/min
+MultiplyToProduce.execute    200    EJML  thrpt    3      27020.117 ±      198.925  ops/min
+MultiplyToProduce.execute    200  ojAlgo  thrpt    3      94551.452 ±    14177.663  ops/min
+MultiplyToProduce.execute    256    EJML  thrpt    3      12919.292 ±      816.872  ops/min
+MultiplyToProduce.execute    256  ojAlgo  thrpt    3      45785.908 ±    12193.473  ops/min
+MultiplyToProduce.execute    500    EJML  thrpt    3       1740.145 ±       83.598  ops/min
+MultiplyToProduce.execute    500  ojAlgo  thrpt    3       6233.036 ±     1397.429  ops/min
+MultiplyToProduce.execute    512    EJML  thrpt    3       1604.907 ±       76.803  ops/min
+MultiplyToProduce.execute    512  ojAlgo  thrpt    3       5747.459 ±     1591.073  ops/min
+MultiplyToProduce.execute   1000    EJML  thrpt    3        217.303 ±       11.642  ops/min
+MultiplyToProduce.execute   1000  ojAlgo  thrpt    3        832.143 ±      404.436  ops/min
  * </pre>
  *
  * <h1>MacBook Pro</h1>
@@ -336,7 +351,7 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "ojAlgo" })
     public String lib;
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

@@ -1,9 +1,27 @@
-"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: power"
-"org.ojalgo.benchmark.fft.DFTACM.ACM","thrpt",1,3,2198024956.033844,8138036255.277074,"ops/min",0
-"org.ojalgo.benchmark.fft.DFTACM.ACM","thrpt",1,3,1864371252.902234,155899391.485996,"ops/min",1
-"org.ojalgo.benchmark.fft.DFTACM.ACM","thrpt",1,3,1096570131.799049,80921719.574909,"ops/min",2
-"org.ojalgo.benchmark.fft.DFTACM.ACM","thrpt",1,3,597281836.499576,20732364.350315,"ops/min",3
-"org.ojalgo.benchmark.fft.DFTACM.ojAlgo","thrpt",1,3,1448059830.151063,49355770.045018,"ops/min",0
-"org.ojalgo.benchmark.fft.DFTACM.ojAlgo","thrpt",1,3,1436196809.068693,94798133.574724,"ops/min",1
-"org.ojalgo.benchmark.fft.DFTACM.ojAlgo","thrpt",1,3,990069756.436801,36149721.024171,"ops/min",2
-"org.ojalgo.benchmark.fft.DFTACM.ojAlgo","thrpt",1,3,550692956.668235,7106378.004773,"ops/min",3
+"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: dim","Param: lib"
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,117344146.442313,9939039.033624,"ops/min",10,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,286226761.203205,9538021.820164,"ops/min",10,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,34176343.696797,2656289.598603,"ops/min",16,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,34835887.183557,729347.254558,"ops/min",16,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,18425427.108005,349649.555251,"ops/min",20,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,18560669.989835,512610.070088,"ops/min",20,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,5208824.236717,91950.352055,"ops/min",32,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,5099996.955289,11527.997162,"ops/min",32,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,1542866.364043,66675.849000,"ops/min",50,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,1539771.582979,151135.515182,"ops/min",50,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,748494.020834,79522.750210,"ops/min",64,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,956641.848392,62937.637216,"ops/min",64,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,208099.750156,10359.774606,"ops/min",100,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,495192.538619,105599.376770,"ops/min",100,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,98946.510813,5080.888111,"ops/min",128,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,254836.488613,78110.941983,"ops/min",128,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,26823.068273,2102.819669,"ops/min",200,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,85315.120366,2071.969105,"ops/min",200,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,12536.715765,2797.214129,"ops/min",256,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,43636.914133,5451.053055,"ops/min",256,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,1723.365135,238.081267,"ops/min",500,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,6181.202659,197.460590,"ops/min",500,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,1572.479658,441.612470,"ops/min",512,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,5564.673860,2358.381716,"ops/min",512,ojAlgo
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,213.626349,77.373431,"ops/min",1000,EJML
+"org.ojalgo.benchmark.lab.MultiplyToProduce.execute","thrpt",1,3,803.232559,267.857775,"ops/min",1000,ojAlgo
