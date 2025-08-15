@@ -60,7 +60,7 @@ DFTACM.ojAlgo       16  thrpt    3       51346.528 ±        803.834  ops/min
 @State(Scope.Benchmark)
 public class DFTACM {
 
-    //  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" 
+    //  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(DFTACM.class);
