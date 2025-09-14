@@ -50,6 +50,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
 
             private final R064Store myMatrix = R064Store.FACTORY.make(numberOfRows, numberOfColumns);
 
+            @Override
             public MatrixStore<Double> get() {
                 return myMatrix;
             }
@@ -102,8 +103,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationFillByMultiplying(final boolean transpL,
-            final boolean transpR) {
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
         return (left, right, product) -> product.fillByMultiplying(transpL ? left.transpose() : left, transpR ? right.transpose() : right);
     }
 
@@ -144,7 +144,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
         return matrix -> {
             svd.decompose(matrix);
             ret[0] = svd.getU();
-            ret[1] = svd.getD();
+            ret[1] = svd.getS();
             ret[2] = svd.getV().transpose();
             return ret;
         };
