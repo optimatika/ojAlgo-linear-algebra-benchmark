@@ -30,4 +30,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/openjdk/jmh/jmh-generator-annprocess/1.37/jmh-generator-annprocess-1.37.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/ojalgo/ojalgo/56.2.0-SNAPSHOT/ojalgo-56.2.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/ojalgo/ojalgo/56.2.0-SNAPSHOT/ojalgo-56.2.0-SNAPSHOT-tests.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>
