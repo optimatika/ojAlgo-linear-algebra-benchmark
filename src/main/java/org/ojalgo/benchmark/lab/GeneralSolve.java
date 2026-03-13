@@ -35,6 +35,51 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Air (15-inch, M4, 2025): 2026-03-13
+ *
+ * <pre>
+Benchmark             (dim)   (lib)   Mode  Cnt         Score         Error    Units
+GeneralSolve.execute     10     ACM  thrpt    3  34978968.863 ± 1056247.120  ops/min
+GeneralSolve.execute     10    EJML  thrpt    3  68905622.096 ± 4761989.698  ops/min
+GeneralSolve.execute     10  ojAlgo  thrpt    3  74685553.797 ± 4256540.673  ops/min
+GeneralSolve.execute     16     ACM  thrpt    3  16662993.695 ± 1585297.451  ops/min
+GeneralSolve.execute     16    EJML  thrpt    3  26477106.815 ±  453312.036  ops/min
+GeneralSolve.execute     16  ojAlgo  thrpt    3  30371137.353 ±  928942.530  ops/min
+GeneralSolve.execute     20     ACM  thrpt    3  11049631.214 ±  517588.059  ops/min
+GeneralSolve.execute     20    EJML  thrpt    3  15896441.731 ±  327404.013  ops/min
+GeneralSolve.execute     20  ojAlgo  thrpt    3  20405537.336 ± 3568076.887  ops/min
+GeneralSolve.execute     32     ACM  thrpt    3   4049685.949 ±  171871.191  ops/min
+GeneralSolve.execute     32    EJML  thrpt    3   5341561.101 ±   97660.991  ops/min
+GeneralSolve.execute     32  ojAlgo  thrpt    3   7479278.465 ± 8824578.669  ops/min
+GeneralSolve.execute     50     ACM  thrpt    3   1309719.255 ±   19445.151  ops/min
+GeneralSolve.execute     50    EJML  thrpt    3   1854165.744 ±   58023.773  ops/min
+GeneralSolve.execute     50  ojAlgo  thrpt    3   2072622.781 ± 2681719.402  ops/min
+GeneralSolve.execute     64     ACM  thrpt    3    664956.884 ±    2522.669  ops/min
+GeneralSolve.execute     64    EJML  thrpt    3   1029481.001 ±   17733.725  ops/min
+GeneralSolve.execute     64  ojAlgo  thrpt    3   1375259.604 ± 3817223.586  ops/min
+GeneralSolve.execute    100     ACM  thrpt    3    189964.558 ±     583.446  ops/min
+GeneralSolve.execute    100    EJML  thrpt    3    314841.594 ±    4395.867  ops/min
+GeneralSolve.execute    100  ojAlgo  thrpt    3    376809.235 ±  527833.301  ops/min
+GeneralSolve.execute    128     ACM  thrpt    3     91824.635 ±      63.869  ops/min
+GeneralSolve.execute    128    EJML  thrpt    3    153452.057 ±    1158.320  ops/min
+GeneralSolve.execute    128  ojAlgo  thrpt    3    195271.801 ±   93314.341  ops/min
+GeneralSolve.execute    200     ACM  thrpt    3     22646.972 ±     520.973  ops/min
+GeneralSolve.execute    200    EJML  thrpt    3     37096.183 ±    1770.966  ops/min
+GeneralSolve.execute    200  ojAlgo  thrpt    3     51280.244 ±    2066.045  ops/min
+GeneralSolve.execute    256     ACM  thrpt    3     10548.099 ±     396.898  ops/min
+GeneralSolve.execute    256    EJML  thrpt    3     15970.988 ±     863.584  ops/min
+GeneralSolve.execute    256  ojAlgo  thrpt    3     25200.420 ±     386.144  ops/min
+GeneralSolve.execute    500     ACM  thrpt    3      1322.418 ±      33.682  ops/min
+GeneralSolve.execute    500    EJML  thrpt    3      1974.778 ±      47.450  ops/min
+GeneralSolve.execute    500  ojAlgo  thrpt    3      3820.246 ±      33.678  ops/min
+GeneralSolve.execute    512     ACM  thrpt    3      1221.713 ±      38.693  ops/min
+GeneralSolve.execute    512    EJML  thrpt    3      1773.141 ±     114.351  ops/min
+GeneralSolve.execute    512  ojAlgo  thrpt    3      3550.755 ±      23.493  ops/min
+GeneralSolve.execute   1000     ACM  thrpt    3       148.363 ±       2.300  ops/min
+GeneralSolve.execute   1000    EJML  thrpt    3       209.177 ±       3.221  ops/min
+GeneralSolve.execute   1000  ojAlgo  thrpt    3       650.473 ±      28.268  ops/min
+ * </pre>
+ *
  * MacBook Pro (16-inch, 2019): 2022-01-05
  *
  * <pre>
@@ -226,7 +271,7 @@ public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkS
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "ACM", "EJML", "ojAlgo" })
     public String lib;
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

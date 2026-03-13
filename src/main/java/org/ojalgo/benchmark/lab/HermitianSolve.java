@@ -34,6 +34,51 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Air (15-inch, M4, 2025): 2026-03-13
+ *
+ * <pre>
+Benchmark               (dim)   (lib)   Mode  Cnt          Score          Error    Units
+HermitianSolve.execute     10     ACM  thrpt    3   28567071.004 ±  2706112.275  ops/min
+HermitianSolve.execute     10    EJML  thrpt    3  111505208.614 ± 19297140.782  ops/min
+HermitianSolve.execute     10  ojAlgo  thrpt    3  114980920.469 ±  2443705.638  ops/min
+HermitianSolve.execute     16     ACM  thrpt    3   15856603.072 ±   293117.063  ops/min
+HermitianSolve.execute     16    EJML  thrpt    3   48936819.305 ±  6298527.574  ops/min
+HermitianSolve.execute     16  ojAlgo  thrpt    3   49352799.346 ±   605962.006  ops/min
+HermitianSolve.execute     20     ACM  thrpt    3   11337678.254 ±    54258.222  ops/min
+HermitianSolve.execute     20    EJML  thrpt    3   31721561.061 ±  2920847.703  ops/min
+HermitianSolve.execute     20  ojAlgo  thrpt    3   30574319.213 ±  7023139.602  ops/min
+HermitianSolve.execute     32     ACM  thrpt    3    5207885.257 ±    94425.334  ops/min
+HermitianSolve.execute     32    EJML  thrpt    3   12172468.273 ±  1060595.742  ops/min
+HermitianSolve.execute     32  ojAlgo  thrpt    3   11909841.660 ±   472635.143  ops/min
+HermitianSolve.execute     50     ACM  thrpt    3    2069118.790 ±    36864.413  ops/min
+HermitianSolve.execute     50    EJML  thrpt    3    4461351.408 ±   169336.647  ops/min
+HermitianSolve.execute     50  ojAlgo  thrpt    3    3723007.550 ±   190691.183  ops/min
+HermitianSolve.execute     64     ACM  thrpt    3    1198194.700 ±    18453.320  ops/min
+HermitianSolve.execute     64    EJML  thrpt    3    2410303.662 ±    89297.850  ops/min
+HermitianSolve.execute     64  ojAlgo  thrpt    3    2173233.888 ±    23052.053  ops/min
+HermitianSolve.execute    100     ACM  thrpt    3     412637.819 ±     1185.761  ops/min
+HermitianSolve.execute    100    EJML  thrpt    3     681777.904 ±     1663.724  ops/min
+HermitianSolve.execute    100  ojAlgo  thrpt    3     651547.085 ±    56340.755  ops/min
+HermitianSolve.execute    128     ACM  thrpt    3     220738.188 ±     7891.582  ops/min
+HermitianSolve.execute    128    EJML  thrpt    3     318852.405 ±     8143.198  ops/min
+HermitianSolve.execute    128  ojAlgo  thrpt    3     333989.440 ±    48444.324  ops/min
+HermitianSolve.execute    200     ACM  thrpt    3      62035.258 ±     1109.441  ops/min
+HermitianSolve.execute    200    EJML  thrpt    3      81168.218 ±    10508.854  ops/min
+HermitianSolve.execute    200  ojAlgo  thrpt    3      38908.127 ±     1281.665  ops/min
+HermitianSolve.execute    256     ACM  thrpt    3      28684.706 ±      425.198  ops/min
+HermitianSolve.execute    256    EJML  thrpt    3      33971.980 ±     1815.991  ops/min
+HermitianSolve.execute    256  ojAlgo  thrpt    3      20424.658 ±      383.836  ops/min
+HermitianSolve.execute    500     ACM  thrpt    3       3948.935 ±      235.509  ops/min
+HermitianSolve.execute    500    EJML  thrpt    3       4072.867 ±      265.718  ops/min
+HermitianSolve.execute    500  ojAlgo  thrpt    3       4719.512 ±     1559.843  ops/min
+HermitianSolve.execute    512     ACM  thrpt    3       3652.660 ±      195.174  ops/min
+HermitianSolve.execute    512    EJML  thrpt    3       3759.397 ±      190.756  ops/min
+HermitianSolve.execute    512  ojAlgo  thrpt    3       4592.446 ±       98.051  ops/min
+HermitianSolve.execute   1000     ACM  thrpt    3        513.167 ±        7.792  ops/min
+HermitianSolve.execute   1000    EJML  thrpt    3        699.715 ±      118.984  ops/min
+HermitianSolve.execute   1000  ojAlgo  thrpt    3        991.895 ±       40.369  ops/min
+ * </pre>
+ *
  * MacBook Pro (16-inch, 2019): 2022-01-05
  *
  * <pre>
@@ -129,7 +174,7 @@ public class HermitianSolve extends MatrixBenchmarkOperation {
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "ACM", "EJML", "ojAlgo" })
     public String lib;
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

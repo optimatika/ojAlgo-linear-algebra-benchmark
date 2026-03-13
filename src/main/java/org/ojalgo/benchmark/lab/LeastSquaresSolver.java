@@ -35,6 +35,51 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * MacBook Air (15-inch, M4, 2025): 2026-03-13
+ *
+ * <pre>
+Benchmark                   (dim)   (lib)   Mode  Cnt         Score         Error    Units
+LeastSquaresSolver.execute     10     ACM  thrpt    3  15001624.843 ±  375537.100  ops/min
+LeastSquaresSolver.execute     10    EJML  thrpt    3  30171550.171 ±  279671.829  ops/min
+LeastSquaresSolver.execute     10  ojAlgo  thrpt    3  26640538.486 ±  284418.586  ops/min
+LeastSquaresSolver.execute     16     ACM  thrpt    3   5466608.751 ±   86410.880  ops/min
+LeastSquaresSolver.execute     16    EJML  thrpt    3  10917155.157 ± 2911039.586  ops/min
+LeastSquaresSolver.execute     16  ojAlgo  thrpt    3  10886783.625 ±  294745.445  ops/min
+LeastSquaresSolver.execute     20     ACM  thrpt    3   3458521.719 ±   35789.145  ops/min
+LeastSquaresSolver.execute     20    EJML  thrpt    3   6181072.984 ±  599397.462  ops/min
+LeastSquaresSolver.execute     20  ojAlgo  thrpt    3   6363801.900 ±  197299.952  ops/min
+LeastSquaresSolver.execute     32     ACM  thrpt    3   1200407.063 ±   13141.667  ops/min
+LeastSquaresSolver.execute     32    EJML  thrpt    3   1811448.972 ±   39785.343  ops/min
+LeastSquaresSolver.execute     32  ojAlgo  thrpt    3   1954767.740 ±   30581.987  ops/min
+LeastSquaresSolver.execute     50     ACM  thrpt    3    388554.542 ±    1684.931  ops/min
+LeastSquaresSolver.execute     50    EJML  thrpt    3    485468.006 ±    1823.261  ops/min
+LeastSquaresSolver.execute     50  ojAlgo  thrpt    3    599232.249 ±    7241.792  ops/min
+LeastSquaresSolver.execute     64     ACM  thrpt    3    200785.169 ±    1355.477  ops/min
+LeastSquaresSolver.execute     64    EJML  thrpt    3    238298.969 ±    2713.339  ops/min
+LeastSquaresSolver.execute     64  ojAlgo  thrpt    3    303132.131 ±    7181.489  ops/min
+LeastSquaresSolver.execute    100     ACM  thrpt    3     47332.330 ±     165.373  ops/min
+LeastSquaresSolver.execute    100    EJML  thrpt    3     53905.782 ±    1585.530  ops/min
+LeastSquaresSolver.execute    100  ojAlgo  thrpt    3     67756.698 ±     349.392  ops/min
+LeastSquaresSolver.execute    128     ACM  thrpt    3     22857.792 ±    1718.083  ops/min
+LeastSquaresSolver.execute    128    EJML  thrpt    3     25344.570 ±     451.456  ops/min
+LeastSquaresSolver.execute    128  ojAlgo  thrpt    3     34486.698 ±     313.876  ops/min
+LeastSquaresSolver.execute    200     ACM  thrpt    3      6469.332 ±      92.476  ops/min
+LeastSquaresSolver.execute    200    EJML  thrpt    3      6833.205 ±     106.844  ops/min
+LeastSquaresSolver.execute    200  ojAlgo  thrpt    3     11641.937 ±   10091.874  ops/min
+LeastSquaresSolver.execute    256     ACM  thrpt    3      3079.107 ±      34.296  ops/min
+LeastSquaresSolver.execute    256    EJML  thrpt    3      3252.651 ±      77.801  ops/min
+LeastSquaresSolver.execute    256  ojAlgo  thrpt    3      7209.295 ±    9566.361  ops/min
+LeastSquaresSolver.execute    500     ACM  thrpt    3       424.829 ±       2.742  ops/min
+LeastSquaresSolver.execute    500    EJML  thrpt    3       439.983 ±      71.984  ops/min
+LeastSquaresSolver.execute    500  ojAlgo  thrpt    3      1567.701 ±      37.068  ops/min
+LeastSquaresSolver.execute    512     ACM  thrpt    3       395.691 ±       4.878  ops/min
+LeastSquaresSolver.execute    512    EJML  thrpt    3       405.985 ±      81.426  ops/min
+LeastSquaresSolver.execute    512  ojAlgo  thrpt    3      1472.687 ±     203.839  ops/min
+LeastSquaresSolver.execute   1000     ACM  thrpt    3        53.177 ±       0.468  ops/min
+LeastSquaresSolver.execute   1000    EJML  thrpt    3        54.545 ±       0.567  ops/min
+LeastSquaresSolver.execute   1000  ojAlgo  thrpt    3       247.776 ±       3.925  ops/min
+ * </pre>
+ *
  * MacBook Pro (16-inch, 2019): 2022-01-14
  *
  * <pre>
@@ -186,7 +231,7 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "ACM", "EJML", "ojAlgo" })
     public String lib;
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

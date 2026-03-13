@@ -145,7 +145,7 @@ public class Pseudoinverse extends MatrixBenchmarkOperation {
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "ACM", "EJML", "ojAlgo" })
     public String lib;
 
     private ProducingUnaryMatrixOperation<?, ?> myOperation;
