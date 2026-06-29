@@ -1,22 +1,51 @@
-# oj! Linear Algebra (JMH) Benchmark - ojLAB
+# ojAlgo Linear Algebra Benchmark (ojLAB)
 
-Comparing various linear algebra operations between ojAlgo and what we think are the main alternatives to ojAlgo.
+Benchmarks and internal tuning tools for [ojAlgo](https://github.com/optimatika/ojAlgo) linear algebra operations, using [JMH](https://openjdk.org/projects/code-tools/jmh/) (Java Microbenchmark Harness).
 
-Alternative | Reason for inclusion
-----------------|----------------
-EJML | A pure Java, no dependecies, efficient linear algebra package (just like ojAlgo). The author of EJML is also the author of the Java Matrix Benchmark. EJML is top quality pure Java.
-MTJ | Continuing the fortran tradition of BLAS and LAPACK and bringing it over to Java. MTJ depends on netlib-java that will automatically switch between Java and native code libraries. When used on a Mac it will default to use Apple's built in vecLib library which is very fast. It's included as a reference to what can be achieved with native code.
-Apache Commons Math | Essentially all Java linear algebra libraries available are developed by "small" teams. Apache Commons Math is the only library backed by an organisation that could be described as "large" (I conclude that simply because it is an Apache project). Other libraries must offer some benfit over using Commons Math to justify their existence.
+## What's in here
 
+This project serves two purposes:
 
+### Library comparison benchmarks
+
+Comparing ojAlgo linear algebra operations against alternative Java libraries:
+
+| Library | Why it's included |
+|---------|-------------------|
+| [EJML](https://ejml.org/) | Pure Java, no dependencies, high performance. Top quality pure Java alternative. |
+| [MTJ](https://github.com/fommil/matrix-toolkits-java) | Wraps BLAS/LAPACK via netlib-java, automatically switching between Java and native code. On macOS it defaults to Apple's vecLib. Included as a native code performance reference. |
+| [Apache Commons Math](https://commons.apache.org/proper/commons-math/) | The only linear algebra library backed by a large organisation (Apache). A baseline that alternatives must justify improving upon. |
+
+Benchmark classes in `org.ojalgo.benchmark.lab` cover: matrix multiplication, addition, scaling, transpose, decompositions (EVD, SVD, Cholesky), solvers (general, Hermitian, least squares), inversion, determinant, and pseudoinverse.
+
+### Internal tuning benchmarks
+
+Benchmarks used to tune ojAlgo's internal implementation parameters:
+
+- **Threshold tuners** (`org.ojalgo.matrix.operation`) -- determine at what matrix size operations should switch between serial and parallel execution, and between different multiplication strategies.
+- **Parallelism tuners** (`org.ojalgo.matrix.operation`) -- find the optimal degree of parallelism for various matrix operations and Householder transformations.
+- **Decomposition tuners** (`org.ojalgo.matrix.decomposition`) -- compare implementation variants (primitive vs raw arrays) for Cholesky, LU, QR, Eigenvalue, SVD, and Tridiagonal decompositions, and benchmark sparse LU operations.
+- **Array operation tuners** (`org.ojalgo.array.operation`) -- tune DOT product unrolling, AXPY ordering, and norm calculations.
+- **Other** -- DFT benchmarks, number parsing benchmarks, special function benchmarks, sparse array performance, and solver strategy selection.
+
+## Building and running
+
+```sh
+mvn clean install
+```
+
+Run a specific benchmark:
+
+```sh
+java -jar target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying
+```
+
+Replace `FillByMultiplying` with whichever benchmark you want to run. Use `-l` to list all available benchmarks:
+
+```sh
+java -jar target/ojlab.jar -l
+```
 
 ## Results
 
-Various benchmark results are sporadically published at the ojAlgo web site: https://www.ojalgo.org/category/benchmarks/
-
-Running these benchmarks is easy. They're based on JMH. Just clone the repository. Do `mvn clean install` and then
-```
-java -jar ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying
-```
-
-Replace FillByMultiplying with which ever benchmark you want to run.
+Benchmark results are published at: https://www.ojalgo.org/category/benchmarks/
