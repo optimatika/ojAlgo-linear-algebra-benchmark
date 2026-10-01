@@ -13,7 +13,7 @@
     </organization>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.java>11</version.java>
+        <version.java>17</version.java>
         <version.org.ojalgo>57.3.1</version.org.ojalgo>
         <version.org.openjdk.jmh>1.37</version.org.openjdk.jmh>
         <uberjar.name>ojlab</uberjar.name>
@@ -62,11 +62,20 @@
                     <target>${version.java}</target>
                     <release>${version.java}</release>
                     <compilerArgs>
+                        <arg>--add-modules</arg>
+                        <arg>jdk.incubator.vector</arg>
                         <arg>--add-exports</arg>
                         <arg>ojalgo/org.ojalgo.array.operation=ALL-UNNAMED</arg>
                         <arg>--add-exports</arg>
                         <arg>ojalgo/org.ojalgo.matrix.operation=ALL-UNNAMED</arg>
                     </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.openjdk.jmh</groupId>
+                            <artifactId>jmh-generator-annprocess</artifactId>
+                            <version>${version.org.openjdk.jmh}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
