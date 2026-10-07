@@ -23,6 +23,7 @@ package org.ojalgo.matrix.decomposition;
 
 import org.ojalgo.BenchmarkUtils;
 import org.ojalgo.matrix.store.MatrixStore;
+import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.R064Store;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
@@ -94,7 +95,7 @@ public class PrimitiveOrRawEigenvalue extends AbstractPrimitiveOrRaw<Eigenvalue<
     public int dim;
 
     MatrixStore<Double> matrix;
-    DecompositionStore<Double> preallocated;
+    PhysicalStore<Double> preallocated;
     MatrixStore<Double> rhs;
 
     protected Eigenvalue<Double> simultaneous;
