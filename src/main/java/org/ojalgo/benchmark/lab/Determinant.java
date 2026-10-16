@@ -107,25 +107,25 @@ public class Determinant extends MatrixBenchmarkOperation implements BenchmarkSu
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private PropertyOperation<?, ?> myOperation;
 
     Object original;
-    Object result;
+    double result;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(original);
+        return result = myOperation.execute(original);
     }
 
     @Override
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationDeterminant(dim);
 
@@ -136,9 +136,7 @@ public class Determinant extends MatrixBenchmarkOperation implements BenchmarkSu
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifyDeterminant(original, result);
     }
 
 }

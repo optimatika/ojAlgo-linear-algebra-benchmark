@@ -1,9 +1,9 @@
 package org.ojalgo.benchmark.fft;
 
-import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.transform.DftNormalization;
-import org.apache.commons.math3.transform.FastFourierTransformer;
-import org.apache.commons.math3.transform.TransformType;
+import org.hipparchus.complex.Complex;
+import org.hipparchus.transform.DftNormalization;
+import org.hipparchus.transform.FastFourierTransformer;
+import org.hipparchus.transform.TransformType;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.ojalgo.data.transform.DiscreteFourierTransform;
 import org.ojalgo.function.special.PowerOf2;
@@ -58,24 +58,24 @@ DFTACM.ojAlgo       16  thrpt    3       51346.528 ±        803.834  ops/min
  * </pre>
  */
 @State(Scope.Benchmark)
-public class DFTACM {
+public class DFTHipparchus {
 
     //  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DFTACM.class);
+        MatrixBenchmarkOperation.run(DFTHipparchus.class);
     }
 
     @Param({ "0", "1", "2", "3" })
     public int power;
 
     R064Store input;
-    FastFourierTransformer transformerACM;
+    FastFourierTransformer transformerHipparchus;
     DiscreteFourierTransform transformerOjAlgo;
 
     @Benchmark
-    public Complex[] ACM() {
-        return transformerACM.transform(input.data, TransformType.FORWARD);
+    public Complex[] Hipparchus() {
+        return transformerHipparchus.transform(input.data, TransformType.FORWARD);
     }
 
     @Benchmark
@@ -87,7 +87,7 @@ public class DFTACM {
     public void setup() {
         int size = PowerOf2.powerOfInt2(power);
         input = R064Store.FACTORY.makeFilled(size, 1, Uniform.of(-2, 4));
-        transformerACM = new FastFourierTransformer(DftNormalization.STANDARD);
+        transformerHipparchus = new FastFourierTransformer(DftNormalization.STANDARD);
         transformerOjAlgo = DiscreteFourierTransform.newInstance(size);
 
     }

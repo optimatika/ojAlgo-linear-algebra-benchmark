@@ -250,11 +250,12 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
         MatrixBenchmarkOperation.run(FillByMultiplying.class);
     }
 
+    // The full set of sizes is MatrixBenchmarkOperation.FULL
     @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096",
             "5000", "8192", "10000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
@@ -273,7 +274,7 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationFillByMultiplying(false, false);
 
@@ -285,9 +286,7 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifyProduct(left, false, right, false, product);
     }
 
 }

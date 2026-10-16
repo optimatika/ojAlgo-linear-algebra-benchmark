@@ -13,26 +13,25 @@
     </organization>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.java>17</version.java>
-        <version.org.ojalgo>57.4.0</version.org.ojalgo>
+        <version.java>27</version.java>
         <version.org.openjdk.jmh>1.37</version.org.openjdk.jmh>
         <uberjar.name>ojlab</uberjar.name>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>io.github.andreas-solti.matrix-toolkits-java</groupId>
-            <artifactId>mtj</artifactId>
-            <version>1.0.8</version>
-        </dependency>
         <dependency>
             <groupId>org.ejml</groupId>
             <artifactId>ejml-all</artifactId>
             <version>0.46.1</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.6.1</version>
+            <groupId>org.hipparchus</groupId>
+            <artifactId>hipparchus-core</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hipparchus</groupId>
+            <artifactId>hipparchus-fft</artifactId>
+            <version>4.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
@@ -48,7 +47,7 @@
         <dependency>
             <groupId>org.ojalgo</groupId>
             <artifactId>ojalgo</artifactId>
-            <version>${version.org.ojalgo}</version>
+            <version>58.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>

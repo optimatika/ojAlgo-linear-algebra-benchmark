@@ -57,7 +57,7 @@ public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuit
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private MutatingUnaryMatrixOperation<?, ?> myOperation;
@@ -75,7 +75,7 @@ public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuit
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationInvert(dim, true);
 
@@ -86,9 +86,7 @@ public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuit
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifyInverse(original, result);
     }
 
 }

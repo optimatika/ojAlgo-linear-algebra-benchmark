@@ -217,6 +217,21 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    protected int countColumns(final DMatrixRMaj matrix) {
+        return matrix.getNumCols();
+    }
+
+    @Override
+    protected int countRows(final DMatrixRMaj matrix) {
+        return matrix.getNumRows();
+    }
+
+    @Override
+    protected double doubleValue(final DMatrixRMaj matrix, final int row, final int col) {
+        return matrix.get(row, col);
+    }
+
+    @Override
     protected DMatrixRMaj[] makeArray(final int length) {
         return new DMatrixRMaj[length];
     }

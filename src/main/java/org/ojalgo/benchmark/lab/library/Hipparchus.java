@@ -21,13 +21,13 @@
  */
 package org.ojalgo.benchmark.lab.library;
 
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.CholeskyDecomposition;
-import org.apache.commons.math3.linear.EigenDecomposition;
-import org.apache.commons.math3.linear.LUDecomposition;
-import org.apache.commons.math3.linear.QRDecomposition;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.SingularValueDecomposition;
+import org.hipparchus.linear.Array2DRowRealMatrix;
+import org.hipparchus.linear.CholeskyDecomposition;
+import org.hipparchus.linear.EigenDecompositionSymmetric;
+import org.hipparchus.linear.LUDecomposition;
+import org.hipparchus.linear.QRDecomposition;
+import org.hipparchus.linear.RealMatrix;
+import org.hipparchus.linear.SingularValueDecomposition;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
@@ -38,9 +38,9 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 
 /**
- * Apache Commons Math
+ * Hipparchus (a fork of Apache Commons Math)
  */
-public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix> {
+public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix> {
 
     @Override
     public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
@@ -104,10 +104,10 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
         RealMatrix[] ret = this.makeArray(3);
 
         return matrix -> {
-            EigenDecomposition svd = new EigenDecomposition(matrix);
-            ret[0] = svd.getV();
-            ret[1] = svd.getD();
-            ret[2] = svd.getVT();
+            EigenDecompositionSymmetric evd = new EigenDecompositionSymmetric(matrix);
+            ret[0] = evd.getV();
+            ret[1] = evd.getD();
+            ret[2] = evd.getVT();
             return ret;
         };
     }
@@ -173,6 +173,21 @@ public class ACM extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix
             }
         }
         return destination;
+    }
+
+    @Override
+    protected int countColumns(final RealMatrix matrix) {
+        return matrix.getColumnDimension();
+    }
+
+    @Override
+    protected int countRows(final RealMatrix matrix) {
+        return matrix.getRowDimension();
+    }
+
+    @Override
+    protected double doubleValue(final RealMatrix matrix, final int row, final int col) {
+        return matrix.getEntry(row, col);
     }
 
     @Override

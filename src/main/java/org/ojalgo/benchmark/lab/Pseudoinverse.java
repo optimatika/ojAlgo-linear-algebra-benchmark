@@ -145,24 +145,25 @@ public class Pseudoinverse extends MatrixBenchmarkOperation {
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private ProducingUnaryMatrixOperation<?, ?> myOperation;
 
     Object matrix;
+    Object result;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(matrix);
+        return result = myOperation.execute(matrix);
     }
 
     @Override
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         matrix = MatrixBenchmarkOperation.makeSPD(dim, library);
 
@@ -171,9 +172,7 @@ public class Pseudoinverse extends MatrixBenchmarkOperation {
 
     @Override
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myDecomposer.getClass());
-
+        this.verifyPseudoinverse(matrix, result);
     }
 
 }

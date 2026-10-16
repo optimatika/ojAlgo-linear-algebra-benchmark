@@ -34,10 +34,10 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperatio
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
-import org.ojalgo.benchmark.lab.library.ACM;
 import org.ojalgo.benchmark.lab.library.EJML;
-import org.ojalgo.benchmark.lab.library.MTJ;
+import org.ojalgo.benchmark.lab.library.Hipparchus;
 import org.ojalgo.benchmark.lab.library.ojAlgo;
+import org.ojalgo.benchmark.lab.library.ojAlgoNative;
 import org.ojalgo.netio.BasicLogger;
 
 /**
@@ -65,13 +65,25 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     }
 
-    public static final Map<String, MatrixBenchmarkLibrary<?, ?>> LIBRARIES = new HashMap<>();
+    /**
+     * Libraries are instantiated on demand, and only the one being benchmarked, since some of them configure
+     * the JVM (ojAlgo's native code is switched on or off when the library is instantiated).
+     */
+    private static final Map<String, Supplier<MatrixBenchmarkLibrary<?, ?>>> LIBRARIES = new HashMap<>();
 
     static {
-        LIBRARIES.put(ACM.class.getSimpleName(), new ACM());
-        LIBRARIES.put(EJML.class.getSimpleName(), new EJML());
-        LIBRARIES.put(ojAlgo.class.getSimpleName(), new ojAlgo());
-        LIBRARIES.put(MTJ.class.getSimpleName(), new MTJ());
+        LIBRARIES.put(EJML.class.getSimpleName(), EJML::new);
+        LIBRARIES.put(Hipparchus.class.getSimpleName(), Hipparchus::new);
+        LIBRARIES.put(ojAlgo.class.getSimpleName(), ojAlgo::new);
+        LIBRARIES.put(ojAlgoNative.class.getSimpleName(), ojAlgoNative::new);
+    }
+
+    public static MatrixBenchmarkLibrary<?, ?> make(final String name) {
+        Supplier<MatrixBenchmarkLibrary<?, ?>> constructor = LIBRARIES.get(name);
+        if (constructor == null) {
+            throw new IllegalArgumentException("Unknown library: " + name + ", available are " + LIBRARIES.keySet());
+        }
+        return constructor.get();
     }
 
     public MatrixBenchmarkLibrary() {
@@ -110,6 +122,25 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
+    /**
+     * Element access, of matrices of any of the library's types, for verification – independent of the
+     * operations being verified.
+     */
+    @SuppressWarnings("unchecked")
+    final double get(final Object matrix, final int row, final int col) {
+        return this.doubleValue((I) matrix, row, col);
+    }
+
+    @SuppressWarnings("unchecked")
+    final int getColDim(final Object matrix) {
+        return this.countColumns((I) matrix);
+    }
+
+    @SuppressWarnings("unchecked")
+    final int getRowDim(final Object matrix) {
+        return this.countRows((I) matrix);
+    }
+
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
 
     public abstract PropertyOperation<I, T> getOperationDeterminant(int dim);
@@ -144,6 +175,12 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract MutatingUnaryMatrixOperation<I, T> getOperationTranspose();
 
     protected abstract T copy(I source, T destination);
+
+    protected abstract int countColumns(I matrix);
+
+    protected abstract int countRows(I matrix);
+
+    protected abstract double doubleValue(I matrix, int row, int col);
 
     protected abstract I[] makeArray(int length);
 

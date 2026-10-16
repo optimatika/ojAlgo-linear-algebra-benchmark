@@ -351,25 +351,26 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "EJML", "ojAlgo" })
+    @Param({ "EJML", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object left;
+    Object product;
     Object right;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(left, right);
+        return product = myOperation.execute(left, right);
     }
 
     @Override
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationMultiplyToProduce();
 
@@ -380,9 +381,7 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifyProduct(left, false, right, false, product);
     }
 
 }

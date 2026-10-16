@@ -76,7 +76,7 @@ public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.Ja
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private MutatingBinaryMatrixScalarOperation<?, ?> myOperation;
@@ -95,7 +95,7 @@ public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.Ja
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationScale();
 
@@ -107,9 +107,7 @@ public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.Ja
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifyElements(result, dim, dim, (i, j) -> scale * this.doubleValue(original, i, j));
     }
 
 }

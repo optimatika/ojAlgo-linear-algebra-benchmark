@@ -224,7 +224,7 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private DecompositionOperation<?, ?> myOperation;
@@ -242,7 +242,7 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         matrix = MatrixBenchmarkOperation.makeSPD(dim, library);
 

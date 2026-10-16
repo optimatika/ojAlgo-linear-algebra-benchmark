@@ -21,6 +21,7 @@
  */
 package org.ojalgo.benchmark.lab.library;
 
+import org.ojalgo.array.operation.NativeLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
@@ -40,9 +41,38 @@ import org.ojalgo.matrix.task.InverterTask;
 import org.ojalgo.matrix.task.SolverTask;
 
 /**
- * oj! Algorithms
+ * oj! Algorithms – pure Java. Native code is switched off, even if the JVM grants native access.
+ *
+ * @see ojAlgoNative
  */
 public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Store> {
+
+    public ojAlgo() {
+        this(false);
+    }
+
+    /**
+     * ojAlgo decides whether to use native code once, when {@link NativeLibrary} is initialised, so this must
+     * happen before ojAlgo performs any operation that could be delegated to native code. Each JMH fork
+     * benchmarks a single library, so that is satisfied as long as forks are used.
+     */
+    ojAlgo(final boolean nativeCode) {
+
+        super();
+
+        if (!nativeCode) {
+            System.setProperty(NativeLibrary.PROPERTY_LIBRARY, NativeLibrary.NONE);
+        }
+
+        if (NativeLibrary.isAvailable() != nativeCode) {
+            if (nativeCode) {
+                throw new IllegalStateException(
+                        "No native BLAS available to ojAlgo! The (forked) JVM must be started with --enable-native-access=ALL-UNNAMED, and a native library must be found.");
+            } else {
+                throw new IllegalStateException("Not able to switch off ojAlgo's native code – it was already initialised. Are you running without forks?");
+            }
+        }
+    }
 
     @Override
     public MatrixBenchmarkLibrary<MatrixStore<Double>, R064Store>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
@@ -110,7 +140,13 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     @Override
     public MutatingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationInvert(final int dim, final boolean spd) {
         InverterTask<Double> task = InverterTask.R064.make(dim, spd);
-        return task::invert;
+        if (spd) {
+            // The inverse is (typically) returned as a symmetric view of the lower triangle of the preallocated
+            // store – calculate it in a separate store, and copy the full matrix to result
+            R064Store preallocated = R064Store.FACTORY.make(dim, dim);
+            return (original, result) -> task.invert(original, preallocated).supplyTo(result);
+        }
+        return task::invert; // Calculated in place – the returned inverse is result
     }
 
     @Override
@@ -159,6 +195,21 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     protected R064Store copy(final MatrixStore<Double> source, final R064Store destination) {
         source.supplyTo(destination);
         return destination;
+    }
+
+    @Override
+    protected int countColumns(final MatrixStore<Double> matrix) {
+        return matrix.getColDim();
+    }
+
+    @Override
+    protected int countRows(final MatrixStore<Double> matrix) {
+        return matrix.getRowDim();
+    }
+
+    @Override
+    protected double doubleValue(final MatrixStore<Double> matrix, final int row, final int col) {
+        return matrix.doubleValue(row, col);
     }
 
     @SuppressWarnings("unchecked")

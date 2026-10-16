@@ -72,7 +72,7 @@ public class Transpose extends MatrixBenchmarkOperation implements BenchmarkSuit
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private MutatingUnaryMatrixOperation<?, ?> myOperation;
@@ -90,7 +90,7 @@ public class Transpose extends MatrixBenchmarkOperation implements BenchmarkSuit
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationTranspose();
 
@@ -101,9 +101,7 @@ public class Transpose extends MatrixBenchmarkOperation implements BenchmarkSuit
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifyElements(result, dim, dim, (i, j) -> this.doubleValue(original, j, i));
     }
 
 }

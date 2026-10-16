@@ -147,7 +147,7 @@ public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo", "MTJ" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
@@ -166,7 +166,7 @@ public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationFillByMultiplying(true, false);
 
@@ -178,9 +178,7 @@ public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifyProduct(left, true, right, false, product);
     }
 
 }

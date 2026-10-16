@@ -15,16 +15,31 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
+        <version>3.16.0</version>
         <configuration>
           <source>${version.java}</source>
           <target>${version.java}</target>
           <release>${version.java}</release>
+          <compilerArgs>
+            <arg>--add-modules</arg>
+            <arg>jdk.incubator.vector</arg>
+            <arg>--add-exports</arg>
+            <arg>ojalgo/org.ojalgo.array.operation=ALL-UNNAMED</arg>
+            <arg>--add-exports</arg>
+            <arg>ojalgo/org.ojalgo.matrix.operation=ALL-UNNAMED</arg>
+          </compilerArgs>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.openjdk.jmh</groupId>
+              <artifactId>jmh-generator-annprocess</artifactId>
+              <version>${version.org.openjdk.jmh}</version>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.2</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -61,20 +76,11 @@
       <version>1.37</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.ojalgo</groupId>
-      <artifactId>ojalgo</artifactId>
-      <version>55.0.2</version>
-      <type>test-jar</type>
-      <scope>compile</scope>
-    </dependency>
   </dependencies>
   <properties>
-    <version.java>11</version.java>
-    <uberjar.name>ojlab</uberjar.name>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.org.ojalgo>55.0.2</version.org.ojalgo>
+    <version.java>27</version.java>
+    <uberjar.name>ojlab</uberjar.name>
     <version.org.openjdk.jmh>1.37</version.org.openjdk.jmh>
-    <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
   </properties>
 </project>

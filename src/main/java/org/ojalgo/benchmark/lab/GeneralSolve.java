@@ -271,25 +271,26 @@ public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkS
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "ACM", "EJML", "ojAlgo" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
     public String lib;
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
     Object body;
+    Object result;
     Object rhs;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(body, rhs);
+        return result = myOperation.execute(body, rhs);
     }
 
     @Override
     @Setup
     public void setup() {
 
-        library = MatrixBenchmarkLibrary.LIBRARIES.get(lib);
+        library = MatrixBenchmarkLibrary.make(lib);
 
         myOperation = library.getOperationEquationSystemSolver(dim, dim, 1, false);
 
@@ -300,9 +301,7 @@ public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkS
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-
-        // this.verifyStateless(myOperation.getClass());
-
+        this.verifySolution(body, rhs, result);
     }
 
 }
