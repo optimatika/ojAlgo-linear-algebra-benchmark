@@ -29,6 +29,7 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
@@ -79,7 +80,7 @@ import org.openjdk.jmh.runner.RunnerException;
  * @author apete
  */
 @State(Scope.Benchmark)
-public class PrimitiveOrRawCholesky extends AbstractPrimitiveOrRaw<Cholesky<Double>> {
+public class PrimitiveOrRawCholesky extends AbstractDenseRawOrNative<Cholesky<Double>> {
 
     public static void main(final String[] args) throws RunnerException {
         BenchmarkUtils.run(PrimitiveOrRawCholesky.class);
@@ -93,9 +94,15 @@ public class PrimitiveOrRawCholesky extends AbstractPrimitiveOrRaw<Cholesky<Doub
 
     @Override
     @Benchmark
-    public MatrixStore<Double> primitive() {
-        primitive.compute(matrix);
-        return primitive.getInverse(preallocated);
+    public MatrixStore<Double> dense() {
+        dense.compute(matrix);
+        return dense.getInverse(preallocated);
+    }
+
+    @Override
+    public MatrixStore<Double> accelerate() {
+        dense.compute(matrix);
+        return dense.getInverse(preallocated);
     }
 
     @Override
@@ -107,9 +114,10 @@ public class PrimitiveOrRawCholesky extends AbstractPrimitiveOrRaw<Cholesky<Doub
 
     @Override
     @Setup
-    public void setup() {
+    public void setup(final BenchmarkParams params) {
 
-        super.setup();
+        super.setup(params);
+
         final int dim1 = dim;
 
         matrix = R064Store.FACTORY.makeSPD(dim1);
@@ -118,12 +126,12 @@ public class PrimitiveOrRawCholesky extends AbstractPrimitiveOrRaw<Cholesky<Doub
     }
 
     @Override
-    protected Cholesky<Double> makePrimitive() {
+    protected Cholesky<Double> newDense() {
         return new DenseCholesky.R064();
     }
 
     @Override
-    protected Cholesky<Double> makeRaw() {
+    protected Cholesky<Double> newRaw() {
         return new RawCholesky();
     }
 

@@ -21,24 +21,40 @@
  */
 package org.ojalgo.matrix.decomposition;
 
+import org.ojalgo.array.operation.NativeLibrary;
 import org.ojalgo.matrix.store.MatrixStore;
+import org.openjdk.jmh.infra.BenchmarkParams;
 
-abstract class AbstractPrimitiveOrRaw<T extends MatrixDecomposition<Double>> {
+abstract class AbstractDenseRawOrNative<T extends MatrixDecomposition<Double>> {
 
-    protected T primitive;
+    protected T dense;
     protected T raw;
 
-    public abstract MatrixStore<Double> primitive();
+    public abstract MatrixStore<Double> accelerate();
+
+    public abstract MatrixStore<Double> dense();
 
     public abstract MatrixStore<Double> raw();
 
-    protected abstract T makePrimitive();
+    protected abstract T newDense();
 
-    protected abstract T makeRaw();
+    protected abstract T newRaw();
 
-    protected void setup() {
-        primitive = this.makePrimitive();
-        raw = this.makeRaw();
+    protected void setup(final BenchmarkParams params) {
+
+        boolean nativeCode = params.getBenchmark().endsWith(".accelerate");
+
+        if (!nativeCode) {
+            System.setProperty(NativeLibrary.PROPERTY_LIBRARY, NativeLibrary.NONE);
+        }
+
+        if (NativeLibrary.isAvailable() != nativeCode) {
+            throw new IllegalStateException(
+                    nativeCode ? "No native BLAS/LAPACK available to ojAlgo!" : "ojAlgo's native code already initialised – run with forks!");
+        }
+
+        dense = this.newDense();
+        raw = this.newRaw();
     }
 
 }

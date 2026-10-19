@@ -30,6 +30,7 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
@@ -85,7 +86,7 @@ PrimitiveOrRawEigenvalue.raw         1000  thrpt   15      0.436 ±    0.015  op
  * @author apete
  */
 @State(Scope.Benchmark)
-public class PrimitiveOrRawEigenvalue extends AbstractPrimitiveOrRaw<Eigenvalue<Double>> {
+public class PrimitiveOrRawEigenvalue extends AbstractDenseRawOrNative<Eigenvalue<Double>> {
 
     public static void main(final String[] args) throws RunnerException {
         BenchmarkUtils.run(PrimitiveOrRawEigenvalue.class);
@@ -109,9 +110,15 @@ public class PrimitiveOrRawEigenvalue extends AbstractPrimitiveOrRaw<Eigenvalue<
 
     @Override
     @Benchmark
-    public MatrixStore<Double> primitive() {
-        primitive.decompose(matrix);
-        return primitive.getV();
+    public MatrixStore<Double> dense() {
+        dense.decompose(matrix);
+        return dense.getV();
+    }
+
+    @Override
+    public MatrixStore<Double> accelerate() {
+        dense.decompose(matrix);
+        return dense.getV();
     }
 
     @Override
@@ -123,9 +130,10 @@ public class PrimitiveOrRawEigenvalue extends AbstractPrimitiveOrRaw<Eigenvalue<
 
     @Override
     @Setup
-    public void setup() {
+    public void setup(final BenchmarkParams params) {
 
-        super.setup();
+        super.setup(params);
+
         final int dim1 = dim;
 
         matrix = R064Store.FACTORY.makeSPD(dim1);
@@ -137,18 +145,18 @@ public class PrimitiveOrRawEigenvalue extends AbstractPrimitiveOrRaw<Eigenvalue<
         return simultaneous.getV();
     }
 
-    @Override
-    protected Eigenvalue<Double> makePrimitive() {
-        return new HermitianEvD.R064();
-    }
-
-    @Override
-    protected Eigenvalue<Double> makeRaw() {
-        return new RawEigenvalue.Symmetric();
-    }
-
     protected Eigenvalue<Double> makeSimultaneousPrimitive() {
         return new HermitianEvD.R064();
+    }
+
+    @Override
+    protected Eigenvalue<Double> newDense() {
+        return new HermitianEvD.R064();
+    }
+
+    @Override
+    protected Eigenvalue<Double> newRaw() {
+        return new RawEigenvalue.Symmetric();
     }
 
 }

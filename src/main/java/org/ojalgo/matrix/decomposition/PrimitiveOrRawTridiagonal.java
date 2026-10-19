@@ -29,6 +29,7 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
@@ -105,7 +106,7 @@ PrimitiveOrRawTridiagonal.raw         1000  thrpt   15      0.114 ±   0.001  op
  * @author apete
  */
 @State(Scope.Benchmark)
-public class PrimitiveOrRawTridiagonal extends AbstractPrimitiveOrRaw<Tridiagonal<Double>> {
+public class PrimitiveOrRawTridiagonal extends AbstractDenseRawOrNative<Tridiagonal<Double>> {
 
     public static void main(final String[] args) throws RunnerException {
         BenchmarkUtils.run(PrimitiveOrRawTridiagonal.class);
@@ -118,9 +119,15 @@ public class PrimitiveOrRawTridiagonal extends AbstractPrimitiveOrRaw<Tridiagona
 
     @Override
     @Benchmark
-    public MatrixStore<Double> primitive() {
-        primitive.decompose(matrix);
-        return primitive.getQ();
+    public MatrixStore<Double> dense() {
+        dense.decompose(matrix);
+        return dense.getQ();
+    }
+
+    @Override
+    public MatrixStore<Double> accelerate() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
@@ -132,9 +139,9 @@ public class PrimitiveOrRawTridiagonal extends AbstractPrimitiveOrRaw<Tridiagona
 
     @Override
     @Setup
-    public void setup() {
+    public void setup(final BenchmarkParams params) {
 
-        super.setup();
+        super.setup(params);
         final int dim1 = dim;
 
         matrix = R064Store.FACTORY.makeSPD(dim1);
@@ -151,12 +158,12 @@ public class PrimitiveOrRawTridiagonal extends AbstractPrimitiveOrRaw<Tridiagona
     }
 
     @Override
-    protected Tridiagonal<Double> makePrimitive() {
+    protected Tridiagonal<Double> newDense() {
         return new DeferredTridiagonal.R064();
     }
 
     @Override
-    protected Tridiagonal<Double> makeRaw() {
+    protected Tridiagonal<Double> newRaw() {
         return new SimultaneousTridiagonal();
     }
 

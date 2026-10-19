@@ -31,6 +31,7 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
@@ -59,9 +60,9 @@ PrimitiveOrRawQR.raw         1000  thrpt    3        87.984 ±       6.549  ops/
 PrimitiveOrRawQR.raw         2000  thrpt    3        11.877 ±       1.328  ops/min
 PrimitiveOrRawQR.raw         5000  thrpt    3         0.889 ±       0.149  ops/min
  * </pre>
- * 
+ *
  * Mac Pro (Early 2009): 2022-01-19 (Modified code with multi-threading removed)
- * 
+ *
  * <pre>
  * new
 Benchmark                   (dim)   Mode  Cnt         Score          Error    Units
@@ -91,7 +92,7 @@ PrimitiveOrRawQR.raw         2000  thrpt    3         6.959 ±        2.280  ops
  * @author apete
  */
 @State(Scope.Benchmark)
-public class PrimitiveOrRawQR extends AbstractPrimitiveOrRaw<QR<Double>> {
+public class PrimitiveOrRawQR extends AbstractDenseRawOrNative<QR<Double>> {
 
     public static final class CodeAndData {
 
@@ -140,32 +141,37 @@ public class PrimitiveOrRawQR extends AbstractPrimitiveOrRaw<QR<Double>> {
 
     @Override
     @Benchmark
-    public MatrixStore<Double> primitive() {
-        return codeAndData.execute(primitive);
+    public MatrixStore<Double> dense() {
+        return codeAndData.execute(dense);
+    }
+
+    @Override
+    public MatrixStore<Double> accelerate() {
+        return codeAndData.execute(dense);
     }
 
     @Override
     @Benchmark
     public MatrixStore<Double> raw() {
-        return codeAndData.execute(raw);
+        return codeAndData.execute(dense);
     }
 
     @Override
     @Setup
-    public void setup() {
+    public void setup(final BenchmarkParams params) {
 
-        super.setup();
+        super.setup(params);
 
         codeAndData = new CodeAndData(dim);
     }
 
     @Override
-    protected QR<Double> makePrimitive() {
+    protected QR<Double> newDense() {
         return new DenseQR.R064();
     }
 
     @Override
-    protected QR<Double> makeRaw() {
+    protected QR<Double> newRaw() {
         return new RawQR();
     }
 }

@@ -22,13 +22,16 @@
 package org.ojalgo.matrix.decomposition;
 
 import org.ojalgo.BenchmarkUtils;
+import org.ojalgo.array.operation.NativeLibrary;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.R064Store;
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
@@ -72,27 +75,79 @@ PrimitiveOrRawLU.raw         2000  thrpt    3      11.569 ±    3.558  ops/min
  * PrimitiveOrRawLU.raw         1000  thrpt    3       100,325 ±      7,884  ops/min
  * </pre>
  *
+ * MacBook Pro, M5 Pro: 2026-10-17
+ *
+ * <pre>
+ * Benchmark                         (dim)   Mode  Cnt        Score        Error  Units
+PrimitiveOrRawLU.primitive           10  thrpt    3  1279799.527 ±  45736.664  ops/s
+PrimitiveOrRawLU.primitive           20  thrpt    3   274110.874 ±   9679.591  ops/s
+PrimitiveOrRawLU.primitive           50  thrpt    3    34063.124 ±    853.417  ops/s
+PrimitiveOrRawLU.primitive          100  thrpt    3     6675.727 ±    185.684  ops/s
+PrimitiveOrRawLU.primitive          200  thrpt    3     1182.803 ±      7.544  ops/s
+PrimitiveOrRawLU.primitive          500  thrpt    3       84.890 ±      4.429  ops/s
+PrimitiveOrRawLU.primitive         1000  thrpt    3       18.539 ±      0.138  ops/s
+PrimitiveOrRawLU.primitive         2000  thrpt    3        2.486 ±      0.194  ops/s
+PrimitiveOrRawLU.primitiveNative     10  thrpt    3  2125610.984 ± 154573.240  ops/s
+PrimitiveOrRawLU.primitiveNative     20  thrpt    3   533634.587 ±  46401.918  ops/s
+PrimitiveOrRawLU.primitiveNative     50  thrpt    3    65666.457 ±   2976.579  ops/s
+PrimitiveOrRawLU.primitiveNative    100  thrpt    3    19340.929 ±    210.053  ops/s
+PrimitiveOrRawLU.primitiveNative    200  thrpt    3     5118.441 ±     73.344  ops/s
+PrimitiveOrRawLU.primitiveNative    500  thrpt    3      613.253 ±     53.864  ops/s
+PrimitiveOrRawLU.primitiveNative   1000  thrpt    3      124.282 ±      7.993  ops/s
+PrimitiveOrRawLU.primitiveNative   2000  thrpt    3       18.520 ±      0.223  ops/s
+PrimitiveOrRawLU.raw                 10  thrpt    3  1653990.060 ± 104774.470  ops/s
+PrimitiveOrRawLU.raw                 20  thrpt    3   361263.144 ±  30544.252  ops/s
+PrimitiveOrRawLU.raw                 50  thrpt    3    37701.147 ±    434.691  ops/s
+PrimitiveOrRawLU.raw                100  thrpt    3     6405.459 ±     54.513  ops/s
+PrimitiveOrRawLU.raw                200  thrpt    3     1122.575 ±     16.812  ops/s
+PrimitiveOrRawLU.raw                500  thrpt    3       81.908 ±      5.656  ops/s
+PrimitiveOrRawLU.raw               1000  thrpt    3       12.834 ±      0.112  ops/s
+PrimitiveOrRawLU.raw               2000  thrpt    3        1.590 ±      0.005  ops/s
+Benchmark                    (dim)   Mode  Cnt   Score   Error  Units
+PrimitiveOrRawLU.accelerate   2000  thrpt    3  18.418 ± 1.082  ops/s
+PrimitiveOrRawLU.accelerate   5000  thrpt    3   1.283 ± 0.212  ops/s
+PrimitiveOrRawLU.accelerate  10000  thrpt    3   0.165 ± 0.064  ops/s
+PrimitiveOrRawLU.dense        2000  thrpt    3   2.512 ± 0.258  ops/s
+PrimitiveOrRawLU.dense        5000  thrpt    3   0.117 ± 0.051  ops/s
+PrimitiveOrRawLU.dense       10000  thrpt    3   0.013 ± 0.003  ops/s
+PrimitiveOrRawLU.raw          2000  thrpt    3   1.493 ± 0.017  ops/s
+PrimitiveOrRawLU.raw          5000  thrpt    3   0.085 ± 0.006  ops/s
+PrimitiveOrRawLU.raw         10000  thrpt    3   0.010 ± 0.001  ops/s
+ * </pre>
+ *
  * @author apete
  */
 @State(Scope.Benchmark)
-public class PrimitiveOrRawLU extends AbstractPrimitiveOrRaw<LU<Double>> {
+@Fork(jvmArgsAppend = "--enable-native-access=ALL-UNNAMED")
+public class PrimitiveOrRawLU extends AbstractDenseRawOrNative<LU<Double>> {
 
     public static void main(final String[] args) throws RunnerException {
         BenchmarkUtils.run(PrimitiveOrRawLU.class);
     }
 
-    @Param({ "100", "200", "500", "1000", "2000" })
+    @Param({ "2000", "5000", "10000" })
     public int dim;
 
     R064Store matrix;
 
     R064Store preallocated;
 
+    /**
+     * The same as {@link #dense()}, but in a fork where ojAlgo uses native code: DenseLU then calls GETRF,
+     * GETRS and GETRI natively, above their thresholds.
+     */
     @Override
     @Benchmark
-    public MatrixStore<Double> primitive() {
-        primitive.compute(matrix);
-        return primitive.getInverse(preallocated);
+    public MatrixStore<Double> accelerate() {
+        dense.compute(matrix);
+        return dense.getInverse(preallocated);
+    }
+
+    @Override
+    @Benchmark
+    public MatrixStore<Double> dense() {
+        dense.compute(matrix);
+        return dense.getInverse(preallocated);
     }
 
     @Override
@@ -102,11 +157,16 @@ public class PrimitiveOrRawLU extends AbstractPrimitiveOrRaw<LU<Double>> {
         return raw.getInverse(preallocated);
     }
 
+    /**
+     * Each fork runs a single benchmark method. ojAlgo decides whether to use native code once, when
+     * {@link NativeLibrary} is initialised, so that is settled first: only {@link #primitiveNative()} may use
+     * it.
+     */
     @Override
     @Setup
-    public void setup() {
+    public void setup(final BenchmarkParams params) {
 
-        super.setup();
+        super.setup(params);
 
         matrix = R064Store.FACTORY.makeSPD(dim);
 
@@ -114,12 +174,12 @@ public class PrimitiveOrRawLU extends AbstractPrimitiveOrRaw<LU<Double>> {
     }
 
     @Override
-    protected LU<Double> makePrimitive() {
+    protected LU<Double> newDense() {
         return new DenseLU.R064();
     }
 
     @Override
-    protected LU<Double> makeRaw() {
+    protected LU<Double> newRaw() {
         return new RawLU();
     }
 

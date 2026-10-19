@@ -29,6 +29,7 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
@@ -91,7 +92,7 @@ PrimitiveOrRawSingularValue.raw         2000  thrpt    3    0.016 ±  0.003  ops
  * @author apete
  */
 @State(Scope.Benchmark)
-public class PrimitiveOrRawSingularValue extends AbstractPrimitiveOrRaw<SingularValue<Double>> {
+public class PrimitiveOrRawSingularValue extends AbstractDenseRawOrNative<SingularValue<Double>> {
 
     public static void main(final String[] args) throws RunnerException {
         BenchmarkUtils.run(PrimitiveOrRawSingularValue.class);
@@ -104,14 +105,25 @@ public class PrimitiveOrRawSingularValue extends AbstractPrimitiveOrRaw<Singular
 
     @Override
     @Benchmark
-    public MatrixStore<Double> primitive() {
+    public MatrixStore<Double> dense() {
 
-        primitive.compute(matrix);
+        dense.compute(matrix);
 
-        primitive.getU();
-        primitive.getV();
+        dense.getU();
+        dense.getV();
 
-        return primitive.getS();
+        return dense.getS();
+    }
+
+    @Override
+    public MatrixStore<Double> accelerate() {
+
+        dense.compute(matrix);
+
+        dense.getU();
+        dense.getV();
+
+        return dense.getS();
     }
 
     @Override
@@ -128,21 +140,21 @@ public class PrimitiveOrRawSingularValue extends AbstractPrimitiveOrRaw<Singular
 
     @Override
     @Setup
-    public void setup() {
+    public void setup(final BenchmarkParams params) {
 
-        super.setup();
+        super.setup(params);
         final int dim1 = dim;
 
         matrix = R064Store.FACTORY.makeSPD(dim1);
     }
 
     @Override
-    protected SingularValue<Double> makePrimitive() {
+    protected SingularValue<Double> newDense() {
         return new DenseSingularValue.R064();
     }
 
     @Override
-    protected SingularValue<Double> makeRaw() {
+    protected SingularValue<Double> newRaw() {
         return new RawSingularValue();
     }
 
