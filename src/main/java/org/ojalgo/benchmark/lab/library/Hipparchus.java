@@ -21,10 +21,12 @@
  */
 package org.ojalgo.benchmark.lab.library;
 
-import org.hipparchus.linear.Array2DRowRealMatrix;
+import org.hipparchus.linear.BlockRealMatrix;
 import org.hipparchus.linear.CholeskyDecomposition;
+import org.hipparchus.linear.DecompositionSolver;
 import org.hipparchus.linear.EigenDecompositionSymmetric;
 import org.hipparchus.linear.LUDecomposition;
+import org.hipparchus.linear.MatrixUtils;
 import org.hipparchus.linear.QRDecomposition;
 import org.hipparchus.linear.RealMatrix;
 import org.hipparchus.linear.SingularValueDecomposition;
@@ -38,17 +40,26 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 
 /**
- * Hipparchus (a fork of Apache Commons Math)
+ * Hipparchus (a fork of Apache Commons Math). BlockRealMatrix throughout – measured faster on 10-1000 than
+ * {@link MatrixUtils#createRealMatrix(int, int)}, which would give Array2DRowRealMatrix up to 4096 elements.
  */
-public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix> {
+public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
+
+    /**
+     * The benchmarks solve for a single right hand side – solved as a vector, Hipparchus' matrix solve has
+     * overhead for one column.
+     */
+    private static RealMatrix solve(final DecompositionSolver solver, final RealMatrix rhs) {
+        return MatrixUtils.createColumnRealMatrix(solver.solve(rhs.getColumnVector(0)).toArray());
+    }
 
     @Override
-    public MatrixBenchmarkLibrary<RealMatrix, Array2DRowRealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
+    public MatrixBenchmarkLibrary<RealMatrix, RealMatrix>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
         return new MatrixBuilder() {
 
-            private final Array2DRowRealMatrix myMatrix = new Array2DRowRealMatrix(numberOfRows, numberOfColumns);
+            private final RealMatrix myMatrix = new BlockRealMatrix(numberOfRows, numberOfColumns);
 
-            public Array2DRowRealMatrix get() {
+            public RealMatrix get() {
                 return myMatrix;
             }
 
@@ -62,12 +73,12 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRea
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationAdd() {
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationAdd() {
         return (a, b, c) -> this.copy(a.add(b), c);
     }
 
     @Override
-    public PropertyOperation<RealMatrix, Array2DRowRealMatrix> getOperationDeterminant(final int dim) {
+    public PropertyOperation<RealMatrix, RealMatrix> getOperationDeterminant(final int dim) {
         return matA -> {
             LUDecomposition lu = new LUDecomposition(matA);
             return lu.getDeterminant();
@@ -75,18 +86,21 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRea
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationEquationSystemSolver(final int numbEquations,
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions, final boolean spd) {
+        if (numbSolutions != 1) {
+            return null; // Only implemented for a single right hand side
+        }
         if (numbEquations == numbVariables) {
             if (spd) {
                 return (body, rhs) -> {
                     CholeskyDecomposition cholesky = new CholeskyDecomposition(body);
-                    return cholesky.getSolver().solve(rhs);
+                    return Hipparchus.solve(cholesky.getSolver(), rhs);
                 };
             }
             return (body, rhs) -> {
                 LUDecomposition lu = new LUDecomposition(body);
-                return lu.getSolver().solve(rhs);
+                return Hipparchus.solve(lu.getSolver(), rhs);
             };
         }
         if (numbEquations <= numbVariables) {
@@ -94,7 +108,7 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRea
         }
         return (body, rhs) -> {
             QRDecomposition qr = new QRDecomposition(body);
-            return qr.getSolver().solve(rhs);
+            return Hipparchus.solve(qr.getSolver(), rhs);
         };
     }
 
@@ -112,21 +126,33 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRea
     }
 
     @Override
-    public MutatingBinaryMatrixMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
-        return (left, right, product) -> this.copy((transpL ? left.transpose() : left).multiply(transpR ? right.transpose() : right), product);
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        // The transposed variants have their own implementations – no explicit transpose
+        if (transpL) {
+            if (transpR) {
+                return (left, right, product) -> this.copy(left.transpose().multiplyTransposed(right), product);
+            }
+            return (left, right, product) -> this.copy(left.transposeMultiply(right), product);
+        }
+        if (transpR) {
+            return (left, right, product) -> this.copy(left.multiplyTransposed(right), product);
+        }
+        return (left, right, product) -> this.copy(left.multiply(right), product);
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationInvert(final int dim, final boolean spd) {
+    public MutatingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationInvert(final int dim, final boolean spd) {
+        // What getInverse() does, without creating a new identity every time
+        RealMatrix identity = MatrixUtils.createRealIdentityMatrix(dim);
         if (spd) {
             return (matA, result) -> {
                 CholeskyDecomposition chol = new CholeskyDecomposition(matA);
-                this.copy(chol.getSolver().getInverse(), result);
+                this.copy(chol.getSolver().solve(identity), result);
             };
         }
         return (matA, result) -> {
             LUDecomposition lu = new LUDecomposition(matA);
-            this.copy(lu.getSolver().getInverse(), result);
+            this.copy(lu.getSolver().solve(identity), result);
         };
     }
 
@@ -136,12 +162,12 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRea
     }
 
     @Override
-    public ProducingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationPseudoinverse(final int dim) {
+    public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationPseudoinverse(final int dim) {
         return matrix -> new SingularValueDecomposition(matrix).getSolver().getInverse();
     }
 
     @Override
-    public MutatingBinaryMatrixScalarOperation<RealMatrix, Array2DRowRealMatrix> getOperationScale() {
+    public MutatingBinaryMatrixScalarOperation<RealMatrix, RealMatrix> getOperationScale() {
         return (a, s, b) -> this.copy(a.scalarMultiply(s), b);
     }
 
@@ -160,16 +186,15 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRea
     }
 
     @Override
-    public MutatingUnaryMatrixOperation<RealMatrix, Array2DRowRealMatrix> getOperationTranspose() {
+    public MutatingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationTranspose() {
         return (matA, result) -> this.copy(matA.transpose(), result);
     }
 
     @Override
-    protected Array2DRowRealMatrix copy(final RealMatrix source, final Array2DRowRealMatrix destination) {
+    protected RealMatrix copy(final RealMatrix source, final RealMatrix destination) {
+        // Row by row – element by element is (much) slower, in particular for BlockRealMatrix
         for (int i = 0, rlim = source.getRowDimension(); i < rlim; i++) {
-            for (int j = 0, clim = destination.getColumnDimension(); j < clim; j++) {
-                destination.setEntry(i, j, source.getEntry(i, j));
-            }
+            destination.setRow(i, source.getRow(i));
         }
         return destination;
     }

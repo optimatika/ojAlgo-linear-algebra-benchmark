@@ -108,7 +108,8 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
             if (spd) {
                 return (body, rhs) -> {
                     DenseMatrix solution = rhs.copy();
-                    body.copy().withUplo(UPLO.LOWER).cholesky().solve(solution);
+                    // UPPER – SMILE's pure Java Cholesky then runs down columns (contiguous), LOWER is strided
+                    body.copy().withUplo(UPLO.UPPER).cholesky().solve(solution);
                     return solution;
                 };
             }
@@ -151,10 +152,12 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
 
     @Override
     public MutatingUnaryMatrixOperation<DenseMatrix, DenseMatrix> getOperationInvert(final int dim, final boolean spd) {
+        // Solve against the identity, directly in result – what inverse() does, without allocating the identity and the inverse
+        DenseMatrix identity = DenseMatrix.eye(ScalarType.Float64, dim);
         if (spd) {
-            return (matA, result) -> this.copy(matA.copy().withUplo(UPLO.LOWER).cholesky().inverse(), result);
+            return (matA, result) -> matA.copy().withUplo(UPLO.UPPER).cholesky().solve(this.copy(identity, result));
         }
-        return (matA, result) -> this.copy(matA.inverse(), result);
+        return (matA, result) -> matA.copy().lu().solve(this.copy(identity, result));
     }
 
     @Override
@@ -178,6 +181,8 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
         DenseMatrix[] ret = this.makeArray(3);
 
         return matrix -> {
+            // Release the previous results first – at large sizes they don't fit in memory alongside the workspace
+            ret[0] = ret[1] = ret[2] = null;
             SVD svd = matrix.copy().svd(true);
             ret[0] = svd.U();
             ret[1] = svd.diag();

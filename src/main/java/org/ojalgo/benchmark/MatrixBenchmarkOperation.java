@@ -311,9 +311,9 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
-     * The matrix size. A benchmark may redeclare the field to get other values – JMH sets both fields.
+     * The base matrix size.
      */
-    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" })
+    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", })
     public int dim;
 
     /**

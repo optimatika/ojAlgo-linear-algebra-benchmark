@@ -139,13 +139,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     @Override
     public MutatingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationInvert(final int dim, final boolean spd) {
         InverterTask<Double> task = InverterTask.R064.make(dim, spd);
-        if (spd) {
-            // The inverse is (typically) returned as a symmetric view of the lower triangle of the preallocated
-            // store – calculate it in a separate store, and copy the full matrix to result
-            R064Store preallocated = R064Store.FACTORY.make(dim, dim);
-            return (original, result) -> task.invert(original, preallocated).supplyTo(result);
-        }
-        return task::invert; // Calculated in place – the returned inverse is result
+        return task::invert; // Calculated in place – the returned inverse is result (the full matrix, also when SPD)
     }
 
     @Override

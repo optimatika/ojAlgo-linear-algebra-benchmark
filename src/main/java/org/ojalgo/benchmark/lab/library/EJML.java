@@ -24,14 +24,16 @@ package org.ojalgo.benchmark.lab.library;
 import org.ejml.LinearSolverSafe;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
-import org.ejml.dense.row.CovarianceOps_DDRM;
+import org.ejml.dense.row.CommonOps_MT_DDRM;
 import org.ejml.dense.row.EigenOps_DDRM;
 import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
+import org.ejml.interfaces.decomposition.LUDecomposition_F64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.ejml.simple.ops.SimpleOperations_DDRM;
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
@@ -46,6 +48,12 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
  * Efficient Java Matrix Library
  */
 public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
+
+    /**
+     * What SimpleMatrix uses – EJML's own switching to the concurrent implementations (CommonOps_MT_DDRM) for
+     * large matrices. Only covers mult, multTransA and transpose.
+     */
+    private static final SimpleOperations_DDRM OPERATIONS = new SimpleOperations_DDRM();
 
     @Override
     public MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj>.MatrixBuilder getMatrixBuilder(final int numberOfRows, final int numberOfColumns) {
@@ -73,7 +81,9 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public PropertyOperation<DMatrixRMaj, DMatrixRMaj> getOperationDeterminant(final int dim) {
-        return CommonOps_DDRM::det;
+        // Reused, rather than CommonOps_DDRM.det(...) creating a new decomposition every time
+        LUDecomposition_F64<DMatrixRMaj> lu = DecompositionFactory_DDRM.lu(dim, dim);
+        return a -> lu.decompose(a) ? lu.computeDeterminant().real : 0.0;
     }
 
     @Override
@@ -120,10 +130,13 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
         DMatrixRMaj[] ret = this.makeArray(2);
         EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
+        // The decomposition works in place – copy into a preallocated matrix, rather than decomposeSafe(...) allocating a copy every time
+        DMatrixRMaj work = new DMatrixRMaj(dim, dim);
 
         return input -> {
 
-            if (!DecompositionFactory_DDRM.decomposeSafe(evd, input)) {
+            work.setTo(input);
+            if (!evd.decompose(work)) {
                 throw new BenchmarkRequirementsException("Decomposition failed");
             }
 
@@ -137,31 +150,37 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
+        // multTransB and multTransAB have no variant that switches to the concurrent implementation. multTransB is
+        // always concurrent – measured faster on 10-1000 (it loses below 100)
         if (transpL) {
             if (transpR) {
                 return CommonOps_DDRM::multTransAB;
             }
-            return CommonOps_DDRM::multTransA;
+            return OPERATIONS::multTransA;
         }
         if (transpR) {
-            return CommonOps_DDRM::multTransB;
+            return CommonOps_MT_DDRM::multTransB;
         }
-        return CommonOps_DDRM::mult;
+        return OPERATIONS::mult;
     }
 
     @Override
     public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationInvert(final int dim, final boolean spd) {
-        if (spd) {
-            return CovarianceOps_DDRM::invert;
-        }
-        return CommonOps_DDRM::invert;
+        // Reused, rather than CommonOps_DDRM.invert(...) / CovarianceOps_DDRM.invert(...) creating a new solver every time
+        LinearSolverDense<DMatrixRMaj> solver = spd ? new LinearSolverSafe<>(LinearSolverFactory_DDRM.symmPosDef(dim)) : LinearSolverFactory_DDRM.linear(dim);
+        return (a, inv) -> {
+            if (!solver.setA(a)) {
+                throw new BenchmarkRequirementsException();
+            }
+            solver.invert(inv);
+        };
     }
 
     @Override
     public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationMultiplyToProduce() {
         return (left, right) -> {
             DMatrixRMaj product = new DMatrixRMaj(left.getNumRows(), right.getNumCols());
-            CommonOps_DDRM.mult(left, right, product);
+            OPERATIONS.mult(left, right, product);
             return product;
         };
     }
@@ -205,7 +224,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationTranspose() {
-        return CommonOps_DDRM::transpose;
+        return OPERATIONS::transpose;
     }
 
     @Override

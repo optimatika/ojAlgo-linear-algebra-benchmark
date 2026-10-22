@@ -25,7 +25,9 @@ import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
@@ -161,6 +163,7 @@ public class Pseudoinverse extends MatrixBenchmarkOperation {
     }
 
     @Override
+    @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
         this.verifyPseudoinverse(matrix, result);
     }
