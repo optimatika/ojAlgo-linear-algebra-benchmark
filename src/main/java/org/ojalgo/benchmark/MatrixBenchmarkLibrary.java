@@ -21,8 +21,6 @@
  */
 package org.ojalgo.benchmark;
 
-import static org.ojalgo.function.constant.PrimitiveMath.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -36,6 +34,8 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperati
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
 import org.ojalgo.benchmark.lab.library.EJML;
 import org.ojalgo.benchmark.lab.library.Hipparchus;
+import org.ojalgo.benchmark.lab.library.Smile;
+import org.ojalgo.benchmark.lab.library.SmileNative;
 import org.ojalgo.benchmark.lab.library.ojAlgo;
 import org.ojalgo.benchmark.lab.library.ojAlgoNative;
 import org.ojalgo.netio.BasicLogger;
@@ -76,6 +76,8 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         LIBRARIES.put(Hipparchus.class.getSimpleName(), Hipparchus::new);
         LIBRARIES.put(ojAlgo.class.getSimpleName(), ojAlgo::new);
         LIBRARIES.put(ojAlgoNative.class.getSimpleName(), ojAlgoNative::new);
+        LIBRARIES.put(Smile.class.getSimpleName(), Smile::new);
+        LIBRARIES.put(SmileNative.class.getSimpleName(), SmileNative::new);
     }
 
     public static MatrixBenchmarkLibrary<?, ?> make(final String name) {
@@ -90,6 +92,11 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         super();
     }
 
+    /**
+     * Arrays (of decomposition factors) are multiplied together before comparing. The allowed (normwise
+     * relative) error is the same as for the other verifications, {@link MatrixBenchmarkOperation#TOLERANCE}
+     * per dimension, relative to the norm of the expected matrix.
+     */
     @SuppressWarnings("unchecked")
     public boolean equals(final Object expected, final int dim, final Object actual) {
 
@@ -110,11 +117,12 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         final I diff = this.subtract(left, right);
 
         final double error = this.norm(diff);
+        final double scale = this.norm(left);
 
-        final boolean retVal = (error <= (dim * dim * MACHINE_EPSILON));
+        final boolean retVal = (error <= MatrixBenchmarkOperation.TOLERANCE * dim * scale); // Also catches NaN
 
         if (!retVal) {
-            BasicLogger.debug("Error {} too large for {}", error, dim);
+            BasicLogger.debug("Error {} too large for {}, the relative error is {}", error, dim, error / scale);
         }
 
         return retVal;

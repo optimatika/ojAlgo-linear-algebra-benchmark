@@ -16,6 +16,8 @@ Comparing ojAlgo linear algebra operations against alternative Java libraries. T
 | `Hipparchus` | [Hipparchus](https://hipparchus.org/) | Maintained fork of Apache Commons Math (essentially the same linear algebra code). A baseline that alternatives must justify improving upon. |
 | `ojAlgo` | [ojAlgo](https://github.com/optimatika/ojAlgo) | Pure Java – native code switched off. |
 | `ojAlgoNative` | [ojAlgo](https://github.com/optimatika/ojAlgo) | ojAlgo delegating to a native BLAS/LAPACK (through the FFM API) where it can. Accelerate on macOS, OpenBLAS, MKL… elsewhere. The native code performance reference. |
+| `Smile` | [SMILE](https://haifengl.github.io/) | Pure Java – SMILE's linear algebra backend set to `java`. Widely used machine learning library, with its own (dense) linear algebra. |
+| `SmileNative` | [SMILE](https://haifengl.github.io/) | SMILE's `native` backend – BLAS/LAPACK through the FFM API, fails if there is none. The system's libblas/liblapack on macOS (Accelerate's legacy interface), OpenBLAS elsewhere. The alternative to ojAlgo calling the same native code. |
 
 Benchmark classes in `org.ojalgo.benchmark.lab` cover: matrix multiplication, addition, scaling, transpose, decompositions (EVD, SVD, Cholesky), solvers (general, Hermitian, least squares), inversion, determinant, and pseudoinverse.
 
@@ -59,13 +61,15 @@ java -jar target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -p lib=ojA
 
 ### Native code
 
-The forked JVMs of the library comparison benchmarks are started with `--enable-native-access=ALL-UNNAMED` (an `@Fork` annotation on `MatrixBenchmarkOperation`). Each fork benchmarks a single library, and instantiating it decides whether ojAlgo uses native code: `ojAlgo` switches it off, `ojAlgoNative` fails if there is no native library to use. Don't run without forks (`-f 0`).
+The forked JVMs of the library comparison benchmarks are started with `--enable-native-access=ALL-UNNAMED` (an `@Fork` annotation on `MatrixBenchmarkOperation`). Each fork benchmarks a single library, and instantiating it decides whether ojAlgo or SMILE uses native code: `ojAlgo` and `Smile` switch it off, `ojAlgoNative` and `SmileNative` fail if there is no native library to use. Don't run without forks (`-f 0`).
 
 To use a specific native library, set the `ojalgo.native.library` system property in the forked JVMs. Use `-jvmArgsPrepend` – `-jvmArgsAppend` would replace the `--enable-native-access` argument:
 
 ```sh
 java -jar target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -p lib=ojAlgoNative -jvmArgsPrepend -Dojalgo.native.library=/opt/homebrew/opt/openblas/lib/libopenblas.dylib
 ```
+
+SMILE has system properties of its own for that (`smile.lib.blas`, `blas.native.path`… – see `smile.linalg.NativeLibrary`).
 
 The internal tuning benchmarks don't grant native access, and tune the pure Java implementations.
 

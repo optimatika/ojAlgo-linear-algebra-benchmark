@@ -255,7 +255,7 @@ public class FillByMultiplying extends MatrixBenchmarkOperation implements Bench
             "5000", "8192", "10000" })
     public int dim;
 
-    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative", "Smile", "SmileNative" })
     public String lib;
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

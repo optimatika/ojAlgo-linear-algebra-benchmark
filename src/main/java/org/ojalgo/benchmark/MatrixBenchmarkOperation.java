@@ -34,8 +34,8 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
 /**
- * The forked JVMs grant native access so that ojAlgo can use native code. Whether it actually does is
- * decided by the library being benchmarked – "ojAlgo" (pure Java) or "ojAlgoNative".
+ * The forked JVMs grant native access so that ojAlgo and SMILE can use native code. Whether they actually do
+ * is decided by the library being benchmarked – "ojAlgo"/"Smile" (pure Java) or "ojAlgoNative"/"SmileNative".
  */
 @Fork(jvmArgsAppend = "--enable-native-access=ALL-UNNAMED")
 public abstract class MatrixBenchmarkOperation {
@@ -184,7 +184,7 @@ public abstract class MatrixBenchmarkOperation {
      * Allowed (normwise relative) error, per dimension, when verifying. Generous – the verification is there
      * to catch wrong results, not to rank accuracy.
      */
-    private static final double TOLERANCE = 16.0 * Math.ulp(1.0);
+    static final double TOLERANCE = 16.0 * Math.ulp(1.0);
 
     static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
     static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
