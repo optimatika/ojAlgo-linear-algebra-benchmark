@@ -27,10 +27,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
@@ -62,18 +59,11 @@ Transpose.execute   1000     MTJ  thrpt    3      15193.998 ±     1819.946  ops
  *
  * @author apete
  */
-@State(Scope.Benchmark)
 public class Transpose extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(Transpose.class);
     }
-
-    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
-    public int dim;
-
-    @Param({ "EJML", "Hipparchus", "ojAlgo-JVM", "ojAlgo-Native", "SMILE-JVM", "SMILE-Native" })
-    public String lib;
 
     private MutatingUnaryMatrixOperation<?, ?> myOperation;
 

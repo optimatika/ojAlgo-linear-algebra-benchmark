@@ -26,6 +26,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.Param;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -37,8 +40,11 @@ import org.openjdk.jmh.runner.options.TimeValue;
  * The forked JVMs grant native access so that ojAlgo and SMILE can use native code. Whether they actually do
  * is decided by the library being benchmarked – "ojAlgo-JVM"/"SMILE-JVM" (pure Java) or
  * "ojAlgo-Native"/"SMILE-Native".
+ * <p>
+ * The benchmarks (subclasses) inherit the state scope as well as the "dim" and "lib" parameters.
  */
 @Fork(jvmArgsAppend = "--enable-native-access=ALL-UNNAMED")
+@State(Scope.Benchmark)
 public abstract class MatrixBenchmarkOperation {
 
     @FunctionalInterface
@@ -178,18 +184,17 @@ public abstract class MatrixBenchmarkOperation {
      */
     private static final String[] FULL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000",
             "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
-    private static final String[] SMALL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" };
-    private static final String[] MEDIUM = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", };
     private static final String[] LARGE = { "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
+    private static final String[] MEDIUM = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", };
+    private static final String[] SMALL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" };
 
+    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
+    static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
     /**
      * Allowed (normwise relative) error, per dimension, when verifying. Generous – the verification is there
      * to catch wrong results, not to rank accuracy.
      */
     static final double TOLERANCE = 16.0 * Math.ulp(1.0);
-
-    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
-    static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
 
     public static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(2).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
@@ -304,6 +309,18 @@ public abstract class MatrixBenchmarkOperation {
     protected final static Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
         return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
     }
+
+    /**
+     * The matrix size. A benchmark may redeclare the field to get other values – JMH sets both fields.
+     */
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" })
+    public int dim;
+
+    /**
+     * The library, by its name in {@link MatrixBenchmarkLibrary}
+     */
+    @Param({ "EJML", "Hipparchus", "ojAlgo-JVM", "ojAlgo-Native", "SMILE-JVM", "SMILE-Native" })
+    public String lib;
 
     protected MatrixBenchmarkLibrary<?, ?> library;
 

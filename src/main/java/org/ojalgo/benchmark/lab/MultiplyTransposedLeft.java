@@ -26,10 +26,7 @@ import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
@@ -137,18 +134,11 @@ FillByMultiplyingTransposedLeft.execute   1000     MTJ  thrpt    3        1387.0
  *
  * @author apete
  */
-@State(Scope.Benchmark)
 public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class);
     }
-
-    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
-    public int dim;
-
-    @Param({ "EJML", "Hipparchus", "ojAlgo-JVM", "ojAlgo-Native", "SMILE-JVM", "SMILE-Native" })
-    public String lib;
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
