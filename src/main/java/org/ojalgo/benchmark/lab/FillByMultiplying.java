@@ -21,6 +21,8 @@
 */
 package org.ojalgo.benchmark.lab;
 
+import java.util.concurrent.TimeUnit;
+
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -243,7 +245,7 @@ FillByMultiplying.execute   5000     MTJ  thrpt    3       21,268 ±      1,937 
 public class FillByMultiplying extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(FillByMultiplying.class);
+        MatrixBenchmarkOperation.run(FillByMultiplying.class, TimeUnit.SECONDS);
     }
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

@@ -21,6 +21,8 @@
  */
 package org.ojalgo.benchmark.lab;
 
+import java.util.concurrent.TimeUnit;
+
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -47,7 +49,7 @@ import org.openjdk.jmh.runner.RunnerException;
 public class InvertGeneral extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(InvertGeneral.class);
+        MatrixBenchmarkOperation.run(InvertGeneral.class, TimeUnit.MINUTES);
     }
 
     private MutatingUnaryMatrixOperation<?, ?> myOperation;

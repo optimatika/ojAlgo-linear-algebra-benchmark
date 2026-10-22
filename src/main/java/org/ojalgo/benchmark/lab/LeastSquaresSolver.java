@@ -21,6 +21,8 @@
  */
 package org.ojalgo.benchmark.lab;
 
+import java.util.concurrent.TimeUnit;
+
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -227,7 +229,7 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
     private static final int RATIO = 3;
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(LeastSquaresSolver.class);
+        MatrixBenchmarkOperation.run(LeastSquaresSolver.class, TimeUnit.MINUTES);
     }
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

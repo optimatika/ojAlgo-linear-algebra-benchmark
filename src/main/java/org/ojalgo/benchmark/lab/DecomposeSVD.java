@@ -21,6 +21,8 @@
  */
 package org.ojalgo.benchmark.lab;
 
+import java.util.concurrent.TimeUnit;
+
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -134,7 +136,7 @@ DecomposeSVD.execute   1000     MTJ  thrpt    3      161.126 ±      3.737  ops/
 public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeSVD.class);
+        MatrixBenchmarkOperation.run(DecomposeSVD.class, TimeUnit.MINUTES);
     }
 
     private DecompositionOperation<?, ?> myOperation;

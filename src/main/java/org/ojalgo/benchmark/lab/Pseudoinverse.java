@@ -21,6 +21,8 @@
  */
 package org.ojalgo.benchmark.lab;
 
+import java.util.concurrent.TimeUnit;
+
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
@@ -137,7 +139,7 @@ DecomposeSingular.execute   1000     ojAlgo  thrpt    3         9.032 ±        
 public class Pseudoinverse extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Pseudoinverse.class);
+        MatrixBenchmarkOperation.run(Pseudoinverse.class, TimeUnit.MINUTES);
     }
 
     private ProducingUnaryMatrixOperation<?, ?> myOperation;

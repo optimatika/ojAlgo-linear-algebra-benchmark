@@ -23,6 +23,7 @@ package org.ojalgo.benchmark;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Mode;
@@ -188,33 +189,45 @@ public abstract class MatrixBenchmarkOperation {
     private static final String[] MEDIUM = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", };
     private static final String[] SMALL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" };
 
-    static final TimeValue ITERATION_TIME = new TimeValue(10L, TimeUnit.SECONDS);
-    static final TimeValue TIMEOUT = new TimeValue(1L, TimeUnit.MINUTES);
+    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.SECONDS);
+    /**
+     * Long enough for a single invocation at the largest sizes – JMH would otherwise try to interrupt it.
+     */
+    static final TimeValue TIMEOUT = new TimeValue(10L, TimeUnit.MINUTES);
     /**
      * Allowed (normwise relative) error, per dimension, when verifying. Generous – the verification is there
      * to catch wrong results, not to rank accuracy.
      */
     static final double TOLERANCE = 16.0 * Math.ulp(1.0);
 
+    /**
+     * Settings for results to publish, that still run reasonably fast: 1 fork, 3 warmup and 5 measurement
+     * iterations of 1s (an iteration always lasts at least one invocation), throughput, CSV results. The heap
+     * is large enough for decompositions of 10000x10000 matrices.
+     */
     public static ChainedOptionsBuilder options() {
-        return new OptionsBuilder().forks(1).warmupIterations(2).measurementIterations(3).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx8g").resultFormat(ResultFormatType.CSV);
+        return new OptionsBuilder().forks(1).warmupIterations(3).measurementIterations(5).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
+                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx16g").resultFormat(ResultFormatType.CSV);
     }
 
+    /**
+     * Runs only the given benchmark class – the include pattern is its full name, so that e.g. Transpose
+     * doesn't also run MultiplyTransposedLeft/Right.
+     */
     public static void run(final ChainedOptionsBuilder options, final Class<?> clazz) throws RunnerException {
-        new Runner(options.include(clazz.getSimpleName()).build()).run();
+        new Runner(options.include(Pattern.quote(clazz.getName() + ".")).build()).run();
     }
 
-    public static void run(final Class<?> clazz) throws RunnerException {
-        MatrixBenchmarkOperation.run(MatrixBenchmarkOperation.options(), clazz);
-    }
-
+    /**
+     * Runs the benchmark class with {@link #options()}, in the given time unit, and writes the results to a
+     * CSV file named after the class.
+     */
     public static void run(final Class<?> clazz, final TimeUnit timeUnit) throws RunnerException {
-        MatrixBenchmarkOperation.run(MatrixBenchmarkOperation.options().timeUnit(timeUnit), clazz);
+        MatrixBenchmarkOperation.run(MatrixBenchmarkOperation.options().timeUnit(timeUnit).result(clazz.getSimpleName() + ".csv"), clazz);
     }
 
     private static void check(final String what, final double error, final double scale) throws BenchmarkRequirementsException {
-        if ((error > TOLERANCE * scale)) { // Also catches NaN
+        if (!(error <= TOLERANCE * scale)) { // Also catches NaN
             throw new BenchmarkRequirementsException(
                     what + " is wrong! Error " + error + " > " + TOLERANCE * scale + ", the relative error is " + error / scale);
         }
@@ -494,7 +507,7 @@ public abstract class MatrixBenchmarkOperation {
             for (int i = 0; i < nbRows; i++) {
                 double value = library.get(actual, i, j);
                 double reference = expected.invoke(i, j);
-                if ((Math.abs(value - reference) > TOLERANCE * Math.abs(reference))) {
+                if (!(Math.abs(value - reference) <= TOLERANCE * Math.abs(reference))) { // Also catches NaN
                     throw new BenchmarkRequirementsException("Result is wrong! Element (" + i + "," + j + ") is " + value + " but should be " + reference);
                 }
             }

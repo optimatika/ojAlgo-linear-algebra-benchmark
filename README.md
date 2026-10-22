@@ -25,7 +25,7 @@ Every benchmark verifies the results after each iteration (outside the measured 
 mvn clean install
 ```
 
-Each benchmark class has a `main` method that runs it with the settings defined in code – `MatrixBenchmarkOperation.options()` (1 fork, 2 warmup and 3 measurement iterations of 10s, ops/min, results written to `jmh-result.csv`). This is the normal way to run a benchmark:
+Each benchmark class has a `main` method that runs it with the settings defined in code – `MatrixBenchmarkOperation.options()`: 1 fork, 3 warmup and 5 measurement iterations of 1s, a 16 GB heap, and a time unit chosen per benchmark (ops/s for add, scale and transpose, ops/min for the rest). The results are written to a CSV file named after the benchmark, e.g. `FillByMultiplying.csv`. This is the normal way to run a benchmark:
 
 ```sh
 java -cp target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying
