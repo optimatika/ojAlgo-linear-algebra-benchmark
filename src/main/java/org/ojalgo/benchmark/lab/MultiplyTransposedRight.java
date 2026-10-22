@@ -59,7 +59,7 @@ import org.openjdk.jmh.runner.RunnerException;
 public class MultiplyTransposedRight extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyTransposedRight.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(MultiplyTransposedRight.class, SIZE);
     }
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

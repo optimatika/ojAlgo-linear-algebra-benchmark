@@ -261,7 +261,7 @@ GeneralSolve.execute   1000     ojAlgo  thrpt   15        2.199 ±      0.048  o
 public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(GeneralSolve.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(GeneralSolve.class, SIZE);
     }
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

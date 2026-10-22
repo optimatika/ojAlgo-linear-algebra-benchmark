@@ -66,7 +66,7 @@ Scale.execute   1000     MTJ  thrpt    3        8049.585 ±      357.424  ops/mi
 public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Scale.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(Scale.class, SIZE);
     }
 
     private MutatingBinaryMatrixScalarOperation<?, ?> myOperation;

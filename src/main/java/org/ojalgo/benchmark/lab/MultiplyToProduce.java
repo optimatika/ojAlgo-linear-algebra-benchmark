@@ -341,7 +341,7 @@ Square3Multiply.execute   2000        MTJ  thrpt    3         317,437 ±        
 public class MultiplyToProduce extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyToProduce.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(MultiplyToProduce.class, SIZE);
     }
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

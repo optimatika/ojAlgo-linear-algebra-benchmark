@@ -137,7 +137,7 @@ DecomposeSingular.execute   1000     ojAlgo  thrpt    3         9.032 ±        
 public class Pseudoinverse extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Pseudoinverse.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(Pseudoinverse.class, SIZE);
     }
 
     private ProducingUnaryMatrixOperation<?, ?> myOperation;

@@ -97,7 +97,7 @@ Determinant.execute   1000  ojAlgo  thrpt    3       220.580 ±      2.028  ops/
 public class Determinant extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Determinant.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(Determinant.class, SIZE);
     }
 
     private PropertyOperation<?, ?> myOperation;

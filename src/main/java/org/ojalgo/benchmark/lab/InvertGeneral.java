@@ -47,7 +47,7 @@ import org.openjdk.jmh.runner.RunnerException;
 public class InvertGeneral extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(InvertGeneral.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(InvertGeneral.class, SIZE);
     }
 
     private MutatingUnaryMatrixOperation<?, ?> myOperation;

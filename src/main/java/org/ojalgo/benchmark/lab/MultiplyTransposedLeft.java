@@ -137,7 +137,7 @@ FillByMultiplyingTransposedLeft.execute   1000     MTJ  thrpt    3        1387.0
 public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class, SIZE);
     }
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

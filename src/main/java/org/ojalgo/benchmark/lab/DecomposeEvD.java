@@ -218,7 +218,7 @@ DecomposeEigen.execute   1000     ojAlgo  thrpt    3        25,599 ±        2,0
 public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeEvD.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(DecomposeEvD.class, SIZE);
     }
 
     private DecompositionOperation<?, ?> myOperation;

@@ -134,7 +134,7 @@ DecomposeSVD.execute   1000     MTJ  thrpt    3      161.126 ±      3.737  ops/
 public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeSVD.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(DecomposeSVD.class, SIZE);
     }
 
     private DecompositionOperation<?, ?> myOperation;

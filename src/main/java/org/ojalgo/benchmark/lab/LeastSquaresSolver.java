@@ -227,7 +227,7 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
     private static final int RATIO = 3;
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(LeastSquaresSolver.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(LeastSquaresSolver.class, SIZE);
     }
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

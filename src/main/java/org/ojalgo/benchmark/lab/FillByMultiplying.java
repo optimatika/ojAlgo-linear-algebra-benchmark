@@ -243,7 +243,7 @@ FillByMultiplying.execute   5000     MTJ  thrpt    3       21,268 ±      1,937 
 public class FillByMultiplying extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(FillByMultiplying.class, TIME_UNIT);
+        MatrixBenchmarkOperation.run(FillByMultiplying.class, SIZE);
     }
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

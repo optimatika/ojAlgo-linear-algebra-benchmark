@@ -179,17 +179,59 @@ public abstract class MatrixBenchmarkOperation {
 
     }
 
-    /*
-     * Reference sets of sizes (the "dim" parameter). Annotation values can't refer to these, they're here to
-     * copy from when temporarily changing the @Param values.
+    /**
+     * The three ranges of matrix sizes, each with the settings that suit it – the sizes (the "dim"
+     * parameter), the libraries (the "lib" parameter), the time unit, the number of iterations and the
+     * timeout. Used with {@link MatrixBenchmarkOperation#run(Class, Size)}, the values override the @Param
+     * defaults.
      */
-    private static final String[] FULL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000",
-            "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
-    private static final String[] LARGE = { "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
-    private static final String[] MEDIUM = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", };
-    private static final String[] SMALL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" };
+    public enum Size {
 
-    protected static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+        /**
+         * 1–100, all libraries. Everything is fast, ops/s.
+         */
+        SMALL(new String[] { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" },
+                new String[] { "EJML", "Hipparchus", "ojAlgo-JVM", "ojAlgo-Native", "SMILE-JVM", "SMILE-Native" }, TimeUnit.SECONDS, 3, 5,
+                new TimeValue(1L, TimeUnit.MINUTES)),
+
+        /**
+         * 10–1000, all libraries. The slowest operations at 1000 take seconds, ops/min.
+         */
+        MEDIUM(new String[] { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" },
+                new String[] { "EJML", "Hipparchus", "ojAlgo-JVM", "ojAlgo-Native", "SMILE-JVM", "SMILE-Native" }, TimeUnit.MINUTES, 3, 5,
+                new TimeValue(10L, TimeUnit.MINUTES)),
+
+        /**
+         * 100–10000, the native code libraries with ojAlgo-JVM as a pure Java reference – the other pure Java
+         * libraries would take hours per invocation at the largest sizes. A single invocation can take
+         * minutes, ops/hr, and fewer iterations (each lasts at least one invocation).
+         */
+        LARGE(new String[] { "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096", "5000", "8192", "10000" },
+                new String[] { "ojAlgo-JVM", "ojAlgo-Native", "SMILE-Native" }, TimeUnit.HOURS, 2, 3, new TimeValue(30L, TimeUnit.MINUTES));
+
+        private final String[] myDims;
+        private final String[] myLibs;
+        private final int myMeasurementIterations;
+        private final TimeValue myTimeout;
+        private final TimeUnit myTimeUnit;
+        private final int myWarmupIterations;
+
+        Size(final String[] dims, final String[] libs, final TimeUnit timeUnit, final int warmupIterations, final int measurementIterations,
+                final TimeValue timeout) {
+            myDims = dims;
+            myLibs = libs;
+            myTimeUnit = timeUnit;
+            myWarmupIterations = warmupIterations;
+            myMeasurementIterations = measurementIterations;
+            myTimeout = timeout;
+        }
+
+    }
+
+    /**
+     * The size range the benchmarks' main methods run.
+     */
+    protected static final Size SIZE = Size.MEDIUM;
 
     /**
      * Allowed (normwise relative) error, per dimension, when verifying. Generous – the verification is there
@@ -217,17 +259,22 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
-     * Runs the benchmark class with {@link #options()}, in the given time unit, and writes the results to a
-     * CSV file named after the class.
+     * Runs the benchmark class with {@link #options()}, configured for the given size range – its sizes,
+     * libraries, time unit, iterations and timeout. The results are written to a CSV file named after the
+     * class and the size range, e.g. "FillByMultiplying-MEDIUM.csv".
      */
-    public static void run(final Class<?> clazz, final TimeUnit timeUnit) throws RunnerException {
-        MatrixBenchmarkOperation.run(MatrixBenchmarkOperation.options().timeUnit(timeUnit).result(clazz.getSimpleName() + ".csv"), clazz);
+    public static void run(final Class<?> clazz, final Size size) throws RunnerException {
+        ChainedOptionsBuilder options = MatrixBenchmarkOperation.options().param("dim", size.myDims).param("lib", size.myLibs).timeUnit(size.myTimeUnit)
+                .warmupIterations(size.myWarmupIterations).measurementIterations(size.myMeasurementIterations).timeout(size.myTimeout)
+                .result(clazz.getSimpleName() + "-" + size.name() + ".csv");
+        MatrixBenchmarkOperation.run(options, clazz);
     }
 
     private static void check(final String what, final double error, final double scale) throws BenchmarkRequirementsException {
-        if ((error > TOLERANCE * scale)) { // Also catches NaN
-            throw new BenchmarkRequirementsException(
-                    what + " is wrong! Error " + error + " > " + TOLERANCE * scale + ", the relative error is " + error / scale);
+        double limit = TOLERANCE * scale;
+        // NaN must fail – "error > limit" alone would let it pass
+        if (Double.isNaN(error) || Double.isNaN(limit) || error > limit) {
+            throw new BenchmarkRequirementsException(what + " is wrong! Error " + error + " > " + limit + ", the relative error is " + error / scale);
         }
     }
 
@@ -324,7 +371,8 @@ public abstract class MatrixBenchmarkOperation {
     /**
      * The base matrix size.
      */
-    @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", })
+    @Param({ "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096",
+            "5000", "8192", "10000" })
     public int dim;
 
     /**
@@ -505,7 +553,9 @@ public abstract class MatrixBenchmarkOperation {
             for (int i = 0; i < nbRows; i++) {
                 double value = library.get(actual, i, j);
                 double reference = expected.invoke(i, j);
-                if ((Math.abs(value - reference) > TOLERANCE * Math.abs(reference))) { // Also catches NaN
+                double difference = Math.abs(value - reference);
+                // NaN must fail – "difference > limit" alone would let it pass
+                if (Double.isNaN(difference) || difference > TOLERANCE * Math.abs(reference)) {
                     throw new BenchmarkRequirementsException("Result is wrong! Element (" + i + "," + j + ") is " + value + " but should be " + reference);
                 }
             }
