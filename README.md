@@ -25,13 +25,15 @@ Every benchmark verifies the results after each iteration (outside the measured 
 mvn clean install
 ```
 
-Each benchmark class has a `main` method that runs it with the settings defined in code – `MatrixBenchmarkOperation.options()` (1 fork, iterations of 1s, a 16 GB heap) configured for one of three size ranges, `MatrixBenchmarkOperation.Size`:
+Each benchmark class has a `main` method that runs it with the settings defined in code – `MatrixBenchmarkOperation.options()` (1 fork, throughput, a 16 GB heap) configured for one of three size ranges, `MatrixBenchmarkOperation.Size`:
 
-| `Size` | Sizes | Libraries | Unit | Warmup + measurement iterations | Timeout |
-|--------|-------|-----------|------|---------------------------------|---------|
-| `SMALL` | 1 – 100 | all | ops/s | 3 + 5 | 1 min |
-| `MEDIUM` | 10 – 1000 | all | ops/min | 3 + 5 | 10 min |
-| `LARGE` | 100 – 10000 | `ojAlgo-JVM`, `ojAlgo-Native`, `SMILE-Native` | ops/hr | 2 + 3 | 30 min |
+| `Size` | Sizes | Libraries | Unit | Iteration time | Warmup + measurement iterations | Timeout |
+|--------|-------|-----------|------|----------------|---------------------------------|---------|
+| `SMALL` | 1 – 100 | all | ops/ms | 1 s | 8 + 5 | 10 s |
+| `MEDIUM` | 10 – 1000 | all | ops/s | 1 s | 4 + 5 | 10 s |
+| `LARGE` | 100 – 10000 | `ojAlgo-JVM`, `ojAlgo-Native`, `SMILE-Native` | ops/min | 1 s | 2 + 3 | 30 min |
+
+An iteration lasts at least one invocation, however long that takes. The timeout counts from the start of an iteration, so it must exceed the iteration time plus one invocation.
 
 The `main` methods run `MatrixBenchmarkOperation.SIZE` (`MEDIUM`) – change it to run another range. The results are written to a CSV file named after the benchmark and the size range, e.g. `FillByMultiplying-MEDIUM.csv`. This is the normal way to run a benchmark:
 
