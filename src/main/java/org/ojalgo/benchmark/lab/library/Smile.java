@@ -132,14 +132,13 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
     @Override
     public DecompositionOperation<DenseMatrix, DenseMatrix> getOperationEvD(final int dim) {
 
-        DenseMatrix[] ret = this.makeArray(3);
+        DenseMatrix[] ret = this.makeArray(2);
 
         return matrix -> {
             // Flagged as symmetric, to get the symmetric algorithm
             EVD evd = matrix.copy().withUplo(UPLO.LOWER).eigen(false, true);
             ret[0] = evd.Vr();
             ret[1] = evd.diag();
-            ret[2] = ret[0].transpose();
             return ret;
         };
     }

@@ -34,11 +34,6 @@
             <version>4.0.3</version>
         </dependency>
         <dependency>
-            <groupId>org.hipparchus</groupId>
-            <artifactId>hipparchus-fft</artifactId>
-            <version>4.0.3</version>
-        </dependency>
-        <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
             <version>${version.org.openjdk.jmh}</version>
@@ -66,12 +61,8 @@
                     <target>${version.java}</target>
                     <release>${version.java}</release>
                     <compilerArgs>
-                        <arg>--add-modules</arg>
-                        <arg>jdk.incubator.vector</arg>
                         <arg>--add-exports</arg>
                         <arg>ojalgo/org.ojalgo.array.operation=ALL-UNNAMED</arg>
-                        <arg>--add-exports</arg>
-                        <arg>ojalgo/org.ojalgo.matrix.operation=ALL-UNNAMED</arg>
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <path>
@@ -94,6 +85,7 @@
                         </goals>
                         <configuration>
                             <finalName>${uberjar.name}</finalName>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>org.openjdk.jmh.Main</mainClass>

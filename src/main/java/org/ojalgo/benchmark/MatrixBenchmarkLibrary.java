@@ -72,12 +72,13 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     private static final Map<String, Supplier<MatrixBenchmarkLibrary<?, ?>>> LIBRARIES = new HashMap<>();
 
     static {
-        LIBRARIES.put(EJML.class.getSimpleName(), EJML::new);
-        LIBRARIES.put(Hipparchus.class.getSimpleName(), Hipparchus::new);
-        LIBRARIES.put(ojAlgo.class.getSimpleName(), ojAlgo::new);
-        LIBRARIES.put(ojAlgoNative.class.getSimpleName(), ojAlgoNative::new);
-        LIBRARIES.put(Smile.class.getSimpleName(), Smile::new);
-        LIBRARIES.put(SmileNative.class.getSimpleName(), SmileNative::new);
+        // The names are the values of the benchmarks' "lib" parameter
+        LIBRARIES.put("EJML", EJML::new);
+        LIBRARIES.put("Hipparchus", Hipparchus::new);
+        LIBRARIES.put("ojAlgo-JVM", ojAlgo::new);
+        LIBRARIES.put("ojAlgo-Native", ojAlgoNative::new);
+        LIBRARIES.put("SMILE-JVM", Smile::new);
+        LIBRARIES.put("SMILE-Native", SmileNative::new);
     }
 
     public static MatrixBenchmarkLibrary<?, ?> make(final String name) {

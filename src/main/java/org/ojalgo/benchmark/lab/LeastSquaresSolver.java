@@ -224,6 +224,12 @@ LeastSquaresSolver.execute   1000     MTJ  thrpt    3       648.200 ±      82.1
 @State(Scope.Benchmark)
 public class LeastSquaresSolver extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
+    /**
+     * The number of equations per variable – the body is (RATIO*dim)x(dim). The Java Matrix Benchmark uses 3.
+     * (The results above were measured with 2.)
+     */
+    private static final int RATIO = 3;
+
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(LeastSquaresSolver.class);
     }
@@ -231,7 +237,7 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative", "Smile", "SmileNative" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo-JVM", "ojAlgo-Native", "SMILE-JVM", "SMILE-Native" })
     public String lib;
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
@@ -252,10 +258,10 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationEquationSystemSolver(dim + dim, dim, 1, false);
+        myOperation = library.getOperationEquationSystemSolver(RATIO * dim, dim, 1, false);
 
-        body = MatrixBenchmarkOperation.makeRandom(dim + dim, dim, library);
-        rhs = MatrixBenchmarkOperation.makeRandom(dim + dim, 1, library);
+        body = MatrixBenchmarkOperation.makeRandom(RATIO * dim, dim, library);
+        rhs = MatrixBenchmarkOperation.makeRandom(RATIO * dim, 1, library);
     }
 
     @Override

@@ -118,9 +118,8 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationEvD(final int dim) {
 
-        DMatrixRMaj[] ret = this.makeArray(3);
+        DMatrixRMaj[] ret = this.makeArray(2);
         EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, true, true);
-        DMatrixRMaj vt = new DMatrixRMaj(dim, dim);
 
         return input -> {
 
@@ -130,7 +129,6 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
             ret[0] = EigenOps_DDRM.createMatrixV(evd);
             ret[1] = EigenOps_DDRM.createMatrixD(evd);
-            ret[2] = CommonOps_DDRM.transpose(ret[0], vt);
 
             return ret;
         };

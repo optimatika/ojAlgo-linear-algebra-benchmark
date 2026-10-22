@@ -101,13 +101,12 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, Array2DRowRea
     @Override
     public DecompositionOperation<RealMatrix, RealMatrix> getOperationEvD(final int dim) {
 
-        RealMatrix[] ret = this.makeArray(3);
+        RealMatrix[] ret = this.makeArray(2);
 
         return matrix -> {
             EigenDecompositionSymmetric evd = new EigenDecompositionSymmetric(matrix);
             ret[0] = evd.getV();
             ret[1] = evd.getD();
-            ret[2] = evd.getVT();
             return ret;
         };
     }

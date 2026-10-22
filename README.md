@@ -1,37 +1,23 @@
 # ojAlgo Linear Algebra Benchmark (ojLAB)
 
-Benchmarks and internal tuning tools for [ojAlgo](https://github.com/optimatika/ojAlgo) linear algebra operations, using [JMH](https://openjdk.org/projects/code-tools/jmh/) (Java Microbenchmark Harness).
+Benchmarks comparing [ojAlgo](https://github.com/optimatika/ojAlgo) linear algebra operations with alternative Java libraries, using [JMH](https://openjdk.org/projects/code-tools/jmh/) (Java Microbenchmark Harness).
 
 ## What's in here
 
-This project serves two purposes:
-
-### Library comparison benchmarks
-
-Comparing ojAlgo linear algebra operations against alternative Java libraries. The `lib` parameter of each benchmark selects the library:
+The `lib` parameter of each benchmark selects the library:
 
 | `lib` | Library | Why it's included |
 |-------|---------|-------------------|
 | `EJML` | [EJML](https://ejml.org/) | Pure Java, no dependencies, high performance. Top quality pure Java alternative. |
 | `Hipparchus` | [Hipparchus](https://hipparchus.org/) | Maintained fork of Apache Commons Math (essentially the same linear algebra code). A baseline that alternatives must justify improving upon. |
-| `ojAlgo` | [ojAlgo](https://github.com/optimatika/ojAlgo) | Pure Java – native code switched off. |
-| `ojAlgoNative` | [ojAlgo](https://github.com/optimatika/ojAlgo) | ojAlgo delegating to a native BLAS/LAPACK (through the FFM API) where it can. Accelerate on macOS, OpenBLAS, MKL… elsewhere. The native code performance reference. |
-| `Smile` | [SMILE](https://haifengl.github.io/) | Pure Java – SMILE's linear algebra backend set to `java`. Widely used machine learning library, with its own (dense) linear algebra. |
-| `SmileNative` | [SMILE](https://haifengl.github.io/) | SMILE's `native` backend – BLAS/LAPACK through the FFM API, fails if there is none. The system's libblas/liblapack on macOS (Accelerate's legacy interface), OpenBLAS elsewhere. The alternative to ojAlgo calling the same native code. |
+| `ojAlgo-JVM` | [ojAlgo](https://github.com/optimatika/ojAlgo) | Pure Java – native code switched off. |
+| `ojAlgo-Native` | [ojAlgo](https://github.com/optimatika/ojAlgo) | ojAlgo delegating to a native BLAS/LAPACK (through the FFM API) where it can. Accelerate on macOS, OpenBLAS, MKL… elsewhere. The native code performance reference. |
+| `SMILE-JVM` | [SMILE](https://haifengl.github.io/) | Pure Java – SMILE's linear algebra backend set to `java`. Widely used machine learning library, with its own (dense) linear algebra. |
+| `SMILE-Native` | [SMILE](https://haifengl.github.io/) | SMILE's `native` backend – BLAS/LAPACK through the FFM API, fails if there is none. The system's libblas/liblapack on macOS (Accelerate's legacy interface), OpenBLAS elsewhere. The alternative to ojAlgo calling the same native code. |
 
-Benchmark classes in `org.ojalgo.benchmark.lab` cover: matrix multiplication, addition, scaling, transpose, decompositions (EVD, SVD, Cholesky), solvers (general, Hermitian, least squares), inversion, determinant, and pseudoinverse.
+Benchmark classes in `org.ojalgo.benchmark.lab` cover: matrix multiplication, addition, scaling, transpose, decompositions (EvD, SVD), solvers (general, Hermitian, least squares), inversion, determinant, and pseudoinverse.
 
-Every benchmark verifies the results after each iteration (outside the measured time), independently of the library being benchmarked – products and inverses with random vectors, solutions by their residuals, determinants against a plain Java calculation. A library that produces wrong results is reported as a failure, and gets no score.
-
-### Internal tuning benchmarks
-
-Benchmarks used to tune ojAlgo's internal implementation parameters:
-
-- **Threshold tuners** (`org.ojalgo.matrix.operation`) -- determine at what matrix size operations should switch between serial and parallel execution, and between different multiplication strategies.
-- **Parallelism tuners** (`org.ojalgo.matrix.operation`) -- find the optimal degree of parallelism for various matrix operations and Householder transformations.
-- **Decomposition tuners** (`org.ojalgo.matrix.decomposition`) -- compare implementation variants (primitive vs raw arrays) for Cholesky, LU, QR, Eigenvalue, SVD, and Tridiagonal decompositions, and benchmark sparse LU operations.
-- **Array operation tuners** (`org.ojalgo.array.operation`) -- tune DOT product unrolling, AXPY ordering, and norm calculations.
-- **Other** -- DFT benchmarks, number parsing benchmarks, special function benchmarks, sparse array performance, and solver strategy selection.
+Every benchmark verifies the results after each iteration (outside the measured time), independently of the library being benchmarked – products and inverses with random vectors, solutions by their residuals, decompositions by reconstructing the matrix, determinants against a plain Java calculation. A library that produces wrong results is reported as a failure, and gets no score.
 
 ## Building and running
 
@@ -39,7 +25,7 @@ Benchmarks used to tune ojAlgo's internal implementation parameters:
 mvn clean install
 ```
 
-Each benchmark class has a `main` method that runs it with the settings defined in code – `MatrixBenchmarkOperation.options()` for the library comparison benchmarks (1 fork, 2 warmup and 3 measurement iterations of 10s, ops/min, results written to `jmh-result.csv`), `BenchmarkUtils.options()` for most of the others. This is the normal way to run a benchmark:
+Each benchmark class has a `main` method that runs it with the settings defined in code – `MatrixBenchmarkOperation.options()` (1 fork, 2 warmup and 3 measurement iterations of 10s, ops/min, results written to `jmh-result.csv`). This is the normal way to run a benchmark:
 
 ```sh
 java -cp target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying
@@ -56,22 +42,20 @@ java -jar target/ojlab.jar -l
 Note that it does not use the settings defined in code, but JMH's defaults (5 forks, 5 warmup and 5 measurement iterations of 10s, ops/s) unless you specify otherwise. Restrict the parameters with `-p`, e.g. to compare ojAlgo with and without native code:
 
 ```sh
-java -jar target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -p lib=ojAlgo,ojAlgoNative -p dim=100,1000 -f 1 -wi 2 -i 3 -tu m
+java -jar target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -p lib=ojAlgo-JVM,ojAlgo-Native -p dim=100,1000 -f 1 -wi 2 -i 3 -tu m
 ```
 
 ### Native code
 
-The forked JVMs of the library comparison benchmarks are started with `--enable-native-access=ALL-UNNAMED` (an `@Fork` annotation on `MatrixBenchmarkOperation`). Each fork benchmarks a single library, and instantiating it decides whether ojAlgo or SMILE uses native code: `ojAlgo` and `Smile` switch it off, `ojAlgoNative` and `SmileNative` fail if there is no native library to use. Don't run without forks (`-f 0`).
+The forked JVMs are started with `--enable-native-access=ALL-UNNAMED` (an `@Fork` annotation on `MatrixBenchmarkOperation`). Each fork benchmarks a single library, and instantiating it decides whether ojAlgo or SMILE uses native code: `ojAlgo-JVM` and `SMILE-JVM` switch it off, `ojAlgo-Native` and `SMILE-Native` fail if there is no native library to use. Don't run without forks (`-f 0`).
 
 To use a specific native library, set the `ojalgo.native.library` system property in the forked JVMs. Use `-jvmArgsPrepend` – `-jvmArgsAppend` would replace the `--enable-native-access` argument:
 
 ```sh
-java -jar target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -p lib=ojAlgoNative -jvmArgsPrepend -Dojalgo.native.library=/opt/homebrew/opt/openblas/lib/libopenblas.dylib
+java -jar target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying -p lib=ojAlgo-Native -jvmArgsPrepend -Dojalgo.native.library=/opt/homebrew/opt/openblas/lib/libopenblas.dylib
 ```
 
 SMILE has system properties of its own for that (`smile.lib.blas`, `blas.native.path`… – see `smile.linalg.NativeLibrary`).
-
-The internal tuning benchmarks don't grant native access, and tune the pure Java implementations.
 
 ## Results
 

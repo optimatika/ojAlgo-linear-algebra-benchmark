@@ -35,7 +35,8 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 /**
  * The forked JVMs grant native access so that ojAlgo and SMILE can use native code. Whether they actually do
- * is decided by the library being benchmarked – "ojAlgo"/"Smile" (pure Java) or "ojAlgoNative"/"SmileNative".
+ * is decided by the library being benchmarked – "ojAlgo-JVM"/"SMILE-JVM" (pure Java) or
+ * "ojAlgo-Native"/"SMILE-Native".
  */
 @Fork(jvmArgsAppend = "--enable-native-access=ALL-UNNAMED")
 public abstract class MatrixBenchmarkOperation {
@@ -175,10 +176,11 @@ public abstract class MatrixBenchmarkOperation {
      * Reference sets of sizes (the "dim" parameter). Annotation values can't refer to these, they're here to
      * copy from when temporarily changing the @Param values.
      */
-    private static final String[] _10_1000 = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" };
     private static final String[] FULL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000",
             "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
-    private static final String[] JVM = { "100", "150", "200", "350", "500", "750", "1000" };
+    private static final String[] SMALL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" };
+    private static final String[] MEDIUM = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", };
+    private static final String[] LARGE = { "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096", "5000", "8192", "10000" };
 
     /**
      * Allowed (normwise relative) error, per dimension, when verifying. Generous – the verification is there
@@ -206,39 +208,10 @@ public abstract class MatrixBenchmarkOperation {
         MatrixBenchmarkOperation.run(MatrixBenchmarkOperation.options().timeUnit(timeUnit), clazz);
     }
 
-    protected final static Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
-        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
-        for (int j = 0; j < numberOfColumns; j++) {
-            for (int i = 0; i < numberOfRows; i++) {
-                tmpSupplier.set(i, j, Math.random());
-            }
-        }
-        return tmpSupplier.get();
-    }
-
-    protected final static Object makeSPD(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
-
-        final double[] random = new double[size];
-
-        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
-
-        for (int i = 0; i < size; i++) {
-
-            random[i] = Math.random();
-
-            for (int j = 0; j < i; j++) {
-                builder.set(i, j, random[i] * random[j]);
-                builder.set(j, i, random[j] * random[i]);
-            }
-            builder.set(i, i, random[i] + 1.0);
-        }
-
-        return builder.get();
-    }
-
     private static void check(final String what, final double error, final double scale) throws BenchmarkRequirementsException {
-        if (!(error <= TOLERANCE * scale)) { // Also catches NaN
-            throw new BenchmarkRequirementsException(what + " is wrong! Error " + error + " > " + TOLERANCE * scale + ", the relative error is " + error / scale);
+        if ((error > TOLERANCE * scale)) { // Also catches NaN
+            throw new BenchmarkRequirementsException(
+                    what + " is wrong! Error " + error + " > " + TOLERANCE * scale + ", the relative error is " + error / scale);
         }
     }
 
@@ -266,6 +239,68 @@ public abstract class MatrixBenchmarkOperation {
         return retVal;
     }
 
+    /**
+     * Uniform in [-1, 1)
+     */
+    private static double uniform() {
+        return 2.0 * Math.random() - 1.0;
+    }
+
+    /**
+     * Uniform in [-1, 1), as in the Java Matrix Benchmark.
+     */
+    protected final static Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder tmpSupplier = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
+        for (int j = 0; j < numberOfColumns; j++) {
+            for (int i = 0; i < numberOfRows; i++) {
+                tmpSupplier.set(i, j, MatrixBenchmarkOperation.uniform());
+            }
+        }
+        return tmpSupplier.get();
+    }
+
+    /**
+     * [a][a]<sup>T</sup> + [I], as in the Java Matrix Benchmark, but with [a] uniform in [-1, 1) rather than
+     * [0, 1). All eigenvalues are at least 1.
+     */
+    protected final static Object makeSPD(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
+
+        final double[] random = new double[size];
+
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
+
+        for (int i = 0; i < size; i++) {
+
+            random[i] = MatrixBenchmarkOperation.uniform();
+
+            for (int j = 0; j < i; j++) {
+                builder.set(i, j, random[i] * random[j]);
+                builder.set(j, i, random[j] * random[i]);
+            }
+            builder.set(i, i, random[i] * random[i] + 1.0);
+        }
+
+        return builder.get();
+    }
+
+    /**
+     * Uniform in [-1, 1), mirrored – symmetric but indefinite, as in the Java Matrix Benchmark.
+     */
+    protected final static Object makeSymmetric(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
+
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
+
+        for (int j = 0; j < size; j++) {
+            for (int i = j; i < size; i++) {
+                double value = MatrixBenchmarkOperation.uniform();
+                builder.set(i, j, value);
+                builder.set(j, i, value);
+            }
+        }
+
+        return builder.get();
+    }
+
     protected final static Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
         return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
     }
@@ -285,6 +320,63 @@ public abstract class MatrixBenchmarkOperation {
      * implementation with <code>@TearDown(Level.Iteration)</code>
      */
     public abstract void verify() throws BenchmarkRequirementsException;
+
+    private double[] column(final Object matrix, final int col) {
+        double[] retVal = new double[library.getRowDim(matrix)];
+        for (int i = 0; i < retVal.length; i++) {
+            retVal[i] = library.get(matrix, i, col);
+        }
+        return retVal;
+    }
+
+    /**
+     * [matrix][vector] or, if transpose, [matrix]<sup>T</sup>[vector]
+     */
+    private double[] multiply(final Object matrix, final boolean transpose, final double[] vector) {
+
+        int nbRows = library.getRowDim(matrix);
+        int nbCols = library.getColDim(matrix);
+
+        double[] retVal = new double[transpose ? nbCols : nbRows];
+
+        for (int j = 0; j < nbCols; j++) {
+            for (int i = 0; i < nbRows; i++) {
+                double value = library.get(matrix, i, j);
+                if (transpose) {
+                    retVal[j] += value * vector[i];
+                } else {
+                    retVal[i] += value * vector[j];
+                }
+            }
+        }
+
+        return retVal;
+    }
+
+    /**
+     * Frobenius norm
+     */
+    private double norm(final Object matrix) {
+        double retVal = 0.0;
+        for (int j = 0, nbCols = library.getColDim(matrix); j < nbCols; j++) {
+            for (int i = 0, nbRows = library.getRowDim(matrix); i < nbRows; i++) {
+                double value = library.get(matrix, i, j);
+                retVal += value * value;
+            }
+        }
+        return Math.sqrt(retVal);
+    }
+
+    private void verifyShape(final String what, final Object matrix, final int nbRows, final int nbCols) throws BenchmarkRequirementsException {
+        if (matrix == null) {
+            throw new BenchmarkRequirementsException(what + " is missing!");
+        }
+        int rows = library.getRowDim(matrix);
+        int cols = library.getColDim(matrix);
+        if (rows != nbRows || cols != nbCols) {
+            throw new BenchmarkRequirementsException(what + " is " + rows + "x" + cols + " but should be " + nbRows + "x" + nbCols);
+        }
+    }
 
     /**
      * Element access, for verification, independent of the operations being verified.
@@ -348,6 +440,32 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
+     * Checks that [original][V] = [V][D] and that [V] is orthonormal, [V]<sup>T</sup>[V] = [I], by
+     * multiplying with a random vector.
+     */
+    protected void verifyEigenpairs(final Object original, final Object eigenvectors, final Object eigenvalues) throws BenchmarkRequirementsException {
+
+        int dim = library.getRowDim(original);
+
+        this.verifyShape("Eigenvectors", eigenvectors, dim, dim);
+        this.verifyShape("Eigenvalues", eigenvalues, dim, dim);
+
+        double[] vector = MatrixBenchmarkOperation.random(dim);
+        double[] image = this.multiply(eigenvectors, false, vector);
+
+        double[] left = this.multiply(original, false, image);
+        double[] right = this.multiply(eigenvectors, false, this.multiply(eigenvalues, false, vector));
+
+        double normEigenvectors = this.norm(eigenvectors);
+        MatrixBenchmarkOperation.check("Eigenpairs", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(left, right)),
+                dim * this.norm(original) * normEigenvectors * MatrixBenchmarkOperation.norm(vector));
+
+        double[] identity = this.multiply(eigenvectors, true, image);
+        MatrixBenchmarkOperation.check("Eigenvectors", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(identity, vector)),
+                dim * normEigenvectors * normEigenvectors * MatrixBenchmarkOperation.norm(vector));
+    }
+
+    /**
      * Element by element comparison with the expected values.
      */
     protected void verifyElements(final Object actual, final int nbRows, final int nbCols, final ElementFunction expected)
@@ -359,7 +477,7 @@ public abstract class MatrixBenchmarkOperation {
             for (int i = 0; i < nbRows; i++) {
                 double value = library.get(actual, i, j);
                 double reference = expected.invoke(i, j);
-                if (!(Math.abs(value - reference) <= TOLERANCE * Math.abs(reference))) {
+                if ((Math.abs(value - reference) > TOLERANCE * Math.abs(reference))) {
                     throw new BenchmarkRequirementsException("Result is wrong! Element (" + i + "," + j + ") is " + value + " but should be " + reference);
                 }
             }
@@ -466,63 +584,6 @@ public abstract class MatrixBenchmarkOperation {
 
         for (final Class<?> tmpInterface : clazz.getInterfaces()) {
             this.verifyStateless(tmpInterface);
-        }
-    }
-
-    private double[] column(final Object matrix, final int col) {
-        double[] retVal = new double[library.getRowDim(matrix)];
-        for (int i = 0; i < retVal.length; i++) {
-            retVal[i] = library.get(matrix, i, col);
-        }
-        return retVal;
-    }
-
-    /**
-     * [matrix][vector] or, if transpose, [matrix]<sup>T</sup>[vector]
-     */
-    private double[] multiply(final Object matrix, final boolean transpose, final double[] vector) {
-
-        int nbRows = library.getRowDim(matrix);
-        int nbCols = library.getColDim(matrix);
-
-        double[] retVal = new double[transpose ? nbCols : nbRows];
-
-        for (int j = 0; j < nbCols; j++) {
-            for (int i = 0; i < nbRows; i++) {
-                double value = library.get(matrix, i, j);
-                if (transpose) {
-                    retVal[j] += value * vector[i];
-                } else {
-                    retVal[i] += value * vector[j];
-                }
-            }
-        }
-
-        return retVal;
-    }
-
-    /**
-     * Frobenius norm
-     */
-    private double norm(final Object matrix) {
-        double retVal = 0.0;
-        for (int j = 0, nbCols = library.getColDim(matrix); j < nbCols; j++) {
-            for (int i = 0, nbRows = library.getRowDim(matrix); i < nbRows; i++) {
-                double value = library.get(matrix, i, j);
-                retVal += value * value;
-            }
-        }
-        return Math.sqrt(retVal);
-    }
-
-    private void verifyShape(final String what, final Object matrix, final int nbRows, final int nbCols) throws BenchmarkRequirementsException {
-        if (matrix == null) {
-            throw new BenchmarkRequirementsException(what + " is missing!");
-        }
-        int rows = library.getRowDim(matrix);
-        int cols = library.getColDim(matrix);
-        if (rows != nbRows || cols != nbCols) {
-            throw new BenchmarkRequirementsException(what + " is " + rows + "x" + cols + " but should be " + nbRows + "x" + nbCols);
         }
     }
 

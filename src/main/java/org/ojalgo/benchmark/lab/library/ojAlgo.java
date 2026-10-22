@@ -119,7 +119,7 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     @Override
     public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationEvD(final int dim) {
 
-        MatrixStore<Double>[] ret = this.makeArray(3);
+        MatrixStore<Double>[] ret = this.makeArray(2);
 
         Eigenvalue<Double> evd = Eigenvalue.R064.make(dim, true);
 
@@ -127,7 +127,6 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
             evd.decompose(matrix);
             ret[0] = evd.getV();
             ret[1] = evd.getD();
-            ret[2] = ret[0].transpose();
             return ret;
         };
     }

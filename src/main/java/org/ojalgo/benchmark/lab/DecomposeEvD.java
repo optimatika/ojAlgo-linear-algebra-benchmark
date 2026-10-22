@@ -35,6 +35,10 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
+ * As in the Java Matrix Benchmark: a random symmetric (indefinite) matrix, and the eigenvectors V and
+ * eigenvalues D are extracted. The results below were measured with a symmetric positive definite matrix, and
+ * V<sup>T</sup> also extracted.
+ * <p>
  * MacBook Pro (16-inch, 2019): 2022-01-04
  *
  * <pre>
@@ -224,7 +228,7 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
     @Param({ "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" })
     public int dim;
 
-    @Param({ "EJML", "Hipparchus", "ojAlgo", "ojAlgoNative", "Smile", "SmileNative" })
+    @Param({ "EJML", "Hipparchus", "ojAlgo-JVM", "ojAlgo-Native", "SMILE-JVM", "SMILE-Native" })
     public String lib;
 
     private DecompositionOperation<?, ?> myOperation;
@@ -244,7 +248,7 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        matrix = MatrixBenchmarkOperation.makeSPD(dim, library);
+        matrix = MatrixBenchmarkOperation.makeSymmetric(dim, library);
 
         myOperation = library.getOperationEvD(dim);
     }
@@ -252,9 +256,10 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        if (!library.equals(matrix, dim, result)) {
-            throw new BenchmarkRequirementsException("Not able to reconstruct the matrix!");
+        if (!(result instanceof Object[] factors)) {
+            throw new BenchmarkRequirementsException("Decomposition is missing!");
         }
+        this.verifyEigenpairs(matrix, factors[0], factors[1]);
     }
 
 }
