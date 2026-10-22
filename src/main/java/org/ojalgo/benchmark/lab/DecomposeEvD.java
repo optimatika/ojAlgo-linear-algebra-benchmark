@@ -21,8 +21,6 @@
  */
 package org.ojalgo.benchmark.lab;
 
-import java.util.concurrent.TimeUnit;
-
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -220,7 +218,7 @@ DecomposeEigen.execute   1000     ojAlgo  thrpt    3        25,599 ±        2,0
 public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeEvD.class, TimeUnit.MINUTES);
+        MatrixBenchmarkOperation.run(DecomposeEvD.class, TIME_UNIT);
     }
 
     private DecompositionOperation<?, ?> myOperation;

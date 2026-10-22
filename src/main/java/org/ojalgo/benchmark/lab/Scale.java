@@ -21,8 +21,6 @@
  */
 package org.ojalgo.benchmark.lab;
 
-import java.util.concurrent.TimeUnit;
-
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -68,7 +66,7 @@ Scale.execute   1000     MTJ  thrpt    3        8049.585 ±      357.424  ops/mi
 public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Scale.class, TimeUnit.SECONDS);
+        MatrixBenchmarkOperation.run(Scale.class, TIME_UNIT);
     }
 
     private MutatingBinaryMatrixScalarOperation<?, ?> myOperation;

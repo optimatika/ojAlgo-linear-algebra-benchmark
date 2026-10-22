@@ -21,8 +21,6 @@
 */
 package org.ojalgo.benchmark.lab;
 
-import java.util.concurrent.TimeUnit;
-
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -61,7 +59,7 @@ import org.openjdk.jmh.runner.RunnerException;
 public class MultiplyTransposedRight extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyTransposedRight.class, TimeUnit.MINUTES);
+        MatrixBenchmarkOperation.run(MultiplyTransposedRight.class, TIME_UNIT);
     }
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

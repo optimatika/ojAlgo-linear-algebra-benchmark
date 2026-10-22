@@ -21,8 +21,6 @@
  */
 package org.ojalgo.benchmark.lab;
 
-import java.util.concurrent.TimeUnit;
-
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
@@ -166,7 +164,7 @@ HermitianSolve.execute   1000     MTJ  thrpt    3      2599.969 ±      29.084  
 public class SymmetricSolve extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(SymmetricSolve.class, TimeUnit.MINUTES);
+        MatrixBenchmarkOperation.run(SymmetricSolve.class, TIME_UNIT);
     }
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

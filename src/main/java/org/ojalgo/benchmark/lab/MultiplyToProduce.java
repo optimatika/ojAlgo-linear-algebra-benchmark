@@ -21,8 +21,6 @@
  */
 package org.ojalgo.benchmark.lab;
 
-import java.util.concurrent.TimeUnit;
-
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
@@ -343,7 +341,7 @@ Square3Multiply.execute   2000        MTJ  thrpt    3         317,437 ±        
 public class MultiplyToProduce extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyToProduce.class, TimeUnit.MINUTES);
+        MatrixBenchmarkOperation.run(MultiplyToProduce.class, TIME_UNIT);
     }
 
     private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;

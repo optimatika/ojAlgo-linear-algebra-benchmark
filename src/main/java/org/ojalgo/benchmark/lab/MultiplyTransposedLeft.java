@@ -21,8 +21,6 @@
 */
 package org.ojalgo.benchmark.lab;
 
-import java.util.concurrent.TimeUnit;
-
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
@@ -139,7 +137,7 @@ FillByMultiplyingTransposedLeft.execute   1000     MTJ  thrpt    3        1387.0
 public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class, TimeUnit.MINUTES);
+        MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class, TIME_UNIT);
     }
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;

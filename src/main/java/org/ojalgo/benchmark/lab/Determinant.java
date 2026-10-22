@@ -21,8 +21,6 @@
  */
 package org.ojalgo.benchmark.lab;
 
-import java.util.concurrent.TimeUnit;
-
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
@@ -99,7 +97,7 @@ Determinant.execute   1000  ojAlgo  thrpt    3       220.580 ±      2.028  ops/
 public class Determinant extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Determinant.class, TimeUnit.MINUTES);
+        MatrixBenchmarkOperation.run(Determinant.class, TIME_UNIT);
     }
 
     private PropertyOperation<?, ?> myOperation;

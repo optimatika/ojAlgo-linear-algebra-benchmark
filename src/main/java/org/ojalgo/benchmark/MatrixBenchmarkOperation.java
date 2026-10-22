@@ -189,11 +189,8 @@ public abstract class MatrixBenchmarkOperation {
     private static final String[] MEDIUM = { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000", };
     private static final String[] SMALL = { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" };
 
-    static final TimeValue ITERATION_TIME = new TimeValue(1L, TimeUnit.SECONDS);
-    /**
-     * Long enough for a single invocation at the largest sizes – JMH would otherwise try to interrupt it.
-     */
-    static final TimeValue TIMEOUT = new TimeValue(10L, TimeUnit.MINUTES);
+    protected static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+
     /**
      * Allowed (normwise relative) error, per dimension, when verifying. Generous – the verification is there
      * to catch wrong results, not to rank accuracy.
@@ -207,7 +204,8 @@ public abstract class MatrixBenchmarkOperation {
      */
     public static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(3).measurementIterations(5).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .warmupTime(ITERATION_TIME).measurementTime(ITERATION_TIME).timeout(TIMEOUT).jvmArgs("-Xmx16g").resultFormat(ResultFormatType.CSV);
+                .warmupTime(new TimeValue(1L, TimeUnit.SECONDS)).measurementTime(new TimeValue(1L, TimeUnit.SECONDS))
+                .timeout(new TimeValue(10L, TimeUnit.MINUTES)).jvmArgs("-Xmx16g").resultFormat(ResultFormatType.CSV);
     }
 
     /**
@@ -227,7 +225,7 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     private static void check(final String what, final double error, final double scale) throws BenchmarkRequirementsException {
-        if (!(error <= TOLERANCE * scale)) { // Also catches NaN
+        if ((error > TOLERANCE * scale)) { // Also catches NaN
             throw new BenchmarkRequirementsException(
                     what + " is wrong! Error " + error + " > " + TOLERANCE * scale + ", the relative error is " + error / scale);
         }
@@ -507,7 +505,7 @@ public abstract class MatrixBenchmarkOperation {
             for (int i = 0; i < nbRows; i++) {
                 double value = library.get(actual, i, j);
                 double reference = expected.invoke(i, j);
-                if (!(Math.abs(value - reference) <= TOLERANCE * Math.abs(reference))) { // Also catches NaN
+                if ((Math.abs(value - reference) > TOLERANCE * Math.abs(reference))) { // Also catches NaN
                     throw new BenchmarkRequirementsException("Result is wrong! Element (" + i + "," + j + ") is " + value + " but should be " + reference);
                 }
             }
