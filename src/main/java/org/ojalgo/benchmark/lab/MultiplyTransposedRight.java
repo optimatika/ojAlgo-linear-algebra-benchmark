@@ -32,29 +32,18 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * MacBook Pro (16-inch, 2019)
- *
- * <pre>
- * </pre>
- *
- * <h1>Mac Pro (Early 2009)</h1>
- * <h2>2018-01-23</h2>
- *
- * <pre>
- * </pre>
- *
- * <h2>2018-01-23</h2>
- *
- * <pre>
- * </pre>
- *
- * <h1>MacBook Pro</h1>
- * <h2>2018-02-18</h2>
- *
- * <pre>
- * </pre>
- *
- * @author apete
+ * Matrix multiplication with the right factor transposed: [C] = [A][B]<sup>T</sup>.
+ * <dl>
+ * <dt>Input</dt>
+ * <dd>[A] and [B], dim x dim, random elements, uniform in [-1, 1).</dd>
+ * <dt>Measured</dt>
+ * <dd>Multiplying [A] and the transpose of [B] into the preallocated [C]. How the transpose is handled is up to the library – any explicit transpose is part of what is measured.</dd>
+ * <dt>Required</dt>
+ * <dd>The product, checked by multiplying with a random vector: [A]([B]<sup>T</sup>[x]) = [C][x] ({@code verifyProduct}).</dd>
+ * <dt>Java Matrix Benchmark</dt>
+ * <dd>"Mult c=a*b^T"</dd>
+ * </dl>
+ * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
 public class MultiplyTransposedRight extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 

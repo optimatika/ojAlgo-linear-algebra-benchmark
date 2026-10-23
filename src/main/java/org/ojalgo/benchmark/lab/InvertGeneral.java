@@ -32,17 +32,18 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * MacBook Pro (16-inch, 2019)
- *
- * <pre>
- * </pre>
- *
- * MacBook Pro 2018-04-01
- *
- * <pre>
- * </pre>
- *
- * @author apete
+ * The inverse, [A]<sup>-1</sup>, of a general square matrix.
+ * <dl>
+ * <dt>Input</dt>
+ * <dd>[A], dim x dim, random elements, uniform in [-1, 1).</dd>
+ * <dt>Measured</dt>
+ * <dd>Inverting [A] into the preallocated result – typically an LU decomposition and solving for the identity – from scratch every invocation.</dd>
+ * <dt>Required</dt>
+ * <dd>[A]([A]<sup>-1</sup>[x]) = [x] for a random vector [x], within a tolerance scaled by dim and the norms of [A], [A]<sup>-1</sup> and [x] ({@code verifyInverse}).</dd>
+ * <dt>Java Matrix Benchmark</dt>
+ * <dd>"Invert b=inv(a)"</dd>
+ * </dl>
+ * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
 public class InvertGeneral extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 

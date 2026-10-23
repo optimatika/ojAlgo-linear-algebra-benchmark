@@ -43,6 +43,22 @@ import org.openjdk.jmh.runner.options.TimeValue;
  * "ojAlgo-Native"/"SMILE-Native".
  * <p>
  * The benchmarks (subclasses) inherit the state scope as well as the "dim" and "lib" parameters.
+ * <p>
+ * Rules that apply to all benchmarks:
+ * <ul>
+ * <li>What is measured is a single call of the library's implementation of the operation – the lambda
+ * returned by {@link MatrixBenchmarkLibrary}. Creating decomposition/solver objects and preallocating results
+ * is done in setup, and is not measured.</li>
+ * <li>The inputs are the same for every invocation. An implementation must not modify them – if a library's
+ * algorithm works in place, copying the input is part of what is measured – and must not reuse anything
+ * from a previous invocation.</li>
+ * <li>After each iteration, outside the measured time, the result of the last invocation is verified,
+ * independently of the library. The tolerances are generous – the verification is there to catch wrong
+ * results, not to rank accuracy. A library that produces a wrong result is reported as a failure, and gets
+ * no score.</li>
+ * <li>Any switching between alternative implementations (by matrix size, single or multi-threaded…) must be
+ * done by the library itself – the adapters make one, static, choice per operation.</li>
+ * </ul>
  */
 @Fork(jvmArgsAppend = "--enable-native-access=ALL-UNNAMED")
 @State(Scope.Benchmark)
@@ -188,39 +204,39 @@ public abstract class MatrixBenchmarkOperation {
     public enum Size {
 
         /**
-         * 1–100, all libraries. Everything is fast, ops/ms.
-         */
-        SMALL(new String[] { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" },
-                new String[] { "EJML", "Hipparchus", "ojAlgo-JVM", "SMILE-JVM", "ojAlgo-Native", "SMILE-Native" }, TimeUnit.MILLISECONDS,
-                new TimeValue(1L, TimeUnit.SECONDS), 8, 3, new TimeValue(10L, TimeUnit.SECONDS)),
-
-        /**
-         * 10–1000, all libraries. The slowest operations at 1000 take seconds, ops/s.
-         */
-        MEDIUM(new String[] { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" },
-                new String[] { "EJML", "Hipparchus", "ojAlgo-JVM", "SMILE-JVM", "ojAlgo-Native", "SMILE-Native" }, TimeUnit.SECONDS,
-                new TimeValue(10L, TimeUnit.SECONDS), 4, 3, new TimeValue(100L, TimeUnit.SECONDS)),
-
-        /**
          * 100–10000, the native code libraries with ojAlgo-JVM as a pure Java reference – the other pure Java
          * libraries would take hours per invocation at the largest sizes. A single invocation can take
          * minutes, ops/min, and fewer iterations (each lasts at least one invocation).
          */
         LARGE(new String[] { "100", "128", "200", "256", "500", "512", "1000", "1024", "2000", "2048", "4096", "5000", "8192", "10000" },
                 new String[] { "ojAlgo-JVM", "ojAlgo-Native", "SMILE-Native" }, TimeUnit.MINUTES, new TimeValue(1L, TimeUnit.MINUTES), 2, 3,
-                new TimeValue(10L, TimeUnit.MINUTES));
+                new TimeValue(10L, TimeUnit.MINUTES)),
 
-        private final String[] myDims;
+        /**
+         * 10–1000, all libraries. The slowest operations at 1000 take seconds, ops/s.
+         */
+        MEDIUM(new String[] { "10", "16", "20", "32", "50", "64", "100", "128", "200", "256", "500", "512", "1000" },
+                new String[] { "EJML", "Hipparchus", "ojAlgo-JVM", "SMILE-JVM", "ojAlgo-Native", "SMILE-Native" }, TimeUnit.SECONDS,
+                new TimeValue(1L, TimeUnit.SECONDS), 4, 3, new TimeValue(100L, TimeUnit.SECONDS)),
+
+        /**
+         * 1–100, all libraries. Everything is fast, ops/ms.
+         */
+        SMALL(new String[] { "1", "2", "3", "4", "5", "8", "10", "16", "20", "32", "50", "64", "100" },
+                new String[] { "EJML", "Hipparchus", "ojAlgo-JVM", "SMILE-JVM", "ojAlgo-Native", "SMILE-Native" }, TimeUnit.MILLISECONDS,
+                new TimeValue(1L, TimeUnit.SECONDS), 8, 3, new TimeValue(10L, TimeUnit.SECONDS));
+
+        final String[] dims;
         /**
          * How long each warmup and measurement iteration lasts – at least one invocation, however long that
          * takes.
          */
-        private final TimeValue myIterationTime;
-        private final String[] myLibs;
-        private final int myMeasurementIterations;
-        private final TimeValue myTimeout;
-        private final TimeUnit myTimeUnit;
-        private final int myWarmupIterations;
+        final TimeValue iterationTime;
+        final String[] libs;
+        final int measurementIterations;
+        final TimeValue timeout;
+        final TimeUnit timeUnit;
+        final int warmupIterations;
 
         /**
          * The timeout counts from the start of an iteration, so it must exceed the iteration time plus one
@@ -228,13 +244,13 @@ public abstract class MatrixBenchmarkOperation {
          */
         Size(final String[] dims, final String[] libs, final TimeUnit timeUnit, final TimeValue iterationTime, final int warmupIterations,
                 final int measurementIterations, final TimeValue timeout) {
-            myDims = dims;
-            myLibs = libs;
-            myTimeUnit = timeUnit;
-            myIterationTime = iterationTime;
-            myWarmupIterations = warmupIterations;
-            myMeasurementIterations = measurementIterations;
-            myTimeout = timeout;
+            this.dims = dims;
+            this.libs = libs;
+            this.timeUnit = timeUnit;
+            this.iterationTime = iterationTime;
+            this.warmupIterations = warmupIterations;
+            this.measurementIterations = measurementIterations;
+            this.timeout = timeout;
         }
 
     }
@@ -274,9 +290,9 @@ public abstract class MatrixBenchmarkOperation {
      * named after the class and the size range, e.g. "FillByMultiplying-MEDIUM.csv".
      */
     public static void run(final Class<?> clazz, final Size size) throws RunnerException {
-        ChainedOptionsBuilder options = MatrixBenchmarkOperation.options().param("dim", size.myDims).param("lib", size.myLibs).timeUnit(size.myTimeUnit)
-                .warmupTime(size.myIterationTime).warmupIterations(size.myWarmupIterations).measurementTime(size.myIterationTime)
-                .measurementIterations(size.myMeasurementIterations).timeout(size.myTimeout).result(clazz.getSimpleName() + "-" + size.name() + ".csv");
+        ChainedOptionsBuilder options = MatrixBenchmarkOperation.options().param("dim", size.dims).param("lib", size.libs).timeUnit(size.timeUnit)
+                .warmupTime(size.iterationTime).warmupIterations(size.warmupIterations).measurementTime(size.iterationTime)
+                .measurementIterations(size.measurementIterations).timeout(size.timeout).result(clazz.getSimpleName() + "-" + size.name() + ".csv");
         MatrixBenchmarkOperation.run(options, clazz);
     }
 

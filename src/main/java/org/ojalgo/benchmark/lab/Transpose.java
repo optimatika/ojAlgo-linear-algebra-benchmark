@@ -32,32 +32,18 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * MacBook Pro (16-inch, 2019)
- *
- * <pre>
- * </pre>
- *
- * MacBook Pro 2018-04-01
- *
- * <pre>
-# Run complete. Total time: 00:20:06
-
-Benchmark          (dim)   (lib)   Mode  Cnt          Score          Error    Units
-Transpose.execute     10     ACM  thrpt    3  115920350.392 ±  7994978.542  ops/min
-Transpose.execute     10    EJML  thrpt    3  608689114.495 ± 11885046.082  ops/min
-Transpose.execute     10  ojAlgo  thrpt    3  457287028.536 ± 31025052.989  ops/min
-Transpose.execute     10     MTJ  thrpt    3  237444189.161 ±   945483.879  ops/min
-Transpose.execute    100     ACM  thrpt    3    2923089.174 ±   269666.993  ops/min
-Transpose.execute    100    EJML  thrpt    3   10207132.877 ±  6079726.029  ops/min
-Transpose.execute    100  ojAlgo  thrpt    3    6272691.366 ±   190029.914  ops/min
-Transpose.execute    100     MTJ  thrpt    3    2261270.585 ±   131585.007  ops/min
-Transpose.execute   1000     ACM  thrpt    3       4631.933 ±      141.196  ops/min
-Transpose.execute   1000    EJML  thrpt    3      37644.012 ±    25317.898  ops/min
-Transpose.execute   1000  ojAlgo  thrpt    3      34557.537 ±     3316.361  ops/min
-Transpose.execute   1000     MTJ  thrpt    3      15193.998 ±     1819.946  ops/min
- * </pre>
- *
- * @author apete
+ * Transpose: [B] = [A]<sup>T</sup>.
+ * <dl>
+ * <dt>Input</dt>
+ * <dd>[A], dim x dim (square), random elements, uniform in [-1, 1).</dd>
+ * <dt>Measured</dt>
+ * <dd>Transposing [A] into the preallocated [B].</dd>
+ * <dt>Required</dt>
+ * <dd>Every element of [B] equal to the mirrored element of [A], within a relative 16 ulp ({@code verifyElements}).</dd>
+ * <dt>Java Matrix Benchmark</dt>
+ * <dd>"Transpose Square: b=a^T"</dd>
+ * </dl>
+ * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
 public class Transpose extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 

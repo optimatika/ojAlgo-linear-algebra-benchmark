@@ -32,17 +32,18 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * MacBook Pro (16-inch, 2019)
- *
- * <pre>
- * </pre>
- *
- * MacBook Pro 2018-04-01
- *
- * <pre>
- * </pre>
- *
- * @author apete
+ * The inverse, [A]<sup>-1</sup>, of a symmetric positive definite matrix.
+ * <dl>
+ * <dt>Input</dt>
+ * <dd>[A], dim x dim, symmetric positive definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1) (the Java Matrix Benchmark used [0, 1)).</dd>
+ * <dt>Measured</dt>
+ * <dd>Inverting [A] into the preallocated result, from scratch every invocation. The library may exploit that [A] is symmetric positive definite (Cholesky), but must deliver the full inverse – not only a triangle of it.</dd>
+ * <dt>Required</dt>
+ * <dd>[A]([A]<sup>-1</sup>[x]) = [x] for a random vector [x] ({@code verifyInverse}).</dd>
+ * <dt>Java Matrix Benchmark</dt>
+ * <dd>"Invert Symm b=inv(a)"</dd>
+ * </dl>
+ * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
 public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 

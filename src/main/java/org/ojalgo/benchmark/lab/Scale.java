@@ -32,36 +32,18 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * MacBook Pro (16-inch, 2019)
- *
- * <pre>
- * </pre>
- *
- * <pre>
-Result "org.ojalgo.benchmark.lab.Scale.execute":
-  8049.585 ±(99.9%) 357.424 ops/min [Average]
-  (min, avg, max) = (8033.363, 8049.585, 8071.352), stdev = 19.592
-  CI (99.9%): [7692.161, 8407.010] (assumes normal distribution)
-
-
-# Run complete. Total time: 00:20:09
-
-Benchmark      (dim)   (lib)   Mode  Cnt           Score          Error    Units
-Scale.execute     10     ACM  thrpt    3    60360633.924 ±   403272.522  ops/min
-Scale.execute     10    EJML  thrpt    3  1232129771.831 ± 20741535.237  ops/min
-Scale.execute     10  ojAlgo  thrpt    3  1303631722.966 ± 13381499.544  ops/min
-Scale.execute     10     MTJ  thrpt    3    89332488.188 ±   685338.931  ops/min
-Scale.execute    100     ACM  thrpt    3     1779845.361 ±  1077399.245  ops/min
-Scale.execute    100    EJML  thrpt    3    10915172.743 ±   255068.223  ops/min
-Scale.execute    100  ojAlgo  thrpt    3    10608399.014 ±    81233.538  ops/min
-Scale.execute    100     MTJ  thrpt    3      924558.751 ±     8998.151  ops/min
-Scale.execute   1000     ACM  thrpt    3       10935.585 ±     3746.852  ops/min
-Scale.execute   1000    EJML  thrpt    3       30127.826 ±      341.113  ops/min
-Scale.execute   1000  ojAlgo  thrpt    3       69883.968 ±    28191.452  ops/min
-Scale.execute   1000     MTJ  thrpt    3        8049.585 ±      357.424  ops/min
- * </pre>
- *
- * @author apete
+ * Scaling: [B] = &alpha;[A].
+ * <dl>
+ * <dt>Input</dt>
+ * <dd>[A], dim x dim, random elements, uniform in [-1, 1), and &alpha; uniform in [0, 1) (the Java Matrix Benchmark used 2.5).</dd>
+ * <dt>Measured</dt>
+ * <dd>Scaling [A] into the preallocated [B].</dd>
+ * <dt>Required</dt>
+ * <dd>Every element of [B] equal to &alpha; times the corresponding element of [A], within a relative 16 ulp ({@code verifyElements}).</dd>
+ * <dt>Java Matrix Benchmark</dt>
+ * <dd>"Scale b=alpha*a"</dd>
+ * </dl>
+ * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
 public class Scale extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
 
