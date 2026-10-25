@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -32,35 +32,35 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Matrix addition: [C] = [A] + [B].
+ * Transpose: [B] = [A]<sup>T</sup>.
  * <dl>
  * <dt>Input</dt>
- * <dd>[A] and [B], dim x dim, random elements, uniform in [-1, 1).</dd>
+ * <dd>[A], dim x dim (square), random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Adding [A] and [B] into the preallocated [C].</dd>
+ * <dd>Transposing [A] into the preallocated [B].</dd>
  * <dt>Required</dt>
- * <dd>Every element of [C] equal to the sum of the corresponding elements of [A] and [B], within a relative 16 ulp ({@code verifyElements}).</dd>
+ * <dd>Every element of [B] equal to the mirrored element of [A], within a relative 16 ulp
+ * ({@code verifyElements}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"Add c=a+b"</dd>
+ * <dd>"Transpose Square: b=a^T"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class Add extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class Transpose extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Add.class, SIZE);
+        MatrixBenchmarkOperation.run(Transpose.class, SIZE);
     }
 
-    private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
+    private MutatingUnaryMatrixOperation<?, ?> myOperation;
 
-    Object left;
+    Object original;
     Object result;
-    Object right;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(left, right, result);
+        return myOperation.execute(original, result);
     }
 
     @Override
@@ -69,17 +69,16 @@ public class Add extends MatrixBenchmarkOperation implements BenchmarkSuite.Java
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationAdd();
+        myOperation = library.getOperationTranspose();
 
-        left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
-        right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
         result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifyElements(result, dim, dim, (i, j) -> this.doubleValue(left, i, j) + this.doubleValue(right, i, j));
+        this.verifyElements(result, dim, dim, (i, j) -> this.doubleValue(original, j, i));
     }
 
 }

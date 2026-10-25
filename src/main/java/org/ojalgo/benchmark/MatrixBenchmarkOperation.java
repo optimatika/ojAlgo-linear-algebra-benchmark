@@ -21,7 +21,13 @@
  */
 package org.ojalgo.benchmark;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -30,6 +36,7 @@ import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -260,6 +267,12 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
+     * The directory where the result files are written – for benchmarks run individually, and the default for
+     * suites (a suite can redeclare {@link BenchmarkSuite#RESULTS}).
+     */
+    public static final Path RESULTS = Path.of("results");
+
+    /**
      * The size range the benchmarks' main methods run.
      */
     protected static final Size SIZE = Size.MEDIUM;
@@ -281,23 +294,62 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
+     * The name of the CSV file with the results of running the benchmark class for the size range, e.g.
+     * "FillByMultiplying-MEDIUM.csv".
+     */
+    public static String resultFileName(final Class<?> clazz, final Size size) {
+        return clazz.getSimpleName() + "-" + size.name() + ".csv";
+    }
+
+    /**
      * Runs only the given benchmark class – the include pattern is its full name, so that e.g. Transpose
      * doesn't also run MultiplyTransposedLeft/Right.
      */
-    public static void run(final ChainedOptionsBuilder options, final Class<?> clazz) throws RunnerException {
-        new Runner(options.include(Pattern.quote(clazz.getName() + ".")).build()).run();
+    public static Collection<RunResult> run(final ChainedOptionsBuilder options, final Class<?> clazz) throws RunnerException {
+        return new Runner(options.include(Pattern.quote(clazz.getName() + ".")).build()).run();
     }
 
     /**
      * Runs the benchmark class with {@link #options()}, configured for the given size range – its sizes,
      * libraries, time unit, forks, iteration time, iterations and timeout. The results are written to a CSV
-     * file named after the class and the size range, e.g. "FillByMultiplying-MEDIUM.csv".
+     * file in {@link #RESULTS}, named after the class and the size range, e.g.
+     * "results/FillByMultiplying-MEDIUM.csv".
      */
     public static void run(final Class<?> clazz, final Size size) throws RunnerException {
-        ChainedOptionsBuilder options = MatrixBenchmarkOperation.options().param("dim", size.dims).param("lib", size.libs).timeUnit(size.timeUnit)
-                .forks(size.forks).warmupTime(size.iterationTime).warmupIterations(size.warmupIterations).measurementTime(size.iterationTime)
-                .measurementIterations(size.measurementIterations).timeout(size.timeout).result(clazz.getSimpleName() + "-" + size.name() + ".csv");
-        MatrixBenchmarkOperation.run(options, clazz);
+        MatrixBenchmarkOperation.run(clazz, size, RESULTS);
+    }
+
+    /**
+     * As {@link #run(Class, Size)}, but writes the result file to the given directory. JMH creates its result
+     * file as soon as a run starts, so it's written as "….csv.part" and renamed when the run is complete – an
+     * interrupted run never leaves a result file that looks complete.
+     *
+     * @return true if the run produced results, and the result file was saved
+     */
+    public static boolean run(final Class<?> clazz, final Size size, final Path directory) throws RunnerException {
+
+        Path file = directory.resolve(MatrixBenchmarkOperation.resultFileName(clazz, size));
+        Path temporary = file.resolveSibling(file.getFileName() + ".part");
+
+        try {
+
+            Files.createDirectories(directory.toAbsolutePath());
+
+            ChainedOptionsBuilder options = MatrixBenchmarkOperation.options().param("dim", size.dims).param("lib", size.libs).timeUnit(size.timeUnit)
+                    .forks(size.forks).warmupTime(size.iterationTime).warmupIterations(size.warmupIterations).measurementTime(size.iterationTime)
+                    .measurementIterations(size.measurementIterations).timeout(size.timeout).result(temporary.toString());
+
+            Collection<RunResult> results = MatrixBenchmarkOperation.run(options, clazz);
+
+            if (results.isEmpty() || !Files.exists(temporary)) {
+                return false;
+            }
+            Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            return true;
+
+        } catch (IOException cause) {
+            throw new UncheckedIOException(cause);
+        }
     }
 
     private static void check(final String what, final double error, final double scale) throws BenchmarkRequirementsException {

@@ -19,12 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.DecompositionSuite;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -32,40 +33,36 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Solving an overdetermined system of linear equations in the least squares sense: minimise |[A][x] - [b]|.
+ * Eigenvalue decomposition of a symmetric matrix: [A] = [V][D][V]<sup>T</sup>.
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], (RATIO*dim) x dim (RATIO = 3, as in the Java Matrix Benchmark), and [b], (RATIO*dim) x 1, random elements, uniform in [-1, 1). As [b] is random there is no exact solution – a true least squares problem (the Java Matrix Benchmark used [b] = [A][x]).</dd>
+ * <dd>[A], dim x dim, symmetric but indefinite, random elements uniform in [-1, 1) mirrored.</dd>
  * <dt>Measured</dt>
- * <dd>Solving for [x] – typically a QR decomposition and a solve – from scratch every invocation. Nothing may be reused from a previous invocation.</dd>
+ * <dd>Decomposing [A] and extracting the eigenvectors [V] and the (diagonal) eigenvalues [D], both dim x dim,
+ * from scratch every invocation. The library may exploit that [A] is symmetric.</dd>
  * <dt>Required</dt>
- * <dd>The residual orthogonal to the columns of [A]: |[A]<sup>T</sup>([A][x] - [b])| within a tolerance scaled by RATIO*dim and the norms ({@code verifySolution}).</dd>
+ * <dd>[A][V] = [V][D] and [V]<sup>T</sup>[V] = [I], both checked by multiplying with a random vector
+ * ({@code verifyEigenpairs}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"Solve m>n"</dd>
+ * <dd>"Eigen for Symm Matrices"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class LeastSquaresSolver extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
-
-    /**
-     * The number of equations per variable – the body is (RATIO*dim)x(dim). The Java Matrix Benchmark uses 3.
-     */
-    private static final int RATIO = 3;
+public class DecomposeEvD extends MatrixBenchmarkOperation implements JavaMatrixBenchmark, DecompositionSuite {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(LeastSquaresSolver.class, SIZE);
+        MatrixBenchmarkOperation.run(DecomposeEvD.class, SIZE);
     }
 
-    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
+    private DecompositionOperation<?, ?> myOperation;
 
-    Object body;
+    Object matrix;
     Object result;
-    Object rhs;
 
     @Override
     @Benchmark
     public Object execute() {
-        return result = myOperation.execute(body, rhs);
+        return result = myOperation.execute(matrix);
     }
 
     @Override
@@ -74,16 +71,18 @@ public class LeastSquaresSolver extends MatrixBenchmarkOperation implements Benc
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationEquationSystemSolver(RATIO * dim, dim, 1, false);
+        matrix = MatrixBenchmarkOperation.makeSymmetric(dim, library);
 
-        body = MatrixBenchmarkOperation.makeRandom(RATIO * dim, dim, library);
-        rhs = MatrixBenchmarkOperation.makeRandom(RATIO * dim, 1, library);
+        myOperation = library.getOperationEvD(dim);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifySolution(body, rhs, result);
+        if (!(result instanceof Object[] factors)) {
+            throw new BenchmarkRequirementsException("Decomposition is missing!");
+        }
+        this.verifyEigenpairs(matrix, factors[0], factors[1]);
     }
 
 }

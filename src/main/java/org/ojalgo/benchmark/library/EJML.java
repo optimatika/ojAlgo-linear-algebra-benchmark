@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab.library;
+package org.ojalgo.benchmark.library;
 
 import org.ejml.LinearSolverSafe;
 import org.ejml.data.DMatrixRMaj;

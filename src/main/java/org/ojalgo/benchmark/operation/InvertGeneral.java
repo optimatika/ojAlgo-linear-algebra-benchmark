@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -32,35 +32,36 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Solving a square system of linear equations: [A][x] = [b].
+ * The inverse, [A]<sup>-1</sup>, of a general square matrix.
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, and [b], dim x 1, random elements, uniform in [-1, 1).</dd>
+ * <dd>[A], dim x dim, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Solving for [x] – typically an LU decomposition and a solve – from scratch every invocation. Nothing (no decomposition) may be reused from a previous invocation.</dd>
+ * <dd>Inverting [A] into the preallocated result – typically an LU decomposition and solving for the identity
+ * – from scratch every invocation.</dd>
  * <dt>Required</dt>
- * <dd>A small residual: |[A][x] - [b]| within a tolerance scaled by dim and |[A]||[x]| + |[b]| ({@code verifySolution}).</dd>
+ * <dd>[A]([A]<sup>-1</sup>[x]) = [x] for a random vector [x], within a tolerance scaled by dim and the norms
+ * of [A], [A]<sup>-1</sup> and [x] ({@code verifyInverse}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"Solve m=n"</dd>
+ * <dd>"Invert b=inv(a)"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class InvertGeneral extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(GeneralSolve.class, SIZE);
+        MatrixBenchmarkOperation.run(InvertGeneral.class, SIZE);
     }
 
-    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
+    private MutatingUnaryMatrixOperation<?, ?> myOperation;
 
-    Object body;
+    Object original;
     Object result;
-    Object rhs;
 
     @Override
     @Benchmark
     public Object execute() {
-        return result = myOperation.execute(body, rhs);
+        return myOperation.execute(original, result);
     }
 
     @Override
@@ -69,16 +70,16 @@ public class GeneralSolve extends MatrixBenchmarkOperation implements BenchmarkS
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationEquationSystemSolver(dim, dim, 1, false);
+        myOperation = library.getOperationInvert(dim, false);
 
-        body = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
-        rhs = MatrixBenchmarkOperation.makeRandom(dim, 1, library);
+        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifySolution(body, rhs, result);
+        this.verifyInverse(original, result);
     }
 
 }

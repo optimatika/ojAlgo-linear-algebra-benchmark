@@ -19,12 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -37,15 +37,17 @@ import org.openjdk.jmh.runner.RunnerException;
  * <dt>Input</dt>
  * <dd>[A] and [B], dim x dim, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Multiplying [A] and [B] into the preallocated [C] – allocating the product is not part of it (compare MultiplyToProduce).</dd>
+ * <dd>Multiplying [A] and [B] into the preallocated [C] – allocating the product is not part of it (compare
+ * MultiplyToProduce).</dd>
  * <dt>Required</dt>
- * <dd>The product, checked by multiplying with a random vector: [A]([B][x]) = [C][x], within a tolerance scaled by dim and the norms of [A], [B] and [x] ({@code verifyProduct}).</dd>
+ * <dd>The product, checked by multiplying with a random vector: [A]([B][x]) = [C][x], within a tolerance
+ * scaled by dim and the norms of [A], [B] and [x] ({@code verifyProduct}).</dd>
  * <dt>Java Matrix Benchmark</dt>
  * <dd>"Mult c=a*b"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class FillByMultiplying extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class FillByMultiplying extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(FillByMultiplying.class, SIZE);

@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -32,34 +32,44 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Singular value decomposition: [A] = [U][S][V]<sup>T</sup>.
+ * Solving an overdetermined system of linear equations in the least squares sense: minimise |[A][x] - [b]|.
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, random elements, uniform in [-1, 1).</dd>
+ * <dd>[A], (RATIO*dim) x dim (RATIO = 3, as in the Java Matrix Benchmark), and [b], (RATIO*dim) x 1, random
+ * elements, uniform in [-1, 1). As [b] is random there is no exact solution – a true least squares problem
+ * (the Java Matrix Benchmark used [b] = [A][x]).</dd>
  * <dt>Measured</dt>
- * <dd>Decomposing [A] and extracting [U], [S] (diagonal) and [V]<sup>T</sup>, all dim x dim, from scratch every invocation.</dd>
+ * <dd>Solving for [x] – typically a QR decomposition and a solve – from scratch every invocation. Nothing may
+ * be reused from a previous invocation.</dd>
  * <dt>Required</dt>
- * <dd>The factors must reconstruct [A]: |[A] - [U][S][V]<sup>T</sup>| within a tolerance scaled by dim and |[A]| ({@code MatrixBenchmarkLibrary.equals}).</dd>
+ * <dd>The residual orthogonal to the columns of [A]: |[A]<sup>T</sup>([A][x] - [b])| within a tolerance
+ * scaled by RATIO*dim and the norms ({@code verifySolution}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"SVD"</dd>
+ * <dd>"Solve m>n"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class LeastSquaresSolver extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
+
+    /**
+     * The number of equations per variable – the body is (RATIO*dim)x(dim). The Java Matrix Benchmark uses 3.
+     */
+    private static final int RATIO = 3;
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeSVD.class, SIZE);
+        MatrixBenchmarkOperation.run(LeastSquaresSolver.class, SIZE);
     }
 
-    private DecompositionOperation<?, ?> myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
-    Object matrix;
+    Object body;
     Object result;
+    Object rhs;
 
     @Override
     @Benchmark
     public Object execute() {
-        return result = myOperation.execute(matrix);
+        return result = myOperation.execute(body, rhs);
     }
 
     @Override
@@ -68,17 +78,16 @@ public class DecomposeSVD extends MatrixBenchmarkOperation implements BenchmarkS
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        matrix = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        myOperation = library.getOperationEquationSystemSolver(RATIO * dim, dim, 1, false);
 
-        myOperation = library.getOperationSVD(dim);
+        body = MatrixBenchmarkOperation.makeRandom(RATIO * dim, dim, library);
+        rhs = MatrixBenchmarkOperation.makeRandom(RATIO * dim, 1, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        if (!library.equals(matrix, dim, result)) {
-            throw new BenchmarkRequirementsException("Not able to reconstruct the matrix!");
-        }
+        this.verifySolution(body, rhs, result);
     }
 
 }

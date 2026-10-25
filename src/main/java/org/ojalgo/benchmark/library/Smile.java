@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab.library;
+package org.ojalgo.benchmark.library;
 
 import static smile.linalg.Transpose.NO_TRANSPOSE;
 import static smile.linalg.Transpose.TRANSPOSE;
@@ -146,8 +146,7 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
 
     @Override
     public MutatingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
-        return (left, right, product) -> DenseMatrix.mm(1.0, transpL ? TRANSPOSE : NO_TRANSPOSE, left, transpR ? TRANSPOSE : NO_TRANSPOSE, right, 0.0,
-                product);
+        return (left, right, product) -> DenseMatrix.mm(1.0, transpL ? TRANSPOSE : NO_TRANSPOSE, left, transpR ? TRANSPOSE : NO_TRANSPOSE, right, 0.0, product);
     }
 
     @Override

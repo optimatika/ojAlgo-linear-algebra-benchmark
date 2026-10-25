@@ -19,10 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -32,34 +31,37 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * The inverse, [A]<sup>-1</sup>, of a symmetric positive definite matrix.
+ * Matrix multiplication returning a new matrix: [C] = [A][B].
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, symmetric positive definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1) (the Java Matrix Benchmark used [0, 1)).</dd>
+ * <dd>[A] and [B], dim x dim, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Inverting [A] into the preallocated result, from scratch every invocation. The library may exploit that [A] is symmetric positive definite (Cholesky), but must deliver the full inverse – not only a triangle of it.</dd>
+ * <dd>Multiplying [A] and [B], including creating the matrix that holds the product (compare
+ * FillByMultiplying, which multiplies into a preallocated matrix).</dd>
  * <dt>Required</dt>
- * <dd>[A]([A]<sup>-1</sup>[x]) = [x] for a random vector [x] ({@code verifyInverse}).</dd>
+ * <dd>The product, checked by multiplying with a random vector: [A]([B][x]) = [C][x]
+ * ({@code verifyProduct}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"Invert Symm b=inv(a)"</dd>
+ * <dd>Not part of it.</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class MultiplyToProduce extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(InvertSPD.class, SIZE);
+        MatrixBenchmarkOperation.run(MultiplyToProduce.class, SIZE);
     }
 
-    private MutatingUnaryMatrixOperation<?, ?> myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
-    Object original;
-    Object result;
+    Object left;
+    Object product;
+    Object right;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(original, result);
+        return product = myOperation.execute(left, right);
     }
 
     @Override
@@ -68,16 +70,16 @@ public class InvertSPD extends MatrixBenchmarkOperation implements BenchmarkSuit
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationInvert(dim, true);
+        myOperation = library.getOperationMultiplyToProduce();
 
-        original = MatrixBenchmarkOperation.makeSPD(dim, library);
-        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
+        left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifyInverse(original, result);
+        this.verifyProduct(left, false, right, false, product);
     }
 
 }

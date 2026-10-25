@@ -19,10 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -32,34 +31,38 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * The determinant, det([A]), of a general square matrix.
+ * Solving a symmetric positive definite system of linear equations: [A][x] = [b].
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, random elements, uniform in [-1, 1).</dd>
+ * <dd>[A], dim x dim, symmetric positive definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1), and
+ * [b], dim x 1, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Calculating the determinant – typically an LU decomposition – from scratch every invocation.</dd>
+ * <dd>Solving for [x], from scratch every invocation. The library may exploit that [A] is symmetric positive
+ * definite (Cholesky). Nothing may be reused from a previous invocation.</dd>
  * <dt>Required</dt>
- * <dd>The same value as a plain Java LU decomposition with partial pivoting: the same sign, and the logarithms of the absolute values within a tolerance scaled by dim<sup>2</sup>. A determinant that overflows must be infinite, with the correct sign ({@code verifyDeterminant}).</dd>
+ * <dd>A small residual: |[A][x] - [b]| within a tolerance scaled by dim and |[A]||[x]| + |[b]|
+ * ({@code verifySolution}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"Determinant"</dd>
+ * <dd>Not part of it.</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class Determinant extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class SymmetricSolve extends MatrixBenchmarkOperation {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Determinant.class, SIZE);
+        MatrixBenchmarkOperation.run(SymmetricSolve.class, SIZE);
     }
 
-    private PropertyOperation<?, ?> myOperation;
+    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
-    Object original;
-    double result;
+    Object body;
+    Object result;
+    Object rhs;
 
     @Override
     @Benchmark
     public Object execute() {
-        return result = myOperation.execute(original);
+        return result = myOperation.execute(body, rhs);
     }
 
     @Override
@@ -68,16 +71,16 @@ public class Determinant extends MatrixBenchmarkOperation implements BenchmarkSu
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationDeterminant(dim);
+        myOperation = library.getOperationEquationSystemSolver(dim, dim, 1, true);
 
-        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
-        result = 0.0D;
+        body = MatrixBenchmarkOperation.makeSPD(dim, library);
+        rhs = MatrixBenchmarkOperation.makeRandom(dim, 1, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifyDeterminant(original, result);
+        this.verifySolution(body, rhs, result);
     }
 
 }

@@ -32,12 +32,12 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperatio
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
-import org.ojalgo.benchmark.lab.library.EJML;
-import org.ojalgo.benchmark.lab.library.Hipparchus;
-import org.ojalgo.benchmark.lab.library.Smile;
-import org.ojalgo.benchmark.lab.library.SmileNative;
-import org.ojalgo.benchmark.lab.library.ojAlgo;
-import org.ojalgo.benchmark.lab.library.ojAlgoNative;
+import org.ojalgo.benchmark.library.EJML;
+import org.ojalgo.benchmark.library.Hipparchus;
+import org.ojalgo.benchmark.library.Smile;
+import org.ojalgo.benchmark.library.SmileNative;
+import org.ojalgo.benchmark.library.ojAlgo;
+import org.ojalgo.benchmark.library.ojAlgoNative;
 import org.ojalgo.netio.BasicLogger;
 
 /**

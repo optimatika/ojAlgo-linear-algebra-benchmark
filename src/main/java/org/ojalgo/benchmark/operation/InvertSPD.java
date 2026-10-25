@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -32,34 +32,37 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Eigenvalue decomposition of a symmetric matrix: [A] = [V][D][V]<sup>T</sup>.
+ * The inverse, [A]<sup>-1</sup>, of a symmetric positive definite matrix.
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, symmetric but indefinite, random elements uniform in [-1, 1) mirrored.</dd>
+ * <dd>[A], dim x dim, symmetric positive definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1) (the
+ * Java Matrix Benchmark used [0, 1)).</dd>
  * <dt>Measured</dt>
- * <dd>Decomposing [A] and extracting the eigenvectors [V] and the (diagonal) eigenvalues [D], both dim x dim, from scratch every invocation. The library may exploit that [A] is symmetric.</dd>
+ * <dd>Inverting [A] into the preallocated result, from scratch every invocation. The library may exploit that
+ * [A] is symmetric positive definite (Cholesky), but must deliver the full inverse – not only a triangle of
+ * it.</dd>
  * <dt>Required</dt>
- * <dd>[A][V] = [V][D] and [V]<sup>T</sup>[V] = [I], both checked by multiplying with a random vector ({@code verifyEigenpairs}).</dd>
+ * <dd>[A]([A]<sup>-1</sup>[x]) = [x] for a random vector [x] ({@code verifyInverse}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"Eigen for Symm Matrices"</dd>
+ * <dd>"Invert Symm b=inv(a)"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class InvertSPD extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(DecomposeEvD.class, SIZE);
+        MatrixBenchmarkOperation.run(InvertSPD.class, SIZE);
     }
 
-    private DecompositionOperation<?, ?> myOperation;
+    private MutatingUnaryMatrixOperation<?, ?> myOperation;
 
-    Object matrix;
+    Object original;
     Object result;
 
     @Override
     @Benchmark
     public Object execute() {
-        return result = myOperation.execute(matrix);
+        return myOperation.execute(original, result);
     }
 
     @Override
@@ -68,18 +71,16 @@ public class DecomposeEvD extends MatrixBenchmarkOperation implements BenchmarkS
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        matrix = MatrixBenchmarkOperation.makeSymmetric(dim, library);
+        myOperation = library.getOperationInvert(dim, true);
 
-        myOperation = library.getOperationEvD(dim);
+        original = MatrixBenchmarkOperation.makeSPD(dim, library);
+        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        if (!(result instanceof Object[] factors)) {
-            throw new BenchmarkRequirementsException("Decomposition is missing!");
-        }
-        this.verifyEigenpairs(matrix, factors[0], factors[1]);
+        this.verifyInverse(original, result);
     }
 
 }

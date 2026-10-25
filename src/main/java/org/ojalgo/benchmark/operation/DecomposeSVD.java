@@ -19,12 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
-import org.ojalgo.benchmark.BenchmarkSuite;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.DecompositionSuite;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -32,34 +33,36 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * The inverse, [A]<sup>-1</sup>, of a general square matrix.
+ * Singular value decomposition: [A] = [U][S][V]<sup>T</sup>.
  * <dl>
  * <dt>Input</dt>
  * <dd>[A], dim x dim, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Inverting [A] into the preallocated result – typically an LU decomposition and solving for the identity – from scratch every invocation.</dd>
+ * <dd>Decomposing [A] and extracting [U], [S] (diagonal) and [V]<sup>T</sup>, all dim x dim, from scratch
+ * every invocation.</dd>
  * <dt>Required</dt>
- * <dd>[A]([A]<sup>-1</sup>[x]) = [x] for a random vector [x], within a tolerance scaled by dim and the norms of [A], [A]<sup>-1</sup> and [x] ({@code verifyInverse}).</dd>
+ * <dd>The factors must reconstruct [A]: |[A] - [U][S][V]<sup>T</sup>| within a tolerance scaled by dim and
+ * |[A]| ({@code MatrixBenchmarkLibrary.equals}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>"Invert b=inv(a)"</dd>
+ * <dd>"SVD"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class InvertGeneral extends MatrixBenchmarkOperation implements BenchmarkSuite.JavaMatrixBenchmark {
+public class DecomposeSVD extends MatrixBenchmarkOperation implements JavaMatrixBenchmark, DecompositionSuite {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(InvertGeneral.class, SIZE);
+        MatrixBenchmarkOperation.run(DecomposeSVD.class, SIZE);
     }
 
-    private MutatingUnaryMatrixOperation<?, ?> myOperation;
+    private DecompositionOperation<?, ?> myOperation;
 
-    Object original;
+    Object matrix;
     Object result;
 
     @Override
     @Benchmark
     public Object execute() {
-        return myOperation.execute(original, result);
+        return result = myOperation.execute(matrix);
     }
 
     @Override
@@ -68,16 +71,17 @@ public class InvertGeneral extends MatrixBenchmarkOperation implements Benchmark
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationInvert(dim, false);
+        matrix = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
 
-        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
-        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
+        myOperation = library.getOperationSVD(dim);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifyInverse(original, result);
+        if (!library.equals(matrix, dim, result)) {
+            throw new BenchmarkRequirementsException("Not able to reconstruct the matrix!");
+        }
     }
 
 }

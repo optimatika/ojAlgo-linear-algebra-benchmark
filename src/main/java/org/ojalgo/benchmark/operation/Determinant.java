@@ -19,11 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -31,35 +32,36 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Matrix multiplication returning a new matrix: [C] = [A][B].
+ * The determinant, det([A]), of a general square matrix.
  * <dl>
  * <dt>Input</dt>
- * <dd>[A] and [B], dim x dim, random elements, uniform in [-1, 1).</dd>
+ * <dd>[A], dim x dim, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Multiplying [A] and [B], including creating the matrix that holds the product (compare FillByMultiplying, which multiplies into a preallocated matrix).</dd>
+ * <dd>Calculating the determinant – typically an LU decomposition – from scratch every invocation.</dd>
  * <dt>Required</dt>
- * <dd>The product, checked by multiplying with a random vector: [A]([B][x]) = [C][x] ({@code verifyProduct}).</dd>
+ * <dd>The same value as a plain Java LU decomposition with partial pivoting: the same sign, and the
+ * logarithms of the absolute values within a tolerance scaled by dim<sup>2</sup>. A determinant that
+ * overflows must be infinite, with the correct sign ({@code verifyDeterminant}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>Not part of it.</dd>
+ * <dd>"Determinant"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class MultiplyToProduce extends MatrixBenchmarkOperation {
+public class Determinant extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyToProduce.class, SIZE);
+        MatrixBenchmarkOperation.run(Determinant.class, SIZE);
     }
 
-    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
+    private PropertyOperation<?, ?> myOperation;
 
-    Object left;
-    Object product;
-    Object right;
+    Object original;
+    double result;
 
     @Override
     @Benchmark
     public Object execute() {
-        return product = myOperation.execute(left, right);
+        return result = myOperation.execute(original);
     }
 
     @Override
@@ -68,16 +70,16 @@ public class MultiplyToProduce extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationMultiplyToProduce();
+        myOperation = library.getOperationDeterminant(dim);
 
-        left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
-        right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        result = 0.0D;
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifyProduct(left, false, right, false, product);
+        this.verifyDeterminant(original, result);
     }
 
 }

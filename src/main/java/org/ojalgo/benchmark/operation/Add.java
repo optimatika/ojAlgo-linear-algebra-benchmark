@@ -19,11 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -31,35 +32,36 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Solving a symmetric positive definite system of linear equations: [A][x] = [b].
+ * Matrix addition: [C] = [A] + [B].
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, symmetric positive definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1), and [b], dim x 1, random elements, uniform in [-1, 1).</dd>
+ * <dd>[A] and [B], dim x dim, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Solving for [x], from scratch every invocation. The library may exploit that [A] is symmetric positive definite (Cholesky). Nothing may be reused from a previous invocation.</dd>
+ * <dd>Adding [A] and [B] into the preallocated [C].</dd>
  * <dt>Required</dt>
- * <dd>A small residual: |[A][x] - [b]| within a tolerance scaled by dim and |[A]||[x]| + |[b]| ({@code verifySolution}).</dd>
+ * <dd>Every element of [C] equal to the sum of the corresponding elements of [A] and [B], within a relative
+ * 16 ulp ({@code verifyElements}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>Not part of it.</dd>
+ * <dd>"Add c=a+b"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class SymmetricSolve extends MatrixBenchmarkOperation {
+public class Add extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(SymmetricSolve.class, SIZE);
+        MatrixBenchmarkOperation.run(Add.class, SIZE);
     }
 
-    private ProducingBinaryMatrixMatrixOperation<?, ?> myOperation;
+    private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
 
-    Object body;
+    Object left;
     Object result;
-    Object rhs;
+    Object right;
 
     @Override
     @Benchmark
     public Object execute() {
-        return result = myOperation.execute(body, rhs);
+        return myOperation.execute(left, right, result);
     }
 
     @Override
@@ -68,16 +70,17 @@ public class SymmetricSolve extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationEquationSystemSolver(dim, dim, 1, true);
+        myOperation = library.getOperationAdd();
 
-        body = MatrixBenchmarkOperation.makeSPD(dim, library);
-        rhs = MatrixBenchmarkOperation.makeRandom(dim, 1, library);
+        left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifySolution(body, rhs, result);
+        this.verifyElements(result, dim, dim, (i, j) -> this.doubleValue(left, i, j) + this.doubleValue(right, i, j));
     }
 
 }

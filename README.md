@@ -35,13 +35,23 @@ Each benchmark class has a `main` method that runs it with the settings defined 
 
 An iteration lasts at least one invocation, however long that takes. The timeout counts from the start of an iteration, so it must exceed the iteration time plus one invocation.
 
-The `main` methods run `MatrixBenchmarkOperation.SIZE` (`MEDIUM`) – change it to run another range. The results are written to a CSV file named after the benchmark and the size range, e.g. `FillByMultiplying-MEDIUM.csv`. This is the normal way to run a benchmark:
+The `main` methods run `MatrixBenchmarkOperation.SIZE` (`MEDIUM`) – change it to run another range. The results are written to a CSV file in the `results` directory (`MatrixBenchmarkOperation.RESULTS`), named after the benchmark and the size range, e.g. `results/FillByMultiplying-MEDIUM.csv`. This is the normal way to run a benchmark:
 
 ```sh
 java -cp target/ojlab.jar org.ojalgo.benchmark.lab.FillByMultiplying
 ```
 
 Replace `FillByMultiplying` with whichever benchmark you want to run. The sizes and libraries come from the `Size` – edit its constants to run a subset.
+
+### Suites
+
+A suite is a sub-interface of `BenchmarkSuite`, and a benchmark belongs to the suites whose interfaces it implements – `BenchmarkSuite.JavaMatrixBenchmark` is the 12 benchmarks corresponding to the Java Matrix Benchmark. Running a suite runs each of its benchmarks for each of its size ranges (`SIZES`, by default `SMALL`, `MEDIUM` and `LARGE`, in that order), one result file per combination, e.g. `FillByMultiplying-MEDIUM.csv`, in the suite's directory (`RESULTS`, by default the same `results` directory as for benchmarks run individually, shared by all suites). A suite can redeclare `RESULTS` and `SIZES` to get its own.
+
+Only the missing result files are computed. If you terminate a run early, the next run continues with the files that are still missing. To recompute some results, delete those files. Each file is written as `….csv.part` and renamed when its run is complete – also when a benchmark is run individually – so an interrupted run never leaves a file that counts as done:
+
+```sh
+java -cp target/ojlab.jar org.ojalgo.benchmark.BenchmarkSuite\$JavaMatrixBenchmark
+```
 
 The jar's main class is JMH's own command line runner. Use it to list the available benchmarks, or for ad hoc runs:
 

@@ -19,11 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -31,34 +32,37 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * The (Moore–Penrose) pseudoinverse, [A]<sup>+</sup>.
+ * Scaling: [B] = &alpha;[A].
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, symmetric positive definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1). It has full rank, so [A]<sup>+</sup> = [A]<sup>-1</sup>, but it is calculated as a pseudoinverse – typically from an SVD.</dd>
+ * <dd>[A], dim x dim, random elements, uniform in [-1, 1), and &alpha; uniform in [0, 1) (the Java Matrix
+ * Benchmark used 2.5).</dd>
  * <dt>Measured</dt>
- * <dd>Calculating [A]<sup>+</sup>, from scratch every invocation.</dd>
+ * <dd>Scaling [A] into the preallocated [B].</dd>
  * <dt>Required</dt>
- * <dd>[A][A]<sup>+</sup>[A] = [A], checked by multiplying with a random vector ({@code verifyPseudoinverse}).</dd>
+ * <dd>Every element of [B] equal to &alpha; times the corresponding element of [A], within a relative 16 ulp
+ * ({@code verifyElements}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>Not part of it.</dd>
+ * <dd>"Scale b=alpha*a"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class Pseudoinverse extends MatrixBenchmarkOperation {
+public class Scale extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(Pseudoinverse.class, SIZE);
+        MatrixBenchmarkOperation.run(Scale.class, SIZE);
     }
 
-    private ProducingUnaryMatrixOperation<?, ?> myOperation;
+    private MutatingBinaryMatrixScalarOperation<?, ?> myOperation;
 
-    Object matrix;
+    Object original;
     Object result;
+    double scale;
 
     @Override
     @Benchmark
     public Object execute() {
-        return result = myOperation.execute(matrix);
+        return myOperation.execute(original, scale, result);
     }
 
     @Override
@@ -67,15 +71,17 @@ public class Pseudoinverse extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        matrix = MatrixBenchmarkOperation.makeSPD(dim, library);
+        myOperation = library.getOperationScale();
 
-        myOperation = library.getOperationPseudoinverse(dim);
+        original = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
+        scale = Math.random();
+        result = MatrixBenchmarkOperation.makeZero(dim, dim, library);
     }
 
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifyPseudoinverse(matrix, result);
+        this.verifyElements(result, dim, dim, (i, j) -> scale * this.doubleValue(original, i, j));
     }
 
 }

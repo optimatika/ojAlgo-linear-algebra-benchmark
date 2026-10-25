@@ -19,18 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab.library;
+package org.ojalgo.benchmark.library;
 
 /**
- * oj! Algorithms – using native code (BLAS/LAPACK through the FFM API) where available. On macOS that is
- * Accelerate, otherwise OpenBLAS, MKL… A specific library can be chosen with the system property
- * <code>ojalgo.native.library</code>.
+ * SMILE – using native code (BLAS/LAPACK through the FFM API). On macOS that is the system's
+ * libblas/liblapack (Accelerate, its legacy interface), otherwise OpenBLAS. SMILE's own system properties
+ * choose another library – see <code>smile.linalg.NativeLibrary</code>.
  *
- * @see ojAlgo
+ * @see Smile
  */
-public class ojAlgoNative extends ojAlgo {
+public class SmileNative extends Smile {
 
-    public ojAlgoNative() {
+    public SmileNative() {
         super(true);
     }
 

@@ -19,11 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
-package org.ojalgo.benchmark.lab;
+package org.ojalgo.benchmark.operation;
 
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
+import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -31,23 +32,25 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * Matrix multiplication with the left factor transposed: [C] = [A]<sup>T</sup>[B].
+ * Matrix multiplication with the right factor transposed: [C] = [A][B]<sup>T</sup>.
  * <dl>
  * <dt>Input</dt>
  * <dd>[A] and [B], dim x dim, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Multiplying the transpose of [A] and [B] into the preallocated [C]. How the transpose is handled is up to the library – any explicit transpose is part of what is measured.</dd>
+ * <dd>Multiplying [A] and the transpose of [B] into the preallocated [C]. How the transpose is handled is up
+ * to the library – any explicit transpose is part of what is measured.</dd>
  * <dt>Required</dt>
- * <dd>The product, checked by multiplying with a random vector: [A]<sup>T</sup>([B][x]) = [C][x] ({@code verifyProduct}).</dd>
+ * <dd>The product, checked by multiplying with a random vector: [A]([B]<sup>T</sup>[x]) = [C][x]
+ * ({@code verifyProduct}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>Not in the latest results – measured as "multTransA" before version 0.7, when it was replaced by A*B^T (MultiplyTransposedRight).</dd>
+ * <dd>"Mult c=a*b^T"</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
+public class MultiplyTransposedRight extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
 
     public static void main(final String[] args) throws RunnerException {
-        MatrixBenchmarkOperation.run(MultiplyTransposedLeft.class, SIZE);
+        MatrixBenchmarkOperation.run(MultiplyTransposedRight.class, SIZE);
     }
 
     private MutatingBinaryMatrixMatrixOperation<?, ?> myOperation;
@@ -68,7 +71,7 @@ public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
 
         library = MatrixBenchmarkLibrary.make(lib);
 
-        myOperation = library.getOperationFillByMultiplying(true, false);
+        myOperation = library.getOperationFillByMultiplying(false, true);
 
         left = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
         right = MatrixBenchmarkOperation.makeRandom(dim, dim, library);
@@ -78,7 +81,7 @@ public class MultiplyTransposedLeft extends MatrixBenchmarkOperation {
     @Override
     @TearDown(Level.Iteration)
     public void verify() throws BenchmarkRequirementsException {
-        this.verifyProduct(left, true, right, false, product);
+        this.verifyProduct(left, false, right, true, product);
     }
 
 }

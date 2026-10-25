@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.ojalgo.benchmark.lab.library;
+package org.ojalgo.benchmark.library;
 
 import org.hipparchus.linear.BlockRealMatrix;
 import org.hipparchus.linear.CholeskyDecomposition;
@@ -86,8 +86,8 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
-    public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationEquationSystemSolver(final int numbEquations,
-            final int numbVariables, final int numbSolutions, final boolean spd) {
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
+            final int numbSolutions, final boolean spd) {
         if (numbSolutions != 1) {
             return null; // Only implemented for a single right hand side
         }
