@@ -42,8 +42,9 @@ import org.openjdk.jmh.runner.options.VerboseMode;
  * result file per combination, "operation-size" (e.g. "FillByMultiplying-MEDIUM.csv"), to the suite's
  * directory ({@link #RESULTS}). Only the result files that are missing are (re)computed: a run that is
  * terminated early leaves a subset of the files, and the next run continues with the rest. To recompute some
- * results, delete those files. A result file is written under a temporary name and renamed when its run is
- * complete, so an interrupted run never leaves a file that counts as done.
+ * results, delete those files. A result file is only written when its run is complete, with a result for
+ * every dim/lib combination, so an interrupted, or partly failed, run never leaves a file that counts as
+ * done.
  * <p>
  * A suite can redeclare {@link #RESULTS} and {@link #SIZES} to get its own directory and size ranges.
  */
@@ -70,7 +71,7 @@ public interface BenchmarkSuite {
     /**
      * The size ranges a suite is run for, in the order they're run. Redeclare it in a suite to change it.
      */
-    List<Size> SIZES = List.of(Size.SMALL, Size.MEDIUM, Size.LARGE);
+    List<Size> SIZES = List.of(Size.MEDIUM, Size.SMALL, Size.LARGE);
 
     /**
      * The value of a suite's constant – the most specific declaration, the suite's own or an inherited one.
@@ -168,7 +169,7 @@ public interface BenchmarkSuite {
         for (Result result : missing) {
             System.out.printf("%s: running %s (%d of %d)%n", suite.getSimpleName(), result.file().getFileName(), ++count, missing.size());
             if (!MatrixBenchmarkOperation.run(result.benchmark(), result.size(), directory)) {
-                System.out.printf("%s: %s produced no results – not saved%n", suite.getSimpleName(), result.file().getFileName());
+                System.out.printf("%s: %s is incomplete – not saved%n", suite.getSimpleName(), result.file().getFileName());
             }
         }
     }

@@ -26,9 +26,11 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
@@ -41,6 +43,9 @@ import org.ojalgo.benchmark.library.ojAlgoNative;
 import org.ojalgo.netio.BasicLogger;
 
 /**
+ * The adapter of one library to the benchmarks. Each operation is a lambda calling the library, written by
+ * the rules in {@link MatrixBenchmarkOperation}: make the best possible use of the library's features, but no
+ * switching between alternative implementations in the adapter code – one, static, choice per operation.
  * <p>
  * The type paramater I is intended to be some high level interface that defines the shape of the matrix as
  * well as how to get individual elements (as a minimum).
@@ -154,6 +159,11 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract PropertyOperation<I, T> getOperationDeterminant(int dim);
 
+    /**
+     * The eigenvalues, only, of a symmetric matrix – a dim x 1 matrix, in any order.
+     */
+    public abstract ProducingUnaryMatrixOperation<I, T> getOperationEigenvalues(int dim);
+
     public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationEquationSystemSolver(int numbEquations, int numbVariables, int numbSolutions,
             boolean spd);
 
@@ -171,15 +181,66 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
      */
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationFillByMultiplying(boolean transpL, boolean transpR);
 
+    /**
+     * [A]<sup>T</sup>[A] into the preallocated result – the library may exploit that it is symmetric.
+     */
+    public abstract MutatingUnaryMatrixOperation<I, T> getOperationGram();
+
     public abstract MutatingUnaryMatrixOperation<I, T> getOperationInvert(int dim, boolean spd);
+
+    /**
+     * One step, predict and update, of a Kalman filter with dim states and nbMeasurements measurements. Any
+     * workspace is preallocated – only the results are written to the matrices passed in.
+     */
+    public abstract KalmanFilterOperation<I, T> getOperationKalmanFilter(int dim, int nbMeasurements);
+
+    /**
+     * The minimum norm least squares solution, of a possibly rank deficient system, for a single right hand
+     * side.
+     */
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationMinimumNormSolver(int numbEquations, int numbVariables);
+
+    /**
+     * [matrix][vector], or if transpose [matrix]<sup>T</sup>[vector], into the preallocated result – the
+     * vectors are single column matrices.
+     */
+    public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationMultiplyMatrixVector(boolean transpose);
 
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);
 
+    /**
+     * Prepares (decomposes) a general square body, in setup, and returns the operation that solves for a
+     * single right hand side using that decomposition.
+     */
+    public abstract PreparingOperation<I, T> getOperationRepeatedSolver(int dim);
+
+    /**
+     * Solves (X<sup>T</sup>X + &lambda;I)&beta; = X<sup>T</sup>y for &beta;. Any workspace is preallocated.
+     */
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationRidgeRegression(int numbEquations, int numbVariables, double lambda);
+
     public abstract MutatingBinaryMatrixScalarOperation<I, T> getOperationScale();
 
+    /**
+     * The singular values, only, of a square matrix – a dim x 1 matrix, in any order.
+     */
+    public abstract ProducingUnaryMatrixOperation<I, T> getOperationSingularValues(int dim);
+
     public abstract DecompositionOperation<I, I> getOperationSVD(int dim);
+
+    /**
+     * Solves a symmetric indefinite system for a single right hand side – the library may exploit the
+     * symmetry, if it can.
+     */
+    public abstract ProducingBinaryMatrixMatrixOperation<I, T> getOperationSymmetricIndefiniteSolver(int dim);
+
+    /**
+     * The thin singular value decomposition of a numbRows x numbCols matrix, numbRows &ge; numbCols: [U]
+     * numbRows x numbCols, [S] and [V]<sup>T</sup> numbCols x numbCols.
+     */
+    public abstract DecompositionOperation<I, I> getOperationThinSVD(int numbRows, int numbCols);
 
     public abstract MutatingUnaryMatrixOperation<I, T> getOperationTranspose();
 

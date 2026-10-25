@@ -25,6 +25,7 @@ import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation;
 import org.ojalgo.benchmark.suite.JavaMatrixBenchmark;
+import org.ojalgo.benchmark.suite.WorkloadSuite;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Setup;
@@ -47,7 +48,7 @@ import org.openjdk.jmh.runner.RunnerException;
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */
-public class GeneralSolve extends MatrixBenchmarkOperation implements JavaMatrixBenchmark {
+public class GeneralSolve extends MatrixBenchmarkOperation implements JavaMatrixBenchmark, WorkloadSuite {
 
     public static void main(final String[] args) throws RunnerException {
         MatrixBenchmarkOperation.run(GeneralSolve.class, SIZE);

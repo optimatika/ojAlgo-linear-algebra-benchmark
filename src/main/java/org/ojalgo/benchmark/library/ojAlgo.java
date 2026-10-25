@@ -21,17 +21,24 @@
  */
 package org.ojalgo.benchmark.library;
 
+import java.util.Optional;
+
 import org.ojalgo.array.operation.NativeLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
+import org.ojalgo.function.UnaryFunction;
 import org.ojalgo.function.constant.PrimitiveMath;
+import org.ojalgo.matrix.decomposition.Cholesky;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
+import org.ojalgo.matrix.decomposition.LU;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
@@ -106,6 +113,19 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     }
 
     @Override
+    public ProducingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationEigenvalues(final int dim) {
+
+        Eigenvalue<Double> evd = Eigenvalue.R064.make(dim, true);
+        R064Store values = R064Store.FACTORY.make(dim, 1);
+
+        return matrix -> {
+            evd.computeValuesOnly(matrix);
+            evd.getEigenvalues(values.data, Optional.empty());
+            return values;
+        };
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationEquationSystemSolver(final int numbEquations,
             final int numbVariables, final int numbSolutions, final boolean spd) {
 
@@ -137,9 +157,71 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     }
 
     @Override
+    public MutatingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationGram() {
+        return (matrix, product) -> product.fillByMultiplying(matrix.transpose(), matrix);
+    }
+
+    @Override
     public MutatingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationInvert(final int dim, final boolean spd) {
         InverterTask<Double> task = InverterTask.R064.make(dim, spd);
         return task::invert; // Calculated in place – the returned inverse is result (the full matrix, also when SPD)
+    }
+
+    @Override
+    public KalmanFilterOperation<MatrixStore<Double>, R064Store> getOperationKalmanFilter(final int dim, final int nbMeasurements) {
+
+        R064Store predictedState = R064Store.FACTORY.make(dim, 1);
+        R064Store transformed = R064Store.FACTORY.make(dim, dim);
+        R064Store predicted = R064Store.FACTORY.make(dim, dim);
+        R064Store projected = R064Store.FACTORY.make(nbMeasurements, dim);
+        R064Store innovationCovariance = R064Store.FACTORY.make(nbMeasurements, nbMeasurements);
+        R064Store innovation = R064Store.FACTORY.make(nbMeasurements, 1);
+        R064Store correction = R064Store.FACTORY.make(dim, dim);
+
+        Cholesky<Double> cholesky = Cholesky.R064.make(nbMeasurements, nbMeasurements);
+        PhysicalStore<Double> preallocated = cholesky.preallocate(nbMeasurements, nbMeasurements, dim);
+
+        return (transition, processNoise, observation, measurementNoise, state, covariance, measurement, updatedState, updatedCovariance) -> {
+
+            predictedState.fillByMultiplying(transition, state);
+            transformed.fillByMultiplying(transition, covariance);
+            predicted.fillByMultiplying(transformed, transition.transpose());
+            predicted.modifyMatching(PrimitiveMath.ADD, processNoise);
+
+            projected.fillByMultiplying(observation, predicted);
+            innovationCovariance.fillByMultiplying(projected, observation.transpose());
+            innovationCovariance.modifyMatching(PrimitiveMath.ADD, measurementNoise);
+            innovation.fillByMultiplying(observation, predictedState);
+            innovation.modifyMatching(measurement, PrimitiveMath.SUBTRACT);
+
+            // [K]^T = [S]^-1[H][P]-
+            cholesky.decompose(innovationCovariance);
+            MatrixStore<Double> gainTransposed = cholesky.getSolution(projected, preallocated);
+
+            updatedState.fillByMultiplying(gainTransposed.transpose(), innovation);
+            updatedState.modifyMatching(PrimitiveMath.ADD, predictedState);
+            correction.fillByMultiplying(gainTransposed.transpose(), projected);
+            updatedCovariance.fillMatching(predicted, PrimitiveMath.SUBTRACT, correction);
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationMinimumNormSolver(final int numbEquations,
+            final int numbVariables) {
+
+        SingularValue<Double> svd = SingularValue.R064.make(numbEquations, numbVariables);
+        PhysicalStore<Double> preallocated = svd.preallocate(numbEquations, numbVariables, 1);
+
+        // Not svd.solve(...) – it requires full rank. The solution only uses the singular values above the rank threshold.
+        return (body, rhs) -> {
+            svd.decompose(body);
+            return svd.getSolution(rhs, preallocated);
+        };
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationMultiplyMatrixVector(final boolean transpose) {
+        return (matrix, vector, product) -> product.fillByMultiplying(transpose ? matrix.transpose() : matrix, vector);
     }
 
     @Override
@@ -160,8 +242,56 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     }
 
     @Override
+    public PreparingOperation<MatrixStore<Double>, R064Store> getOperationRepeatedSolver(final int dim) {
+        return body -> {
+
+            LU<Double> lu = LU.R064.make(body);
+            lu.decompose(body);
+
+            PhysicalStore<Double> preallocated = lu.preallocate(dim, dim, 1);
+
+            return rhs -> lu.getSolution(rhs, preallocated);
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationRidgeRegression(final int numbEquations, final int numbVariables,
+            final double lambda) {
+
+        R064Store gram = R064Store.FACTORY.make(numbVariables, numbVariables);
+        R064Store moment = R064Store.FACTORY.make(numbVariables, 1);
+        UnaryFunction<Double> regularise = PrimitiveMath.ADD.by(lambda);
+
+        Cholesky<Double> cholesky = Cholesky.R064.make(numbVariables, numbVariables);
+        PhysicalStore<Double> preallocated = cholesky.preallocate(numbVariables, numbVariables, 1);
+
+        return (design, observations) -> {
+
+            gram.fillByMultiplying(design.transpose(), design);
+            gram.modifyDiagonal(regularise);
+            moment.fillByMultiplying(design.transpose(), observations);
+
+            cholesky.decompose(gram);
+            return cholesky.getSolution(moment, preallocated);
+        };
+    }
+
+    @Override
     public MutatingBinaryMatrixScalarOperation<MatrixStore<Double>, R064Store> getOperationScale() {
         return (a, s, b) -> b.fillMatching(PrimitiveMath.MULTIPLY.first(s), a);
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationSingularValues(final int dim) {
+
+        SingularValue<Double> svd = SingularValue.R064.make(dim, dim);
+        R064Store values = R064Store.FACTORY.make(dim, 1);
+
+        return matrix -> {
+            svd.computeValuesOnly(matrix);
+            svd.getSingularValues(values.data);
+            return values;
+        };
     }
 
     @Override
@@ -169,6 +299,32 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
 
         MatrixStore<Double>[] ret = this.makeArray(3);
         SingularValue<Double> svd = SingularValue.R064.make(dim, dim);
+
+        return matrix -> {
+            svd.decompose(matrix);
+            ret[0] = svd.getU();
+            ret[1] = svd.getS();
+            ret[2] = svd.getV().transpose();
+            return ret;
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationSymmetricIndefiniteSolver(final int dim) {
+
+        // Symmetric but not positive definite – SolverTask chooses LU, measured faster on 10-1000 than LDL (much faster with native code)
+        SolverTask<Double> task = SolverTask.R064.make(dim, dim, 1, true, false);
+
+        PhysicalStore<Double> preallocated = task.preallocate(dim, dim, 1);
+
+        return (body, rhs) -> task.solve(body, rhs, preallocated);
+    }
+
+    @Override
+    public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationThinSVD(final int numbRows, final int numbCols) {
+
+        MatrixStore<Double>[] ret = this.makeArray(3);
+        SingularValue<Double> svd = SingularValue.R064.make(numbRows, numbCols);
 
         return matrix -> {
             svd.decompose(matrix);

@@ -21,14 +21,19 @@
  */
 package org.ojalgo.benchmark;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.UncheckedIOException;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.concurrent.TimeUnit;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.openjdk.jmh.annotations.Fork;
@@ -37,6 +42,7 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.results.RunResult;
+import org.openjdk.jmh.results.format.ResultFormatFactory;
 import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -58,13 +64,16 @@ import org.openjdk.jmh.runner.options.TimeValue;
  * is done in setup, and is not measured.</li>
  * <li>The inputs are the same for every invocation. An implementation must not modify them – if a library's
  * algorithm works in place, copying the input is part of what is measured – and must not reuse anything from
- * a previous invocation.</li>
+ * a previous invocation. The one exception is RepeatedSolve, that measures solving with a decomposition
+ * prepared in setup.</li>
  * <li>After each iteration, outside the measured time, the result of the last invocation is verified,
  * independently of the library. The tolerances are generous – the verification is there to catch wrong
  * results, not to rank accuracy. A library that produces a wrong result is reported as a failure, and gets no
  * score.</li>
- * <li>Any switching between alternative implementations (by matrix size, single or multi-threaded…) must be
- * done by the library itself – the adapters make one, static, choice per operation.</li>
+ * <li>Each adapter makes the best possible use of the library's features: the most suitable API for the
+ * operation, and any switching between alternative implementations (by matrix size, single or
+ * multi-threaded…) that the library does itself. The adapter code does no switching of its own – it makes
+ * one, static, choice per operation, also when the library has no switching for that operation.</li>
  * </ul>
  */
 @Fork(jvmArgsAppend = "--enable-native-access=ALL-UNNAMED")
@@ -95,6 +104,32 @@ public abstract class MatrixBenchmarkOperation {
     public interface ElementFunction {
 
         double invoke(int row, int col);
+
+    }
+
+    /**
+     * One step, predict and update, of a Kalman filter. The model – transition [F], process noise [Q],
+     * observation [H] and measurement noise [R] – the state [x], its covariance [P] and the measurement [z] are
+     * inputs. The updated state and covariance are written to the preallocated results.
+     */
+    @FunctionalInterface
+    public interface KalmanFilterOperation<I, T extends I> {
+
+        @SuppressWarnings("unchecked")
+        default Object execute(final Object transition, final Object processNoise, final Object observation, final Object measurementNoise,
+                final Object state, final Object covariance, final Object measurement, final Object updatedState, final Object updatedCovariance) {
+            try {
+                this.operate((I) transition, (I) processNoise, (I) observation, (I) measurementNoise, (I) state, (I) covariance, (I) measurement,
+                        (T) updatedState, (T) updatedCovariance);
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+                return null;
+            }
+            return updatedCovariance;
+        }
+
+        void operate(I transition, I processNoise, I observation, I measurementNoise, I state, I covariance, I measurement, T updatedState,
+                T updatedCovariance) throws Exception;
 
     }
 
@@ -149,6 +184,26 @@ public abstract class MatrixBenchmarkOperation {
         }
 
         void operate(I arg, T ret) throws Exception;
+
+    }
+
+    /**
+     * Prepares, in setup, the operation that is measured – e.g. decomposes a matrix, and returns an operation
+     * that solves using that decomposition. Failing to prepare is an error, not a result to verify.
+     */
+    @FunctionalInterface
+    public interface PreparingOperation<I, T extends I> {
+
+        @SuppressWarnings("unchecked")
+        default ProducingUnaryMatrixOperation<I, T> execute(final Object arg) {
+            try {
+                return this.operate((I) arg);
+            } catch (final Exception exception) {
+                throw new IllegalStateException(exception);
+            }
+        }
+
+        ProducingUnaryMatrixOperation<I, T> operate(I arg) throws Exception;
 
     }
 
@@ -284,13 +339,15 @@ public abstract class MatrixBenchmarkOperation {
     static final double TOLERANCE = 16.0 * Math.ulp(1.0);
 
     /**
-     * Settings for results to publish, that still run reasonably fast: 1 fork, throughput, CSV results. The
-     * heap is large enough for decompositions of 10000x10000 matrices. The number of forks, the iteration
-     * time, the number of iterations and the time unit are set per {@link Size}.
+     * Settings for results to publish, that still run reasonably fast: 1 fork, throughput. The heap is large
+     * enough for decompositions of 10000x10000 matrices. The number of forks, the iteration time, the number of
+     * iterations and the time unit are set per {@link Size}. No result file – asking for a result format, or a
+     * result file, makes JMH create the file before the run (empty) – {@link #run(Class, Size, Path)} writes it
+     * when the run is complete.
      */
     public static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(3).measurementIterations(5).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
-                .timeout(new TimeValue(10L, TimeUnit.MINUTES)).jvmArgs("-Xmx16g").resultFormat(ResultFormatType.CSV);
+                .timeout(new TimeValue(10L, TimeUnit.MINUTES)).jvmArgs("-Xmx16g");
     }
 
     /**
@@ -320,36 +377,51 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
-     * As {@link #run(Class, Size)}, but writes the result file to the given directory. JMH creates its result
-     * file as soon as a run starts, so it's written as "….csv.part" and renamed when the run is complete – an
-     * interrupted run never leaves a result file that looks complete.
+     * As {@link #run(Class, Size)}, but writes the result file to the given directory. The file is written
+     * (CSV) from the results JMH returns, after the run, and only if every dim/lib combination has a result –
+     * JMH completes a run also when some forks fail (a wrong result, an exception, a timeout…), skipping those
+     * combinations. An interrupted, or partly failed, run leaves no result file.
      *
-     * @return true if the run produced results, and the result file was saved
+     * @return true if every dim/lib combination produced a result, and the result file was written
      */
     public static boolean run(final Class<?> clazz, final Size size, final Path directory) throws RunnerException {
 
         Path file = directory.resolve(MatrixBenchmarkOperation.resultFileName(clazz, size));
-        Path temporary = file.resolveSibling(file.getFileName() + ".part");
+
+        ChainedOptionsBuilder options = MatrixBenchmarkOperation.options().param("dim", size.dims).param("lib", size.libs).timeUnit(size.timeUnit)
+                .forks(size.forks).warmupTime(size.iterationTime).warmupIterations(size.warmupIterations).measurementTime(size.iterationTime)
+                .measurementIterations(size.measurementIterations).timeout(size.timeout);
+
+        Collection<RunResult> results = MatrixBenchmarkOperation.run(options, clazz);
+
+        Set<String> missing = MatrixBenchmarkOperation.missing(results, size);
+        if (!missing.isEmpty()) {
+            System.out.printf("%s is incomplete, no results for (dim/lib) %s – not written%n", file.getFileName(), String.join(", ", missing));
+            return false;
+        }
+
+        // Formatted in memory first, so writing the file is quick
+        ByteArrayOutputStream csv = new ByteArrayOutputStream();
+        PrintStream printer = new PrintStream(csv, true, StandardCharsets.UTF_8);
+        ResultFormatFactory.getInstance(ResultFormatType.CSV, printer).writeOut(results);
+        printer.flush();
 
         try {
-
             Files.createDirectories(directory.toAbsolutePath());
-
-            ChainedOptionsBuilder options = MatrixBenchmarkOperation.options().param("dim", size.dims).param("lib", size.libs).timeUnit(size.timeUnit)
-                    .forks(size.forks).warmupTime(size.iterationTime).warmupIterations(size.warmupIterations).measurementTime(size.iterationTime)
-                    .measurementIterations(size.measurementIterations).timeout(size.timeout).result(temporary.toString());
-
-            Collection<RunResult> results = MatrixBenchmarkOperation.run(options, clazz);
-
-            if (results.isEmpty() || !Files.exists(temporary)) {
-                return false;
-            }
-            Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
-            return true;
-
+            Files.write(file, csv.toByteArray());
         } catch (IOException cause) {
             throw new UncheckedIOException(cause);
         }
+
+        return true;
+    }
+
+    private static double[] add(final double[] left, final double[] right) {
+        double[] retVal = new double[left.length];
+        for (int i = 0; i < left.length; i++) {
+            retVal[i] = left[i] + right[i];
+        }
+        return retVal;
     }
 
     private static void check(final String what, final double error, final double scale) throws BenchmarkRequirementsException {
@@ -358,6 +430,25 @@ public abstract class MatrixBenchmarkOperation {
         if (Double.isNaN(error) || Double.isNaN(limit) || error > limit) {
             throw new BenchmarkRequirementsException(what + " is wrong! Error " + error + " > " + limit + ", the relative error is " + error / scale);
         }
+    }
+
+    /**
+     * The dim/lib combinations of the size range, as "dim/lib", that have no result.
+     */
+    private static Set<String> missing(final Collection<RunResult> results, final Size size) {
+
+        Set<String> retVal = new LinkedHashSet<>();
+        for (String dim : size.dims) {
+            for (String lib : size.libs) {
+                retVal.add(dim + "/" + lib);
+            }
+        }
+
+        for (RunResult result : results) {
+            retVal.remove(result.getParams().getParam("dim") + "/" + result.getParams().getParam("lib"));
+        }
+
+        return retVal;
     }
 
     private static double norm(final double[] vector) {
@@ -392,6 +483,74 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
+     * [a][a]<sup>T</sup>/size + [I], with [a] uniform in [-1, 1) – symmetric positive definite and well
+     * conditioned, all eigenvalues in [1, 2).
+     */
+    protected final static Object makeCovariance(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
+
+        final double[] random = new double[size];
+
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
+
+        for (int i = 0; i < size; i++) {
+
+            random[i] = MatrixBenchmarkOperation.uniform();
+
+            for (int j = 0; j < i; j++) {
+                builder.set(i, j, random[i] * random[j] / size);
+                builder.set(j, i, random[j] * random[i] / size);
+            }
+            builder.set(i, i, random[i] * random[i] / size + 1.0);
+        }
+
+        return builder.get();
+    }
+
+    /**
+     * Diagonal, the diagonal elements uniform in [1, 2).
+     */
+    protected final static Object makeDiagonal(final int size, final MatrixBenchmarkLibrary<?, ?> contestant) {
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(size, size);
+        for (int i = 0; i < size; i++) {
+            builder.set(i, i, 1.0 + Math.random());
+        }
+        return builder.get();
+    }
+
+    /**
+     * The KKT matrix of an equality constrained quadratic program, [H A<sup>T</sup>; A 0] – symmetric but
+     * indefinite. [H], nbVariables x nbVariables, is [a][a]<sup>T</sup> + [I] as {@link #makeSPD}, and [A],
+     * nbConstraints x nbVariables, uniform in [-1, 1).
+     */
+    protected final static Object makeKKT(final int nbVariables, final int nbConstraints, final MatrixBenchmarkLibrary<?, ?> contestant) {
+
+        final double[] random = new double[nbVariables];
+
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(nbVariables + nbConstraints, nbVariables + nbConstraints);
+
+        for (int i = 0; i < nbVariables; i++) {
+
+            random[i] = MatrixBenchmarkOperation.uniform();
+
+            for (int j = 0; j < i; j++) {
+                builder.set(i, j, random[i] * random[j]);
+                builder.set(j, i, random[j] * random[i]);
+            }
+            builder.set(i, i, random[i] * random[i] + 1.0);
+        }
+
+        for (int i = nbVariables; i < nbVariables + nbConstraints; i++) {
+            for (int j = 0; j < nbVariables; j++) {
+                double value = MatrixBenchmarkOperation.uniform();
+                builder.set(i, j, value);
+                builder.set(j, i, value);
+            }
+        }
+
+        return builder.get();
+    }
+
+    /**
      * Uniform in [-1, 1), as in the Java Matrix Benchmark.
      */
     protected final static Object makeRandom(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
@@ -402,6 +561,58 @@ public abstract class MatrixBenchmarkOperation {
             }
         }
         return tmpSupplier.get();
+    }
+
+    /**
+     * Uniform in [-scale, scale).
+     */
+    protected final static Object makeRandom(final int numberOfRows, final int numberOfColumns, final double scale,
+            final MatrixBenchmarkLibrary<?, ?> contestant) {
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(numberOfRows, numberOfColumns);
+        for (int j = 0; j < numberOfColumns; j++) {
+            for (int i = 0; i < numberOfRows; i++) {
+                builder.set(i, j, scale * MatrixBenchmarkOperation.uniform());
+            }
+        }
+        return builder.get();
+    }
+
+    /**
+     * Rank deficient: the first rank = multipliers.length columns uniform in [-1, 1), and the remaining
+     * multipliers[0].length columns linear combinations of those – column rank + j is the sum over k of
+     * multipliers[k][j] times column k. The null space is spanned by the columns of [-M; I].
+     */
+    protected final static Object makeRankDeficient(final int numberOfRows, final double[][] multipliers, final MatrixBenchmarkLibrary<?, ?> contestant) {
+
+        int rank = multipliers.length;
+        int nullity = multipliers[0].length;
+
+        final MatrixBenchmarkLibrary<?, ?>.MatrixBuilder builder = contestant.getMatrixBuilder(numberOfRows, rank + nullity);
+
+        double[] independent = new double[rank];
+        double[] dependent = new double[nullity];
+
+        for (int i = 0; i < numberOfRows; i++) {
+
+            for (int k = 0; k < rank; k++) {
+                independent[k] = MatrixBenchmarkOperation.uniform();
+                builder.set(i, k, independent[k]);
+            }
+
+            Arrays.fill(dependent, 0.0);
+            for (int k = 0; k < rank; k++) {
+                double factor = independent[k];
+                double[] row = multipliers[k];
+                for (int j = 0; j < nullity; j++) {
+                    dependent[j] += factor * row[j];
+                }
+            }
+            for (int j = 0; j < nullity; j++) {
+                builder.set(i, rank + j, dependent[j]);
+            }
+        }
+
+        return builder.get();
     }
 
     /**
@@ -446,6 +657,19 @@ public abstract class MatrixBenchmarkOperation {
         return builder.get();
     }
 
+    /**
+     * Uniform in [-1, 1), as plain arrays – data that is not a matrix of the library being benchmarked.
+     */
+    protected final static double[][] makeUniform(final int numberOfRows, final int numberOfColumns) {
+        double[][] retVal = new double[numberOfRows][numberOfColumns];
+        for (int i = 0; i < numberOfRows; i++) {
+            for (int j = 0; j < numberOfColumns; j++) {
+                retVal[i][j] = MatrixBenchmarkOperation.uniform();
+            }
+        }
+        return retVal;
+    }
+
     protected final static Object makeZero(final int numberOfRows, final int numberOfColumns, final MatrixBenchmarkLibrary<?, ?> contestant) {
         return contestant.getMatrixBuilder(numberOfRows, numberOfColumns).get();
     }
@@ -464,6 +688,13 @@ public abstract class MatrixBenchmarkOperation {
     public String lib;
 
     protected MatrixBenchmarkLibrary<?, ?> library;
+
+    /**
+     * The (plain Java) determinant of {@link #myReferenceMatrix} – the sign and the logarithm of the absolute
+     * value. Calculated once, when first needed – the inputs are the same for every invocation.
+     */
+    private double[] myReferenceDeterminant = null;
+    private Object myReferenceMatrix = null;
 
     protected MatrixBenchmarkOperation() {
         super();
@@ -485,6 +716,51 @@ public abstract class MatrixBenchmarkOperation {
             retVal[i] = library.get(matrix, i, col);
         }
         return retVal;
+    }
+
+    /**
+     * The determinant of a square matrix, calculated with a plain Java LU decomposition with partial
+     * pivoting, as its sign and the logarithm of its absolute value – the determinant itself overflows for
+     * large matrices.
+     */
+    private double[] determinant(final Object matrix) {
+
+        int dim = library.getRowDim(matrix);
+
+        double[][] lu = new double[dim][dim];
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                lu[i][j] = library.get(matrix, i, j);
+            }
+        }
+
+        double sign = 1.0;
+        double logAbs = 0.0;
+        for (int k = 0; k < dim; k++) {
+            int pivot = k;
+            for (int i = k + 1; i < dim; i++) {
+                if (Math.abs(lu[i][k]) > Math.abs(lu[pivot][k])) {
+                    pivot = i;
+                }
+            }
+            if (pivot != k) {
+                double[] row = lu[pivot];
+                lu[pivot] = lu[k];
+                lu[k] = row;
+                sign = -sign;
+            }
+            double diagonal = lu[k][k];
+            sign = diagonal < 0.0 ? -sign : sign;
+            logAbs += Math.log(Math.abs(diagonal));
+            for (int i = k + 1; i < dim; i++) {
+                double factor = lu[i][k] / diagonal;
+                for (int j = k + 1; j < dim; j++) {
+                    lu[i][j] -= factor * lu[k][j];
+                }
+            }
+        }
+
+        return new double[] { sign, logAbs };
     }
 
     /**
@@ -525,6 +801,17 @@ public abstract class MatrixBenchmarkOperation {
         return Math.sqrt(retVal);
     }
 
+    /**
+     * {@link #determinant(Object)}, calculated once per matrix.
+     */
+    private double[] referenceDeterminant(final Object matrix) {
+        if (myReferenceMatrix != matrix) {
+            myReferenceDeterminant = this.determinant(matrix);
+            myReferenceMatrix = matrix;
+        }
+        return myReferenceDeterminant;
+    }
+
     private void verifyShape(final String what, final Object matrix, final int nbRows, final int nbCols) throws BenchmarkRequirementsException {
         if (matrix == null) {
             throw new BenchmarkRequirementsException(what + " is missing!");
@@ -551,38 +838,9 @@ public abstract class MatrixBenchmarkOperation {
 
         int dim = library.getRowDim(matrix);
 
-        double[][] lu = new double[dim][dim];
-        for (int i = 0; i < dim; i++) {
-            for (int j = 0; j < dim; j++) {
-                lu[i][j] = library.get(matrix, i, j);
-            }
-        }
-
-        double sign = 1.0;
-        double logAbs = 0.0;
-        for (int k = 0; k < dim; k++) {
-            int pivot = k;
-            for (int i = k + 1; i < dim; i++) {
-                if (Math.abs(lu[i][k]) > Math.abs(lu[pivot][k])) {
-                    pivot = i;
-                }
-            }
-            if (pivot != k) {
-                double[] row = lu[pivot];
-                lu[pivot] = lu[k];
-                lu[k] = row;
-                sign = -sign;
-            }
-            double diagonal = lu[k][k];
-            sign = diagonal < 0.0 ? -sign : sign;
-            logAbs += Math.log(Math.abs(diagonal));
-            for (int i = k + 1; i < dim; i++) {
-                double factor = lu[i][k] / diagonal;
-                for (int j = k + 1; j < dim; j++) {
-                    lu[i][j] -= factor * lu[k][j];
-                }
-            }
-        }
+        double[] reference = this.determinant(matrix);
+        double sign = reference[0];
+        double logAbs = reference[1];
 
         if (Math.signum(determinant) != sign) {
             throw new BenchmarkRequirementsException("Determinant is wrong! " + determinant + " has the wrong sign.");
@@ -624,6 +882,42 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
+     * Checks the eigenvalues, a dim x 1 matrix, of a symmetric matrix by invariants: their sum is the trace,
+     * the sum of their squares is the square of the Frobenius norm, and their product is the determinant
+     * (compared as in {@link #verifyDeterminant(Object, double)}, with the logarithms).
+     */
+    protected void verifyEigenvalues(final Object original, final Object eigenvalues) throws BenchmarkRequirementsException {
+
+        int dim = library.getRowDim(original);
+
+        this.verifyShape("Eigenvalues", eigenvalues, dim, 1);
+
+        double trace = 0.0;
+        double sum = 0.0;
+        double sumOfSquares = 0.0;
+        double sign = 1.0;
+        double logAbs = 0.0;
+        for (int i = 0; i < dim; i++) {
+            double value = library.get(eigenvalues, i, 0);
+            trace += library.get(original, i, i);
+            sum += value;
+            sumOfSquares += value * value;
+            sign = value < 0.0 ? -sign : sign;
+            logAbs += Math.log(Math.abs(value));
+        }
+
+        double normOriginal = this.norm(original);
+        MatrixBenchmarkOperation.check("Eigenvalues (trace)", Math.abs(sum - trace), dim * normOriginal);
+        MatrixBenchmarkOperation.check("Eigenvalues (Frobenius norm)", Math.abs(sumOfSquares - normOriginal * normOriginal), dim * normOriginal * normOriginal);
+
+        double[] reference = this.referenceDeterminant(original);
+        if (sign != reference[0]) {
+            throw new BenchmarkRequirementsException("Eigenvalues are wrong! Their product has the wrong sign.");
+        }
+        MatrixBenchmarkOperation.check("Eigenvalues (determinant)", Math.abs(logAbs - reference[1]), dim * dim);
+    }
+
+    /**
      * Element by element comparison with the expected values.
      */
     protected void verifyElements(final Object actual, final int nbRows, final int nbCols, final ElementFunction expected)
@@ -658,6 +952,96 @@ public abstract class MatrixBenchmarkOperation {
 
         MatrixBenchmarkOperation.check("Inverse", MatrixBenchmarkOperation.norm(residual),
                 dim * this.norm(original) * this.norm(inverse) * MatrixBenchmarkOperation.norm(vector));
+    }
+
+    /**
+     * One step of a Kalman filter: predict, [x]<sup>-</sup> = [F][x] and [P]<sup>-</sup> = [F][P][F]<sup>T</sup> +
+     * [Q], then update with the measurement [z]. With the measurement noise [R] diagonal, the update can be
+     * checked without inverting anything: the updated covariance is [P]<sup>+</sup> = (([P]<sup>-</sup>)<sup>-1</sup> +
+     * [H]<sup>T</sup>[R]<sup>-1</sup>[H])<sup>-1</sup>, so [P]<sup>-</sup>[v] = [P]<sup>+</sup>([v] +
+     * [H]<sup>T</sup>[R]<sup>-1</sup>[H][P]<sup>-</sup>[v]) for a random vector [v], and the updated state is
+     * [x]<sup>+</sup> = [x]<sup>-</sup> + [P]<sup>+</sup>[H]<sup>T</sup>[R]<sup>-1</sup>([z] - [H][x]<sup>-</sup>).
+     */
+    protected void verifyKalmanUpdate(final Object transition, final Object processNoise, final Object observation, final Object measurementNoise,
+            final Object state, final Object covariance, final Object measurement, final Object updatedState, final Object updatedCovariance)
+            throws BenchmarkRequirementsException {
+
+        int dim = library.getRowDim(transition);
+        int nbMeasurements = library.getRowDim(observation);
+
+        this.verifyShape("Updated state", updatedState, dim, 1);
+        this.verifyShape("Updated covariance", updatedCovariance, dim, dim);
+
+        double[] noise = new double[nbMeasurements];
+        for (int i = 0; i < nbMeasurements; i++) {
+            noise[i] = library.get(measurementNoise, i, i);
+        }
+
+        // An upper bound on the norm of the predicted covariance
+        double normTransition = this.norm(transition);
+        double normPredicted = normTransition * normTransition * this.norm(covariance) + this.norm(processNoise);
+        double normUpdated = this.norm(updatedCovariance);
+
+        double[] vector = MatrixBenchmarkOperation.random(dim);
+        double[] predicted = MatrixBenchmarkOperation.add(this.multiply(transition, false, this.multiply(covariance, false, this.multiply(transition, true, vector))),
+                this.multiply(processNoise, false, vector));
+        double[] weighted = this.multiply(observation, false, predicted);
+        for (int i = 0; i < nbMeasurements; i++) {
+            weighted[i] /= noise[i];
+        }
+        double[] information = this.multiply(observation, true, weighted);
+
+        double[] residual = MatrixBenchmarkOperation.subtract(predicted, this.multiply(updatedCovariance, false, MatrixBenchmarkOperation.add(vector, information)));
+        MatrixBenchmarkOperation.check("Updated covariance", MatrixBenchmarkOperation.norm(residual),
+                dim * (normPredicted + normUpdated) * (MatrixBenchmarkOperation.norm(vector) + MatrixBenchmarkOperation.norm(information)));
+
+        double[] predictedState = this.multiply(transition, false, this.column(state, 0));
+        double[] innovation = MatrixBenchmarkOperation.subtract(this.column(measurement, 0), this.multiply(observation, false, predictedState));
+        for (int i = 0; i < nbMeasurements; i++) {
+            innovation[i] /= noise[i];
+        }
+        double[] gain = this.multiply(observation, true, innovation);
+
+        double[] expected = MatrixBenchmarkOperation.add(predictedState, this.multiply(updatedCovariance, false, gain));
+        MatrixBenchmarkOperation.check("Updated state", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(this.column(updatedState, 0), expected)),
+                dim * (MatrixBenchmarkOperation.norm(predictedState) + (normPredicted + normUpdated) * MatrixBenchmarkOperation.norm(gain)));
+    }
+
+    /**
+     * Rank deficient least squares, with the body as {@link #makeRankDeficient(int, double[][], MatrixBenchmarkLibrary)}:
+     * the solution should satisfy the normal equations, [A]<sup>T</sup>([A][x] - [b]) = 0, and be orthogonal
+     * to the null space of [A] – the minimum norm solution. The null space is spanned by the columns of [-M;
+     * I], so x[rank + j] should be the sum over k of multipliers[k][j] times x[k].
+     */
+    protected void verifyMinimumNormSolution(final Object body, final Object rhs, final Object solution, final double[][] multipliers)
+            throws BenchmarkRequirementsException {
+
+        int nbEquations = library.getRowDim(body);
+        int nbVariables = library.getColDim(body);
+        int rank = multipliers.length;
+
+        this.verifyShape("Solution", solution, nbVariables, 1);
+
+        double[] x = this.column(solution, 0);
+        double[] b = this.column(rhs, 0);
+
+        double normBody = this.norm(body);
+        double[] residual = MatrixBenchmarkOperation.subtract(this.multiply(body, false, x), b);
+        MatrixBenchmarkOperation.check("Least squares solution", MatrixBenchmarkOperation.norm(this.multiply(body, true, residual)),
+                nbEquations * normBody * (normBody * MatrixBenchmarkOperation.norm(x) + MatrixBenchmarkOperation.norm(b)));
+
+        double normMultipliers = 0.0;
+        double[] difference = new double[nbVariables - rank];
+        for (int j = 0; j < difference.length; j++) {
+            double value = x[rank + j];
+            for (int k = 0; k < rank; k++) {
+                value -= multipliers[k][j] * x[k];
+                normMultipliers += multipliers[k][j] * multipliers[k][j];
+            }
+            difference[j] = value;
+        }
+        MatrixBenchmarkOperation.check("Minimum norm solution", MatrixBenchmarkOperation.norm(difference),
+                nbVariables * (Math.sqrt(normMultipliers) + 1.0) * MatrixBenchmarkOperation.norm(x));
     }
 
     /**
@@ -697,6 +1081,101 @@ public abstract class MatrixBenchmarkOperation {
         double normOriginal = this.norm(original);
         MatrixBenchmarkOperation.check("Pseudoinverse", MatrixBenchmarkOperation.norm(residual),
                 Math.max(nbRows, nbCols) * normOriginal * this.norm(pseudoinverse) * normOriginal * MatrixBenchmarkOperation.norm(vector));
+    }
+
+    /**
+     * Ridge regression, minimise |[X][&beta;] - [y]|<sup>2</sup> + &lambda;|[&beta;]|<sup>2</sup>: the solution
+     * should satisfy [X]<sup>T</sup>([X][&beta;] - [y]) + &lambda;[&beta;] = 0.
+     */
+    protected void verifyRidgeSolution(final Object design, final Object observations, final double lambda, final Object solution)
+            throws BenchmarkRequirementsException {
+
+        int nbEquations = library.getRowDim(design);
+        int nbVariables = library.getColDim(design);
+
+        this.verifyShape("Solution", solution, nbVariables, 1);
+
+        double[] beta = this.column(solution, 0);
+        double[] y = this.column(observations, 0);
+
+        double[] residual = this.multiply(design, true, MatrixBenchmarkOperation.subtract(this.multiply(design, false, beta), y));
+        for (int j = 0; j < nbVariables; j++) {
+            residual[j] += lambda * beta[j];
+        }
+
+        double normDesign = this.norm(design);
+        double normBeta = MatrixBenchmarkOperation.norm(beta);
+        MatrixBenchmarkOperation.check("Ridge regression solution", MatrixBenchmarkOperation.norm(residual),
+                nbEquations * (normDesign * (normDesign * normBeta + MatrixBenchmarkOperation.norm(y)) + lambda * normBeta));
+    }
+
+    /**
+     * Checks a thin singular value decomposition, [A] = [U][S][V]<sup>T</sup> with [A] m x n and k = min(m, n):
+     * [U] m x k with orthonormal columns, [S] k x k diagonal and non-negative, [V]<sup>T</sup> k x n with
+     * orthonormal rows. The reconstruction and the orthonormality are checked by multiplying with random
+     * vectors.
+     */
+    protected void verifySingularValueDecomposition(final Object original, final Object left, final Object singular, final Object right)
+            throws BenchmarkRequirementsException {
+
+        int nbRows = library.getRowDim(original);
+        int nbCols = library.getColDim(original);
+        int rank = Math.min(nbRows, nbCols);
+
+        this.verifyShape("U", left, nbRows, rank);
+        this.verifyShape("S", singular, rank, rank);
+        this.verifyShape("V^T", right, rank, nbCols);
+
+        for (int j = 0; j < rank; j++) {
+            for (int i = 0; i < rank; i++) {
+                double value = library.get(singular, i, j);
+                if (i == j ? !(value >= 0.0) : value != 0.0) {
+                    throw new BenchmarkRequirementsException("S is wrong! Element (" + i + "," + j + ") is " + value);
+                }
+            }
+        }
+
+        double[] vector = MatrixBenchmarkOperation.random(nbCols);
+        double[] reconstructed = this.multiply(left, false, this.multiply(singular, false, this.multiply(right, false, vector)));
+        MatrixBenchmarkOperation.check("Singular value decomposition",
+                MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(reconstructed, this.multiply(original, false, vector))),
+                Math.max(nbRows, nbCols) * this.norm(original) * MatrixBenchmarkOperation.norm(vector));
+
+        double[] coordinates = MatrixBenchmarkOperation.random(rank);
+        double normLeft = this.norm(left);
+        MatrixBenchmarkOperation.check("U", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(this.multiply(left, true, this.multiply(left, false, coordinates)), coordinates)),
+                nbRows * normLeft * normLeft * MatrixBenchmarkOperation.norm(coordinates));
+        double normRight = this.norm(right);
+        MatrixBenchmarkOperation.check("V", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(this.multiply(right, false, this.multiply(right, true, coordinates)), coordinates)),
+                nbCols * normRight * normRight * MatrixBenchmarkOperation.norm(coordinates));
+    }
+
+    /**
+     * Checks the singular values, a dim x 1 matrix, of a square matrix: they should be non-negative, the sum
+     * of their squares is the square of the Frobenius norm, and their product is the absolute value of the
+     * determinant (compared as in {@link #verifyDeterminant(Object, double)}, with the logarithms).
+     */
+    protected void verifySingularValues(final Object original, final Object singularValues) throws BenchmarkRequirementsException {
+
+        int dim = library.getRowDim(original);
+
+        this.verifyShape("Singular values", singularValues, dim, 1);
+
+        double sumOfSquares = 0.0;
+        double logAbs = 0.0;
+        for (int i = 0; i < dim; i++) {
+            double value = library.get(singularValues, i, 0);
+            if (!(value >= 0.0)) {
+                throw new BenchmarkRequirementsException("Singular values are wrong! " + value + " is not non-negative.");
+            }
+            sumOfSquares += value * value;
+            logAbs += Math.log(value);
+        }
+
+        double normOriginal = this.norm(original);
+        MatrixBenchmarkOperation.check("Singular values (Frobenius norm)", Math.abs(sumOfSquares - normOriginal * normOriginal),
+                dim * normOriginal * normOriginal);
+        MatrixBenchmarkOperation.check("Singular values (determinant)", Math.abs(logAbs - this.referenceDeterminant(original)[1]), dim * dim);
     }
 
     /**

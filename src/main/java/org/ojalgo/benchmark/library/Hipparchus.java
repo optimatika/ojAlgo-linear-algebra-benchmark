@@ -21,6 +21,7 @@
  */
 package org.ojalgo.benchmark.library;
 
+import org.hipparchus.linear.ArrayRealVector;
 import org.hipparchus.linear.BlockRealMatrix;
 import org.hipparchus.linear.CholeskyDecomposition;
 import org.hipparchus.linear.DecompositionSolver;
@@ -32,9 +33,11 @@ import org.hipparchus.linear.RealMatrix;
 import org.hipparchus.linear.SingularValueDecomposition;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
@@ -44,6 +47,12 @@ import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
  * {@link MatrixUtils#createRealMatrix(int, int)}, which would give Array2DRowRealMatrix up to 4096 elements.
  */
 public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
+
+    /**
+     * Products that are symmetric in exact arithmetic, like [H][P][H]<sup>T</sup>, are not exactly symmetric
+     * in floating point – the default threshold (1e-15) rejects them.
+     */
+    private static final double RELATIVE_SYMMETRY_THRESHOLD = 1.0E-10;
 
     /**
      * The benchmarks solve for a single right hand side – solved as a vector, Hipparchus' matrix solve has
@@ -83,6 +92,12 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
             LUDecomposition lu = new LUDecomposition(matA);
             return lu.getDeterminant();
         };
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationEigenvalues(final int dim) {
+        return matrix -> MatrixUtils
+                .createColumnRealMatrix(new EigenDecompositionSymmetric(matrix, EigenDecompositionSymmetric.DEFAULT_EPSILON, false).getEigenvalues());
     }
 
     @Override
@@ -141,6 +156,11 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
+    public MutatingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationGram() {
+        return (matrix, product) -> this.copy(matrix.transposeMultiply(matrix), product);
+    }
+
+    @Override
     public MutatingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationInvert(final int dim, final boolean spd) {
         // What getInverse() does, without creating a new identity every time
         RealMatrix identity = MatrixUtils.createRealIdentityMatrix(dim);
@@ -157,6 +177,49 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
+    public KalmanFilterOperation<RealMatrix, RealMatrix> getOperationKalmanFilter(final int dim, final int nbMeasurements) {
+        return (transition, processNoise, observation, measurementNoise, state, covariance, measurement, updatedState, updatedCovariance) -> {
+
+            double[] predictedState = transition.operate(state.getColumn(0));
+            RealMatrix predicted = transition.multiply(covariance).multiplyTransposed(transition).add(processNoise);
+
+            RealMatrix projected = observation.multiply(predicted);
+            RealMatrix innovationCovariance = projected.multiplyTransposed(observation).add(measurementNoise);
+            double[] innovation = observation.operate(predictedState);
+            for (int i = 0; i < nbMeasurements; i++) {
+                innovation[i] = measurement.getEntry(i, 0) - innovation[i];
+            }
+
+            // [K]^T = [S]^-1[H][P]-
+            CholeskyDecomposition cholesky = new CholeskyDecomposition(innovationCovariance, RELATIVE_SYMMETRY_THRESHOLD,
+                    CholeskyDecomposition.DEFAULT_ABSOLUTE_POSITIVITY_THRESHOLD);
+            RealMatrix gainTransposed = cholesky.getSolver().solve(projected);
+
+            double[] correction = gainTransposed.preMultiply(innovation);
+            for (int i = 0; i < dim; i++) {
+                correction[i] += predictedState[i];
+            }
+            updatedState.setColumn(0, correction);
+            this.copy(predicted.subtract(gainTransposed.transposeMultiply(projected)), updatedCovariance);
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMinimumNormSolver(final int numbEquations, final int numbVariables) {
+        // The SVD solver solves with the pseudoinverse – the minimum norm solution
+        return (body, rhs) -> Hipparchus.solve(new SingularValueDecomposition(body).getSolver(), rhs);
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMultiplyMatrixVector(final boolean transpose) {
+        // Hipparchus' matrix-vector multiplications work with arrays
+        if (transpose) {
+            return (matrix, vector, product) -> product.setColumn(0, matrix.preMultiply(vector.getColumn(0)));
+        }
+        return (matrix, vector, product) -> product.setColumn(0, matrix.operate(vector.getColumn(0)));
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMultiplyToProduce() {
         return RealMatrix::multiply;
     }
@@ -167,8 +230,39 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
+    public PreparingOperation<RealMatrix, RealMatrix> getOperationRepeatedSolver(final int dim) {
+        return body -> {
+            DecompositionSolver solver = new LUDecomposition(body).getSolver();
+            return rhs -> Hipparchus.solve(solver, rhs);
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationRidgeRegression(final int numbEquations, final int numbVariables,
+            final double lambda) {
+        return (design, observations) -> {
+
+            RealMatrix gram = design.transposeMultiply(design);
+            for (int i = 0; i < numbVariables; i++) {
+                gram.addToEntry(i, i, lambda);
+            }
+            double[] moment = design.preMultiply(observations.getColumn(0));
+
+            CholeskyDecomposition cholesky = new CholeskyDecomposition(gram, RELATIVE_SYMMETRY_THRESHOLD,
+                    CholeskyDecomposition.DEFAULT_ABSOLUTE_POSITIVITY_THRESHOLD);
+            return MatrixUtils.createColumnRealMatrix(cholesky.getSolver().solve(new ArrayRealVector(moment, false)).toArray());
+        };
+    }
+
+    @Override
     public MutatingBinaryMatrixScalarOperation<RealMatrix, RealMatrix> getOperationScale() {
         return (a, s, b) -> this.copy(a.scalarMultiply(s), b);
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationSingularValues(final int dim) {
+        // There is no values only option – the singular vectors are always calculated
+        return matrix -> MatrixUtils.createColumnRealMatrix(new SingularValueDecomposition(matrix).getSingularValues());
     }
 
     @Override
@@ -176,6 +270,27 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
 
         RealMatrix[] ret = this.makeArray(3);
 
+        return matrix -> {
+            SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
+            ret[0] = svd.getU();
+            ret[1] = svd.getS();
+            ret[2] = svd.getVT();
+            return ret;
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationSymmetricIndefiniteSolver(final int dim) {
+        // No symmetric indefinite solver, so LU
+        return this.getOperationEquationSystemSolver(dim, dim, 1, false);
+    }
+
+    @Override
+    public DecompositionOperation<RealMatrix, RealMatrix> getOperationThinSVD(final int numbRows, final int numbCols) {
+
+        RealMatrix[] ret = this.makeArray(3);
+
+        // The decomposition is compact – [U] is numbRows x numbCols
         return matrix -> {
             SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
             ret[0] = svd.getU();

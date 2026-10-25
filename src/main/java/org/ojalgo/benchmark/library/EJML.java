@@ -37,9 +37,11 @@ import org.ejml.simple.ops.SimpleOperations_DDRM;
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
@@ -84,6 +86,29 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
         // Reused, rather than CommonOps_DDRM.det(...) creating a new decomposition every time
         LUDecomposition_F64<DMatrixRMaj> lu = DecompositionFactory_DDRM.lu(dim, dim);
         return a -> lu.decompose(a) ? lu.computeDeterminant().real : 0.0;
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationEigenvalues(final int dim) {
+
+        EigenDecomposition_F64<DMatrixRMaj> evd = DecompositionFactory_DDRM.eig(dim, false, true);
+        // The decomposition works in place – copy into a preallocated matrix
+        DMatrixRMaj work = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj values = new DMatrixRMaj(dim, 1);
+
+        return input -> {
+
+            work.setTo(input);
+            if (!evd.decompose(work)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
+
+            for (int i = 0; i < dim; i++) {
+                values.data[i] = evd.getEigenvalue(i).real;
+            }
+
+            return values;
+        };
     }
 
     @Override
@@ -150,8 +175,9 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationFillByMultiplying(final boolean transpL, final boolean transpR) {
-        // multTransB and multTransAB have no variant that switches to the concurrent implementation. multTransB is
-        // always concurrent – measured faster on 10-1000 (it loses below 100)
+        // multTransB and multTransAB have no variant that switches to the concurrent implementation, so the choice is
+        // static: multTransB always concurrent, multTransAB always single-threaded. The concurrent multTransB pays for
+        // the threading at every size – about 12 µs per call at 10x10, where mult takes 0.3 µs
         if (transpL) {
             if (transpR) {
                 return CommonOps_DDRM::multTransAB;
@@ -165,6 +191,12 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationGram() {
+        // Measured faster on 10-1000 than CommonOps_DDRM.multInner, and than multTransA (no switching variant for multInner)
+        return CommonOps_MT_DDRM::multInner;
+    }
+
+    @Override
     public MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationInvert(final int dim, final boolean spd) {
         // Reused, rather than CommonOps_DDRM.invert(...) / CovarianceOps_DDRM.invert(...) creating a new solver every time
         LinearSolverDense<DMatrixRMaj> solver = spd ? new LinearSolverSafe<>(LinearSolverFactory_DDRM.symmPosDef(dim)) : LinearSolverFactory_DDRM.linear(dim);
@@ -174,6 +206,74 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
             }
             solver.invert(inv);
         };
+    }
+
+    @Override
+    public KalmanFilterOperation<DMatrixRMaj, DMatrixRMaj> getOperationKalmanFilter(final int dim, final int nbMeasurements) {
+
+        DMatrixRMaj predictedState = new DMatrixRMaj(dim, 1);
+        DMatrixRMaj transformed = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj predicted = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj projected = new DMatrixRMaj(nbMeasurements, dim);
+        DMatrixRMaj innovationCovariance = new DMatrixRMaj(nbMeasurements, nbMeasurements);
+        DMatrixRMaj innovation = new DMatrixRMaj(nbMeasurements, 1);
+        DMatrixRMaj gainTransposed = new DMatrixRMaj(nbMeasurements, dim);
+        DMatrixRMaj correction = new DMatrixRMaj(dim, dim);
+
+        // The innovation covariance is workspace – may be modified, no LinearSolverSafe
+        LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.symmPosDef(nbMeasurements);
+
+        // The multiplications as in getOperationFillByMultiplying, and the matrix-vector ones as in getOperationMultiplyMatrixVector
+        return (transition, processNoise, observation, measurementNoise, state, covariance, measurement, updatedState, updatedCovariance) -> {
+
+            CommonOps_DDRM.mult(transition, state, predictedState);
+            OPERATIONS.mult(transition, covariance, transformed);
+            CommonOps_MT_DDRM.multTransB(transformed, transition, predicted);
+            CommonOps_DDRM.addEquals(predicted, processNoise);
+
+            OPERATIONS.mult(observation, predicted, projected);
+            CommonOps_MT_DDRM.multTransB(projected, observation, innovationCovariance);
+            CommonOps_DDRM.addEquals(innovationCovariance, measurementNoise);
+            CommonOps_DDRM.mult(observation, predictedState, innovation);
+            CommonOps_DDRM.subtract(measurement, innovation, innovation);
+
+            // [K]^T = [S]^-1[H][P]-
+            if (!solver.setA(innovationCovariance)) {
+                throw new BenchmarkRequirementsException();
+            }
+            solver.solve(projected, gainTransposed);
+
+            CommonOps_DDRM.multTransA(gainTransposed, innovation, updatedState);
+            CommonOps_DDRM.addEquals(updatedState, predictedState);
+            OPERATIONS.multTransA(gainTransposed, projected, correction);
+            CommonOps_DDRM.subtract(predicted, correction, updatedCovariance);
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationMinimumNormSolver(final int numbEquations, final int numbVariables) {
+
+        // SVD – QR with column pivoting, leastSquaresQrPivot(true, false), misjudges the rank: its threshold, machine epsilon times the largest
+        // element, is not scaled by the size, and rounding errors are taken for (huge) contributions to the solution
+        LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.pseudoInverse(true));
+        DMatrixRMaj result = new DMatrixRMaj(numbVariables, 1);
+
+        return (body, rhs) -> {
+            if (!solver.setA(body)) {
+                throw new BenchmarkRequirementsException();
+            }
+            solver.solve(rhs, result);
+            return result;
+        };
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationMultiplyMatrixVector(final boolean transpose) {
+        // CommonOps_DDRM has dedicated matrix-vector implementations, used when the right factor is a vector
+        if (transpose) {
+            return CommonOps_DDRM::multTransA;
+        }
+        return CommonOps_DDRM::mult;
     }
 
     @Override
@@ -199,8 +299,70 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public PreparingOperation<DMatrixRMaj, DMatrixRMaj> getOperationRepeatedSolver(final int dim) {
+        return body -> {
+
+            LinearSolverDense<DMatrixRMaj> solver = new LinearSolverSafe<>(LinearSolverFactory_DDRM.linear(dim));
+            if (!solver.setA(body)) {
+                throw new BenchmarkRequirementsException();
+            }
+
+            DMatrixRMaj result = new DMatrixRMaj(dim, 1);
+
+            return rhs -> {
+                solver.solve(rhs, result);
+                return result;
+            };
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationRidgeRegression(final int numbEquations, final int numbVariables,
+            final double lambda) {
+
+        DMatrixRMaj gram = new DMatrixRMaj(numbVariables, numbVariables);
+        DMatrixRMaj moment = new DMatrixRMaj(numbVariables, 1);
+        DMatrixRMaj result = new DMatrixRMaj(numbVariables, 1);
+
+        // The Gram matrix is workspace – may be modified, no LinearSolverSafe
+        LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.symmPosDef(numbVariables);
+
+        MutatingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> multiplication = this.getOperationGram();
+
+        return (design, observations) -> {
+
+            multiplication.operate(design, gram);
+            for (int i = 0; i < numbVariables; i++) {
+                gram.add(i, i, lambda);
+            }
+            CommonOps_DDRM.multTransA(design, observations, moment);
+
+            if (!solver.setA(gram)) {
+                throw new BenchmarkRequirementsException();
+            }
+            solver.solve(moment, result);
+            return result;
+        };
+    }
+
+    @Override
     public MutatingBinaryMatrixScalarOperation<DMatrixRMaj, DMatrixRMaj> getOperationScale() {
         return (a, s, b) -> CommonOps_DDRM.scale(s, a, b);
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationSingularValues(final int dim) {
+
+        SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(dim, dim, false, false, true);
+        DMatrixRMaj values = new DMatrixRMaj(dim, 1);
+
+        return matrix -> {
+            if (!svd.decompose(matrix)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
+            System.arraycopy(svd.getSingularValues(), 0, values.data, 0, dim);
+            return values;
+        };
     }
 
     @Override
@@ -215,6 +377,33 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
         return matrix -> {
             svd.decompose(matrix);
+            ret[0] = svd.getU(mtrxU, false);
+            ret[1] = svd.getW(mtrxW);
+            ret[2] = svd.getV(mtrxV, true);
+            return ret;
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationSymmetricIndefiniteSolver(final int dim) {
+        // EJML's LDL requires positive definite – no symmetric indefinite solver, so LU
+        return this.getOperationEquationSystemSolver(dim, dim, 1, false);
+    }
+
+    @Override
+    public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationThinSVD(final int numbRows, final int numbCols) {
+
+        DMatrixRMaj[] ret = this.makeArray(3);
+        SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(numbRows, numbCols, true, true, true);
+
+        DMatrixRMaj mtrxU = new DMatrixRMaj(numbRows, numbCols);
+        DMatrixRMaj mtrxW = new DMatrixRMaj(numbCols, numbCols);
+        DMatrixRMaj mtrxV = new DMatrixRMaj(numbCols, numbCols);
+
+        return matrix -> {
+            if (!svd.decompose(matrix)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
             ret[0] = svd.getU(mtrxU, false);
             ret[1] = svd.getW(mtrxW);
             ret[2] = svd.getV(mtrxV, true);

@@ -26,9 +26,11 @@ import static smile.linalg.Transpose.TRANSPOSE;
 
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
 import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
@@ -37,6 +39,7 @@ import smile.linalg.NativeLibrary;
 import smile.linalg.UPLO;
 import smile.tensor.DenseMatrix;
 import smile.tensor.EVD;
+import smile.tensor.LU;
 import smile.tensor.ScalarType;
 import smile.tensor.SVD;
 
@@ -102,6 +105,12 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
     }
 
     @Override
+    public ProducingUnaryMatrixOperation<DenseMatrix, DenseMatrix> getOperationEigenvalues(final int dim) {
+        // Flagged as symmetric, to get the symmetric algorithm
+        return matrix -> matrix.copy().withUplo(UPLO.LOWER).eigen(false, false).wr();
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationEquationSystemSolver(final int numbEquations, final int numbVariables,
             final int numbSolutions, final boolean spd) {
         if (numbEquations == numbVariables) {
@@ -150,6 +159,12 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
     }
 
     @Override
+    public MutatingUnaryMatrixOperation<DenseMatrix, DenseMatrix> getOperationGram() {
+        // What ata() does, but into the preallocated product
+        return (matrix, product) -> DenseMatrix.mm(1.0, TRANSPOSE, matrix, NO_TRANSPOSE, matrix, 0.0, product);
+    }
+
+    @Override
     public MutatingUnaryMatrixOperation<DenseMatrix, DenseMatrix> getOperationInvert(final int dim, final boolean spd) {
         // Solve against the identity, directly in result – what inverse() does, without allocating the identity and the inverse
         DenseMatrix identity = DenseMatrix.eye(ScalarType.Float64, dim);
@@ -157,6 +172,54 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
             return (matA, result) -> matA.copy().withUplo(UPLO.UPPER).cholesky().solve(this.copy(identity, result));
         }
         return (matA, result) -> matA.copy().lu().solve(this.copy(identity, result));
+    }
+
+    @Override
+    public KalmanFilterOperation<DenseMatrix, DenseMatrix> getOperationKalmanFilter(final int dim, final int nbMeasurements) {
+
+        DenseMatrix predictedState = DenseMatrix.zeros(ScalarType.Float64, dim, 1);
+        DenseMatrix transformed = DenseMatrix.zeros(ScalarType.Float64, dim, dim);
+        DenseMatrix predicted = DenseMatrix.zeros(ScalarType.Float64, dim, dim);
+        DenseMatrix projected = DenseMatrix.zeros(ScalarType.Float64, nbMeasurements, dim);
+        // UPPER – as in getOperationEquationSystemSolver, SMILE's pure Java Cholesky then runs down columns
+        DenseMatrix innovationCovariance = DenseMatrix.zeros(ScalarType.Float64, nbMeasurements, nbMeasurements).withUplo(UPLO.UPPER);
+        DenseMatrix innovation = DenseMatrix.zeros(ScalarType.Float64, nbMeasurements, 1);
+        DenseMatrix gainTransposed = DenseMatrix.zeros(ScalarType.Float64, nbMeasurements, dim);
+
+        return (transition, processNoise, observation, measurementNoise, state, covariance, measurement, updatedState, updatedCovariance) -> {
+
+            transition.mv(NO_TRANSPOSE, 1.0, state.column(0), 0.0, predictedState.column(0));
+            DenseMatrix.mm(1.0, NO_TRANSPOSE, transition, NO_TRANSPOSE, covariance, 0.0, transformed);
+            this.copy(processNoise, predicted);
+            DenseMatrix.mm(1.0, NO_TRANSPOSE, transformed, TRANSPOSE, transition, 1.0, predicted);
+
+            DenseMatrix.mm(1.0, NO_TRANSPOSE, observation, NO_TRANSPOSE, predicted, 0.0, projected);
+            this.copy(measurementNoise, innovationCovariance);
+            DenseMatrix.mm(1.0, NO_TRANSPOSE, projected, TRANSPOSE, observation, 1.0, innovationCovariance);
+            this.copy(measurement, innovation);
+            observation.mv(NO_TRANSPOSE, -1.0, predictedState.column(0), 1.0, innovation.column(0));
+
+            // [K]^T = [S]^-1[H][P]- – the Cholesky decomposition overwrites the innovation covariance, and the solve the right hand side
+            this.copy(projected, gainTransposed);
+            innovationCovariance.cholesky().solve(gainTransposed);
+
+            this.copy(predictedState, updatedState);
+            gainTransposed.mv(TRANSPOSE, 1.0, innovation.column(0), 1.0, updatedState.column(0));
+            this.copy(predicted, updatedCovariance);
+            DenseMatrix.mm(-1.0, TRANSPOSE, gainTransposed, NO_TRANSPOSE, projected, 1.0, updatedCovariance);
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationMinimumNormSolver(final int numbEquations, final int numbVariables) {
+        // The SVD solve only uses the singular values above the rank threshold – the minimum norm solution
+        return (body, rhs) -> body.copy().svd(true).solve(rhs.column(0));
+    }
+
+    @Override
+    public MutatingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationMultiplyMatrixVector(final boolean transpose) {
+        // The vectors as Vector views of the single column matrices
+        return (matrix, vector, product) -> matrix.mv(transpose ? TRANSPOSE : NO_TRANSPOSE, 1.0, vector.column(0), 0.0, product.column(0));
     }
 
     @Override
@@ -170,8 +233,49 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
     }
 
     @Override
+    public PreparingOperation<DenseMatrix, DenseMatrix> getOperationRepeatedSolver(final int dim) {
+        return body -> {
+
+            LU lu = body.copy().lu();
+            DenseMatrix solution = DenseMatrix.zeros(ScalarType.Float64, dim, 1);
+
+            // The solve overwrites the right hand side
+            return rhs -> {
+                lu.solve(this.copy(rhs, solution));
+                return solution;
+            };
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationRidgeRegression(final int numbEquations, final int numbVariables,
+            final double lambda) {
+
+        DenseMatrix gram = DenseMatrix.zeros(ScalarType.Float64, numbVariables, numbVariables).withUplo(UPLO.UPPER);
+        DenseMatrix solution = DenseMatrix.zeros(ScalarType.Float64, numbVariables, 1);
+
+        return (design, observations) -> {
+
+            DenseMatrix.mm(1.0, TRANSPOSE, design, NO_TRANSPOSE, design, 0.0, gram);
+            for (int i = 0; i < numbVariables; i++) {
+                gram.add(i, i, lambda);
+            }
+            design.mv(TRANSPOSE, 1.0, observations.column(0), 0.0, solution.column(0));
+
+            // The Cholesky decomposition overwrites the Gram matrix, and the solve the right hand side
+            gram.cholesky().solve(solution);
+            return solution;
+        };
+    }
+
+    @Override
     public MutatingBinaryMatrixScalarOperation<DenseMatrix, DenseMatrix> getOperationScale() {
         return (a, s, b) -> this.copy(a, b).scale(s);
+    }
+
+    @Override
+    public ProducingUnaryMatrixOperation<DenseMatrix, DenseMatrix> getOperationSingularValues(final int dim) {
+        return matrix -> matrix.copy().svd(false).s();
     }
 
     @Override
@@ -185,6 +289,30 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
             SVD svd = matrix.copy().svd(true);
             ret[0] = svd.U();
             ret[1] = svd.diag();
+            ret[2] = svd.Vt();
+            return ret;
+        };
+    }
+
+    @Override
+    public ProducingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationSymmetricIndefiniteSolver(final int dim) {
+        // No symmetric indefinite solver, so LU
+        return this.getOperationEquationSystemSolver(dim, dim, 1, false);
+    }
+
+    @Override
+    public DecompositionOperation<DenseMatrix, DenseMatrix> getOperationThinSVD(final int numbRows, final int numbCols) {
+
+        DenseMatrix[] ret = this.makeArray(3);
+
+        // The decomposition is compact – [U] is numbRows x numbCols
+        return matrix -> {
+            // Release the previous results first – at large sizes they don't fit in memory alongside the workspace
+            ret[0] = ret[1] = ret[2] = null;
+            SVD svd = matrix.copy().svd(true);
+            ret[0] = svd.U();
+            // Not diag() – it is numbRows x numbCols
+            ret[1] = DenseMatrix.diagflat(svd.s().toArray(new double[numbCols]));
             ret[2] = svd.Vt();
             return ret;
         };
