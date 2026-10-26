@@ -36,9 +36,10 @@ import org.openjdk.jmh.runner.RunnerException;
  * quadratic program: [H A<sup>T</sup>; A 0][x; y] = [c; d].
  * <dl>
  * <dt>Input</dt>
- * <dd>The body, dim x dim, with m = dim/3 constraints and n = dim - m variables: [H], n x n, symmetric positive
- * definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1), and [A], m x n, uniform in [-1, 1). The right
- * hand side, dim x 1, uniform in [-1, 1). (Below dim = 3 there are no constraints – the body is [H].)</dd>
+ * <dd>The body, dim x dim, with m = dim/3 constraints and n = dim - m variables: [H], n x n, symmetric
+ * positive definite, [a][a]<sup>T</sup> + [I] with [a] uniform in [-1, 1), and [A], m x n, uniform in [-1,
+ * 1). The right hand side, dim x 1, uniform in [-1, 1). (Below dim = 3 there are no constraints – the body is
+ * [H].)</dd>
  * <dt>Measured</dt>
  * <dd>Solving for [x; y], from scratch every invocation. The library may exploit that the body is symmetric
  * (LDL<sup>T</sup> with symmetric pivoting), but not its KKT structure. A library that has no symmetric

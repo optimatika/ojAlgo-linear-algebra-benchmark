@@ -37,16 +37,16 @@ import org.openjdk.jmh.runner.RunnerException;
  * <dt>Input</dt>
  * <dd>[A], dim x dim, and [b], dim x 1, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Solving for [x] using the decomposition of [A] – typically LU – that was calculated in setup, and is not
- * measured. Unlike in the other benchmarks, every invocation reuses that decomposition – that is what is
- * measured: the substitutions repeated by e.g. Newton methods with a fixed Jacobian, or implicit time stepping,
- * instead of multiplying with an inverse.</dd>
+ * <dd>Solving for [x] using the decomposition of [A] – typically LU – that was calculated in setup, and is
+ * not measured. Unlike in the other benchmarks, every invocation reuses that decomposition – that is what is
+ * measured: the substitutions repeated by e.g. Newton methods with a fixed Jacobian, or implicit time
+ * stepping, instead of multiplying with an inverse.</dd>
  * <dt>Required</dt>
  * <dd>A small residual: |[A][x] - [b]| within a tolerance scaled by dim and |[A]||[x]| + |[b]|
  * ({@code verifySolution}).</dd>
  * <dt>Java Matrix Benchmark</dt>
- * <dd>Not part of it. What an inverse is typically calculated for (compare InvertGeneral), without calculating
- * it.</dd>
+ * <dd>Not part of it. What an inverse is typically calculated for (compare InvertGeneral), without
+ * calculating it.</dd>
  * </dl>
  * The rules that apply to all benchmarks are described in {@link MatrixBenchmarkOperation}.
  */

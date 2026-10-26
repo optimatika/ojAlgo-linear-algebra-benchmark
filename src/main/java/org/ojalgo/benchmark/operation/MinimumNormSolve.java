@@ -35,9 +35,9 @@ import org.openjdk.jmh.runner.RunnerException;
  * Solving a rank deficient least squares problem: the [x] of minimum norm that minimises |[A][x] - [b]|.
  * <dl>
  * <dt>Input</dt>
- * <dd>[A], dim x dim, of rank (dim + 1)/2: those first columns uniform in [-1, 1), and the others random linear
- * combinations of them (the multipliers uniform in [-1, 1)). [b], dim x 1, uniform in [-1, 1) – not in the range
- * of [A]. The library must find the rank itself.</dd>
+ * <dd>[A], dim x dim, of rank (dim + 1)/2: those first columns uniform in [-1, 1), and the others random
+ * linear combinations of them (the multipliers uniform in [-1, 1)). [b], dim x 1, uniform in [-1, 1) – not in
+ * the range of [A]. The library must find the rank itself.</dd>
  * <dt>Measured</dt>
  * <dd>Solving for [x] – typically an SVD, or a QR decomposition with column pivoting – from scratch every
  * invocation. Nothing may be reused from a previous invocation.</dd>

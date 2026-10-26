@@ -32,14 +32,14 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * The Gram matrix of a tall matrix: [C] = [A]<sup>T</sup>[A] – as in the normal equations of least squares, or
- * a covariance matrix.
+ * The Gram matrix of a tall matrix: [C] = [A]<sup>T</sup>[A] – as in the normal equations of least squares,
+ * or a covariance matrix.
  * <dl>
  * <dt>Input</dt>
  * <dd>[A], (RATIO*dim) x dim (RATIO = 3, as in LeastSquaresSolver), random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Calculating [A]<sup>T</sup>[A] into the preallocated [C], dim x dim. The library may exploit that [C] is
- * symmetric, but must deliver all of it – not only a triangle.</dd>
+ * <dd>Calculating [A]<sup>T</sup>[A] into the preallocated [C], dim x dim. The library may exploit that [C]
+ * is symmetric, but must deliver all of it – not only a triangle.</dd>
  * <dt>Required</dt>
  * <dd>The product, checked by multiplying with a random vector: [A]<sup>T</sup>([A][x]) = [C][x]
  * ({@code verifyProduct}).</dd>

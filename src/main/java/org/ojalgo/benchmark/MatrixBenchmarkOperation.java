@@ -109,15 +109,15 @@ public abstract class MatrixBenchmarkOperation {
 
     /**
      * One step, predict and update, of a Kalman filter. The model – transition [F], process noise [Q],
-     * observation [H] and measurement noise [R] – the state [x], its covariance [P] and the measurement [z] are
-     * inputs. The updated state and covariance are written to the preallocated results.
+     * observation [H] and measurement noise [R] – the state [x], its covariance [P] and the measurement [z]
+     * are inputs. The updated state and covariance are written to the preallocated results.
      */
     @FunctionalInterface
     public interface KalmanFilterOperation<I, T extends I> {
 
         @SuppressWarnings("unchecked")
-        default Object execute(final Object transition, final Object processNoise, final Object observation, final Object measurementNoise,
-                final Object state, final Object covariance, final Object measurement, final Object updatedState, final Object updatedCovariance) {
+        default Object execute(final Object transition, final Object processNoise, final Object observation, final Object measurementNoise, final Object state,
+                final Object covariance, final Object measurement, final Object updatedState, final Object updatedCovariance) {
             try {
                 this.operate((I) transition, (I) processNoise, (I) observation, (I) measurementNoise, (I) state, (I) covariance, (I) measurement,
                         (T) updatedState, (T) updatedCovariance);
@@ -128,8 +128,8 @@ public abstract class MatrixBenchmarkOperation {
             return updatedCovariance;
         }
 
-        void operate(I transition, I processNoise, I observation, I measurementNoise, I state, I covariance, I measurement, T updatedState,
-                T updatedCovariance) throws Exception;
+        void operate(I transition, I processNoise, I observation, I measurementNoise, I state, I covariance, I measurement, T updatedState, T updatedCovariance)
+                throws Exception;
 
     }
 
@@ -340,10 +340,10 @@ public abstract class MatrixBenchmarkOperation {
 
     /**
      * Settings for results to publish, that still run reasonably fast: 1 fork, throughput. The heap is large
-     * enough for decompositions of 10000x10000 matrices. The number of forks, the iteration time, the number of
-     * iterations and the time unit are set per {@link Size}. No result file – asking for a result format, or a
-     * result file, makes JMH create the file before the run (empty) – {@link #run(Class, Size, Path)} writes it
-     * when the run is complete.
+     * enough for decompositions of 10000x10000 matrices. The number of forks, the iteration time, the number
+     * of iterations and the time unit are set per {@link Size}. No result file – asking for a result format,
+     * or a result file, makes JMH create the file before the run (empty) – {@link #run(Class, Size, Path)}
+     * writes it when the run is complete.
      */
     public static ChainedOptionsBuilder options() {
         return new OptionsBuilder().forks(1).warmupIterations(3).measurementIterations(5).mode(Mode.Throughput).timeUnit(TimeUnit.MINUTES)
@@ -379,8 +379,8 @@ public abstract class MatrixBenchmarkOperation {
     /**
      * As {@link #run(Class, Size)}, but writes the result file to the given directory. The file is written
      * (CSV) from the results JMH returns, after the run, and only if every dim/lib combination has a result –
-     * JMH completes a run also when some forks fail (a wrong result, an exception, a timeout…), skipping those
-     * combinations. An interrupted, or partly failed, run leaves no result file.
+     * JMH completes a run also when some forks fail (a wrong result, an exception, a timeout…), skipping
+     * those combinations. An interrupted, or partly failed, run leaves no result file.
      *
      * @return true if every dim/lib combination produced a result, and the result file was written
      */
@@ -955,12 +955,13 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
-     * One step of a Kalman filter: predict, [x]<sup>-</sup> = [F][x] and [P]<sup>-</sup> = [F][P][F]<sup>T</sup> +
-     * [Q], then update with the measurement [z]. With the measurement noise [R] diagonal, the update can be
-     * checked without inverting anything: the updated covariance is [P]<sup>+</sup> = (([P]<sup>-</sup>)<sup>-1</sup> +
-     * [H]<sup>T</sup>[R]<sup>-1</sup>[H])<sup>-1</sup>, so [P]<sup>-</sup>[v] = [P]<sup>+</sup>([v] +
-     * [H]<sup>T</sup>[R]<sup>-1</sup>[H][P]<sup>-</sup>[v]) for a random vector [v], and the updated state is
-     * [x]<sup>+</sup> = [x]<sup>-</sup> + [P]<sup>+</sup>[H]<sup>T</sup>[R]<sup>-1</sup>([z] - [H][x]<sup>-</sup>).
+     * One step of a Kalman filter: predict, [x]<sup>-</sup> = [F][x] and [P]<sup>-</sup> =
+     * [F][P][F]<sup>T</sup> + [Q], then update with the measurement [z]. With the measurement noise [R]
+     * diagonal, the update can be checked without inverting anything: the updated covariance is
+     * [P]<sup>+</sup> = (([P]<sup>-</sup>)<sup>-1</sup> + [H]<sup>T</sup>[R]<sup>-1</sup>[H])<sup>-1</sup>,
+     * so [P]<sup>-</sup>[v] = [P]<sup>+</sup>([v] + [H]<sup>T</sup>[R]<sup>-1</sup>[H][P]<sup>-</sup>[v]) for
+     * a random vector [v], and the updated state is [x]<sup>+</sup> = [x]<sup>-</sup> +
+     * [P]<sup>+</sup>[H]<sup>T</sup>[R]<sup>-1</sup>([z] - [H][x]<sup>-</sup>).
      */
     protected void verifyKalmanUpdate(final Object transition, final Object processNoise, final Object observation, final Object measurementNoise,
             final Object state, final Object covariance, final Object measurement, final Object updatedState, final Object updatedCovariance)
@@ -983,7 +984,8 @@ public abstract class MatrixBenchmarkOperation {
         double normUpdated = this.norm(updatedCovariance);
 
         double[] vector = MatrixBenchmarkOperation.random(dim);
-        double[] predicted = MatrixBenchmarkOperation.add(this.multiply(transition, false, this.multiply(covariance, false, this.multiply(transition, true, vector))),
+        double[] predicted = MatrixBenchmarkOperation.add(
+                this.multiply(transition, false, this.multiply(covariance, false, this.multiply(transition, true, vector))),
                 this.multiply(processNoise, false, vector));
         double[] weighted = this.multiply(observation, false, predicted);
         for (int i = 0; i < nbMeasurements; i++) {
@@ -991,7 +993,8 @@ public abstract class MatrixBenchmarkOperation {
         }
         double[] information = this.multiply(observation, true, weighted);
 
-        double[] residual = MatrixBenchmarkOperation.subtract(predicted, this.multiply(updatedCovariance, false, MatrixBenchmarkOperation.add(vector, information)));
+        double[] residual = MatrixBenchmarkOperation.subtract(predicted,
+                this.multiply(updatedCovariance, false, MatrixBenchmarkOperation.add(vector, information)));
         MatrixBenchmarkOperation.check("Updated covariance", MatrixBenchmarkOperation.norm(residual),
                 dim * (normPredicted + normUpdated) * (MatrixBenchmarkOperation.norm(vector) + MatrixBenchmarkOperation.norm(information)));
 
@@ -1003,15 +1006,17 @@ public abstract class MatrixBenchmarkOperation {
         double[] gain = this.multiply(observation, true, innovation);
 
         double[] expected = MatrixBenchmarkOperation.add(predictedState, this.multiply(updatedCovariance, false, gain));
-        MatrixBenchmarkOperation.check("Updated state", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(this.column(updatedState, 0), expected)),
+        MatrixBenchmarkOperation.check("Updated state",
+                MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(this.column(updatedState, 0), expected)),
                 dim * (MatrixBenchmarkOperation.norm(predictedState) + (normPredicted + normUpdated) * MatrixBenchmarkOperation.norm(gain)));
     }
 
     /**
-     * Rank deficient least squares, with the body as {@link #makeRankDeficient(int, double[][], MatrixBenchmarkLibrary)}:
-     * the solution should satisfy the normal equations, [A]<sup>T</sup>([A][x] - [b]) = 0, and be orthogonal
-     * to the null space of [A] – the minimum norm solution. The null space is spanned by the columns of [-M;
-     * I], so x[rank + j] should be the sum over k of multipliers[k][j] times x[k].
+     * Rank deficient least squares, with the body as
+     * {@link #makeRankDeficient(int, double[][], MatrixBenchmarkLibrary)}: the solution should satisfy the
+     * normal equations, [A]<sup>T</sup>([A][x] - [b]) = 0, and be orthogonal to the null space of [A] – the
+     * minimum norm solution. The null space is spanned by the columns of [-M; I], so x[rank + j] should be
+     * the sum over k of multipliers[k][j] times x[k].
      */
     protected void verifyMinimumNormSolution(final Object body, final Object rhs, final Object solution, final double[][] multipliers)
             throws BenchmarkRequirementsException {
@@ -1084,8 +1089,8 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
-     * Ridge regression, minimise |[X][&beta;] - [y]|<sup>2</sup> + &lambda;|[&beta;]|<sup>2</sup>: the solution
-     * should satisfy [X]<sup>T</sup>([X][&beta;] - [y]) + &lambda;[&beta;] = 0.
+     * Ridge regression, minimise |[X][&beta;] - [y]|<sup>2</sup> + &lambda;|[&beta;]|<sup>2</sup>: the
+     * solution should satisfy [X]<sup>T</sup>([X][&beta;] - [y]) + &lambda;[&beta;] = 0.
      */
     protected void verifyRidgeSolution(final Object design, final Object observations, final double lambda, final Object solution)
             throws BenchmarkRequirementsException {
@@ -1110,8 +1115,8 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
-     * Checks a thin singular value decomposition, [A] = [U][S][V]<sup>T</sup> with [A] m x n and k = min(m, n):
-     * [U] m x k with orthonormal columns, [S] k x k diagonal and non-negative, [V]<sup>T</sup> k x n with
+     * Checks a thin singular value decomposition, [A] = [U][S][V]<sup>T</sup> with [A] m x n and k = min(m,
+     * n): [U] m x k with orthonormal columns, [S] k x k diagonal and non-negative, [V]<sup>T</sup> k x n with
      * orthonormal rows. The reconstruction and the orthonormality are checked by multiplying with random
      * vectors.
      */
@@ -1143,10 +1148,14 @@ public abstract class MatrixBenchmarkOperation {
 
         double[] coordinates = MatrixBenchmarkOperation.random(rank);
         double normLeft = this.norm(left);
-        MatrixBenchmarkOperation.check("U", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(this.multiply(left, true, this.multiply(left, false, coordinates)), coordinates)),
+        MatrixBenchmarkOperation.check("U",
+                MatrixBenchmarkOperation
+                        .norm(MatrixBenchmarkOperation.subtract(this.multiply(left, true, this.multiply(left, false, coordinates)), coordinates)),
                 nbRows * normLeft * normLeft * MatrixBenchmarkOperation.norm(coordinates));
         double normRight = this.norm(right);
-        MatrixBenchmarkOperation.check("V", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(this.multiply(right, false, this.multiply(right, true, coordinates)), coordinates)),
+        MatrixBenchmarkOperation.check("V",
+                MatrixBenchmarkOperation
+                        .norm(MatrixBenchmarkOperation.subtract(this.multiply(right, false, this.multiply(right, true, coordinates)), coordinates)),
                 nbCols * normRight * normRight * MatrixBenchmarkOperation.norm(coordinates));
     }
 

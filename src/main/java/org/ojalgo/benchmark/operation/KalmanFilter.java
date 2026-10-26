@@ -32,17 +32,17 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.runner.RunnerException;
 
 /**
- * One step of a Kalman filter: predict, [x]<sup>-</sup> = [F][x] and [P]<sup>-</sup> = [F][P][F]<sup>T</sup> +
- * [Q], then update with the measurement [z]: [S] = [H][P]<sup>-</sup>[H]<sup>T</sup> + [R], [K] =
+ * One step of a Kalman filter: predict, [x]<sup>-</sup> = [F][x] and [P]<sup>-</sup> = [F][P][F]<sup>T</sup>
+ * + [Q], then update with the measurement [z]: [S] = [H][P]<sup>-</sup>[H]<sup>T</sup> + [R], [K] =
  * [P]<sup>-</sup>[H]<sup>T</sup>[S]<sup>-1</sup>, [x]<sup>+</sup> = [x]<sup>-</sup> + [K]([z] -
  * [H][x]<sup>-</sup>) and [P]<sup>+</sup> = [P]<sup>-</sup> - [K][H][P]<sup>-</sup>.
  * <dl>
  * <dt>Input</dt>
- * <dd>dim states and m = max(1, dim/2) measurements. The transition [F], dim x dim, and the observation [H], m
- * x dim, uniform in [-1/&radic;dim, 1/&radic;dim) – so their norms don't grow with dim. The covariances [P] and
- * [Q], dim x dim, [a][a]<sup>T</sup>/dim + [I] with [a] uniform in [-1, 1) – eigenvalues in [1, 2). The
- * measurement noise [R], m x m, diagonal, uniform in [1, 2). The state [x], dim x 1, and the measurement [z], m
- * x 1, uniform in [-1, 1).</dd>
+ * <dd>dim states and m = max(1, dim/2) measurements. The transition [F], dim x dim, and the observation [H],
+ * m x dim, uniform in [-1/&radic;dim, 1/&radic;dim) – so their norms don't grow with dim. The covariances [P]
+ * and [Q], dim x dim, [a][a]<sup>T</sup>/dim + [I] with [a] uniform in [-1, 1) – eigenvalues in [1, 2). The
+ * measurement noise [R], m x m, diagonal, uniform in [1, 2). The state [x], dim x 1, and the measurement [z],
+ * m x 1, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
  * <dd>The step, into the preallocated [x]<sup>+</sup> and [P]<sup>+</sup>, every invocation from the same [x]
  * and [P]. Workspace for the intermediate results is preallocated in setup, as it would be in a filter loop.

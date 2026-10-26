@@ -9,8 +9,8 @@ import org.openjdk.jmh.runner.RunnerException;
  * computational kernel is covered about once, LU only by GeneralSolve, and nothing asks for an inverse or for
  * the factors of a decomposition unless the application needs them.
  * <ul>
- * <li>Kernels: FillByMultiplying, MultiplyTransposedLeft, MultiplyMatrixVector, MultiplyTransposedMatrixVector,
- * Gram</li>
+ * <li>Kernels: FillByMultiplying, MultiplyTransposedLeft, MultiplyMatrixVector,
+ * MultiplyTransposedMatrixVector, Gram</li>
  * <li>Solve: GeneralSolve, SymmetricSolve, SymmetricIndefiniteSolve, LeastSquaresSolver, MinimumNormSolve,
  * RepeatedSolve</li>
  * <li>Spectral: SymmetricEigenvalues, DecomposeEvD, SingularValues, ThinSVD</li>

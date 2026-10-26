@@ -36,15 +36,15 @@ import org.openjdk.jmh.runner.RunnerException;
  * &lambda;|[&beta;]|<sup>2</sup>, by solving ([X]<sup>T</sup>[X] + &lambda;[I])[&beta;] = [X]<sup>T</sup>[y].
  * <dl>
  * <dt>Input</dt>
- * <dd>[X], (RATIO*dim) x dim (RATIO = 3, as in LeastSquaresSolver), and [y], (RATIO*dim) x 1, random elements,
- * uniform in [-1, 1). &lambda; = 1.</dd>
+ * <dd>[X], (RATIO*dim) x dim (RATIO = 3, as in LeastSquaresSolver), and [y], (RATIO*dim) x 1, random
+ * elements, uniform in [-1, 1). &lambda; = 1.</dd>
  * <dt>Measured</dt>
- * <dd>Solving for [&beta;] – typically forming [X]<sup>T</sup>[X] + &lambda;[I] and [X]<sup>T</sup>[y], then a
- * Cholesky decomposition and a solve – from scratch every invocation. Workspace for the intermediate results is
- * preallocated in setup.</dd>
+ * <dd>Solving for [&beta;] – typically forming [X]<sup>T</sup>[X] + &lambda;[I] and [X]<sup>T</sup>[y], then
+ * a Cholesky decomposition and a solve – from scratch every invocation. Workspace for the intermediate
+ * results is preallocated in setup.</dd>
  * <dt>Required</dt>
- * <dd>[X]<sup>T</sup>([X][&beta;] - [y]) + &lambda;[&beta;] = 0, within a tolerance scaled by RATIO*dim and the
- * norms ({@code verifyRidgeSolution}).</dd>
+ * <dd>[X]<sup>T</sup>([X][&beta;] - [y]) + &lambda;[&beta;] = 0, within a tolerance scaled by RATIO*dim and
+ * the norms ({@code verifyRidgeSolution}).</dd>
  * <dt>Java Matrix Benchmark</dt>
  * <dd>Not part of it.</dd>
  * </dl>

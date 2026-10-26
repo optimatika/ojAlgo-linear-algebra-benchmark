@@ -37,8 +37,8 @@ import org.openjdk.jmh.runner.RunnerException;
  * <dt>Input</dt>
  * <dd>[A], dim x dim, and [x], dim x 1, random elements, uniform in [-1, 1).</dd>
  * <dt>Measured</dt>
- * <dd>Multiplying the transpose of [A] and [x] into the preallocated [y]. How the transpose is handled is up to
- * the library – any explicit transpose is part of what is measured.</dd>
+ * <dd>Multiplying the transpose of [A] and [x] into the preallocated [y]. How the transpose is handled is up
+ * to the library – any explicit transpose is part of what is measured.</dd>
  * <dt>Required</dt>
  * <dd>The product, [A]<sup>T</sup>[x] = [y], within a tolerance scaled by dim and the norms of [A] and [x]
  * ({@code verifyProduct}).</dd>
