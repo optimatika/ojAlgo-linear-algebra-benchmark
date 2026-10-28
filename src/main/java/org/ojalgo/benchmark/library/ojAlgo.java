@@ -25,20 +25,13 @@ import java.util.Optional;
 
 import org.ojalgo.array.operation.NativeLibrary;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.*;
 import org.ojalgo.function.UnaryFunction;
 import org.ojalgo.function.constant.PrimitiveMath;
 import org.ojalgo.matrix.decomposition.Cholesky;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.LU;
+import org.ojalgo.matrix.decomposition.QR;
 import org.ojalgo.matrix.decomposition.SingularValue;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
@@ -48,37 +41,59 @@ import org.ojalgo.matrix.task.InverterTask;
 import org.ojalgo.matrix.task.SolverTask;
 
 /**
- * oj! Algorithms – pure Java. Native code is switched off, even if the JVM grants native access.
- *
- * @see ojAlgoNative
+ * oj! Algorithms – the operations, common to {@link JVM} and {@link Native}. Those only differ in whether
+ * ojAlgo is allowed to use native code.
+ * <p>
+ * ojAlgo decides whether to use native code once, when {@link org.ojalgo.array.operation.NativeLibrary} is
+ * initialised, so the subclasses' constructors must run before ojAlgo performs any operation that could be
+ * delegated to native code. Each JMH fork benchmarks a single library, so that is satisfied as long as forks
+ * are used.
  */
-public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Store> {
-
-    public ojAlgo() {
-        this(false);
-    }
+public abstract class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Store> {
 
     /**
-     * ojAlgo decides whether to use native code once, when {@link NativeLibrary} is initialised, so this must
-     * happen before ojAlgo performs any operation that could be delegated to native code. Each JMH fork
-     * benchmarks a single library, so that is satisfied as long as forks are used.
+     * oj! Algorithms – pure Java. Native code is switched off, even if the JVM grants native access.
+     *
+     * @see Native
      */
-    ojAlgo(final boolean nativeCode) {
+    public static final class JVM extends ojAlgo {
 
-        super();
+        public JVM() {
 
-        if (!nativeCode) {
+            super();
+
             System.setProperty(NativeLibrary.PROPERTY_LIBRARY, NativeLibrary.NONE);
-        }
 
-        if (NativeLibrary.isAvailable() != nativeCode) {
-            if (nativeCode) {
-                throw new IllegalStateException(
-                        "No native BLAS available to ojAlgo! The (forked) JVM must be started with --enable-native-access=ALL-UNNAMED, and a native library must be found.");
-            } else {
+            if (NativeLibrary.isAvailable()) {
                 throw new IllegalStateException("Not able to switch off ojAlgo's native code – it was already initialised. Are you running without forks?");
             }
         }
+
+    }
+
+    /**
+     * oj! Algorithms – using native code (BLAS/LAPACK through the FFM API) where available. On macOS that is
+     * Accelerate, otherwise OpenBLAS, MKL… A specific library can be chosen with the system property
+     * <code>ojalgo.native.library</code>.
+     *
+     * @see JVM
+     */
+    public static final class Native extends ojAlgo {
+
+        public Native() {
+
+            super();
+
+            if (!NativeLibrary.isAvailable()) {
+                throw new IllegalStateException(
+                        "No native BLAS available to ojAlgo! The (forked) JVM must be started with --enable-native-access=ALL-UNNAMED, and a native library must be found.");
+            }
+        }
+
+    }
+
+    ojAlgo() {
+        super();
     }
 
     @Override
@@ -104,6 +119,20 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     @Override
     public MutatingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationAdd() {
         return (a, b, c) -> c.fillMatching(a, PrimitiveMath.ADD, b);
+    }
+
+    @Override
+    public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationCholesky(final int dim) {
+
+        MatrixStore<Double>[] ret = this.makeArray(1);
+
+        Cholesky<Double> cholesky = Cholesky.R064.make(dim, dim);
+
+        return matrix -> {
+            cholesky.decompose(matrix);
+            ret[0] = cholesky.getL();
+            return ret;
+        };
     }
 
     @Override
@@ -206,6 +235,24 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
     }
 
     @Override
+    public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationLU(final int dim) {
+
+        MatrixStore<Double>[] ret = this.makeArray(3);
+
+        LU<Double> lu = LU.R064.make(dim, dim);
+        MatrixStore<Double> identity = R064Store.FACTORY.makeIdentity(dim);
+
+        return matrix -> {
+            lu.decompose(matrix);
+            // [A] with its rows in the pivot order is [L][U] – [P] is the identity with its rows in that order
+            ret[0] = identity.rows(lu.getPivotOrder());
+            ret[1] = lu.getL();
+            ret[2] = lu.getU();
+            return ret;
+        };
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<MatrixStore<Double>, R064Store> getOperationMinimumNormSolver(final int numbEquations,
             final int numbVariables) {
 
@@ -238,6 +285,21 @@ public class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>, R064Stor
         return matrix -> {
             svd.decompose(matrix);
             return svd.getInverse(preallocated);
+        };
+    }
+
+    @Override
+    public DecompositionOperation<MatrixStore<Double>, MatrixStore<Double>> getOperationQR(final int dim) {
+
+        MatrixStore<Double>[] ret = this.makeArray(2);
+
+        QR<Double> qr = QR.R064.make(dim, dim);
+
+        return matrix -> {
+            qr.decompose(matrix);
+            ret[0] = qr.getQ();
+            ret[1] = qr.getR();
+            return ret;
         };
     }
 

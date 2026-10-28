@@ -29,27 +29,21 @@ import org.ejml.dense.row.EigenOps_DDRM;
 import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
+import org.ejml.interfaces.decomposition.CholeskyDecomposition_F64;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 import org.ejml.interfaces.decomposition.LUDecomposition_F64;
+import org.ejml.interfaces.decomposition.QRDecomposition;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.interfaces.linsol.LinearSolverDense;
 import org.ejml.simple.ops.SimpleOperations_DDRM;
 import org.ojalgo.benchmark.BenchmarkRequirementsException;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.*;
 
 /**
  * Efficient Java Matrix Library
  */
-public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
+public final class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
     /**
      * What SimpleMatrix uses – EJML's own switching to the concurrent implementations (CommonOps_MT_DDRM) for
@@ -63,6 +57,7 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
 
             private final DMatrixRMaj myMatrix = new DMatrixRMaj(numberOfRows, numberOfColumns);
 
+            @Override
             public DMatrixRMaj get() {
                 return myMatrix;
             }
@@ -79,6 +74,30 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationAdd() {
         return CommonOps_DDRM::add;
+    }
+
+    @Override
+    public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationCholesky(final int dim) {
+
+        DMatrixRMaj[] ret = this.makeArray(1);
+        // Lower, as LinearSolverFactory_DDRM.symmPosDef(...)
+        CholeskyDecomposition_F64<DMatrixRMaj> cholesky = DecompositionFactory_DDRM.chol(dim, true);
+        // The decomposition works in place – copy into a preallocated matrix, rather than decomposeSafe(...) allocating a copy every time
+        DMatrixRMaj work = new DMatrixRMaj(dim, dim);
+
+        DMatrixRMaj mtrxL = new DMatrixRMaj(dim, dim);
+
+        return input -> {
+
+            work.setTo(input);
+            if (!cholesky.decompose(work)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
+
+            ret[0] = cholesky.getT(mtrxL);
+
+            return ret;
+        };
     }
 
     @Override
@@ -251,6 +270,27 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
     }
 
     @Override
+    public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationLU(final int dim) {
+
+        DMatrixRMaj[] ret = this.makeArray(3);
+        LUDecomposition_F64<DMatrixRMaj> lu = DecompositionFactory_DDRM.lu(dim, dim);
+
+        DMatrixRMaj mtrxP = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj mtrxL = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj mtrxU = new DMatrixRMaj(dim, dim);
+
+        return matrix -> {
+            if (!lu.decompose(matrix)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
+            ret[0] = lu.getRowPivot(mtrxP);
+            ret[1] = lu.getLower(mtrxL);
+            ret[2] = lu.getUpper(mtrxU);
+            return ret;
+        };
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<DMatrixRMaj, DMatrixRMaj> getOperationMinimumNormSolver(final int numbEquations, final int numbVariables) {
 
         // SVD – QR with column pivoting, leastSquaresQrPivot(true, false), misjudges the rank: its threshold, machine epsilon times the largest
@@ -294,6 +334,25 @@ public class EJML extends MatrixBenchmarkLibrary<DMatrixRMaj, DMatrixRMaj> {
                 throw new RuntimeException();
             }
             solver.invert(ret);
+            return ret;
+        };
+    }
+
+    @Override
+    public DecompositionOperation<DMatrixRMaj, DMatrixRMaj> getOperationQR(final int dim) {
+
+        DMatrixRMaj[] ret = this.makeArray(2);
+        QRDecomposition<DMatrixRMaj> qr = DecompositionFactory_DDRM.qr(dim, dim);
+
+        DMatrixRMaj mtrxQ = new DMatrixRMaj(dim, dim);
+        DMatrixRMaj mtrxR = new DMatrixRMaj(dim, dim);
+
+        return matrix -> {
+            if (!qr.decompose(matrix)) {
+                throw new BenchmarkRequirementsException("Decomposition failed");
+            }
+            ret[0] = qr.getQ(mtrxQ, true);
+            ret[1] = qr.getR(mtrxR, true);
             return ret;
         };
     }

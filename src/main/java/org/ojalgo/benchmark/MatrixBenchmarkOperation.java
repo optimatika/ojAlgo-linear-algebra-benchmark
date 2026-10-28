@@ -764,6 +764,21 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
+     * Lower (or upper) triangular – all elements above (below) the diagonal exactly zero.
+     */
+    private boolean isTriangular(final Object matrix, final boolean lower) {
+        for (int j = 0, nbCols = library.getColDim(matrix); j < nbCols; j++) {
+            for (int i = 0, nbRows = library.getRowDim(matrix); i < nbRows; i++) {
+                // NaN must fail – it is not zero
+                if ((lower ? i < j : i > j) && library.get(matrix, i, j) != 0.0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * [matrix][vector] or, if transpose, [matrix]<sup>T</sup>[vector]
      */
     private double[] multiply(final Object matrix, final boolean transpose, final double[] vector) {
@@ -812,6 +827,36 @@ public abstract class MatrixBenchmarkOperation {
         return myReferenceDeterminant;
     }
 
+    /**
+     * A square permutation matrix – every element 0 or 1, and exactly one 1 in each row and in each column.
+     */
+    private void verifyPermutation(final String what, final Object matrix) throws BenchmarkRequirementsException {
+
+        int dim = library.getRowDim(matrix);
+
+        int[] rowCounts = new int[dim];
+        int[] colCounts = new int[dim];
+
+        for (int j = 0; j < dim; j++) {
+            for (int i = 0; i < dim; i++) {
+                double value = library.get(matrix, i, j);
+                if (value == 1.0) {
+                    rowCounts[i]++;
+                    colCounts[j]++;
+                } else if (value != 0.0) {
+                    throw new BenchmarkRequirementsException(what + " is not a permutation matrix! Element (" + i + "," + j + ") is " + value);
+                }
+            }
+        }
+
+        for (int k = 0; k < dim; k++) {
+            if (rowCounts[k] != 1 || colCounts[k] != 1) {
+                throw new BenchmarkRequirementsException(
+                        what + " is not a permutation matrix! Row " + k + " has " + rowCounts[k] + " ones, and column " + k + " has " + colCounts[k]);
+            }
+        }
+    }
+
     private void verifyShape(final String what, final Object matrix, final int nbRows, final int nbCols) throws BenchmarkRequirementsException {
         if (matrix == null) {
             throw new BenchmarkRequirementsException(what + " is missing!");
@@ -828,6 +873,39 @@ public abstract class MatrixBenchmarkOperation {
      */
     protected double doubleValue(final Object matrix, final int row, final int col) {
         return library.get(matrix, row, col);
+    }
+
+    /**
+     * Checks a Cholesky decomposition, [A] = [L][L]<sup>T</sup> with [L] lower triangular – or, equivalently,
+     * [A] = [R]<sup>T</sup>[R] with [R] = [L]<sup>T</sup> upper triangular, either is accepted – and with a
+     * positive diagonal. The reconstruction is checked by multiplying with a random vector.
+     */
+    protected void verifyCholeskyDecomposition(final Object original, final Object factor) throws BenchmarkRequirementsException {
+
+        int dim = library.getRowDim(original);
+
+        this.verifyShape("Cholesky factor", factor, dim, dim);
+
+        boolean lower = this.isTriangular(factor, true);
+        if (!lower && !this.isTriangular(factor, false)) {
+            throw new BenchmarkRequirementsException("Cholesky factor is not triangular!");
+        }
+
+        for (int ij = 0; ij < dim; ij++) {
+            double value = library.get(factor, ij, ij);
+            if (!(value > 0.0)) {
+                throw new BenchmarkRequirementsException("Cholesky factor is wrong! Diagonal element " + ij + " is " + value);
+            }
+        }
+
+        // [L][L]^T[x] or [R]^T[R][x]
+        double[] vector = MatrixBenchmarkOperation.random(dim);
+        double[] reconstructed = this.multiply(factor, !lower, this.multiply(factor, lower, vector));
+
+        double normFactor = this.norm(factor);
+        MatrixBenchmarkOperation.check("Cholesky decomposition",
+                MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(reconstructed, this.multiply(original, false, vector))),
+                dim * normFactor * normFactor * MatrixBenchmarkOperation.norm(vector));
     }
 
     /**
@@ -1012,6 +1090,36 @@ public abstract class MatrixBenchmarkOperation {
     }
 
     /**
+     * Checks an LU decomposition with row pivoting, [P][A] = [L][U]: [P] a permutation matrix, [L] lower
+     * triangular and [U] upper triangular, all dim x dim. The reconstruction is checked by multiplying with a
+     * random vector.
+     */
+    protected void verifyLUDecomposition(final Object original, final Object permutation, final Object lower, final Object upper)
+            throws BenchmarkRequirementsException {
+
+        int dim = library.getRowDim(original);
+
+        this.verifyShape("P", permutation, dim, dim);
+        this.verifyShape("L", lower, dim, dim);
+        this.verifyShape("U", upper, dim, dim);
+
+        this.verifyPermutation("P", permutation);
+        if (!this.isTriangular(lower, true)) {
+            throw new BenchmarkRequirementsException("L is not lower triangular!");
+        }
+        if (!this.isTriangular(upper, false)) {
+            throw new BenchmarkRequirementsException("U is not upper triangular!");
+        }
+
+        double[] vector = MatrixBenchmarkOperation.random(dim);
+        double[] left = this.multiply(permutation, false, this.multiply(original, false, vector));
+        double[] right = this.multiply(lower, false, this.multiply(upper, false, vector));
+
+        MatrixBenchmarkOperation.check("LU decomposition", MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(left, right)),
+                dim * this.norm(lower) * this.norm(upper) * MatrixBenchmarkOperation.norm(vector));
+    }
+
+    /**
      * Rank deficient least squares, with the body as
      * {@link #makeRankDeficient(int, double[][], MatrixBenchmarkLibrary)}: the solution should satisfy the
      * normal equations, [A]<sup>T</sup>([A][x] - [b]) = 0, and be orthogonal to the null space of [A] – the
@@ -1086,6 +1194,38 @@ public abstract class MatrixBenchmarkOperation {
         double normOriginal = this.norm(original);
         MatrixBenchmarkOperation.check("Pseudoinverse", MatrixBenchmarkOperation.norm(residual),
                 Math.max(nbRows, nbCols) * normOriginal * this.norm(pseudoinverse) * normOriginal * MatrixBenchmarkOperation.norm(vector));
+    }
+
+    /**
+     * Checks a QR decomposition, [A] = [Q][R] with [A] m x n and k = min(m, n): [Q] m x k with orthonormal
+     * columns and [R] k x n upper triangular. The reconstruction and the orthonormality are checked by
+     * multiplying with random vectors.
+     */
+    protected void verifyQRDecomposition(final Object original, final Object orthogonal, final Object triangular) throws BenchmarkRequirementsException {
+
+        int nbRows = library.getRowDim(original);
+        int nbCols = library.getColDim(original);
+        int rank = Math.min(nbRows, nbCols);
+
+        this.verifyShape("Q", orthogonal, nbRows, rank);
+        this.verifyShape("R", triangular, rank, nbCols);
+
+        if (!this.isTriangular(triangular, false)) {
+            throw new BenchmarkRequirementsException("R is not upper triangular!");
+        }
+
+        double[] vector = MatrixBenchmarkOperation.random(nbCols);
+        double[] reconstructed = this.multiply(orthogonal, false, this.multiply(triangular, false, vector));
+        MatrixBenchmarkOperation.check("QR decomposition",
+                MatrixBenchmarkOperation.norm(MatrixBenchmarkOperation.subtract(reconstructed, this.multiply(original, false, vector))),
+                Math.max(nbRows, nbCols) * this.norm(original) * MatrixBenchmarkOperation.norm(vector));
+
+        double[] coordinates = MatrixBenchmarkOperation.random(rank);
+        double normOrthogonal = this.norm(orthogonal);
+        MatrixBenchmarkOperation.check("Q",
+                MatrixBenchmarkOperation.norm(
+                        MatrixBenchmarkOperation.subtract(this.multiply(orthogonal, true, this.multiply(orthogonal, false, coordinates)), coordinates)),
+                nbRows * normOrthogonal * normOrthogonal * MatrixBenchmarkOperation.norm(coordinates));
     }
 
     /**

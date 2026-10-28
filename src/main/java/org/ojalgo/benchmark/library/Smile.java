@@ -25,53 +25,75 @@ import static smile.linalg.Transpose.NO_TRANSPOSE;
 import static smile.linalg.Transpose.TRANSPOSE;
 
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.*;
 
 import smile.linalg.NativeLibrary;
 import smile.linalg.UPLO;
 import smile.tensor.DenseMatrix;
 import smile.tensor.EVD;
 import smile.tensor.LU;
-import smile.tensor.ScalarType;
+import smile.tensor.QR;
 import smile.tensor.SVD;
+import smile.tensor.ScalarType;
 
 /**
- * SMILE (Statistical Machine Intelligence and Learning Engine) – pure Java. Its linear algebra backend is set
- * to "java", even if there is a native BLAS/LAPACK to use.
+ * SMILE (Statistical Machine Intelligence and Learning Engine) – the operations, common to {@link JVM} and
+ * {@link Native}. Those only differ in SMILE's linear algebra backend, "java" or "native".
+ * <p>
+ * SMILE reads the backend system property every time it chooses between native and Java code, so the
+ * subclasses' constructors only have to set it before the first operation.
  * <p>
  * The decompositions overwrite the matrix they're called on, so the input is copied first. That is part of
  * what is measured, as it is for the other libraries that don't decompose in place.
- *
- * @see SmileNative
  */
-public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
+public abstract class SMILE extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
 
-    public Smile() {
-        this(false);
+    /**
+     * SMILE – pure Java. Its linear algebra backend is set to "java", even if there is a native BLAS/LAPACK
+     * to use.
+     *
+     * @see Native
+     */
+    public static final class JVM extends SMILE {
+
+        public JVM() {
+
+            super();
+
+            System.setProperty(NativeLibrary.BACKEND_PROPERTY, "java");
+
+            if (NativeLibrary.isBlasAvailable() || NativeLibrary.isLapackAvailable()) {
+                throw new IllegalStateException("Not able to switch off SMILE's native backend!");
+            }
+        }
+
     }
 
     /**
-     * SMILE reads the backend system property every time it chooses between native and Java code, so it only
-     * has to be set before the first operation.
+     * SMILE – using native code (BLAS/LAPACK through the FFM API). On macOS that is the system's
+     * libblas/liblapack (Accelerate, its legacy interface), otherwise OpenBLAS. SMILE's own system properties
+     * choose another library – see <code>smile.linalg.NativeLibrary</code>.
+     *
+     * @see JVM
      */
-    Smile(final boolean nativeCode) {
+    public static final class Native extends SMILE {
 
-        super();
+        public Native() {
 
-        System.setProperty(NativeLibrary.BACKEND_PROPERTY, nativeCode ? "native" : "java");
+            super();
 
-        // With the "native" backend these throw if there is no native library – fail now rather than in the benchmark
-        if (NativeLibrary.isBlasAvailable() != nativeCode || NativeLibrary.isLapackAvailable() != nativeCode) {
-            throw new IllegalStateException("Not able to configure SMILE's linear algebra backend!");
+            System.setProperty(NativeLibrary.BACKEND_PROPERTY, "native");
+
+            // With the "native" backend these throw if there is no native library – fail now rather than in the benchmark
+            if (!NativeLibrary.isBlasAvailable() || !NativeLibrary.isLapackAvailable()) {
+                throw new IllegalStateException("No native BLAS/LAPACK available to SMILE!");
+            }
         }
+
+    }
+
+    SMILE() {
+        super();
     }
 
     @Override
@@ -97,6 +119,25 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationAdd() {
         return (a, b, c) -> c.add(1.0, a, 1.0, b);
+    }
+
+    @Override
+    public DecompositionOperation<DenseMatrix, DenseMatrix> getOperationCholesky(final int dim) {
+
+        DenseMatrix[] ret = this.makeArray(1);
+
+        return matrix -> {
+            // UPPER – as in getOperationEquationSystemSolver, SMILE's pure Java Cholesky then runs down columns
+            DenseMatrix factor = matrix.copy().withUplo(UPLO.UPPER).cholesky().lu();
+            // [R] is written to the upper triangle – below the diagonal is what was copied
+            for (int j = 0; j < dim; j++) {
+                for (int i = j + 1; i < dim; i++) {
+                    factor.set(i, j, 0.0);
+                }
+            }
+            ret[0] = factor;
+            return ret;
+        };
     }
 
     @Override
@@ -211,6 +252,53 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
     }
 
     @Override
+    public DecompositionOperation<DenseMatrix, DenseMatrix> getOperationLU(final int dim) {
+
+        DenseMatrix[] ret = this.makeArray(3);
+
+        DenseMatrix permutation = DenseMatrix.zeros(ScalarType.Float64, dim, dim);
+        // Only the diagonal and below are written – above it stays zero
+        DenseMatrix lower = DenseMatrix.zeros(ScalarType.Float64, dim, dim);
+        int[] order = new int[dim];
+
+        // There are no getters for the factors – [L] (unit diagonal) and [U] are packed in one matrix, and [P] is a sequence of row interchanges
+        return matrix -> {
+
+            LU lu = matrix.copy().lu();
+            DenseMatrix upper = lu.lu();
+
+            for (int j = 0; j < dim; j++) {
+                lower.set(j, j, 1.0);
+                for (int i = j + 1; i < dim; i++) {
+                    lower.set(i, j, upper.get(i, j));
+                    upper.set(i, j, 0.0);
+                }
+            }
+
+            // Row i was interchanged with row ipiv[i] - 1 (1-based, as LAPACK), in turn
+            int[] ipiv = lu.ipiv();
+            for (int i = 0; i < dim; i++) {
+                order[i] = i;
+            }
+            for (int i = 0; i < dim; i++) {
+                int k = ipiv[i] - 1;
+                int row = order[i];
+                order[i] = order[k];
+                order[k] = row;
+            }
+            permutation.fill(0.0);
+            for (int i = 0; i < dim; i++) {
+                permutation.set(i, order[i], 1.0);
+            }
+
+            ret[0] = permutation;
+            ret[1] = lower;
+            ret[2] = upper;
+            return ret;
+        };
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<DenseMatrix, DenseMatrix> getOperationMinimumNormSolver(final int numbEquations, final int numbVariables) {
         // The SVD solve only uses the singular values above the rank threshold – the minimum norm solution
         return (body, rhs) -> body.copy().svd(true).solve(rhs.column(0));
@@ -230,6 +318,19 @@ public class Smile extends MatrixBenchmarkLibrary<DenseMatrix, DenseMatrix> {
     @Override
     public ProducingUnaryMatrixOperation<DenseMatrix, DenseMatrix> getOperationPseudoinverse(final int dim) {
         return matrix -> matrix.copy().svd(true).pinv();
+    }
+
+    @Override
+    public DecompositionOperation<DenseMatrix, DenseMatrix> getOperationQR(final int dim) {
+
+        DenseMatrix[] ret = this.makeArray(2);
+
+        return matrix -> {
+            QR qr = matrix.copy().qr();
+            ret[0] = qr.Q();
+            ret[1] = qr.R();
+            return ret;
+        };
     }
 
     @Override

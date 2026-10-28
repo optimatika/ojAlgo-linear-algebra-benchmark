@@ -25,21 +25,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.*;
 import org.ojalgo.benchmark.library.EJML;
 import org.ojalgo.benchmark.library.Hipparchus;
-import org.ojalgo.benchmark.library.Smile;
-import org.ojalgo.benchmark.library.SmileNative;
 import org.ojalgo.benchmark.library.ojAlgo;
-import org.ojalgo.benchmark.library.ojAlgoNative;
+import org.ojalgo.benchmark.library.SMILE;
 import org.ojalgo.netio.BasicLogger;
 
 /**
@@ -80,10 +70,10 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
         // The names are the values of the benchmarks' "lib" parameter
         LIBRARIES.put("EJML", EJML::new);
         LIBRARIES.put("Hipparchus", Hipparchus::new);
-        LIBRARIES.put("ojAlgo-JVM", ojAlgo::new);
-        LIBRARIES.put("ojAlgo-Native", ojAlgoNative::new);
-        LIBRARIES.put("SMILE-JVM", Smile::new);
-        LIBRARIES.put("SMILE-Native", SmileNative::new);
+        LIBRARIES.put("ojAlgo-JVM", ojAlgo.JVM::new);
+        LIBRARIES.put("ojAlgo-Native", ojAlgo.Native::new);
+        LIBRARIES.put("SMILE-JVM", SMILE.JVM::new);
+        LIBRARIES.put("SMILE-Native", SMILE.Native::new);
     }
 
     public static MatrixBenchmarkLibrary<?, ?> make(final String name) {
@@ -136,26 +126,14 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
 
     public abstract MatrixBuilder getMatrixBuilder(int numberOfRows, int numberOfColumns);
 
-    /**
-     * Element access, of matrices of any of the library's types, for verification – independent of the
-     * operations being verified.
-     */
-    @SuppressWarnings("unchecked")
-    final double get(final Object matrix, final int row, final int col) {
-        return this.doubleValue((I) matrix, row, col);
-    }
-
-    @SuppressWarnings("unchecked")
-    final int getColDim(final Object matrix) {
-        return this.countColumns((I) matrix);
-    }
-
-    @SuppressWarnings("unchecked")
-    final int getRowDim(final Object matrix) {
-        return this.countRows((I) matrix);
-    }
-
     public abstract MutatingBinaryMatrixMatrixOperation<I, T> getOperationAdd();
+
+    /**
+     * The Cholesky decomposition of a symmetric positive definite dim x dim matrix: its triangular factor,
+     * dim x dim – [L] lower triangular with [A] = [L][L]<sup>T</sup>, or [R] = [L]<sup>T</sup> upper
+     * triangular, whichever the library provides.
+     */
+    public abstract DecompositionOperation<I, I> getOperationCholesky(int dim);
 
     public abstract PropertyOperation<I, T> getOperationDeterminant(int dim);
 
@@ -195,6 +173,12 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract KalmanFilterOperation<I, T> getOperationKalmanFilter(int dim, int nbMeasurements);
 
     /**
+     * The LU decomposition, with row pivoting, of a dim x dim matrix: [P], [L] and [U], all dim x dim, with
+     * [P][A] = [L][U] – [P] a permutation matrix, [L] lower and [U] upper triangular.
+     */
+    public abstract DecompositionOperation<I, I> getOperationLU(int dim);
+
+    /**
      * The minimum norm least squares solution, of a possibly rank deficient system, for a single right hand
      * side.
      */
@@ -209,6 +193,11 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     public abstract ProducingBinaryMatrixMatrixOperation<I, I> getOperationMultiplyToProduce();
 
     public abstract ProducingUnaryMatrixOperation<I, T> getOperationPseudoinverse(int dim);
+
+    /**
+     * The QR decomposition of a dim x dim matrix: [Q] orthogonal and [R] upper triangular, both dim x dim.
+     */
+    public abstract DecompositionOperation<I, I> getOperationQR(int dim);
 
     /**
      * Prepares (decomposes) a general square body, in setup, and returns the operation that solves for a
@@ -260,5 +249,24 @@ public abstract class MatrixBenchmarkLibrary<I, T extends I> {
     protected abstract double norm(I matrix);
 
     protected abstract I subtract(I left, I right);
+
+    /**
+     * Element access, of matrices of any of the library's types, for verification – independent of the
+     * operations being verified.
+     */
+    @SuppressWarnings("unchecked")
+    final double get(final Object matrix, final int row, final int col) {
+        return this.doubleValue((I) matrix, row, col);
+    }
+
+    @SuppressWarnings("unchecked")
+    final int getColDim(final Object matrix) {
+        return this.countColumns((I) matrix);
+    }
+
+    @SuppressWarnings("unchecked")
+    final int getRowDim(final Object matrix) {
+        return this.countRows((I) matrix);
+    }
 
 }

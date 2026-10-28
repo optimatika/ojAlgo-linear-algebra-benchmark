@@ -21,32 +21,15 @@
  */
 package org.ojalgo.benchmark.library;
 
-import org.hipparchus.linear.ArrayRealVector;
-import org.hipparchus.linear.BlockRealMatrix;
-import org.hipparchus.linear.CholeskyDecomposition;
-import org.hipparchus.linear.DecompositionSolver;
-import org.hipparchus.linear.EigenDecompositionSymmetric;
-import org.hipparchus.linear.LUDecomposition;
-import org.hipparchus.linear.MatrixUtils;
-import org.hipparchus.linear.QRDecomposition;
-import org.hipparchus.linear.RealMatrix;
-import org.hipparchus.linear.SingularValueDecomposition;
+import org.hipparchus.linear.*;
 import org.ojalgo.benchmark.MatrixBenchmarkLibrary;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.DecompositionOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.KalmanFilterOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingBinaryMatrixScalarOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.MutatingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PreparingOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingBinaryMatrixMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.ProducingUnaryMatrixOperation;
-import org.ojalgo.benchmark.MatrixBenchmarkOperation.PropertyOperation;
+import org.ojalgo.benchmark.MatrixBenchmarkOperation.*;
 
 /**
  * Hipparchus (a fork of Apache Commons Math). BlockRealMatrix throughout – measured faster on 10-1000 than
  * {@link MatrixUtils#createRealMatrix(int, int)}, which would give Array2DRowRealMatrix up to 4096 elements.
  */
-public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
+public final class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
 
     /**
      * Products that are symmetric in exact arithmetic, like [H][P][H]<sup>T</sup>, are not exactly symmetric
@@ -68,6 +51,7 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
 
             private final RealMatrix myMatrix = new BlockRealMatrix(numberOfRows, numberOfColumns);
 
+            @Override
             public RealMatrix get() {
                 return myMatrix;
             }
@@ -84,6 +68,19 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     @Override
     public MutatingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationAdd() {
         return (a, b, c) -> this.copy(a.add(b), c);
+    }
+
+    @Override
+    public DecompositionOperation<RealMatrix, RealMatrix> getOperationCholesky(final int dim) {
+
+        RealMatrix[] ret = this.makeArray(1);
+
+        // [L]^T – what the decomposition calculates, getL() is its transpose
+        return matrix -> {
+            CholeskyDecomposition cholesky = new CholeskyDecomposition(matrix);
+            ret[0] = cholesky.getLT();
+            return ret;
+        };
     }
 
     @Override
@@ -205,6 +202,20 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     }
 
     @Override
+    public DecompositionOperation<RealMatrix, RealMatrix> getOperationLU(final int dim) {
+
+        RealMatrix[] ret = this.makeArray(3);
+
+        return matrix -> {
+            LUDecomposition lu = new LUDecomposition(matrix);
+            ret[0] = lu.getP();
+            ret[1] = lu.getL();
+            ret[2] = lu.getU();
+            return ret;
+        };
+    }
+
+    @Override
     public ProducingBinaryMatrixMatrixOperation<RealMatrix, RealMatrix> getOperationMinimumNormSolver(final int numbEquations, final int numbVariables) {
         // The SVD solver solves with the pseudoinverse – the minimum norm solution
         return (body, rhs) -> Hipparchus.solve(new SingularValueDecomposition(body).getSolver(), rhs);
@@ -227,6 +238,19 @@ public class Hipparchus extends MatrixBenchmarkLibrary<RealMatrix, RealMatrix> {
     @Override
     public ProducingUnaryMatrixOperation<RealMatrix, RealMatrix> getOperationPseudoinverse(final int dim) {
         return matrix -> new SingularValueDecomposition(matrix).getSolver().getInverse();
+    }
+
+    @Override
+    public DecompositionOperation<RealMatrix, RealMatrix> getOperationQR(final int dim) {
+
+        RealMatrix[] ret = this.makeArray(2);
+
+        return matrix -> {
+            QRDecomposition qr = new QRDecomposition(matrix);
+            ret[0] = qr.getQ();
+            ret[1] = qr.getR();
+            return ret;
+        };
     }
 
     @Override
