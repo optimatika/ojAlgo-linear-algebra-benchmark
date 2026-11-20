@@ -144,7 +144,8 @@ public abstract class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>,
     @Override
     public ProducingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationEigenvalues(final int dim) {
 
-        Eigenvalue<Double> evd = Eigenvalue.R064.make(dim, true);
+        // The implementation best at computing the eigenvalues only – ojAlgo's choice
+        Eigenvalue<Double> evd = Eigenvalue.R064.makeValuesOnly(dim, true);
         R064Store values = R064Store.FACTORY.make(dim, 1);
 
         return matrix -> {
@@ -346,7 +347,8 @@ public abstract class ojAlgo extends MatrixBenchmarkLibrary<MatrixStore<Double>,
     @Override
     public ProducingUnaryMatrixOperation<MatrixStore<Double>, R064Store> getOperationSingularValues(final int dim) {
 
-        SingularValue<Double> svd = SingularValue.R064.make(dim, dim);
+        // The implementation best at computing the singular values only – ojAlgo's choice
+        SingularValue<Double> svd = SingularValue.R064.makeValuesOnly(dim, dim);
         R064Store values = R064Store.FACTORY.make(dim, 1);
 
         return matrix -> {
